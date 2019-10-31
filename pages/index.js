@@ -7,6 +7,7 @@ import Spinner from 'react-bootstrap/Spinner'
 import Table from 'react-bootstrap/Table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle, faFileCsv, faQuestion, faSearch } from '@fortawesome/free-solid-svg-icons'
+import DayPickerInput from 'react-day-picker/DayPickerInput'
 import AboutModal from '../components/about-modal'
 import ArrowButton from '../components/arrow-button'
 import Footer from '../components/footer'
@@ -245,22 +246,14 @@ const FilterControl = props => {
           </Form.Control>
         </div>
         <div className='col-md-3'>
-          <Form.Control as="select">
-            <option value="">Start Date</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </Form.Control>
+          <DayPickerInput
+            inputProps={{className: 'form-control', placeholder: 'Start Date'}}
+          />
         </div>
         <div className='col-md-3'>
-          <Form.Control as="select">
-            <option value="">End Date</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </Form.Control>
+          <DayPickerInput
+            inputProps={{className: 'form-control', placeholder: 'End Date'}}
+          />
         </div>
         <div className='col-md-3'>
           <Button
@@ -272,6 +265,11 @@ const FilterControl = props => {
           </Button>
         </div>
       </div>
+      <style jsx global>{`
+          .DayPickerInput {
+            width: 100%;
+          }
+        `}</style>
     </div>
   )
 }
