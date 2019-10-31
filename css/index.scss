@@ -1,0 +1,151 @@
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import "../node_modules/@fortawesome/fontawesome-svg-core/styles.css";
+
+$light-blue: #51BAEC;
+$dark-blue: #2D65B1;
+$light-grey: #EBEAE6;
+$dark-grey: #979797;
+$white: #FFFFFF;
+$text: #4C4D55;
+
+@font-face {
+  font-family: 'Museo Sans 500';
+  src: url('/fonts/MuseoSans-500.woff2') format('woff2'),
+      url('/fonts/MuseoSans-500.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Museo Sans 500';
+  src: url('/fonts/MuseoSans-500Italic.woff2') format('woff2'),
+      url('/fonts/MuseoSans-500Italic.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+
+
+body {
+  background-color: $light-grey;
+  color: $text;
+  font-family: 'Museo Sans 500'; font-weight: normal; font-style: normal;
+}
+
+a {
+  color: $dark-blue;
+}
+
+.table {
+  color: $text;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $dark-blue;
+  font-weight: bold;
+}
+
+.text-white {
+  h1, h2, h3, h4, h5, h6 {
+    color: $white;
+  }
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+a.card {
+  text-decoration: none;
+}
+
+.bg-light-blue {
+  background-color: $light-blue!important;
+}
+
+.bg-blue {
+  background-color: $dark-blue!important;
+}
+
+.btn-primary {
+  color: $white;
+  background-color: $dark-blue;
+  border-color: darken($dark-blue, 5%);
+
+  &:hover {
+    background-color: darken($dark-blue, 15%);
+  }
+}
+
+.btn-secondary {
+  color: $white;
+  background-color: $light-blue;
+  border-color: darken($light-blue, 5%);
+
+  &:hover {
+    background-color: darken($light-blue, 15%);
+    border-color: darken($light-blue, 20%);
+  }
+}
+
+.btn-white-border {
+  border-color: $white;
+}
+
+.logo {
+  width: 100%;
+  max-width: 350px;
+}
+
+.header-bar {
+  background-color: $white;
+  border-top: 1px solid $dark-grey;
+  border-bottom: 2px solid $dark-grey;
+  border-left: 1px solid $dark-grey;
+}
+
+.header-stat {
+  color: $dark-blue;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.header-stat-value {
+  font-size: 48px;
+  display: inline;
+  font-weight: bold;
+}
+
+.header-stat-unit {
+  font-size: 30px;
+  display: inline;
+}
+
+.header-stat-label {
+  font-size: 21px;
+}
+
+.question-button {
+  cursor: pointer;
+  width: 80px;
+  height: 80px;
+  font-size: 80px;
+  margin-top: 10px;
+  margin-right: 15px;
+}
+
+.project-table {
+  background-color: $white;
+
+  tr {
+    th {
+      background: $light-blue;
+      color: $white;
+      border-top: none;
+      font-weight: bold;
+    }
+
+    td:first-child {
+      font-size: 18px;
+    }
+  }
+}
