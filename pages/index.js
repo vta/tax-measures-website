@@ -3,10 +3,11 @@ import Head from 'next/head'
 import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Form from 'react-bootstrap/Form'
-import Modal from 'react-bootstrap/Modal'
+import Spinner from 'react-bootstrap/Spinner'
 import Table from 'react-bootstrap/Table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle, faFileCsv, faQuestion, faSearch } from '@fortawesome/free-solid-svg-icons'
+import AboutModal from '../components/about-modal'
 import ArrowButton from '../components/arrow-button'
 import Footer from '../components/footer'
 import PieChart from '../components/pie-chart'
@@ -14,6 +15,70 @@ import '../css/index.scss'
 
 const Home = () => {
   const [aboutModalShow, setAboutModalShow] = useState(false);
+
+  const [data, setData] = useState();
+
+  const [loading, setLoading] = useState(false);
+
+
+  const handleSearch = () => {
+    setLoading(true);
+    
+    setTimeout(() => {
+      setData({
+        pieChart: [
+          {
+            key: 'unallocated',
+            value: 9,
+            title: 'Unallocated'
+          },
+          {
+            key: 'bike',
+            value: 6,
+            title: 'Bike'
+          },
+          {
+            key: 'bus',
+            value: 3,
+            title: 'Bus'
+          },
+          {
+            key: 'road',
+            value: 16,
+            title: 'Road'
+          }
+        ],
+        moneyChart: [
+          {
+            key: 'corporate-tax',
+            value: 9,
+            title: 'Corporate Tax'
+          },
+          {
+            key: 'interest',
+            value: 6,
+            title: 'Interest'
+          },
+          {
+            key: 'road',
+            value: 3,
+            title: 'Road'
+          },
+          {
+            key: 'tax',
+            value: 16,
+            title: 'Tax'
+          },
+          {
+            key: 'donations',
+            value: 16,
+            title: 'Donations'
+          }
+        ]
+      })
+      setLoading(false)
+    }, 2000)
+  }
 
   return (
     <div>
@@ -50,7 +115,7 @@ const Home = () => {
                 <div className='header-stat'>
                   <div className='header-stat-value'>$155k</div>
                   <div className='header-stat-unit'></div>
-                  <div className='header-stat-label'>interest earner</div>
+                  <div className='header-stat-label'>interest earned</div>
                 </div>
               </div>
               <div className='col-md'>
@@ -74,7 +139,7 @@ const Home = () => {
             </div>
             <div className='row mb-3'>
               <div className='col'>
-                <FilterControl />
+                <FilterControl handleSearch={handleSearch} />
               </div>
             </div>
             <div className='row'>
@@ -87,79 +152,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            <div className='row'>
-              <div className='col'>
-                <div className='card'>
-                  <div className='card-body card-graph'>
-                    <div className='row'>
-                      <div className='col-md-6'>
-                        <ButtonGroup aria-label="Chart Type" size="sm">
-                          <Button variant="primary">Pie</Button>
-                          <Button variant="secondary">Bar</Button>
-                        </ButtonGroup>
-
-                        <PieChart data={[
-                          {
-                            key: 'unallocated',
-                            value: 9,
-                            title: 'Unallocated'
-                          },
-                          {
-                            key: 'bike',
-                            value: 6,
-                            title: 'Bike'
-                          },
-                          {
-                            key: 'bus',
-                            value: 3,
-                            title: 'Bus'
-                          },
-                          {
-                            key: 'road',
-                            value: 16,
-                            title: 'Road'
-                          }
-                        ]} />
-                      </div>
-                      <div className='col-md-6'>
-                        <ButtonGroup aria-label="Display Type" size="sm" className="float-right">
-                          <Button variant="primary">Money</Button>
-                          <Button variant="secondary">Map</Button>
-                        </ButtonGroup>
-
-                        <PieChart data={[
-                          {
-                            key: 'corporate-tax',
-                            value: 9,
-                            title: 'Corporate Tax'
-                          },
-                          {
-                            key: 'interest',
-                            value: 6,
-                            title: 'Interest'
-                          },
-                          {
-                            key: 'road',
-                            value: 3,
-                            title: 'Road'
-                          },
-                          {
-                            key: 'tax',
-                            value: 16,
-                            title: 'Tax'
-                          },
-                          {
-                            key: 'donations',
-                            value: 16,
-                            title: 'Donations'
-                          }
-                        ]} />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ChartSection loading={loading} data={data} />
           </div>
         </div>
 
@@ -210,9 +203,6 @@ const Home = () => {
       />
 
       <style jsx>{`
-        .card-graph {
-          min-height: 400px;
-        }
       `}</style>
     </div>
   )
@@ -273,47 +263,80 @@ const FilterControl = props => {
           </Form.Control>
         </div>
         <div className='col-md-3'>
-          <Button className="btn-secondary" block><FontAwesomeIcon icon={faSearch} className='mr-2' /> Search</Button>
+          <Button
+            className="btn-secondary"
+            onClick={props.handleSearch}
+            block
+          >
+            <FontAwesomeIcon icon={faSearch} className='mr-2' /> Search
+          </Button>
         </div>
       </div>
     </div>
   )
 }
 
-const AboutModal = props => {
+const ChartSection = props => {
+  if (props.loading) {
+    return (
+      <div className='row'>
+        <div className='col'>
+          <div className='card'>
+            <div className='card-body card-loading text-center'>
+              <Spinner animation="border" role="status" size="xl" variant="primary" className='mb-4'>
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+              <h1>Loading...</h1>
+            </div>
+          </div>
+        </div>
+        <style jsx>{`
+          .card-loading {
+            min-height: 400px;
+            padding-top: 80px;
+          }
+        `}</style>
+      </div>
+    )
+  }
+
+  if (!props.data) {
+    return null
+  }
+
   return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          About 2016 Measure B
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <h4>What is Measure B?</h4>
-        <p>
-          A 30-year, half-cent countywide sales tax to enhance transit, highways, expressways and active transportation (bicycles, pedestrians and complete streets). The measure passed by nearly 72%, the highest level of support for any Santa Clara County transportation tax. <a href="https://www.vta.org/projects/funding/2016-measure-b">Read More &raquo;</a>
-        </p>
+    <div className='row'>
+      <div className='col'>
+        <div className='card'>
+          <div className='card-body card-graph'>
+            <div className='row'>
+              <div className='col-md-6'>
+                <ButtonGroup aria-label="Chart Type" size="sm">
+                  <Button variant="primary">Pie</Button>
+                  <Button variant="secondary">Bar</Button>
+                </ButtonGroup>
 
-        <h4>What is this website?</h4>
-        <p>
-          A tool for tracking the performance of 2016 Measure B projects and programs and reporting how funding recipients are delivering on promises made to the taxpayers.​
-        </p>
+                <PieChart data={props.data.pieChart} />
+              </div>
+              <div className='col-md-6'>
+                <ButtonGroup aria-label="Display Type" size="sm" className="float-right">
+                  <Button variant="primary">Money</Button>
+                  <Button variant="secondary">Map</Button>
+                </ButtonGroup>
 
-        <h4>Where can I submit questions?</h4>
-        <p>
-          Email us at <a href="mailto:measureb@vta.org">measureb@vta.org</a>.
-        </p>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide} className='btn-secondary'>Close</Button>
-      </Modal.Footer>
-    </Modal>
-  );
+                <PieChart data={props.data.moneyChart} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <style jsx>{`
+        .card-graph {
+          min-height: 400px;
+        }
+      `}</style>
+    </div>
+  )
 }
 
 export default Home
