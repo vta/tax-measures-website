@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Head from 'next/head'
 import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
@@ -6,13 +6,14 @@ import Form from 'react-bootstrap/Form'
 import Modal from 'react-bootstrap/Modal'
 import Table from 'react-bootstrap/Table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle, faChevronDown, faFileCsv, faQuestion, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faCircle, faFileCsv, faQuestion, faSearch } from '@fortawesome/free-solid-svg-icons'
 import ArrowButton from '../components/arrow-button'
 import Footer from '../components/footer'
+import PieChart from '../components/pie-chart'
 import '../css/index.scss'
 
 const Home = () => {
-  const [aboutModalShow, setAboutModalShow] = React.useState(false);
+  const [aboutModalShow, setAboutModalShow] = useState(false);
 
   return (
     <div>
@@ -96,12 +97,63 @@ const Home = () => {
                           <Button variant="primary">Pie</Button>
                           <Button variant="secondary">Bar</Button>
                         </ButtonGroup>
+
+                        <PieChart data={[
+                          {
+                            key: 'unallocated',
+                            value: 9,
+                            title: 'Unallocated'
+                          },
+                          {
+                            key: 'bike',
+                            value: 6,
+                            title: 'Bike'
+                          },
+                          {
+                            key: 'bus',
+                            value: 3,
+                            title: 'Bus'
+                          },
+                          {
+                            key: 'road',
+                            value: 16,
+                            title: 'Road'
+                          }
+                        ]} />
                       </div>
                       <div className='col-md-6'>
                         <ButtonGroup aria-label="Display Type" size="sm" className="float-right">
                           <Button variant="primary">Money</Button>
                           <Button variant="secondary">Map</Button>
                         </ButtonGroup>
+
+                        <PieChart data={[
+                          {
+                            key: 'corporate-tax',
+                            value: 9,
+                            title: 'Corporate Tax'
+                          },
+                          {
+                            key: 'interest',
+                            value: 6,
+                            title: 'Interest'
+                          },
+                          {
+                            key: 'road',
+                            value: 3,
+                            title: 'Road'
+                          },
+                          {
+                            key: 'tax',
+                            value: 16,
+                            title: 'Tax'
+                          },
+                          {
+                            key: 'donations',
+                            value: 16,
+                            title: 'Donations'
+                          }
+                        ]} />
                       </div>
                     </div>
                   </div>
