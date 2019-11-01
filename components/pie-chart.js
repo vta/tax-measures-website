@@ -5,39 +5,26 @@ const PieChart = props => {
   const chartContainer = React.createRef();
 
   useEffect(() => {
-    createChart()
-  }, [])
-
-  useEffect(() => {
     drawChart()
   }, [props.data])
 
-  let margin
-  let width
-  let height
-  let radius
   let svg
 
-  const createChart = () => {
-    margin = 100
-    width = d3.select(chartContainer.current).node().getBoundingClientRect().width
-    height = width - 230
-    radius = width / 2 - margin
+  const drawChart = () => {
+    const margin = 100
+    const width = d3.select(chartContainer.current).node().getBoundingClientRect().width
+    const height = width - 230
+    const radius = width / 2 - margin
 
-    // append the svg object to the div called 'my_dataviz'
-    svg = d3.select(chartContainer.current)
+    if (!svg) {
+      // append the svg object to the div called 'my_dataviz'
+      svg = d3.select(chartContainer.current)
       .append("svg")
         .attr("width", width)
         .attr("height", height)
       .append("g")
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-  }
-
-  const drawChart = () => {
-    margin = 100
-    width = d3.select(chartContainer.current).node().getBoundingClientRect().width
-    height = width - 230
-    radius = width / 2 - margin
+    }
 
     // set the color scale
     var color = d3.scaleOrdinal()

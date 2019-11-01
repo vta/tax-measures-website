@@ -4,14 +4,14 @@ import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Form from 'react-bootstrap/Form'
 import Spinner from 'react-bootstrap/Spinner'
-import Table from 'react-bootstrap/Table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle, faFileCsv, faQuestion, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faCircle, faQuestion, faSearch } from '@fortawesome/free-solid-svg-icons'
 import DayPickerInput from 'react-day-picker/DayPickerInput'
 import AboutModal from '../components/about-modal'
 import ArrowButton from '../components/arrow-button'
 import Footer from '../components/footer'
 import PieChart from '../components/pie-chart'
+import ProjectsList from '../components/projects-list'
 import '../css/index.scss'
 
 const Home = () => {
@@ -24,6 +24,7 @@ const Home = () => {
 
   const handleSearch = () => {
     setLoading(true);
+    setData()
     
     setTimeout(() => {
       setData({
@@ -74,6 +75,20 @@ const Home = () => {
             key: 'donations',
             value: 16,
             title: 'Donations'
+          }
+        ],
+        projects: [
+          {
+            title: 'BART Phase II Program',
+            startDate: '6/22',
+            endDate: '8/24',
+            status: 'pending'
+          },
+          {
+            title: 'Bike and Ped Program',
+            startDate: '4/21',
+            endDate: '7/24',
+            status: 'completed'
           }
         ]
       })
@@ -148,7 +163,7 @@ const Home = () => {
                 <div className='card mb-3'>
                   <div className='card-body'>
                     <h3>See how much Measure B has collected to suport transportation, and how that money has been spent.</h3>
-                    <p>This website provides a gateway to understanding Measure B spending. Use the filters above to pick the timeframe, categories, and grantees you're interested in examining the allocations, payments, and projects for. Below you'll see the data you requested visualized. On the "Money" mode, you'll see a cross section of the funding that fits your filter. If you switch to the "Map" tab, you'll see the relevant projects geographically. Below is a text list of those projects, as well as a tool to export that list of projects in a spreadsheet form.</p>
+                    <div>This website provides a gateway to understanding Measure B spending. Use the filters above to pick the timeframe, categories, and grantees you're interested in examining the allocations, payments, and projects for. Below you'll see the data you requested visualized. On the "Money" mode, you'll see a cross section of the funding that fits your filter. If you switch to the "Map" tab, you'll see the relevant projects geographically. Below is a text list of those projects, as well as a tool to export that list of projects in a spreadsheet form.</div>
                   </div>
                 </div>
               </div>
@@ -157,43 +172,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className='row'>
-          <div className='col'>
-            <div className='card bg-blue text-white mb-3'>
-              <div className='card-body'>
-                <h3>Projects List</h3>
-                <p>Below is a list of the projects correlation with the filter settings above</p>
-                <Table responsive size="sm" className='project-table'>
-                  <thead>
-                    <tr>
-                      <th>Project Name</th>
-                      <th>Start</th>
-                      <th>End</th>
-                      <th>Project Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><a href="">BART Phase II Program</a></td>
-                      <td>6/22</td>
-                      <td>8/24</td>
-                      <td><i>pending</i></td>
-                    </tr>
-                    <tr>
-                      <td><a href="">Bike &amp; Ped Program</a></td>
-                      <td>4/21</td>
-                      <td>7/24</td>
-                      <td><i>completed</i></td>
-                    </tr>
-                  </tbody>
-                </Table>
-                <Button className="btn-primary btn-white-border float-right">
-                  Download CSV <FontAwesomeIcon icon={faFileCsv} className='ml-2' />
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ProjectsList data={data} />
 
         <Footer />
       </div>
@@ -213,7 +192,7 @@ const FilterControl = props => {
   return (
     <div className='card bg-blue p-2'>
       <div className='row'>
-        <div className='col-md-3'>
+        <div className='col-md-3 mb-2'>
           <Form.Control as="select">
             <option value="">Transaction type</option>
             <option>2</option>
@@ -222,7 +201,7 @@ const FilterControl = props => {
             <option>5</option>
           </Form.Control>
         </div>
-        <div className='col-md-3'>
+        <div className='col-md-3 mb-2'>
           <Form.Control as="select">
             <option value="">Grantee</option>
             <option>2</option>
@@ -231,12 +210,12 @@ const FilterControl = props => {
             <option>5</option>
           </Form.Control>
         </div>
-        <div className='col-md-6'>
+        <div className='col-md-6 mb-2'>
           <Form.Control type="text" placeholder="Project Name" />
         </div>
       </div>
-      <div className='row mt-2'>
-        <div className='col-md-3'>
+      <div className='row'>
+        <div className='col-md-3 mb-2 mb-md-0'>
           <Form.Control as="select">
             <option value="">Category</option>
             <option>2</option>
@@ -245,12 +224,12 @@ const FilterControl = props => {
             <option>5</option>
           </Form.Control>
         </div>
-        <div className='col-md-3'>
+        <div className='col-md-3 mb-2 mb-md-0'>
           <DayPickerInput
             inputProps={{className: 'form-control', placeholder: 'Start Date'}}
           />
         </div>
-        <div className='col-md-3'>
+        <div className='col-md-3 mb-2 mb-md-0'>
           <DayPickerInput
             inputProps={{className: 'form-control', placeholder: 'End Date'}}
           />
