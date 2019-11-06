@@ -24,15 +24,15 @@ Start the development server:
 
 Open http://localhost:3000 in your browser
     
-## Building locally
+## Building a staticly compiled version for production
 
-Builds the app for production:
+Rollow the setup inistructions above, and then run:
 
     yarn build
 
 ## Running in production
 
-Runs the built app in production mode
+Runs the built app in production mode:
 
     yarn start
     
