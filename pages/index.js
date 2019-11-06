@@ -145,6 +145,7 @@ const Home = () => {
                 <div
                   className='question-button float-right'
                   onClick={() => setAboutModalShow(true)}
+                  aria-label="About Measure B"
                 >
                   <span className="fa-layers fa-fw">
                     <FontAwesomeIcon icon={faCircle} color="#51BAEC" />
@@ -163,7 +164,7 @@ const Home = () => {
                 <div className='card mb-3'>
                   <div className='card-body'>
                     <h3>See how much Measure B has collected to suport transportation, and how that money has been spent.</h3>
-                    <div>This website provides a gateway to understanding Measure B spending. Use the filters above to pick the timeframe, categories, and grantees you're interested in examining the allocations, payments, and projects for. Below you'll see the data you requested visualized. On the "Money" mode, you'll see a cross section of the funding that fits your filter. If you switch to the "Map" tab, you'll see the relevant projects geographically. Below is a text list of those projects, as well as a tool to export that list of projects in a spreadsheet form.</div>
+                    <div>This website provides a gateway to understanding Measure B spending. Use the filters above to pick the timeframe, categories, and grantees you're interested in examining the allocations, payments, and projects for. Below you'll see the data you requested visualized. On the "Money" mode, you'll see a cross section of the funding that fits your filter. If you switch to the "Map" tab, you'll see the relevant projects geographically. Below is a text list of those projects, as well as a tool to export that list of projects in a spreadsheet form. <a href="#" onClick={() => setAboutModalShow(true)}>Read more about Measure B &raquo;</a></div>
                   </div>
                 </div>
               </div>
@@ -195,10 +196,9 @@ const FilterControl = props => {
         <div className='col-md-3 mb-2'>
           <Form.Control as="select">
             <option value="">Transaction type</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+            <option>Payment</option>
+            <option>Allocation</option>
+            <option>Award</option>
           </Form.Control>
         </div>
         <div className='col-md-3 mb-2'>
