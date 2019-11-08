@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileCsv } from '@fortawesome/free-solid-svg-icons'
 
 const ProjectsList = props => {
-  if (!props.data || !props.data.projects) {
+  if (!props.results || !props.results.projects) {
     return null
   }
 
@@ -26,7 +26,7 @@ const ProjectsList = props => {
                 </tr>
               </thead>
               <tbody>
-                {props.data.projects.map((project, idx) => (
+                {props.results.projects.map((project, idx) => (
                   <tr key={idx}>
                     <td><a href="">{project.title}</a></td>
                     <td>{project.startDate}</td>

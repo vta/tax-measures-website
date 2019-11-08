@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Form from 'react-bootstrap/Form'
 import Spinner from 'react-bootstrap/Spinner'
+import { Typeahead } from 'react-bootstrap-typeahead'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle, faQuestion, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faCircle, faQuestion, faSearch, faUserCheck } from '@fortawesome/free-solid-svg-icons'
 import DayPickerInput from 'react-day-picker/DayPickerInput'
 import AboutModal from '../components/about-modal'
 import ArrowButton from '../components/arrow-button'
@@ -13,21 +14,41 @@ import Footer from '../components/footer'
 import PieChart from '../components/pie-chart'
 import ProjectsList from '../components/projects-list'
 import '../css/index.scss'
+import { fetchCategories, fetchGrantees, fetchProjects } from '../lib/api'
 
 const Home = () => {
-  const [aboutModalShow, setAboutModalShow] = useState(false);
+  const [aboutModalShow, setAboutModalShow] = useState(false)
+  const [data, setData] = useState({})
+  const [results, setResults] = useState()
+  const [loading, setLoading] = useState(false)
 
-  const [data, setData] = useState();
+  useEffect(() => {
+    fetchData();
+  }, [])
 
-  const [loading, setLoading] = useState(false);
+  const fetchData = async () => {
+    try {
+      const categories = await fetchCategories()
+      const grantees =  await fetchGrantees()
+      const projects = await fetchProjects()
 
+      setData({
+        ...data,
+        categories,
+        grantees,
+        projects
+      })
+    } catch(err) {
+      alert('Unable to fetch data')
+    }
+  }
 
   const handleSearch = () => {
-    setLoading(true);
-    setData()
+    setLoading(true)
+    setResults()
     
     setTimeout(() => {
-      setData({
+      setResults({
         pieChart: [
           {
             key: 'unallocated',
@@ -156,7 +177,7 @@ const Home = () => {
             </div>
             <div className='row mb-3'>
               <div className='col'>
-                <FilterControl handleSearch={handleSearch} />
+                <FilterControl handleSearch={handleSearch} data={data} />
               </div>
             </div>
             <div className='row'>
@@ -169,11 +190,11 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            <ChartSection loading={loading} data={data} />
+            <ChartSection loading={loading} results={results} />
           </div>
         </div>
 
-        <ProjectsList data={data} />
+        <ProjectsList results={results} />
 
         <Footer />
       </div>
@@ -190,6 +211,8 @@ const Home = () => {
 }
 
 const FilterControl = props => {
+  const { categories, grantees, projects } = props.data
+
   return (
     <div className='card bg-blue p-2'>
       <div className='row'>
@@ -204,24 +227,26 @@ const FilterControl = props => {
         <div className='col-md-3 mb-2'>
           <Form.Control as="select">
             <option value="">Grantee</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+            {grantees && grantees.map(grantee => (
+              <option key={grantee.id}>{grantee.fields.Name}</option>
+            ))}
           </Form.Control>
         </div>
         <div className='col-md-6 mb-2'>
-          <Form.Control type="text" placeholder="Project Name" />
+          <Typeahead
+            options={projects ? projects.map(project => project.fields.Name) : []}
+            placeholder="Project Name"
+            id="project-name"
+          />
         </div>
       </div>
       <div className='row'>
         <div className='col-md-3 mb-2 mb-md-0'>
           <Form.Control as="select">
             <option value="">Category</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+            {categories && categories.map(category => (
+              <option key={category.id}>{category.fields.Name}</option>
+            ))}
           </Form.Control>
         </div>
         <div className='col-md-3 mb-2 mb-md-0'>
@@ -277,7 +302,7 @@ const ChartSection = props => {
     )
   }
 
-  if (!props.data) {
+  if (!props.results) {
     return null
   }
 
@@ -293,7 +318,7 @@ const ChartSection = props => {
                   <Button variant="secondary">Bar</Button>
                 </ButtonGroup>
 
-                <PieChart data={props.data.pieChart} />
+                <PieChart data={props.results.pieChart} />
               </div>
               <div className='col-md-6'>
                 <ButtonGroup aria-label="Display Type" size="sm" className="float-right">
@@ -301,7 +326,7 @@ const ChartSection = props => {
                   <Button variant="secondary">Map</Button>
                 </ButtonGroup>
 
-                <PieChart data={props.data.moneyChart} />
+                <PieChart data={props.results.moneyChart} />
               </div>
             </div>
           </div>

@@ -16,6 +16,11 @@ Install dependencies
 
     yarn
 
+Setup configurtion by  creating a `.env` file in the project root with the following:
+
+    AIRTABLE_API_KEY=your-airtable-api-key
+    AIRTABLE_BASE_ID=your-airtable-base-id
+
 ## Running locally
 
 Start the development server:
