@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form'
 import Spinner from 'react-bootstrap/Spinner'
 import { Typeahead } from 'react-bootstrap-typeahead'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle, faQuestion, faSearch, faUserCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCircle, faQuestion, faSearch } from '@fortawesome/free-solid-svg-icons'
 import DayPickerInput from 'react-day-picker/DayPickerInput'
 import AboutModal from '../components/about-modal'
 import ArrowButton from '../components/arrow-button'
@@ -16,32 +16,11 @@ import ProjectsList from '../components/projects-list'
 import '../css/index.scss'
 import { fetchCategories, fetchGrantees, fetchProjects } from '../lib/api'
 
-const Home = () => {
+const Home = props => {
+  const { categories, grantees, projects } = props
   const [aboutModalShow, setAboutModalShow] = useState(false)
-  const [data, setData] = useState({})
   const [results, setResults] = useState()
   const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    fetchData();
-  }, [])
-
-  const fetchData = async () => {
-    try {
-      const categories = await fetchCategories()
-      const grantees =  await fetchGrantees()
-      const projects = await fetchProjects()
-
-      setData({
-        ...data,
-        categories,
-        grantees,
-        projects
-      })
-    } catch(err) {
-      alert('Unable to fetch data')
-    }
-  }
 
   const handleSearch = () => {
     setLoading(true)
@@ -177,7 +156,7 @@ const Home = () => {
             </div>
             <div className='row mb-3'>
               <div className='col'>
-                <FilterControl handleSearch={handleSearch} data={data} />
+                <FilterControl handleSearch={handleSearch} projects={projects} grantees={grantees} categories={categories} />
               </div>
             </div>
             <div className='row'>
@@ -211,7 +190,7 @@ const Home = () => {
 }
 
 const FilterControl = props => {
-  const { categories, grantees, projects } = props.data
+  const { categories, grantees, projects } = props
 
   return (
     <div className='card bg-blue p-2'>
@@ -339,6 +318,14 @@ const ChartSection = props => {
       `}</style>
     </div>
   )
+}
+
+Home.getInitialProps = async ({ req }) => {
+  const categories = await fetchCategories()
+  const grantees =  await fetchGrantees()
+  const projects = await fetchProjects()
+
+  return { categories, grantees, projects }
 }
 
 export default Home
