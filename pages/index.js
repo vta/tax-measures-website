@@ -15,6 +15,7 @@ import PieChart from '../components/pie-chart'
 import ProjectsList from '../components/projects-list'
 import '../css/index.scss'
 import { fetchCategories, fetchGrantees, fetchProjects } from '../lib/api'
+import { preprocessData } from '../lib/util'
 
 const Home = props => {
   const { categories, grantees, projects } = props
@@ -321,11 +322,17 @@ const ChartSection = props => {
 }
 
 Home.getInitialProps = async ({ req }) => {
-  const categories = await fetchCategories()
-  const grantees =  await fetchGrantees()
-  const projects = await fetchProjects()
+  const [
+    categories,
+    grantees,
+    projects
+  ] = await Promise.all([
+    fetchCategories(),
+    fetchGrantees(),
+    fetchProjects()
+  ]);
 
-  return { categories, grantees, projects }
+  return preprocessData({ categories, grantees, projects })
 }
 
 export default Home
