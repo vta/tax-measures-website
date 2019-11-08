@@ -20,6 +20,7 @@ Setup configurtion by  creating a `.env` file in the project root with the follo
 
     AIRTABLE_API_KEY=your-airtable-api-key
     AIRTABLE_BASE_ID=your-airtable-base-id
+    HOST=http://localhost:3000
 
 ## Running locally
 
