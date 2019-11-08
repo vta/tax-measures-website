@@ -184,15 +184,25 @@ const Home = props => {
 const FilterControl = props => {
   const { categories, grantees, projects } = props
 
+  const [transactionType, setTransactionType] = useState()
+
+  const validateSearch = () => {
+    if (!transactionType) {
+      return alert('You must specify a transaction type');
+    }
+
+    props.handleSearch({ transactionType })
+  }
+
   return (
     <div className='card bg-blue p-2'>
       <div className='row'>
         <div className='col-md-3 mb-2'>
-          <Form.Control as="select">
+          <Form.Control as="select" onChange={event => setTransactionType(event.target.value )}>
             <option value="">Transaction type</option>
-            <option>Payment</option>
-            <option>Allocation</option>
-            <option>Award</option>
+            <option value="payment">Payment</option>
+            <option value="allocation">Allocation</option>
+            <option value="award">Award</option>
           </Form.Control>
         </div>
         <div className='col-md-3 mb-2'>
@@ -233,7 +243,7 @@ const FilterControl = props => {
         <div className='col-md-3'>
           <Button
             className="btn-secondary"
-            onClick={props.handleSearch}
+            onClick={validateSearch}
             block
           >
             <FontAwesomeIcon icon={faSearch} className='mr-2' /> Search
