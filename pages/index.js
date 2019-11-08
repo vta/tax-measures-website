@@ -79,22 +79,13 @@ const Home = props => {
           }
         ],
         projects: [
-          {
-            title: 'BART Phase II Program',
-            startDate: '6/22',
-            endDate: '8/24',
-            status: 'pending'
-          },
-          {
-            title: 'Bike and Ped Program',
-            startDate: '4/21',
-            endDate: '7/24',
-            status: 'completed'
-          }
+          projects[0],
+          projects[3],
+          projects[5]
         ]
       })
       setLoading(false)
-    }, 2000)
+    }, 500)
   }
 
   return (

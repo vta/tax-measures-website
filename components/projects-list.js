@@ -9,31 +9,43 @@ const ProjectsList = props => {
     return null
   }
 
+  const renderProjectRow = project => {
+    const renderProjectLink = () => {
+      if (project.fields.URL) {
+        return (
+          <a href={project.fields.URL} target="_blank">{project.fields.Name}</a>
+        )
+      } else {
+        return project.fields.Name
+      }
+    }
+
+    return (
+      <tr key={project.id}>
+        <td>
+          {renderProjectLink()}
+        </td>
+        <td>{project.fields['Category Name']}</td>
+      </tr>
+    )
+  }
+
   return (
     <div className='row'>
       <div className='col'>
         <div className='card bg-blue text-white mb-3'>
           <div className='card-body'>
             <h3>Projects List</h3>
-            <p>Below is a list of the projects correlation with the filter settings above</p>
+            <p>Below is a list of the projects correlated with the filter settings above</p>
             <Table responsive size="sm" className='project-table'>
               <thead>
                 <tr>
                   <th>Project Name</th>
-                  <th>Start</th>
-                  <th>End</th>
-                  <th>Project Status</th>
+                  <th>Category</th>
                 </tr>
               </thead>
               <tbody>
-                {props.results.projects.map((project, idx) => (
-                  <tr key={idx}>
-                    <td><a href="">{project.title}</a></td>
-                    <td>{project.startDate}</td>
-                    <td>{project.endDate}</td>
-                    <td><i>{project.status}</i></td>
-                  </tr>
-                ))}
+                {props.results.projects.map(renderProjectRow)}
               </tbody>
             </Table>
             <Button className="btn-primary btn-white-border float-right">
