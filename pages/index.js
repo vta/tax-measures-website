@@ -1,29 +1,27 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Head from 'next/head'
 import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
-import Form from 'react-bootstrap/Form'
 import Spinner from 'react-bootstrap/Spinner'
-import { Typeahead } from 'react-bootstrap-typeahead'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle, faQuestion, faSearch } from '@fortawesome/free-solid-svg-icons'
-import DayPickerInput from 'react-day-picker/DayPickerInput'
+import { faCircle, faQuestion } from '@fortawesome/free-solid-svg-icons'
 import AboutModal from '../components/about-modal'
 import ArrowButton from '../components/arrow-button'
+import FilterControls from '../components/filter-controls'
 import Footer from '../components/footer'
 import PieChart from '../components/pie-chart'
 import ProjectsList from '../components/projects-list'
 import '../css/index.scss'
 import { fetchCategories, fetchGrantees, fetchProjects } from '../lib/api'
-import { preprocessData } from '../lib/util'
+import { getInitialFiltersFromQuery, preprocessData } from '../lib/util'
 
 const Home = props => {
-  const { categories, grantees, projects } = props
+  const { categories, grantees, projects, initialFilters } = props
   const [aboutModalShow, setAboutModalShow] = useState(false)
   const [results, setResults] = useState()
   const [loading, setLoading] = useState(false)
 
-  const handleSearch = () => {
+  const handleSearch = filters => {
     setLoading(true)
     setResults()
     
@@ -104,7 +102,7 @@ const Home = props => {
             <div>
               <ArrowButton>How many funds were received in 2018?</ArrowButton>
               <ArrowButton>How many funds were spent in 2018?</ArrowButton>
-              <ArrowButton>How many dollars have been spent on bikes?</ArrowButton>
+              <ArrowButton href="/?transactionType=payment&category=Bike%2FPed">How many dollars have been spent on bikes?</ArrowButton>
               <ArrowButton>How many funds are currently unallocated?</ArrowButton>
               <ArrowButton>Projected vs. Actuals</ArrowButton>
             </div>
@@ -148,7 +146,13 @@ const Home = props => {
             </div>
             <div className='row mb-3'>
               <div className='col'>
-                <FilterControl handleSearch={handleSearch} projects={projects} grantees={grantees} categories={categories} />
+                <FilterControls
+                  handleSearch={handleSearch}
+                  projects={projects}
+                  grantees={grantees}
+                  categories={categories}
+                  initialFilters={initialFilters}
+                />
               </div>
             </div>
             <div className='row'>
@@ -177,84 +181,6 @@ const Home = props => {
 
       <style jsx>{`
       `}</style>
-    </div>
-  )
-}
-
-const FilterControl = props => {
-  const { categories, grantees, projects } = props
-
-  const [transactionType, setTransactionType] = useState()
-
-  const validateSearch = () => {
-    if (!transactionType) {
-      return alert('You must specify a transaction type');
-    }
-
-    props.handleSearch({ transactionType })
-  }
-
-  return (
-    <div className='card bg-blue p-2'>
-      <div className='row'>
-        <div className='col-md-3 mb-2'>
-          <Form.Control as="select" onChange={event => setTransactionType(event.target.value )}>
-            <option value="">Transaction type</option>
-            <option value="payment">Payment</option>
-            <option value="allocation">Allocation</option>
-            <option value="award">Award</option>
-          </Form.Control>
-        </div>
-        <div className='col-md-3 mb-2'>
-          <Form.Control as="select">
-            <option value="">Grantee</option>
-            {grantees && grantees.map(grantee => (
-              <option key={grantee.id}>{grantee.fields.Name}</option>
-            ))}
-          </Form.Control>
-        </div>
-        <div className='col-md-6 mb-2'>
-          <Typeahead
-            options={projects ? projects.map(project => project.fields.Name) : []}
-            placeholder="Project Name"
-            id="project-name"
-          />
-        </div>
-      </div>
-      <div className='row'>
-        <div className='col-md-3 mb-2 mb-md-0'>
-          <Form.Control as="select">
-            <option value="">Category</option>
-            {categories && categories.map(category => (
-              <option key={category.id}>{category.fields.Name}</option>
-            ))}
-          </Form.Control>
-        </div>
-        <div className='col-md-3 mb-2 mb-md-0'>
-          <DayPickerInput
-            inputProps={{className: 'form-control', placeholder: 'Start Date'}}
-          />
-        </div>
-        <div className='col-md-3 mb-2 mb-md-0'>
-          <DayPickerInput
-            inputProps={{className: 'form-control', placeholder: 'End Date'}}
-          />
-        </div>
-        <div className='col-md-3'>
-          <Button
-            className="btn-secondary"
-            onClick={validateSearch}
-            block
-          >
-            <FontAwesomeIcon icon={faSearch} className='mr-2' /> Search
-          </Button>
-        </div>
-      </div>
-      <style jsx global>{`
-          .DayPickerInput {
-            width: 100%;
-          }
-        `}</style>
     </div>
   )
 }
@@ -322,7 +248,7 @@ const ChartSection = props => {
   )
 }
 
-Home.getInitialProps = async ({ req }) => {
+Home.getInitialProps = async ({ query }) => {
   const [
     categories,
     grantees,
@@ -333,7 +259,9 @@ Home.getInitialProps = async ({ req }) => {
     fetchProjects()
   ]);
 
-  return preprocessData({ categories, grantees, projects })
+  const initialFilters = getInitialFiltersFromQuery(query)
+
+  return preprocessData({ categories, grantees, projects, initialFilters })
 }
 
 export default Home

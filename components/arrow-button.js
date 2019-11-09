@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
 const ArrowButton = props => (
-  <div className='card bg-blue text-white mb-2'>
+  <a className='card bg-blue text-white mb-2' href={props.href}>
     <div className='card-body'>
       <div className='arrow-text'>{props.children}</div>
       <span className="arrow-circle fa-layers fa-fw">
@@ -13,10 +13,6 @@ const ArrowButton = props => (
     </div>
 
     <style jsx>{`
-      .card {
-        cursor: pointer;
-      }
-
       .card-body {
         display: flex;
         align-items: center;
@@ -36,7 +32,7 @@ const ArrowButton = props => (
         font-size: 30px;
       }
     `}</style>
-  </div>
+  </a>
 )
 
 export default ArrowButton
