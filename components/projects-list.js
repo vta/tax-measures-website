@@ -3,20 +3,41 @@ import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileCsv } from '@fortawesome/free-solid-svg-icons'
+import { sortBy } from 'lodash'
 
 const ProjectsList = props => {
-  if (!props.results || !props.results.projects) {
+  const { results, projects } = props
+
+  if (!results || !results.length) {
     return null
   }
+
+  const projectIds = [...results.reduce((memo, item) => {
+    if (item.fields.Project) {
+      memo.add(item.fields.Project[0])
+    }
+    if (item.fields.Projects) {
+      for (const projectId of item.fields.Projects) {
+        memo.add(projectId)
+      }
+    }
+    return memo;
+  }, new Set())]
+
+  const filteredProjects = sortBy(projectIds.map(projectId => {
+    return projects.find(p => p.id === projectId)
+  }), 'fields.Name')
 
   const renderProjectRow = project => {
     const renderProjectLink = () => {
       if (project.fields.URL) {
         return (
-          <a href={project.fields.URL} target="_blank">{project.fields.Name}</a>
+          <a href={project.fields.URL} target="_blank" key={project.id}>{project.fields.Name}</a>
         )
       } else {
-        return project.fields.Name
+        return (
+          <span key={project.id}>{project.fields.Name}</span>
+        )
       }
     }
 
@@ -45,7 +66,7 @@ const ProjectsList = props => {
                 </tr>
               </thead>
               <tbody>
-                {props.results.projects.map(renderProjectRow)}
+                {filteredProjects.map(renderProjectRow)}
               </tbody>
             </Table>
             <Button className="btn-primary btn-white-border float-right">

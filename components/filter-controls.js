@@ -55,7 +55,6 @@ const FilterControls = props => {
             <option value="">Transaction type</option>
             <option value="payment">Payment</option>
             <option value="allocation">Allocation</option>
-            <option value="award">Award</option>
           </Form.Control>
         </div>
         <div className='col-md-3 mb-2'>

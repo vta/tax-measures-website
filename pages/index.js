@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
+import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Spinner from 'react-bootstrap/Spinner'
@@ -12,76 +13,33 @@ import Footer from '../components/footer'
 import PieChart from '../components/pie-chart'
 import ProjectsList from '../components/projects-list'
 import '../css/index.scss'
-import { fetchCategories, fetchGrantees, fetchProjects } from '../lib/api'
-import { getInitialFiltersFromQuery, preprocessData } from '../lib/util'
+import {
+  fetchAllocations,
+  fetchCategories,
+  fetchGrantees,
+  fetchPayments,
+  fetchProjects
+} from '../lib/api'
+import { applyFilters, getInitialFiltersFromQuery, preprocessData } from '../lib/util'
 
 const Home = props => {
-  const { categories, grantees, projects, initialFilters } = props
+  const {
+    allocations,
+    categories,
+    grantees,
+    payments,
+    projects,
+    initialFilters
+  } = props
   const [aboutModalShow, setAboutModalShow] = useState(false)
   const [results, setResults] = useState()
   const [loading, setLoading] = useState(false)
 
   const handleSearch = filters => {
     setLoading(true)
-    setResults()
+    setResults(applyFilters(filters, allocations, payments, categories, grantees))
     
     setTimeout(() => {
-      setResults({
-        pieChart: [
-          {
-            key: 'unallocated',
-            value: 9,
-            title: 'Unallocated'
-          },
-          {
-            key: 'bike',
-            value: 6,
-            title: 'Bike'
-          },
-          {
-            key: 'bus',
-            value: 3,
-            title: 'Bus'
-          },
-          {
-            key: 'road',
-            value: 16,
-            title: 'Road'
-          }
-        ],
-        moneyChart: [
-          {
-            key: 'corporate-tax',
-            value: 9,
-            title: 'Corporate Tax'
-          },
-          {
-            key: 'interest',
-            value: 6,
-            title: 'Interest'
-          },
-          {
-            key: 'road',
-            value: 3,
-            title: 'Road'
-          },
-          {
-            key: 'tax',
-            value: 16,
-            title: 'Tax'
-          },
-          {
-            key: 'donations',
-            value: 16,
-            title: 'Donations'
-          }
-        ],
-        projects: [
-          projects[0],
-          projects[3],
-          projects[5]
-        ]
-      })
       setLoading(false)
     }, 500)
   }
@@ -155,6 +113,7 @@ const Home = props => {
                 />
               </div>
             </div>
+            <FilterAlert results={results} />
             <div className='row'>
               <div className='col'>
                 <div className='card mb-3'>
@@ -169,7 +128,7 @@ const Home = props => {
           </div>
         </div>
 
-        <ProjectsList results={results} />
+        <ProjectsList results={results} projects={projects} />
 
         <Footer />
       </div>
@@ -182,6 +141,19 @@ const Home = props => {
       <style jsx>{`
       `}</style>
     </div>
+  )
+}
+
+const FilterAlert = props => {
+  if (!props.results || props.results.length) {
+    return null
+  }
+
+  return (
+    <Alert variant="warning" className="text-center">
+      <Alert.Heading>No matching results</Alert.Heading>
+      <div>Please adjust the search filters and try again</div>
+    </Alert>
   )
 }
 
@@ -209,7 +181,7 @@ const ChartSection = props => {
     )
   }
 
-  if (!props.results) {
+  if (!props.results || !props.results.length) {
     return null
   }
 
@@ -225,7 +197,7 @@ const ChartSection = props => {
                   <Button variant="secondary">Bar</Button>
                 </ButtonGroup>
 
-                <PieChart data={props.results.pieChart} />
+                <PieChart results={props.results} />
               </div>
               <div className='col-md-6'>
                 <ButtonGroup aria-label="Display Type" size="sm" className="float-right">
@@ -233,7 +205,7 @@ const ChartSection = props => {
                   <Button variant="secondary">Map</Button>
                 </ButtonGroup>
 
-                <PieChart data={props.results.moneyChart} />
+                <PieChart results={props.results} />
               </div>
             </div>
           </div>
@@ -250,18 +222,29 @@ const ChartSection = props => {
 
 Home.getInitialProps = async ({ query }) => {
   const [
+    allocations,
     categories,
     grantees,
+    payments,
     projects
   ] = await Promise.all([
+    fetchAllocations(),
     fetchCategories(),
     fetchGrantees(),
+    fetchPayments(),
     fetchProjects()
   ]);
 
   const initialFilters = getInitialFiltersFromQuery(query)
 
-  return preprocessData({ categories, grantees, projects, initialFilters })
+  return preprocessData({
+    allocations,
+    categories,
+    grantees,
+    payments,
+    projects,
+    initialFilters
+  })
 }
 
 export default Home

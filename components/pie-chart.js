@@ -1,16 +1,31 @@
 import React, { useEffect } from 'react'
 import * as d3 from 'd3'
+import { groupBy, sumBy } from 'lodash'
 
 const PieChart = props => {
   const chartContainer = React.createRef();
 
   useEffect(() => {
     drawChart()
-  }, [props.data])
+  }, [props.results])
 
   let svg
 
+  const prepData = () => {
+    const groups = groupBy(props.results, item => item.fields.Category[0])
+
+    return Object.entries(groups).map(([categoryId, group]) => {
+      return {
+        key: categoryId,
+        value: sumBy(group, i => i.fields.Amount),
+        title: group[0].fields['Category Name']
+      }
+    })
+  }
+
   const drawChart = () => {
+    const data = prepData()
+
     const margin = 100
     const width = d3.select(chartContainer.current).node().getBoundingClientRect().width
     const height = width - 230
@@ -28,14 +43,14 @@ const PieChart = props => {
 
     // set the color scale
     var color = d3.scaleOrdinal()
-      .domain(props.data.map(d => d.key))
+      .domain(data.map(d => d.key))
       .range(d3.schemeDark2);
 
     // Compute the position of each group on the pie:
     var pie = d3.pie()
       .sort(null) // Do not sort group by size
       .value(d => d.value)
-    var data_ready = pie(props.data)
+    var data_ready = pie(data)
 
     // The arc generator
     var arc = d3.arc()
