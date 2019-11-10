@@ -4,6 +4,7 @@ import Table from 'react-bootstrap/Table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileCsv } from '@fortawesome/free-solid-svg-icons'
 import { sortBy } from 'lodash'
+import { CSVLink } from "react-csv";
 import { formatCurrencyMillions } from '../lib/util'
 
 const ProjectsList = props => {
@@ -61,6 +62,19 @@ const ProjectsList = props => {
     )
   }
 
+  const csvData = [
+    ["Project", "Category", "URL", "Total Allocations", "Total Payments"],
+    ...filteredProjects.map(project => {
+      return [
+        project.fields.Name,
+        project.fields['Category Name'],
+        project.fields.URL,
+        project.fields.totalAllocationAmount,
+        project.fields.totalPaymentAmount
+      ]
+    })
+  ];
+
   return (
     <div className='row'>
       <div className='col'>
@@ -81,9 +95,13 @@ const ProjectsList = props => {
                 {filteredProjects.map(renderProjectRow)}
               </tbody>
             </Table>
-            <Button className="btn-primary btn-white-border float-right">
+            <CSVLink
+              data={csvData}
+              filename={"vta-tax-measures.csv"}
+              className="btn btn-primary btn-white-border float-right"
+            >
               <FontAwesomeIcon icon={faFileCsv} className='mr-2' /> Download CSV
-            </Button>
+            </CSVLink>
           </div>
         </div>
       </div>
