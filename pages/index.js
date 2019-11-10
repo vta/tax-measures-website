@@ -4,12 +4,10 @@ import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Spinner from 'react-bootstrap/Spinner'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle, faQuestion } from '@fortawesome/free-solid-svg-icons'
-import AboutModal from '../components/about-modal'
 import ArrowButton from '../components/arrow-button'
 import FilterControls from '../components/filter-controls'
 import Footer from '../components/footer'
+import HeaderStats from '../components/header-stats'
 import PieChart from '../components/pie-chart'
 import ProjectsList from '../components/projects-list'
 import '../css/index.scss'
@@ -18,7 +16,8 @@ import {
   fetchCategories,
   fetchGrantees,
   fetchPayments,
-  fetchProjects
+  fetchProjects,
+  fetchRevenue
 } from '../lib/api'
 import { applyFilters, getInitialFiltersFromQuery, preprocessData } from '../lib/util'
 
@@ -29,9 +28,9 @@ const Home = props => {
     grantees,
     payments,
     projects,
+    revenue,
     initialFilters
   } = props
-  const [aboutModalShow, setAboutModalShow] = useState(false)
   const [results, setResults] = useState()
   const [loading, setLoading] = useState(false)
 
@@ -67,41 +66,10 @@ const Home = props => {
           </div>
 
           <div className='col'>
-            <div className='row header-bar mb-3'>
-              <div className='col-md'>
-                <div className='header-stat'>
-                  <div className='header-stat-value'>$117</div>
-                  <div className='header-stat-unit'>million</div>
-                  <div className='header-stat-label'>collected since 2018</div>
-                </div>
-              </div>
-              <div className='col-md'>
-                <div className='header-stat'>
-                  <div className='header-stat-value'>$155k</div>
-                  <div className='header-stat-unit'></div>
-                  <div className='header-stat-label'>interest earned</div>
-                </div>
-              </div>
-              <div className='col-md'>
-                <div className='header-stat'>
-                  <div className='header-stat-value'>$89</div>
-                  <div className='header-stat-unit'>million</div>
-                  <div className='header-stat-label'>allocated in 2017</div>
-                </div>
-              </div>
-              <div className='col-md-2'>
-                <div
-                  className='question-button float-right'
-                  onClick={() => setAboutModalShow(true)}
-                  aria-label="About Measure B"
-                >
-                  <span className="fa-layers fa-fw">
-                    <FontAwesomeIcon icon={faCircle} color="#51BAEC" />
-                    <FontAwesomeIcon icon={faQuestion} color="white" transform="shrink-6" />
-                  </span>
-                </div>
-              </div>
-            </div>
+            <HeaderStats
+              allocations={allocations}
+              revenue={revenue}
+            />
             <div className='row mb-3'>
               <div className='col'>
                 <FilterControls
@@ -132,11 +100,6 @@ const Home = props => {
 
         <Footer />
       </div>
-
-      <AboutModal
-        show={aboutModalShow}
-        onHide={() => setAboutModalShow(false)}
-      />
 
       <style jsx>{`
       `}</style>
@@ -226,13 +189,15 @@ Home.getInitialProps = async ({ query }) => {
     categories,
     grantees,
     payments,
-    projects
+    projects,
+    revenue
   ] = await Promise.all([
     fetchAllocations(),
     fetchCategories(),
     fetchGrantees(),
     fetchPayments(),
-    fetchProjects()
+    fetchProjects(),
+    fetchRevenue()
   ]);
 
   const initialFilters = getInitialFiltersFromQuery(query)
@@ -243,6 +208,7 @@ Home.getInitialProps = async ({ query }) => {
     grantees,
     payments,
     projects,
+    revenue,
     initialFilters
   })
 }
