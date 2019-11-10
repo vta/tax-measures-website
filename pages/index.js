@@ -96,7 +96,10 @@ const Home = props => {
           </div>
         </div>
 
-        <ProjectsList results={results} projects={projects} />
+        <ProjectsList
+          results={results}
+          projects={projects}
+        />
 
         <Footer />
       </div>

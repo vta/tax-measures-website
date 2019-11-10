@@ -4,9 +4,13 @@ import Table from 'react-bootstrap/Table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileCsv } from '@fortawesome/free-solid-svg-icons'
 import { sortBy } from 'lodash'
+import { formatCurrencyMillions } from '../lib/util'
 
 const ProjectsList = props => {
-  const { results, projects } = props
+  const {
+    results,
+    projects
+  } = props
 
   if (!results || !results.length) {
     return null
@@ -47,6 +51,12 @@ const ProjectsList = props => {
           {renderProjectLink()}
         </td>
         <td>{project.fields['Category Name']}</td>
+        <td className="text-right">
+          {`${formatCurrencyMillions(project.fields.totalAllocationAmount)}m`}
+        </td>
+        <td className="text-right">
+          {`${formatCurrencyMillions(project.fields.totalPaymentAmount)}m`}
+        </td>
       </tr>
     )
   }
@@ -63,6 +73,8 @@ const ProjectsList = props => {
                 <tr>
                   <th>Project Name</th>
                   <th>Category</th>
+                  <th>Allocations</th>
+                  <th>Payments</th>
                 </tr>
               </thead>
               <tbody>
