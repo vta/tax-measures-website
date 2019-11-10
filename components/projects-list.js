@@ -3,35 +3,15 @@ import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileCsv } from '@fortawesome/free-solid-svg-icons'
-import { sortBy } from 'lodash'
 import { CSVLink } from "react-csv";
 import { formatCurrencyMillions } from '../lib/util'
 
 const ProjectsList = props => {
-  const {
-    results,
-    projects
-  } = props
+  const { results } = props
 
-  if (!results || !results.length) {
+  if (!results || !results.projects || !results.projects.length) {
     return null
   }
-
-  const projectIds = [...results.reduce((memo, item) => {
-    if (item.fields.Project) {
-      memo.add(item.fields.Project[0])
-    }
-    if (item.fields.Projects) {
-      for (const projectId of item.fields.Projects) {
-        memo.add(projectId)
-      }
-    }
-    return memo;
-  }, new Set())]
-
-  const filteredProjects = sortBy(projectIds.map(projectId => {
-    return projects.find(p => p.id === projectId)
-  }), 'fields.Name')
 
   const renderProjectRow = project => {
     const renderProjectLink = () => {
@@ -64,7 +44,7 @@ const ProjectsList = props => {
 
   const csvData = [
     ["Project", "Category", "URL", "Total Allocations", "Total Payments"],
-    ...filteredProjects.map(project => {
+    ...results.projects.map(project => {
       return [
         project.fields.Name,
         project.fields['Category Name'],
@@ -92,7 +72,7 @@ const ProjectsList = props => {
                 </tr>
               </thead>
               <tbody>
-                {filteredProjects.map(renderProjectRow)}
+                {results.projects.map(renderProjectRow)}
               </tbody>
             </Table>
             <CSVLink

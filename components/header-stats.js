@@ -18,7 +18,7 @@ const HeaderStats = props => {
         <div className='header-stat'>
           <div className='header-stat-value'>{formatCurrencyMillions(totalRevenue)}</div>
           <div className='header-stat-unit'>million</div>
-          <div className='header-stat-label'>collected since 2018</div>
+          <div className='header-stat-label'>collected since 2017</div>
         </div>
       </div>
       <div className='col-md'>

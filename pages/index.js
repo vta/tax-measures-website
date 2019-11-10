@@ -1,15 +1,12 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
 import Alert from 'react-bootstrap/Alert'
-import Button from 'react-bootstrap/Button'
-import ButtonGroup from 'react-bootstrap/ButtonGroup'
-import Spinner from 'react-bootstrap/Spinner'
 import ArrowButton from '../components/arrow-button'
 import FilterControls from '../components/filter-controls'
 import Footer from '../components/footer'
 import HeaderStats from '../components/header-stats'
-import PieChart from '../components/pie-chart'
 import ProjectsList from '../components/projects-list'
+import Results from '../components/results'
 import '../css/index.scss'
 import {
   fetchAllocations,
@@ -36,7 +33,7 @@ const Home = props => {
 
   const handleSearch = filters => {
     setLoading(true)
-    setResults(applyFilters(filters, allocations, payments, categories, grantees))
+    setResults(applyFilters(filters, allocations, payments, projects, categories, grantees))
     
     setTimeout(() => {
       setLoading(false)
@@ -92,14 +89,14 @@ const Home = props => {
                 </div>
               </div>
             </div>
-            <ChartSection loading={loading} results={results} />
+            <Results
+              loading={loading}
+              results={results}
+            />
           </div>
         </div>
 
-        <ProjectsList
-          results={results}
-          projects={projects}
-        />
+        <ProjectsList results={results} />
 
         <Footer />
       </div>
@@ -111,7 +108,7 @@ const Home = props => {
 }
 
 const FilterAlert = props => {
-  if (!props.results || props.results.length) {
+  if (!props.results || props.results.items.length) {
     return null
   }
 
@@ -120,69 +117,6 @@ const FilterAlert = props => {
       <Alert.Heading>No matching results</Alert.Heading>
       <div>Please adjust the search filters and try again</div>
     </Alert>
-  )
-}
-
-const ChartSection = props => {
-  if (props.loading) {
-    return (
-      <div className='row'>
-        <div className='col'>
-          <div className='card'>
-            <div className='card-body card-loading text-center'>
-              <Spinner animation="border" role="status" size="xl" variant="primary" className='mb-4'>
-                <span className="sr-only">Loading...</span>
-              </Spinner>
-              <h1>Loading...</h1>
-            </div>
-          </div>
-        </div>
-        <style jsx>{`
-          .card-loading {
-            min-height: 400px;
-            padding-top: 80px;
-          }
-        `}</style>
-      </div>
-    )
-  }
-
-  if (!props.results || !props.results.length) {
-    return null
-  }
-
-  return (
-    <div className='row'>
-      <div className='col'>
-        <div className='card'>
-          <div className='card-body card-graph'>
-            <div className='row'>
-              <div className='col-md-6'>
-                <ButtonGroup aria-label="Chart Type" size="sm">
-                  <Button variant="primary">Pie</Button>
-                  <Button variant="secondary">Bar</Button>
-                </ButtonGroup>
-
-                <PieChart results={props.results} />
-              </div>
-              <div className='col-md-6'>
-                <ButtonGroup aria-label="Display Type" size="sm" className="float-right">
-                  <Button variant="primary">Money</Button>
-                  <Button variant="secondary">Map</Button>
-                </ButtonGroup>
-
-                <PieChart results={props.results} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <style jsx>{`
-        .card-graph {
-          min-height: 400px;
-        }
-      `}</style>
-    </div>
   )
 }
 

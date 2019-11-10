@@ -4,7 +4,6 @@ import { groupBy, sumBy } from 'lodash'
 
 const PieChart = props => {
   const chartContainer = React.createRef();
-
   useEffect(() => {
     drawChart()
   }, [props.results])
@@ -12,7 +11,7 @@ const PieChart = props => {
   let svg
 
   const prepData = () => {
-    const groups = groupBy(props.results, item => item.fields.Category[0])
+    const groups = groupBy(props.results.items, item => item.fields.Category[0])
 
     return Object.entries(groups).map(([categoryId, group]) => {
       return {
@@ -37,6 +36,7 @@ const PieChart = props => {
       .append("svg")
         .attr("width", width)
         .attr("height", height)
+        .attr("class", "pie-chart")
       .append("g")
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
     }
@@ -114,7 +114,7 @@ const PieChart = props => {
   return (
     <div ref={chartContainer}>
       <style jsx global>{`
-        svg {
+        svg.pie-chart {
           width: 100%;
           height: 100%;
         }
