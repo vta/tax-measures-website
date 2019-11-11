@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import ReactMapGL, {Marker, NavigationControl} from 'react-map-gl';
+import ReactMapGL, { Marker, NavigationControl, Popup } from 'react-map-gl';
 import getConfig from 'next/config'
 const { publicRuntimeConfig } = getConfig()
 import Pin from './map-pin'
@@ -13,6 +13,7 @@ const ProjectMap = props => {
     bearing: 0,
     pitch: 0
   })
+  const [popupInfo, setPopupInfo] = useState(null)
 
   const projectsWithGeo = results.projects.filter(project => {
     return !!project.fields.Latitude && !!project.fields.Longitude
@@ -25,8 +26,13 @@ const ProjectMap = props => {
         latitude={project.fields.Latitude}
         offsetTop={-20}
         offsetLeft={-10}
+        key={project.id}
       >
-        <Pin size={20} />
+        <Pin
+          size={20}
+          color="#2D65B1"
+          onClick={() => setPopupInfo(project)}
+        />
       </Marker>
     )
   }
@@ -41,6 +47,17 @@ const ProjectMap = props => {
         onViewportChange={viewport => setViewport(viewport)}
       >
         {projectsWithGeo.map(renderMarker)}
+        {popupInfo && <Popup
+          offsetTop={-20}
+          latitude={popupInfo.fields.Latitude}
+          longitude={popupInfo.fields.Longitude}
+          closeButton={true}
+          closeOnClick={false}
+          onClose={() => setPopupInfo(null)}
+          anchor="bottom"
+        >
+          <div className="popup-title">{popupInfo.fields.Name}</div>
+        </Popup>}
         <div className="nav" className="map-nav">
           <NavigationControl onViewportChange={viewport => setViewport(viewport)} />
         </div>
@@ -57,6 +74,10 @@ const ProjectMap = props => {
           top: 0;
           left: 0;
           padding: 10px;
+        }
+
+        .popup-title {
+          margin-right: 14px;
         }
       `}</style>
     </div>
