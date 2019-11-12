@@ -3,12 +3,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
 const ArrowButton = props => (
-  <a className='card bg-blue text-white mb-2' href={props.href}>
+  <a className='card bg-blue text-white mb-2' onClick={props.onClick}>
     <div className='card-body'>
       <div className='arrow-text'>{props.children}</div>
       <span className="arrow-circle fa-layers fa-fw">
         <FontAwesomeIcon icon={faCircle} color="#51BAEC" />
-        <FontAwesomeIcon icon={faChevronRight} color="white" transform="shrink-6 right-1" />
+        <FontAwesomeIcon
+          icon={faChevronRight}
+          color="white"
+          transform="shrink-6 right-1"
+        />
       </span>
     </div>
 
@@ -17,6 +21,7 @@ const ArrowButton = props => (
         display: flex;
         align-items: center;
         justify-content: space-between;
+        cursor: pointer;
       }
     
       .arrow-text {

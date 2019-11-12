@@ -35,7 +35,7 @@ const AboutModal = props => {
         <Button onClick={props.onHide} className='btn-secondary'>Close</Button>
       </Modal.Footer>
     </Modal>
-  );
+  )
 }
 
 export default AboutModal

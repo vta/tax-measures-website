@@ -6,40 +6,40 @@ import DayPickerInput from 'react-day-picker/DayPickerInput'
 import {
   formatDate,
   parseDate,
-} from 'react-day-picker/moment';
+} from 'react-day-picker/moment'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { isEmpty } from 'lodash'
 
 const FilterControls = props => {
-  const { categories, grantees, projects, initialFilters } = props
+  const { categories, grantees, projects, incomingFilters } = props
 
-  const [transactionType, setTransactionType] = useState(initialFilters.transactionType)
-  const [grantee, setGrantee] = useState(initialFilters.grantee)
-  const [project, setProject] = useState(initialFilters.project)
-  const [category, setCategory] = useState(initialFilters.category)
-  const [startDate, setStartDate] = useState(initialFilters.startDate)
-  const [endDate, setEndDate] = useState(initialFilters.endDate)
+  const [transactionType, setTransactionType] = useState(incomingFilters.transactionType)
+  const [grantee, setGrantee] = useState(incomingFilters.grantee)
+  const [project, setProject] = useState(incomingFilters.project)
+  const [category, setCategory] = useState(incomingFilters.category)
+  const [startDate, setStartDate] = useState(incomingFilters.startDate)
+  const [endDate, setEndDate] = useState(incomingFilters.endDate)
 
   useEffect(() => {
-    if (!isEmpty(initialFilters)) {
-      validateFilters(initialFilters);
-    }
-  }, [])
+    if (!isEmpty(incomingFilters)) {
+      setTransactionType(incomingFilters.transactionType)
+      setGrantee(incomingFilters.grantee || '')
+      setProject(incomingFilters.project)
+      setCategory(incomingFilters.category || '')
+      setStartDate(incomingFilters.startDate)
+      setEndDate(incomingFilters.endDate)
 
-  const validateFilters = () => {
-    if (!transactionType) {
-      return alert('You must specify a transaction type');
+      validateFilters(incomingFilters)
+    }
+  }, [props.incomingFilters])
+
+  const validateFilters = filters => {
+    if (!filters.transactionType) {
+      return alert('You must specify a transaction type')
     }
 
-    props.handleSearch({
-      transactionType,
-      grantee,
-      project,
-      category,
-      startDate,
-      endDate
-    })
+    props.handleSearch(filters)
   }
 
   return (
@@ -112,7 +112,14 @@ const FilterControls = props => {
         <div className='col-md-3'>
           <Button
             className="btn-secondary"
-            onClick={validateFilters}
+            onClick={() => validateFilters({
+              transactionType,
+              grantee,
+              project,
+              category,
+              startDate,
+              endDate
+            })}
             block
           >
             <FontAwesomeIcon icon={faSearch} className='mr-2' /> Search

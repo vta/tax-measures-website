@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import ReactMapGL, { Marker, NavigationControl, Popup } from 'react-map-gl';
+import ReactMapGL, { Marker, NavigationControl, Popup } from 'react-map-gl'
 import getConfig from 'next/config'
 const { publicRuntimeConfig } = getConfig()
 import Pin from './map-pin'

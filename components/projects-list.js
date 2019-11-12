@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileCsv } from '@fortawesome/free-solid-svg-icons'
-import { CSVLink } from "react-csv";
+import { CSVLink } from "react-csv"
 import { formatCurrencyMillions } from '../lib/util'
 
 const ProjectsList = props => {
@@ -53,7 +53,7 @@ const ProjectsList = props => {
         project.fields.totalPaymentAmount
       ]
     })
-  ];
+  ]
 
   return (
     <div className='row'>

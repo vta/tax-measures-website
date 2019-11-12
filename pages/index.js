@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Alert from 'react-bootstrap/Alert'
 import ArrowButton from '../components/arrow-button'
@@ -30,6 +30,7 @@ const Home = props => {
   } = props
   const [results, setResults] = useState()
   const [loading, setLoading] = useState(false)
+  const [incomingFilters, setIncomingFilters] = useState(initialFilters)
 
   const handleSearch = filters => {
     setLoading(true)
@@ -54,11 +55,40 @@ const Home = props => {
             <h3 className='mt-3'>Sample Queries</h3>
             <p><i>Click on one of the questions below to change the filters to the settings which answer that question.</i></p>
             <div>
-              <ArrowButton>How many funds were received in 2018?</ArrowButton>
-              <ArrowButton>How many funds were spent in 2018?</ArrowButton>
-              <ArrowButton href="/?transactionType=payment&category=Bike%2FPed">How many dollars have been spent on bikes?</ArrowButton>
-              <ArrowButton>How many funds are currently unallocated?</ArrowButton>
-              <ArrowButton>Projected vs. Actuals</ArrowButton>
+              <ArrowButton 
+                onClick={() => setIncomingFilters({
+                  transactionType: 'allocation',
+                  startDate: '2017-1-1',
+                  endDate: '2017-12-31'
+                })}
+              >
+                How many funds were allocated in 2017?
+              </ArrowButton>
+              <ArrowButton 
+                onClick={() => setIncomingFilters({
+                  transactionType: 'payment',
+                  startDate: '2019-1-1',
+                  endDate: '2019-12-31'
+                })}
+              >
+                How many funds were spent in 2019?
+              </ArrowButton>
+              <ArrowButton 
+                onClick={() => setIncomingFilters({
+                  transactionType: 'payment',
+                  category: 'Bike/Ped'
+                })}
+              >
+                How many dollars have been spent on bikes?
+              </ArrowButton>
+              <ArrowButton 
+                onClick={() => setIncomingFilters({
+                  transactionType: 'allocation',
+                  grantee: 'Palo Alto'
+                })}
+              >
+                How much has been allocated to Palo Alto?
+              </ArrowButton>
             </div>
           </div>
 
@@ -74,7 +104,7 @@ const Home = props => {
                   projects={projects}
                   grantees={grantees}
                   categories={categories}
-                  initialFilters={initialFilters}
+                  incomingFilters={incomingFilters}
                 />
               </div>
             </div>
@@ -135,7 +165,7 @@ Home.getInitialProps = async ({ query }) => {
     fetchPayments(),
     fetchProjects(),
     fetchRevenue()
-  ]);
+  ])
 
   const initialFilters = getInitialFiltersFromQuery(query)
 
