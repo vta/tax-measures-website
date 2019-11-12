@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import querystring from 'querystring'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { Typeahead } from 'react-bootstrap-typeahead'
 import DayPickerInput from 'react-day-picker/DayPickerInput'
+import {
+  formatDate,
+  parseDate,
+} from 'react-day-picker/moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { isEmpty } from 'lodash'
@@ -29,18 +32,14 @@ const FilterControls = props => {
       return alert('You must specify a transaction type');
     }
 
-    const filters = {
+    props.handleSearch({
       transactionType,
       grantee,
       project,
       category,
       startDate,
       endDate
-    }
-
-    window.history.replaceState({}, "", `?${querystring.stringify(filters)}`)
-
-    props.handleSearch(filters)
+    })
   }
 
   return (
@@ -94,12 +93,20 @@ const FilterControls = props => {
         </div>
         <div className='col-md-3 mb-2 mb-md-0'>
           <DayPickerInput
+            formatDate={formatDate}
+            parseDate={parseDate}
             inputProps={{className: 'form-control', placeholder: 'Start Date'}}
+            onDayChange={selectedDay => setStartDate(selectedDay)}
+            value={startDate && formatDate(startDate)}
           />
         </div>
         <div className='col-md-3 mb-2 mb-md-0'>
           <DayPickerInput
+            formatDate={formatDate}
+            parseDate={parseDate}
             inputProps={{className: 'form-control', placeholder: 'End Date'}}
+            onDayChange={selectedDay => setEndDate(selectedDay)}
+            value={endDate && formatDate(endDate)}
           />
         </div>
         <div className='col-md-3'>
