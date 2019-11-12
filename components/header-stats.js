@@ -9,8 +9,9 @@ const HeaderStats = props => {
   const [aboutModalShow, setAboutModalShow] = useState(false)
   const { allocations, revenue } = props
 
-  const totalAllocations = sumBy(allocations, 'fields.Amount')
   const totalRevenue = sumBy(revenue, 'fields.Amount')
+  const totalInterest = sumBy(revenue, 'fields.Interest')
+  const totalAllocations = sumBy(allocations, 'fields.Amount')
 
   return (
     <div className='row header-bar mb-3'>
@@ -23,8 +24,8 @@ const HeaderStats = props => {
       </div>
       <div className='col-md'>
         <div className='header-stat'>
-          <div className='header-stat-value'>$0k</div>
-          <div className='header-stat-unit'></div>
+          <div className='header-stat-value'>{formatCurrencyMillions(totalInterest)}</div>
+          <div className='header-stat-unit'>million</div>
           <div className='header-stat-label'>interest earned</div>
         </div>
       </div>
