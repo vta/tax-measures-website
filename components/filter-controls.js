@@ -62,6 +62,8 @@ const FilterControls = props => {
     props.handleSearch(filters)
   }
 
+  const parentCategories = categories.filter(c => !c.fields['Parent Category'])
+
   return (
     <div className='card bg-blue p-2 mb-3'>
       <div className='row'>
@@ -107,7 +109,7 @@ const FilterControls = props => {
             value={category}
           >
             <option value="">Category</option>
-            {categories && categories.map(category => (
+            {parentCategories && parentCategories.map(category => (
               <option key={category.id}>{category.fields.Name}</option>
             ))}
           </Form.Control>
