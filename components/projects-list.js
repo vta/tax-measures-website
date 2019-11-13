@@ -4,7 +4,7 @@ import Table from 'react-bootstrap/Table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileCsv } from '@fortawesome/free-solid-svg-icons'
 import { CSVLink } from "react-csv"
-import { formatCurrencyMillions } from '../lib/util'
+import { formatCurrencyMillions, formatSubcategory } from '../lib/util'
 
 const ProjectsList = props => {
   const { results } = props
@@ -31,7 +31,8 @@ const ProjectsList = props => {
         <td>
           {renderProjectLink()}
         </td>
-        <td>{project.fields['Category Name']}</td>
+        <td>{project.fields['Parent Category'].fields.Name}</td>
+        <td>{formatSubcategory(project)}</td>
         <td className="text-right">
           {`${formatCurrencyMillions(project.fields.totalAllocationAmount)}m`}
         </td>
@@ -43,11 +44,12 @@ const ProjectsList = props => {
   }
 
   const csvData = [
-    ["Project", "Category", "URL", "Total Allocations", "Total Payments"],
+    ["Project", "Category", "Subcategory", "URL", "Total Allocations", "Total Payments"],
     ...results.projects.map(project => {
       return [
         project.fields.Name,
-        project.fields['Category Name'],
+        project.fields.Category.fields.Name,
+        formatSubcategory(project),
         project.fields.URL,
         project.fields.totalAllocationAmount,
         project.fields.totalPaymentAmount
@@ -67,6 +69,7 @@ const ProjectsList = props => {
                 <tr>
                   <th>Project Name</th>
                   <th>Category</th>
+                  <th>Subcategory</th>
                   <th>Allocations</th>
                   <th>Payments</th>
                 </tr>
