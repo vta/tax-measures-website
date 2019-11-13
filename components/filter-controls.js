@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { Typeahead } from 'react-bootstrap-typeahead'
@@ -21,15 +21,35 @@ const FilterControls = props => {
   const [startDate, setStartDate] = useState(incomingFilters.startDate)
   const [endDate, setEndDate] = useState(incomingFilters.endDate)
 
-  useEffect(() => {
-    if (!isEmpty(incomingFilters)) {
-      setTransactionType(incomingFilters.transactionType)
-      setGrantee(incomingFilters.grantee || '')
-      setProject(incomingFilters.project)
-      setCategory(incomingFilters.category || '')
-      setStartDate(incomingFilters.startDate)
-      setEndDate(incomingFilters.endDate)
+  const projectRef = useRef();
+  const startDateRef = useRef();
+  const endDateRef = useRef();
 
+  useEffect(() => {
+    setTransactionType(incomingFilters.transactionType || '')
+    setGrantee(incomingFilters.grantee || '')
+    setCategory(incomingFilters.category || '')
+
+    if (!incomingFilters.project) {
+      projectRef.current.getInstance().clear()
+    } else {
+      setProject(incomingFilters.project)
+    }
+
+    // Hack until react-day-picker v8 comes out 
+    if (!incomingFilters.startDate) {
+      startDateRef.current.setState({ value: '', typedValue: '' })
+    } else {
+      setStartDate(incomingFilters.startDate)
+    }
+
+    if (!incomingFilters.endDate) {
+      endDateRef.current.setState({ value: '', typedValue: '' })
+    } else {
+      setEndDate(incomingFilters.endDate)
+    }
+
+    if (!isEmpty(incomingFilters)) {
       validateFilters(incomingFilters)
     }
   }, [props.incomingFilters])
@@ -70,6 +90,7 @@ const FilterControls = props => {
         </div>
         <div className='col-md-6 mb-2'>
           <Typeahead
+            ref={projectRef}
             options={projects ? projects.map(project => project.fields.Name) : []}
             placeholder="Project Name"
             onChange={selected => setProject(selected.length ? selected[0] : undefined)}
@@ -97,7 +118,8 @@ const FilterControls = props => {
             parseDate={parseDate}
             inputProps={{className: 'form-control', placeholder: 'Start Date'}}
             onDayChange={selectedDay => setStartDate(selectedDay)}
-            value={startDate && formatDate(startDate)}
+            value={startDate ? formatDate(startDate) : startDate}
+            ref={startDateRef}
           />
         </div>
         <div className='col-md-3 mb-2 mb-md-0'>
@@ -106,12 +128,13 @@ const FilterControls = props => {
             parseDate={parseDate}
             inputProps={{className: 'form-control', placeholder: 'End Date'}}
             onDayChange={selectedDay => setEndDate(selectedDay)}
-            value={endDate && formatDate(endDate)}
+            value={endDate ? formatDate(endDate) : endDate}
+            ref={endDateRef}
           />
         </div>
-        <div className='col-md-3'>
+        <div className='col-md-2'>
           <Button
-            className="btn-secondary"
+            variant="secondary"
             onClick={() => validateFilters({
               transactionType,
               grantee,
@@ -124,6 +147,16 @@ const FilterControls = props => {
           >
             <FontAwesomeIcon icon={faSearch} className='mr-2' /> Search
           </Button>
+        </div>
+        <div className='col-md-1'>
+          <Button
+            variant="danger"
+            onClick={props.clearSearch}
+            block
+          >
+            Clear
+          </Button>
+          
         </div>
       </div>
       <style jsx global>{`

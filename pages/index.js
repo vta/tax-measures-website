@@ -16,7 +16,12 @@ import {
   fetchProjects,
   fetchRevenue
 } from '../lib/api'
-import { applyFilters, getInitialFiltersFromQuery, preprocessData } from '../lib/util'
+import {
+  applyFilters,
+  getInitialFiltersFromQuery,
+  preprocessData,
+  updateUrlWithFilters
+} from '../lib/util'
 
 const Home = props => {
   const {
@@ -39,6 +44,12 @@ const Home = props => {
     setTimeout(() => {
       setLoading(false)
     }, 500)
+  }
+
+  const clearSearch = () => {
+    setResults()
+    setIncomingFilters({})
+    updateUrlWithFilters()
   }
 
   return (
@@ -101,6 +112,7 @@ const Home = props => {
               <div className='col'>
                 <FilterControls
                   handleSearch={handleSearch}
+                  clearSearch={clearSearch}
                   projects={projects}
                   grantees={grantees}
                   categories={categories}
