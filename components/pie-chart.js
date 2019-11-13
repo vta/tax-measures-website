@@ -11,7 +11,7 @@ const PieChart = props => {
   let svg
 
   const prepData = () => {
-    const groups = groupBy(props.results.items, item => item.fields.Category[0])
+    const groups = groupBy(props.results.items, item => item.fields.Category.id)
 
     return Object.entries(groups).map(([categoryId, group]) => {
       return {
