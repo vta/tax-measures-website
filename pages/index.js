@@ -140,6 +140,9 @@ const Home = props => {
       </div>
 
       <style jsx>{`
+        .logo {
+          max-height: 120px;
+        }
       `}</style>
     </div>
   )
