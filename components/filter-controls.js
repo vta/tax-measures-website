@@ -63,7 +63,7 @@ const FilterControls = props => {
   }
 
   return (
-    <div className='card bg-blue p-2'>
+    <div className='card bg-blue p-2 mb-3'>
       <div className='row'>
         <div className='col-md-3 mb-2'>
           <Form.Control
