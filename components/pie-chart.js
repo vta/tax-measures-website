@@ -17,7 +17,7 @@ const PieChart = props => {
       return {
         key: categoryId,
         value: sumBy(group, i => i.fields.Amount),
-        title: group[0].fields['Category Name']
+        title: group[0].fields.Category.fields.Name
       }
     })
   }
@@ -25,7 +25,7 @@ const PieChart = props => {
   const drawChart = () => {
     const data = prepData()
 
-    const margin = 100
+    const margin = 150
     const width = d3.select(chartContainer.current).node().getBoundingClientRect().width
     const height = width - 230
     const radius = width / 2 - margin
