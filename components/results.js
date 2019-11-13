@@ -8,7 +8,6 @@ import ProjectMap from './project-map'
 const Results = props => {
   const { loading, results } = props
   const [section1Toggle, setSection1Toggle] = useState('pie')
-  const [section2Toggle, setSection2Toggle] = useState('pie')
 
   if (loading) {
     return (
@@ -34,50 +33,29 @@ const Results = props => {
   }
 
   return (
-    <div className='row'>
-      <div className='col'>
-        <div className='card'>
-          <div className='card-body card-graph'>
-            <div className='row'>
-              <div className='col-md-6'>
-                <ButtonGroup aria-label="Chart Type" size="sm">
-                  <Button
-                    variant="primary"
-                    onClick={() => setSection1Toggle('pie')}
-                  >
-                    Pie
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    onClick={() => setSection1Toggle('bar')}
-                  >
-                    Bar
-                  </Button>
-                </ButtonGroup>
+    <div className='card'>
+      <div className='card-body card-graph'>
+        <div className='row'>
+          <div className='col-md-6'>
+            <ButtonGroup aria-label="Chart Type" size="sm" className="position-absolute">
+              <Button
+                variant="primary"
+                onClick={() => setSection1Toggle('pie')}
+              >
+                Pie
+              </Button>
+              <Button
+                variant="secondary"
+                onClick={() => setSection1Toggle('bar')}
+              >
+                Bar
+              </Button>
+            </ButtonGroup>
 
-                <PieChart results={results} />
-              </div>
-              <div className='col-md-6'>
-                <ButtonGroup aria-label="Display Type" size="sm" className="float-right">
-                  <Button
-                    variant="primary"
-                    onClick={() => setSection2Toggle('pie')}
-                  >
-                    Money
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    onClick={() => setSection2Toggle('map')}
-                  >
-                    Map
-                  </Button>
-                </ButtonGroup>
-
-                {section2Toggle === 'pie' && <PieChart results={results} />}
-
-                {section2Toggle === 'map' && <ProjectMap results={results} />}
-              </div>
-            </div>
+            <PieChart results={results} />
+          </div>
+          <div className='col-md-6'>
+            <ProjectMap results={results} />
           </div>
         </div>
       </div>
