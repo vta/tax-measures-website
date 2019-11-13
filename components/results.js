@@ -12,16 +12,12 @@ const Results = props => {
 
   if (loading) {
     return (
-      <div className='row'>
-        <div className='col'>
-          <div className='card'>
-            <div className='card-body card-loading text-center'>
-              <Spinner animation="border" role="status" size="xl" variant="primary" className='mb-4'>
-                <span className="sr-only">Loading...</span>
-              </Spinner>
-              <h1>Loading...</h1>
-            </div>
-          </div>
+      <div className='card'>
+        <div className='card-body card-loading text-center'>
+          <Spinner animation="border" role="status" size="xl" variant="primary" className='mb-4'>
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+          <h1>Loading...</h1>
         </div>
         <style jsx>{`
           .card-loading {
