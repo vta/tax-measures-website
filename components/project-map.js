@@ -1,40 +1,142 @@
-import React, { useState } from 'react'
-import ReactMapGL, { Marker, NavigationControl, Popup } from 'react-map-gl'
+import React, { useState, useRef } from 'react'
+import ReactMapGL, { Layer, Marker, NavigationControl, Popup, Source } from 'react-map-gl'
 import getConfig from 'next/config'
 const { publicRuntimeConfig } = getConfig()
+import { every } from 'lodash'
 import Pin from './map-pin'
 
 const ProjectMap = props => {
   const { results } = props
   const [viewport, setViewport] = useState({
-    latitude: 37.432200,
+    latitude: 37.332200,
     longitude: -121.953907,
-    zoom: 9,
+    zoom: 8.5,
     bearing: 0,
     pitch: 0
   })
   const [popupInfo, setPopupInfo] = useState(null)
+  const mapRef = useRef()
 
-  const projectsWithGeo = results.projects.filter(project => {
-    return !!project.fields.Latitude && !!project.fields.Longitude
-  })
+  const onMapClick = event => {
+    const {
+      features,
+      lngLat
+    } = event
 
-  const renderMarker = project => {
+    const clickedFeature = features && features.find(f => f.layer.id === 'data');
+
+    if (!clickedFeature || !clickedFeature.properties.projectId) {
+      return
+    }
+
+    const project = results.projects.find(project => project.id === clickedFeature.properties.projectId)
+
+    if (!project) {
+      return
+    }
+
+    setPopupInfo({
+      name: project.fields.Name,
+      latitude: lngLat[1],
+      longitude: lngLat[0]
+    })
+  }
+
+  const renderMarker = (project, latitude, longitude) => {
     return (
       <Marker
-        longitude={project.fields.Longitude}
-        latitude={project.fields.Latitude}
+        longitude={longitude}
+        latitude={latitude}
         offsetTop={-20}
         offsetLeft={-10}
-        key={project.id}
+        key={`${project.id}${latitude}${longitude}`}
       >
         <Pin
           size={20}
           color="#2D65B1"
-          onClick={() => setPopupInfo(project)}
+          onClick={() => setPopupInfo({
+            name: project.fields.Name,
+            latitude,
+            longitude
+          })}
         />
       </Marker>
     )
+  }
+
+  const renderGeography = project => {
+    if (project.fields.Latitude && project.fields.Longitude) {
+      return renderMarker(project, project.fields.Latitude, project.fields.Longitude)
+    } else if (project.fields.Geometry) {
+      try {
+        const geojson = JSON.parse(project.fields.Geometry)
+        let hasLineString = false
+        let hasPolygon = false
+
+        if (geojson.type === 'Feature') {
+          geojson.properties.projectId = project.id
+          if (geojson.geometry.type === 'LineString') {
+            hasLineString = true
+          }
+          if (geojson.geometry.type === 'MultiPolygon' || geojson.geometry.type === 'Polygon') {
+            hasPolygon = true
+          }
+        } else if (geojson.type === 'FeatureCollection') {
+          for (const feature of geojson.features) {
+            feature.properties.projectId = project.id
+            if (feature.geometry.type === 'LineString') {
+              hasLineString = true
+            }
+            if (feature.geometry.type === 'MultiPolygon' || feature.geometry.type === 'Polygon') {
+              hasPolygon = true
+            }
+          }
+        }
+
+        if (geojson.type === 'FeatureCollection' && every(geojson.features, ['geometry.type', 'Point'])) {
+          return (
+            <React.Fragment key={project.id}>
+              {geojson.features.map(feature => renderMarker(project, feature.geometry.coordinates[1], feature.geometry.coordinates[0]))}
+            </React.Fragment>
+          )
+        } else {
+          const linePaint = {
+            'line-color': '#2D65B1',
+            'line-width': 3
+          }
+
+          const fillPaint = {
+            'fill-color': '#2D65B1',
+            'fill-opacity': 0.8
+          }
+
+          return (
+            <React.Fragment key={project.id}>
+              {hasLineString && <Source
+                type="geojson"
+                key="line"
+                data={geojson}
+              >
+                <Layer id="data" type="line" paint={linePaint} />
+              </Source>}
+              {hasPolygon && <Source
+                type="geojson"
+                key="fill"
+                data={geojson}
+              >
+                <Layer id="data" type="fill" paint={fillPaint} />
+              </Source>}
+            </React.Fragment>
+          )
+        }
+      } catch (err) {
+        console.warn(`Invalid geometry for project "${project.fields.Name}"`)
+        console.warn(project.fields.Geometry)
+        console.warn(err)
+      }
+    }
+
+    return null
   }
 
   return (
@@ -44,19 +146,22 @@ const ProjectMap = props => {
         width="100%"
         height="100%"
         {...viewport}
+        interactiveLayerIds={["data"]}
         onViewportChange={viewport => setViewport(viewport)}
+        onClick={onMapClick}
+        ref={mapRef}
       >
-        {projectsWithGeo.map(renderMarker)}
+        {results.projects.map(renderGeography)}
         {popupInfo && <Popup
           offsetTop={-20}
-          latitude={popupInfo.fields.Latitude}
-          longitude={popupInfo.fields.Longitude}
+          latitude={popupInfo.latitude}
+          longitude={popupInfo.longitude}
           closeButton={true}
           closeOnClick={false}
           onClose={() => setPopupInfo(null)}
           anchor="bottom"
         >
-          <div className="popup-title">{popupInfo.fields.Name}</div>
+          <div className="popup-title">{popupInfo.name}</div>
         </Popup>}
         <div className="nav" className="map-nav">
           <NavigationControl onViewportChange={viewport => setViewport(viewport)} />

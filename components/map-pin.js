@@ -10,7 +10,8 @@ export default class Pin extends PureComponent {
 
     const pinStyle = {
       fill: color,
-      stroke: 'none'
+      stroke: 'none',
+      cursor: 'pointer'
     }
     
     return (
