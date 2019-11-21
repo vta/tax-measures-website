@@ -57,6 +57,12 @@ const ProjectsList = props => {
     })
   ]
 
+  const totals = results.projects.reduce((memo, project) => {
+    memo.totalAllocationAmount += project.fields.totalAllocationAmount
+    memo.totalPaymentAmount += project.fields.totalPaymentAmount
+    return memo
+  }, { totalAllocationAmount: 0, totalPaymentAmount: 0 })
+
   return (
     <div className='row'>
       <div className='col'>
@@ -76,6 +82,17 @@ const ProjectsList = props => {
               </thead>
               <tbody>
                 {results.projects.map(renderProjectRow)}
+                <tr className="table-dark border-top-2">
+                  <td>Total</td>
+                  <td></td>
+                  <td></td>
+                  <td className="text-right">
+                    {`${formatCurrencyMillions(totals.totalAllocationAmount)}m`}
+                  </td>
+                  <td className="text-right">
+                    {`${formatCurrencyMillions(totals.totalPaymentAmount)}m`}
+                  </td>
+                </tr>
               </tbody>
             </Table>
             <CSVLink
