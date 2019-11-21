@@ -10,6 +10,7 @@ import Results from '../components/results'
 import '../css/index.scss'
 import {
   fetchAllocations,
+  fetchAwards,
   fetchCategories,
   fetchGrantees,
   fetchPayments,
@@ -164,6 +165,7 @@ const FilterAlert = props => {
 Home.getInitialProps = async ({ query }) => {
   const [
     allocations,
+    awards,
     categories,
     grantees,
     payments,
@@ -171,6 +173,7 @@ Home.getInitialProps = async ({ query }) => {
     revenue
   ] = await Promise.all([
     fetchAllocations(),
+    fetchAwards(),
     fetchCategories(),
     fetchGrantees(),
     fetchPayments(),
@@ -182,6 +185,7 @@ Home.getInitialProps = async ({ query }) => {
 
   return preprocessData({
     allocations,
+    awards,
     categories,
     grantees,
     payments,
