@@ -3,6 +3,7 @@ import ReactMapGL, { Layer, Marker, NavigationControl, Popup, Source } from 'rea
 import getConfig from 'next/config'
 const { publicRuntimeConfig } = getConfig()
 import { every } from 'lodash'
+import { formatCurrencyMillions } from '../lib/util'
 import Pin from './map-pin'
 
 const ProjectMap = props => {
@@ -36,7 +37,7 @@ const ProjectMap = props => {
     }
 
     setPopupInfo({
-      name: project.fields.Name,
+      project,
       latitude: lngLat[1],
       longitude: lngLat[0]
     })
@@ -55,7 +56,7 @@ const ProjectMap = props => {
           size={20}
           color="#2D65B1"
           onClick={() => setPopupInfo({
-            name: project.fields.Name,
+            project,
             latitude,
             longitude
           })}
@@ -161,7 +162,19 @@ const ProjectMap = props => {
           onClose={() => setPopupInfo(null)}
           anchor="bottom"
         >
-          <div className="popup-title">{popupInfo.name}</div>
+          <div className="popup-title">{popupInfo.project.fields.Name}</div>
+          <div className="popup-stat">
+            Category: {popupInfo.project.fields.Category.fields.Name}
+          </div>
+          <div className="popup-stat">
+            Grantee: {popupInfo.project.fields['Grantee Name']}
+          </div>
+          <div className="popup-stat">
+            Total Allocations: {`${formatCurrencyMillions(popupInfo.project.fields.totalAllocationAmount)}m`}
+          </div>
+          <div className="popup-stat">
+            Total Payments: {`${formatCurrencyMillions(popupInfo.project.fields.totalPaymentAmount)}m`}
+          </div>
         </Popup>}
         <div className="nav" className="map-nav">
           <NavigationControl onViewportChange={viewport => setViewport(viewport)} />
@@ -182,6 +195,7 @@ const ProjectMap = props => {
 
         .popup-title {
           margin-right: 14px;
+          color: #2D65B1;
         }
       `}</style>
     </div>
