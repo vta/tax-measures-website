@@ -1,13 +1,10 @@
-import React, { useState } from 'react'
-import Button from 'react-bootstrap/Button'
-import ButtonGroup from 'react-bootstrap/ButtonGroup'
+import React from 'react'
 import Spinner from 'react-bootstrap/Spinner'
-import PieChart from './pie-chart'
+import BarChart from './bar-chart'
 import ProjectMap from './project-map'
 
 const Results = props => {
   const { loading, results } = props
-  const [section1Toggle, setSection1Toggle] = useState('pie')
 
   if (loading) {
     return (
@@ -37,22 +34,7 @@ const Results = props => {
       <div className='card-body card-graph'>
         <div className='row'>
           <div className='col-md-6'>
-            <ButtonGroup aria-label="Chart Type" size="sm" className="position-absolute">
-              <Button
-                variant="primary"
-                onClick={() => setSection1Toggle('pie')}
-              >
-                Pie
-              </Button>
-              <Button
-                variant="secondary"
-                onClick={() => setSection1Toggle('bar')}
-              >
-                Bar
-              </Button>
-            </ButtonGroup>
-
-            <PieChart results={results} />
+            <BarChart results={results} />
           </div>
           <div className='col-md-6'>
             <ProjectMap results={results} />

@@ -183,7 +183,7 @@ const ProjectMap = props => {
       <style jsx>{`
         .map {
           clear: both;
-          height: 360px;
+          height: 350px;
         }
 
         .map-nav {
