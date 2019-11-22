@@ -13,6 +13,7 @@ import {
   fetchAllocations,
   fetchAwards,
   fetchCategories,
+  fetchDocuments,
   fetchGrantees,
   fetchPayments,
   fetchProjects,
@@ -29,6 +30,7 @@ const Home = ({
   allocations,
   awards,
   categories,
+  documents,
   grantees,
   payments,
   projects,
@@ -152,6 +154,7 @@ const Home = ({
         onHide={() => setProjectModalProject()}
         allocations={allocations}
         awards={awards}
+        documents={documents}
         grantees={grantees}
         payments={payments}
       />
@@ -183,6 +186,7 @@ Home.getInitialProps = async ({ query }) => {
     allocations,
     awards,
     categories,
+    documents,
     grantees,
     payments,
     projects,
@@ -191,6 +195,7 @@ Home.getInitialProps = async ({ query }) => {
     fetchAllocations(),
     fetchAwards(),
     fetchCategories(),
+    fetchDocuments(),
     fetchGrantees(),
     fetchPayments(),
     fetchProjects(),
@@ -203,6 +208,7 @@ Home.getInitialProps = async ({ query }) => {
     allocations,
     awards,
     categories,
+    documents,
     grantees,
     payments,
     projects,
