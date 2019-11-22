@@ -161,7 +161,17 @@ const ProjectMap = ({ results, setProjectModalProject }) => {
           onClose={() => setPopupInfo(null)}
           anchor="bottom"
         >
-          <div className="popup-title">{popupInfo.project.fields.Name}</div>
+          <div className="popup-title">
+            <a
+              href=""
+              onClick={e => {
+                e.preventDefault()
+                setProjectModalProject(popupInfo.project)
+              }}
+            >
+              {popupInfo.project.fields.Name}
+            </a>
+          </div>
           <div className="popup-stat">
             Category: {popupInfo.project.fields.Category.fields.Name}
           </div>
