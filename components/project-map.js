@@ -3,7 +3,7 @@ import ReactMapGL, { Layer, Marker, NavigationControl, Popup, Source } from 'rea
 import getConfig from 'next/config'
 const { publicRuntimeConfig } = getConfig()
 import { every } from 'lodash'
-import { formatCurrencyMillions } from '../lib/util'
+import { formatCurrencyWithUnit } from '../lib/util'
 import Pin from './map-pin'
 
 const ProjectMap = props => {
@@ -170,10 +170,10 @@ const ProjectMap = props => {
             Grantee: {popupInfo.project.fields['Grantee Name']}
           </div>
           <div className="popup-stat">
-            Total Allocations: {`${formatCurrencyMillions(popupInfo.project.fields.totalAllocationAmount)}m`}
+            Total Amount Awarded: {formatCurrencyWithUnit(popupInfo.project.fields.totalAwardAmount)}
           </div>
           <div className="popup-stat">
-            Total Payments: {`${formatCurrencyMillions(popupInfo.project.fields.totalPaymentAmount)}m`}
+            Total Payments: {formatCurrencyWithUnit(popupInfo.project.fields.totalPaymentAmount)}
           </div>
         </Popup>}
         <div className="nav" className="map-nav">

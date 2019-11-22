@@ -1,10 +1,9 @@
 import React from 'react'
-import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileCsv } from '@fortawesome/free-solid-svg-icons'
 import { CSVLink } from "react-csv"
-import { formatCurrencyMillions, formatSubcategory } from '../lib/util'
+import { formatCurrencyWithUnit, formatSubcategory } from '../lib/util'
 
 const ProjectsList = props => {
   const { results } = props
@@ -34,34 +33,34 @@ const ProjectsList = props => {
         <td>{project.fields['Parent Category'].fields.Name}</td>
         <td>{formatSubcategory(project)}</td>
         <td className="text-right">
-          {`${formatCurrencyMillions(project.fields.totalAllocationAmount)}m`}
+          {formatCurrencyWithUnit(project.fields.totalAwardAmount)}
         </td>
         <td className="text-right">
-          {`${formatCurrencyMillions(project.fields.totalPaymentAmount)}m`}
+          {formatCurrencyWithUnit(project.fields.totalPaymentAmount)}
         </td>
       </tr>
     )
   }
 
   const csvData = [
-    ["Project", "Category", "Subcategory", "URL", "Total Allocations", "Total Payments"],
+    ["Project", "Category", "Subcategory", "URL", "Total Awards", "Total Payments"],
     ...results.projects.map(project => {
       return [
         project.fields.Name,
         project.fields.Category.fields.Name,
         formatSubcategory(project),
         project.fields.URL,
-        project.fields.totalAllocationAmount,
+        project.fields.totalAwardAmount,
         project.fields.totalPaymentAmount
       ]
     })
   ]
 
   const totals = results.projects.reduce((memo, project) => {
-    memo.totalAllocationAmount += project.fields.totalAllocationAmount
+    memo.totalAwardAmount += project.fields.totalAwardAmount
     memo.totalPaymentAmount += project.fields.totalPaymentAmount
     return memo
-  }, { totalAllocationAmount: 0, totalPaymentAmount: 0 })
+  }, { totalAwardAmount: 0, totalPaymentAmount: 0 })
 
   return (
     <div className='row'>
@@ -76,7 +75,7 @@ const ProjectsList = props => {
                   <th>Project Name</th>
                   <th>Category</th>
                   <th>Subcategory</th>
-                  <th>Allocations</th>
+                  <th>Awards</th>
                   <th>Payments</th>
                 </tr>
               </thead>
@@ -87,10 +86,10 @@ const ProjectsList = props => {
                   <td></td>
                   <td></td>
                   <td className="text-right">
-                    {`${formatCurrencyMillions(totals.totalAllocationAmount)}m`}
+                    {formatCurrencyWithUnit(totals.totalAwardAmount)}
                   </td>
                   <td className="text-right">
-                    {`${formatCurrencyMillions(totals.totalPaymentAmount)}m`}
+                    {formatCurrencyWithUnit(totals.totalPaymentAmount)}
                   </td>
                 </tr>
               </tbody>
