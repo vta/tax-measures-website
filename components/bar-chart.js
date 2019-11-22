@@ -5,9 +5,7 @@ import { formatCurrencyWithUnit } from '../lib/util'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
-const BarChart = props => {
-  const { results } = props
-
+const BarChart = ({ results }) => {
   const colorPalate = [
     '#33b2df',
     '#546E7A',

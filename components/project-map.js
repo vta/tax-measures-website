@@ -6,8 +6,7 @@ import { every } from 'lodash'
 import { formatCurrencyWithUnit } from '../lib/util'
 import Pin from './map-pin'
 
-const ProjectMap = props => {
-  const { results } = props
+const ProjectMap = ({ results, setProjectModalProject }) => {
   const [viewport, setViewport] = useState({
     latitude: 37.332200,
     longitude: -121.953907,

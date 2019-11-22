@@ -5,9 +5,8 @@ import { sumBy } from 'lodash'
 import { formatCurrencyMillions } from '../lib/util'
 import AboutModal from '../components/about-modal'
 
-const HeaderStats = props => {
+const HeaderStats = ({ allocations, revenue }) => {
   const [aboutModalShow, setAboutModalShow] = useState(false)
-  const { allocations, revenue } = props
 
   const totalRevenue = sumBy(revenue, 'fields.Amount')
   const totalInterest = sumBy(revenue, 'fields.Interest')

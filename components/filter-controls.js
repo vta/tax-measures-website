@@ -11,9 +11,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { isEmpty } from 'lodash'
 
-const FilterControls = props => {
-  const { categories, grantees, projects, incomingFilters } = props
-
+const FilterControls = ({
+  categories,
+  grantees,
+  projects,
+  incomingFilters,
+  handleSearch,
+  clearSearch
+}) => {
   const [transactionType, setTransactionType] = useState(incomingFilters.transactionType)
   const [grantee, setGrantee] = useState(incomingFilters.grantee)
   const [project, setProject] = useState(incomingFilters.project)
@@ -52,14 +57,14 @@ const FilterControls = props => {
     if (!isEmpty(incomingFilters)) {
       validateFilters(incomingFilters)
     }
-  }, [props.incomingFilters])
+  }, [incomingFilters])
 
   const validateFilters = filters => {
     if (!filters.transactionType) {
       return alert('You must specify a transaction type')
     }
 
-    props.handleSearch(filters)
+    handleSearch(filters)
   }
 
   const parentCategories = categories.filter(c => !c.fields['Parent Category'])
@@ -153,7 +158,7 @@ const FilterControls = props => {
         <div className='col-md-1'>
           <Button
             variant="danger"
-            onClick={props.clearSearch}
+            onClick={clearSearch}
             block
           >
             Clear
