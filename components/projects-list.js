@@ -5,28 +5,24 @@ import { faFileCsv } from '@fortawesome/free-solid-svg-icons'
 import { CSVLink } from "react-csv"
 import { formatCurrencyWithUnit, formatSubcategory } from '../lib/util'
 
-const ProjectsList = ({ results }) => {
+const ProjectsList = ({ results, setProjectModalProject }) => {
   if (!results || !results.projects || !results.projects.length) {
     return null
   }
 
   const renderProjectRow = project => {
-    const renderProjectLink = () => {
-      if (project.fields.URL) {
-        return (
-          <a href={project.fields.URL} target="_blank" key={project.id}>{project.fields.Name}</a>
-        )
-      } else {
-        return (
-          <span key={project.id}>{project.fields.Name}</span>
-        )
-      }
-    }
-
     return (
       <tr key={project.id}>
         <td>
-          {renderProjectLink()}
+          <a
+            href=""
+            onClick={e => {
+              e.preventDefault()
+              setProjectModalProject(project)
+            }}
+          >
+            {project.fields.Name}
+          </a>
         </td>
         <td>{project.fields['Parent Category'].fields.Name}</td>
         <td>{formatSubcategory(project)}</td>

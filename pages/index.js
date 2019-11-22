@@ -27,6 +27,7 @@ import {
 
 const Home = ({
   allocations,
+  awards,
   categories,
   grantees,
   payments,
@@ -37,6 +38,7 @@ const Home = ({
   const [results, setResults] = useState()
   const [loading, setLoading] = useState(false)
   const [incomingFilters, setIncomingFilters] = useState(initialFilters)
+  const [projectModalProject, setProjectModalProject] = useState()
 
   const handleSearch = filters => {
     setLoading(true)
@@ -131,14 +133,28 @@ const Home = ({
             <Results
               loading={loading}
               results={results}
+              setProjectModalProject={setProjectModalProject}
             />
           </div>
         </div>
 
-        <ProjectsList results={results} />
+        <ProjectsList
+          results={results}
+          setProjectModalProject={setProjectModalProject}
+        />
 
         <Footer />
       </div>
+
+      <ProjectModal
+        show={!!projectModalProject}
+        project={projectModalProject}
+        onHide={() => setProjectModalProject()}
+        allocations={allocations}
+        awards={awards}
+        grantees={grantees}
+        payments={payments}
+      />
 
       <style jsx>{`
         .logo {
