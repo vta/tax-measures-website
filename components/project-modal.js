@@ -1,19 +1,52 @@
 import React from 'react'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import ListGroup from 'react-bootstrap/ListGroup'
 import Table from 'react-bootstrap/Table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
-import { formatAwardAvailability, formatCurrency } from '../lib/util'
+import { faExternalLinkAlt, faFileDownload } from '@fortawesome/free-solid-svg-icons'
+import { formatAwardAvailability, formatCurrency, formatDocumentLink } from '../lib/util'
 
-const ProjectModal = ({ project, allocations, awards, grantees, ...props }) => {
+const DocumentLink = ({ document }) => {
+  if (document.fields.URL) {
+    return (
+      <a href={document.fields.URL} target="_blank">
+        {document.fields.Name} <FontAwesomeIcon icon={faFileDownload} size="xs" />
+      </a>
+    )
+  } else if (document.fields.Attachment && document.fields.Attachment.length === 1) {
+    return (
+      <a href={document.fields.Attachment[0].url} target="_blank">
+        {document.fields.Name} <FontAwesomeIcon icon={faFileDownload} size="xs" />
+      </a>
+    )
+  } else if (document.fields.Attachment) {
+    return document.fields.Attachment.map((attachment, index) => (
+      <a href={attachment.url} target="_blank" key={index} className="mr-4">
+        {index === 0 ? document.fields.Name : attachment.filename} <FontAwesomeIcon icon={faFileDownload} size="xs" />  
+      </a>
+    ))
+  } else {
+    return document.fields.Name
+  }
+}
+
+const ProjectModal = ({
+  project,
+  allocations,
+  awards,
+  documents,
+  grantees,
+  ...props
+}) => {
   if (!project) {
     return null
   }
 
-  const projectGrantee = grantees.find(g => g.id === project.fields.Grantee[0])
   const projectAllocations = project.fields.Allocations ? allocations.filter(a => project.fields.Allocations.includes(a.id)) : []
   const projectAwards = project.fields.Awards ? awards.filter(a => project.fields.Awards.includes(a.id)) : []
+  const projectDocuments = project.fields.Documents ? documents.filter(d => project.fields.Documents.includes(d.id)) : []
+  const projectGrantee = grantees.find(g => g.id === project.fields.Grantee[0])
   const projectPayments = project.fields.Payments ? payments.filter(p => project.fields.Payments.includes(p.id)) : []
 
   const renderAllocations = () => {
@@ -65,6 +98,22 @@ const ProjectModal = ({ project, allocations, awards, grantees, ...props }) => {
           ))}
         </tbody>
       </Table>
+    )
+  }
+
+  const renderDocuments = () => {
+    if (!projectDocuments.length) {
+      return 'None'
+    }
+
+    return (
+      <ListGroup className='small-list-group'>
+        {projectDocuments.map(document => (
+          <ListGroup.Item key={document.id}>
+            <DocumentLink document={document} />
+          </ListGroup.Item>
+        ))}
+      </ListGroup>
     )
   }
 
@@ -135,6 +184,7 @@ const ProjectModal = ({ project, allocations, awards, grantees, ...props }) => {
         </div>
         <div className="project-stat">
           <b>Related Documents:</b>{' '}
+          {renderDocuments()}
         </div>
         <div className="project-stat">
           <b>Awards:</b>{' '}
@@ -152,6 +202,10 @@ const ProjectModal = ({ project, allocations, awards, grantees, ...props }) => {
       <style jsx>{`
         .table-small td {
           font-size: 12px;
+        }
+
+        .project-stat {
+          margin-top: 6px;
         }
       `}</style>
     </Modal>
