@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import dynamic from 'next/dynamic'
 import { groupBy, sumBy, sortBy } from 'lodash'
-import { formatCurrencyMillions } from '../lib/util'
+import { formatCurrencyWithUnit } from '../lib/util'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -39,10 +39,6 @@ const BarChart = props => {
     }
   }), 'value')
 
-  const formatter = value => {
-    return `${formatCurrencyMillions(value)}m`
-  }
-
   return (
     <Chart
       options={{
@@ -61,7 +57,7 @@ const BarChart = props => {
         colors: data.map(d => d.color),
         dataLabels: {
           enabled: true,
-          formatter,
+          formatter: formatCurrencyWithUnit,
           textAnchor: 'start',
           offsetX: 0,
           dropShadow: {
@@ -78,7 +74,7 @@ const BarChart = props => {
         xaxis: {
           categories: data.map(d => d.title),
           labels: {
-            formatter
+            formatter: formatCurrencyWithUnit
           }
         },
         yaxis: {
@@ -88,7 +84,7 @@ const BarChart = props => {
         },
         tooltip: {
           y: {
-            formatter,
+            formatter: formatCurrencyWithUnit,
             title: {
               formatter: seriesName => seriesName === 'allocation' ? 'Allocations' : seriesName === 'payment' ? 'Payments' : seriesName
             }
