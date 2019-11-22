@@ -6,6 +6,7 @@ import FilterControls from '../components/filter-controls'
 import Footer from '../components/footer'
 import HeaderStats from '../components/header-stats'
 import ProjectsList from '../components/projects-list'
+import ProjectModal from '../components/project-modal'
 import Results from '../components/results'
 import '../css/index.scss'
 import {
@@ -24,16 +25,15 @@ import {
   updateUrlWithFilters
 } from '../lib/util'
 
-const Home = props => {
-  const {
-    allocations,
-    categories,
-    grantees,
-    payments,
-    projects,
-    revenue,
-    initialFilters
-  } = props
+const Home = ({
+  allocations,
+  categories,
+  grantees,
+  payments,
+  projects,
+  revenue,
+  initialFilters
+}) => {
   const [results, setResults] = useState()
   const [loading, setLoading] = useState(false)
   const [incomingFilters, setIncomingFilters] = useState(initialFilters)

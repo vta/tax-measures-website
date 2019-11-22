@@ -5,9 +5,7 @@ import { faFileCsv } from '@fortawesome/free-solid-svg-icons'
 import { CSVLink } from "react-csv"
 import { formatCurrencyWithUnit, formatSubcategory } from '../lib/util'
 
-const ProjectsList = props => {
-  const { results } = props
-
+const ProjectsList = ({ results }) => {
   if (!results || !results.projects || !results.projects.length) {
     return null
   }
