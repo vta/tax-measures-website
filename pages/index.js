@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Head from 'next/head'
 import Alert from 'react-bootstrap/Alert'
+import { compact } from 'lodash'
 import ArrowButton from '../components/arrow-button'
 import FilterControls from '../components/filter-controls'
 import Footer from '../components/footer'
@@ -40,11 +41,13 @@ const Home = ({
   const [results, setResults] = useState()
   const [loading, setLoading] = useState(false)
   const [incomingFilters, setIncomingFilters] = useState(initialFilters)
+  const [currentFilters, setCurrentFilters] = useState(initialFilters)
   const [projectModalProject, setProjectModalProject] = useState()
 
   const handleSearch = filters => {
     setLoading(true)
     setResults(applyFilters(filters, allocations, payments, projects, categories, grantees))
+    setCurrentFilters(filters)
     
     setTimeout(() => {
       setLoading(false)
@@ -123,7 +126,7 @@ const Home = ({
               incomingFilters={incomingFilters}
             />
 
-            <FilterAlert results={results} />
+            <FilterAlert results={results} currentFilters={currentFilters} />
 
             {!results  && <div className='card mb-3'>
               <div className='card-body'>
@@ -168,17 +171,34 @@ const Home = ({
   )
 }
 
-const FilterAlert = props => {
-  if (!props.results || props.results.items.length) {
+const FilterAlert = ({ results, currentFilters }) => {
+  const filterCount = currentFilters ? compact(Object.values(currentFilters)).length : 0
+  if (!results) {
     return null
+  } else if (results.items.length === 0) {
+    return (
+      <Alert variant="warning" className="text-center">
+        <Alert.Heading>No matching results</Alert.Heading>
+        <div>Please adjust the search filters and try again</div>
+      </Alert>
+    )
+  } else if (results.items.length < 5) {
+    return (
+      <Alert variant="warning" className="text-center">
+        <Alert.Heading>Limited results</Alert.Heading>
+        <div>Consider broadening your search if you're not seeing enough results. Select a broader date range or choose additional categories, grantees or projects.</div>
+      </Alert>
+    )
+  } else if (filterCount < 2) {
+    return (
+      <Alert variant="warning" className="text-center">
+        <Alert.Heading>Numerous results</Alert.Heading>
+        <div>Consider selecting additional filters to narrow down your results or focus on the information you're interested in.</div>
+      </Alert>
+    )
   }
 
-  return (
-    <Alert variant="warning" className="text-center">
-      <Alert.Heading>No matching results</Alert.Heading>
-      <div>Please adjust the search filters and try again</div>
-    </Alert>
-  )
+  return null
 }
 
 Home.getInitialProps = async ({ query }) => {
