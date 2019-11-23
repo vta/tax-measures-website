@@ -1,7 +1,7 @@
 import React from 'react'
 import Spinner from 'react-bootstrap/Spinner'
 import BarChart from './bar-chart'
-import ProjectMap from './project-map'
+import ProjectsMap from './projects-map'
 
 const Results = ({ loading, results, setProjectModalProject }) => {
   if (loading) {
@@ -35,7 +35,7 @@ const Results = ({ loading, results, setProjectModalProject }) => {
             <BarChart results={results} />
           </div>
           <div className='col-md-6'>
-            <ProjectMap
+            <ProjectsMap
               results={results}
               setProjectModalProject={setProjectModalProject}
             />

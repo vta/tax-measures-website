@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
@@ -6,6 +6,7 @@ import Table from 'react-bootstrap/Table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLinkAlt, faFileDownload } from '@fortawesome/free-solid-svg-icons'
 import { formatAwardAvailability, formatCurrency, formatDocumentLink } from '../lib/util'
+import ProjectMap from './project-map'
 
 const DocumentLink = ({ document }) => {
   if (document.fields.URL) {
@@ -37,10 +38,19 @@ const ProjectModal = ({
   awards,
   documents,
   grantees,
-  ...props
+  payments,
+  onHide,
+  show
 }) => {
+  const [mapVisible, setMapVisible] = useState(false)
+
   if (!project) {
     return null
+  }
+
+  const handleHide = () => {
+    setMapVisible(false)
+    onHide()
   }
 
   const projectAllocations = project.fields.Allocations ? allocations.filter(a => project.fields.Allocations.includes(a.id)) : []
@@ -144,10 +154,12 @@ const ProjectModal = ({
 
   return (
     <Modal
-      {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      show={show}
+      onEntering={() => setMapVisible(true)}
+      onHide={handleHide}
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
@@ -175,7 +187,7 @@ const ProjectModal = ({
             </div>}
           </div>
           <div className="col-md-6">
-            {/* Map (small, but option to full screen) */}
+            {mapVisible && <ProjectMap project={project} />}
           </div>
         </div>
         <div className="project-stat">
@@ -197,7 +209,7 @@ const ProjectModal = ({
         <small className="float-right">Last Modified: {project.fields['Last Modified']}</small>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.onHide} className='btn-secondary'>Close</Button>
+        <Button onClick={handleHide} className='btn-secondary'>Close</Button>
       </Modal.Footer>
       <style jsx>{`
         .table-small td {
