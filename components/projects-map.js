@@ -6,6 +6,81 @@ import { every } from 'lodash'
 import { formatCurrencyWithUnit } from '../lib/util'
 import Pin from './map-pin'
 
+const PopupInfo = ({ popupInfo, onClose, setProjectModalProject }) => {
+  const renderInfo = () => {
+    if (popupInfo.projects.length === 1) {
+      const project = popupInfo.projects[0]
+      return (
+        <>
+          <div className="popup-title">
+            <a
+              href=""
+              onClick={e => {
+                e.preventDefault()
+                setProjectModalProject(project)
+              }}
+            >
+              {project.fields.Name}
+            </a>
+          </div>
+          <div className="popup-stat">
+            Category: {project.fields.Category.fields.Name}
+          </div>
+          <div className="popup-stat">
+            Grantee: {project.fields['Grantee Name']}
+          </div>
+          <div className="popup-stat">
+            Total Amount Awarded: {formatCurrencyWithUnit(project.fields.totalAwardAmount)}
+          </div>
+          <div className="popup-stat">
+            Total Payments: {formatCurrencyWithUnit(project.fields.totalPaymentAmount)}
+          </div>
+          <style jsx>{`
+            .popup-title {
+              margin-right: 14px;
+              color: #2D65B1;
+            }
+          `}</style>
+        </>
+      )
+    } else {
+      return popupInfo.projects.map(project => (
+        <div className="popup-title" key={project.id}>
+          <a
+            href=""
+            onClick={e => {
+              e.preventDefault()
+              setProjectModalProject(project)
+            }}
+          >
+            {project.fields.Name}
+          </a>
+          <style jsx>{`
+            .popup-title {
+              margin-right: 14px;
+              color: #2D65B1;
+            }
+          `}</style>
+        </div>
+      ))
+    }
+  }
+
+  return (
+    <Popup
+      offsetTop={-20}
+      latitude={popupInfo.latitude}
+      longitude={popupInfo.longitude}
+      closeButton={true}
+      closeOnClick={false}
+      onClose={onClose}
+      anchor="bottom"
+    >
+      {renderInfo()}
+    </Popup>
+  )
+}
+
 const ProjectsMap = ({ results, setProjectModalProject }) => {
   const [viewport, setViewport] = useState({
     latitude: 37.332200,
@@ -22,26 +97,22 @@ const ProjectsMap = ({ results, setProjectModalProject }) => {
       lngLat
     } = event
 
-    const clickedFeature = features && features.find(f => f.layer.id === 'data');
+    const projectIds = features.map(f => f.properties.projectId)
 
-    if (!clickedFeature || !clickedFeature.properties.projectId) {
-      return
-    }
+    const projects = results.projects.filter(project => projectIds.includes(project.id))
 
-    const project = results.projects.find(project => project.id === clickedFeature.properties.projectId)
-
-    if (!project) {
+    if (!projects.length) {
       return
     }
 
     setPopupInfo({
-      project,
+      projects,
       latitude: lngLat[1],
       longitude: lngLat[0]
     })
   }
 
-  const renderMarker = (project, latitude, longitude) => {
+  const MapMarker = ({project, latitude, longitude}) => {
     return (
       <Marker
         longitude={longitude}
@@ -54,7 +125,7 @@ const ProjectsMap = ({ results, setProjectModalProject }) => {
           size={20}
           color="#2D65B1"
           onClick={() => setPopupInfo({
-            project,
+            projects: [project],
             latitude,
             longitude
           })}
@@ -63,52 +134,27 @@ const ProjectsMap = ({ results, setProjectModalProject }) => {
     )
   }
 
-  const renderPolygon = geojson => (
-    <Source
-      type="geojson"
-      key="fill"
-      data={geojson}
-    >
-      <Layer
-        id="data"
-        type="fill"
-        paint={{
-          'fill-color': '#2D65B1',
-          'fill-opacity': 0.8
-        }}
-      />
-    </Source>
-  )
+  const layerIds = []
 
-  const renderLineString = geojson => (
-    <Source
-      type="geojson"
-      key="line"
-      data={geojson}
-    >
-      <Layer
-        id="data"
-        type="line"
-        paint={{
-          'line-color': '#2D65B1',
-          'line-width': 3
-        }}
-      />
-    </Source>
-  ) 
-
-  const renderGeography = project => {
+  const layers = results.projects.reduce((memo, project) => {
     if (project.fields.Latitude && project.fields.Longitude) {
-      return renderMarker(project, project.fields.Latitude, project.fields.Longitude)
+      memo.push(<MapMarker
+        project={project}
+        latitude={project.fields.Latitude}
+        longitude={project.fields.Longitude}
+        key={project.id}
+      />)
     } else if (project.fields.Geometry) {
       const geojson = project.fields.Geometry
 
       if (geojson.type === 'FeatureCollection' && every(geojson.features, ['geometry.type', 'Point'])) {
-        return (
-          <React.Fragment key={project.id}>
-            {geojson.features.map(feature => renderMarker(project, feature.geometry.coordinates[1], feature.geometry.coordinates[0]))}
-          </React.Fragment>
-        )
+        memo.push(...geojson.features.map((feature, index) => <MapMarker
+          project={project}
+          latitude={feature.geometry.coordinates[1]}
+          longitude={feature.geometry.coordinates[0]}
+          key={`${project.id}-${index}`}
+        />
+        ))
       } else {
         let hasLineString = false
         let hasPolygon = false
@@ -133,17 +179,48 @@ const ProjectsMap = ({ results, setProjectModalProject }) => {
           }
         }
         
-        return (
-          <React.Fragment key={project.id}>
-            {hasPolygon && renderPolygon(geojson)}
-            {hasLineString && renderLineString(geojson)}
-          </React.Fragment>
-        )
+        if (hasPolygon) {
+          const layerId = `${project.id}fill`
+          memo.push(<Source
+            type="geojson"
+            key={layerId}
+            data={geojson}
+          >
+            <Layer
+              id={layerId}
+              type="fill"
+              paint={{
+                'fill-color': '#2D65B1',
+                'fill-opacity': 0.8
+              }}
+            />
+          </Source>)
+          layerIds.push(layerId)
+        }
+
+        if (hasLineString) {
+          const layerId = `${project.id}line`
+          memo.push(<Source
+            type="geojson"
+            key={layerId}
+            data={geojson}
+          >
+            <Layer
+              id={layerId}
+              type="line"
+              paint={{
+                'line-color': '#2D65B1',
+                'line-width': 3
+              }}
+            />
+          </Source>)
+          layerIds.push(layerId)
+        }
       }
     }
 
-    return null
-  }
+    return memo
+  }, [])
 
   return (
     <div className="map">
@@ -152,44 +229,16 @@ const ProjectsMap = ({ results, setProjectModalProject }) => {
         width="100%"
         height="100%"
         {...viewport}
-        interactiveLayerIds={["data"]}
+        interactiveLayerIds={layerIds}
         onViewportChange={viewport => setViewport(viewport)}
         onClick={onMapClick}
       >
-        {results.projects.map(renderGeography)}
-        {popupInfo && <Popup
-          offsetTop={-20}
-          latitude={popupInfo.latitude}
-          longitude={popupInfo.longitude}
-          closeButton={true}
-          closeOnClick={false}
+        {layers}
+        {popupInfo && <PopupInfo
+          popupInfo={popupInfo}
           onClose={() => setPopupInfo(null)}
-          anchor="bottom"
-        >
-          <div className="popup-title">
-            <a
-              href=""
-              onClick={e => {
-                e.preventDefault()
-                setProjectModalProject(popupInfo.project)
-              }}
-            >
-              {popupInfo.project.fields.Name}
-            </a>
-          </div>
-          <div className="popup-stat">
-            Category: {popupInfo.project.fields.Category.fields.Name}
-          </div>
-          <div className="popup-stat">
-            Grantee: {popupInfo.project.fields['Grantee Name']}
-          </div>
-          <div className="popup-stat">
-            Total Amount Awarded: {formatCurrencyWithUnit(popupInfo.project.fields.totalAwardAmount)}
-          </div>
-          <div className="popup-stat">
-            Total Payments: {formatCurrencyWithUnit(popupInfo.project.fields.totalPaymentAmount)}
-          </div>
-        </Popup>}
+          setProjectModalProject={setProjectModalProject}
+        />}
         <div className="nav" className="map-nav">
           <NavigationControl onViewportChange={viewport => setViewport(viewport)} />
         </div>
@@ -205,11 +254,6 @@ const ProjectsMap = ({ results, setProjectModalProject }) => {
           top: 0;
           left: 0;
           padding: 10px;
-        }
-
-        .popup-title {
-          margin-right: 14px;
-          color: #2D65B1;
         }
       `}</style>
     </div>
