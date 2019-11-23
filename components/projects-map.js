@@ -66,23 +66,6 @@ const ProjectsMap = ({ results, setProjectModalProject }) => {
   const renderPolygon = geojson => (
     <Source
       type="geojson"
-      key="line"
-      data={geojson}
-    >
-      <Layer
-        id="data"
-        type="line"
-        paint={{
-          'line-color': '#2D65B1',
-          'line-width': 3
-        }}
-      />
-    </Source>
-  )
-
-  const renderLineString = geojson => (
-    <Source
-      type="geojson"
       key="fill"
       data={geojson}
     >
@@ -97,15 +80,39 @@ const ProjectsMap = ({ results, setProjectModalProject }) => {
     </Source>
   )
 
+  const renderLineString = geojson => (
+    <Source
+      type="geojson"
+      key="line"
+      data={geojson}
+    >
+      <Layer
+        id="data"
+        type="line"
+        paint={{
+          'line-color': '#2D65B1',
+          'line-width': 3
+        }}
+      />
+    </Source>
+  ) 
+
   const renderGeography = project => {
     if (project.fields.Latitude && project.fields.Longitude) {
       return renderMarker(project, project.fields.Latitude, project.fields.Longitude)
     } else if (project.fields.Geometry) {
-      try {
-        const geojson = JSON.parse(project.fields.Geometry)
+      const geojson = project.fields.Geometry
+
+      if (geojson.type === 'FeatureCollection' && every(geojson.features, ['geometry.type', 'Point'])) {
+        return (
+          <React.Fragment key={project.id}>
+            {geojson.features.map(feature => renderMarker(project, feature.geometry.coordinates[1], feature.geometry.coordinates[0]))}
+          </React.Fragment>
+        )
+      } else {
         let hasLineString = false
         let hasPolygon = false
-
+  
         if (geojson.type === 'Feature') {
           geojson.properties.projectId = project.id
           if (geojson.geometry.type === 'LineString') {
@@ -125,25 +132,13 @@ const ProjectsMap = ({ results, setProjectModalProject }) => {
             }
           }
         }
-
-        if (geojson.type === 'FeatureCollection' && every(geojson.features, ['geometry.type', 'Point'])) {
-          return (
-            <React.Fragment key={project.id}>
-              {geojson.features.map(feature => renderMarker(project, feature.geometry.coordinates[1], feature.geometry.coordinates[0]))}
-            </React.Fragment>
-          )
-        } else {
-          return (
-            <React.Fragment key={project.id}>
-              {hasLineString && renderPolygon(geojson)}
-              {hasPolygon && renderLineString(geojson)}
-            </React.Fragment>
-          )
-        }
-      } catch (err) {
-        console.warn(`Invalid geometry for project "${project.fields.Name}"`)
-        console.warn(project.fields.Geometry)
-        console.warn(err)
+        
+        return (
+          <React.Fragment key={project.id}>
+            {hasPolygon && renderPolygon(geojson)}
+            {hasLineString && renderLineString(geojson)}
+          </React.Fragment>
+        )
       }
     }
 
