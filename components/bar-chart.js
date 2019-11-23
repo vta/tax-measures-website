@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import dynamic from 'next/dynamic'
 import { groupBy, sumBy, sortBy } from 'lodash'
 import { formatCurrencyWithUnit } from '../lib/util'
@@ -37,6 +37,9 @@ const BarChart = ({ results }) => {
     }
   }), 'value')
 
+  const chartType = results.transactionType === 'allocation' ? 'Allocations' : 'Payments'
+  const total = sumBy(results.items, i => i.fields.Amount)
+
   return (
     <Chart
       options={{
@@ -46,10 +49,19 @@ const BarChart = ({ results }) => {
           },
           parentHeightOffset: 0
         },
+        title: {
+          text: `Total ${chartType}: ${formatCurrencyWithUnit(total)}`,
+          style: {
+            fontSize: 16
+          }
+        },
         plotOptions: {
           bar: {
             distributed: true,
             horizontal: true,
+            dataLabels: {
+              position: 'top',
+          },
           }
         },
         colors: data.map(d => d.color),
@@ -57,9 +69,10 @@ const BarChart = ({ results }) => {
           enabled: true,
           formatter: formatCurrencyWithUnit,
           textAnchor: 'start',
-          offsetX: 0,
-          dropShadow: {
-            enabled: true
+          offsetX: 40,
+          style: {
+            fontSize: '14px',
+            colors: ['#4C4D55']
           }
         },
         grid: {
@@ -67,6 +80,10 @@ const BarChart = ({ results }) => {
             lines: {
               show: false
             }
+          },
+          padding: {
+            left: 0,
+            right: 0
           }
         },
         xaxis: {
