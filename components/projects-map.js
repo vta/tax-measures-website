@@ -3,38 +3,43 @@ import ReactMapGL, { Layer, Marker, NavigationControl, Popup, Source } from 'rea
 import getConfig from 'next/config'
 const { publicRuntimeConfig } = getConfig()
 import { every } from 'lodash'
-import bbox from '@turf/bbox'
+import { formatCurrencyWithUnit } from '../lib/util'
 import Pin from './map-pin'
 
-const ProjectMap = ({ project }) => {
-  if ((!project.fields.Latitude || !project.fields.Longitude) && !project.fields.Geometry) {
-    return null
-  }
+const ProjectsMap = ({ results, setProjectModalProject }) => {
+  const [viewport, setViewport] = useState({
+    latitude: 37.332200,
+    longitude: -121.953907,
+    zoom: 8.5,
+    bearing: 0,
+    pitch: 0
+  })
+  const [popupInfo, setPopupInfo] = useState(null)
 
-  const getInitialViewport = () => {
-    if (project.fields.Latitude && project.fields.Longitude) {
-      return {
-        latitude: project.fields.Latitude,
-        longitude: project.fields.Longitude,
-        zoom: 12,
-        bearing: 0,
-        pitch: 0
-      }
-    } else if (project.fields.Geometry) {
-      const geojson = JSON.parse(project.fields.Geometry)
-      const [minLng, minLat, maxLng, maxLat] = bbox(geojson)
+  const onMapClick = event => {
+    const {
+      features,
+      lngLat
+    } = event
 
-      return {
-        latitude: (maxLat + minLat) / 2 ,
-        longitude: (maxLng + minLng) / 2,
-        zoom: 12,
-        bearing: 0,
-        pitch: 0
-      }
+    const clickedFeature = features && features.find(f => f.layer.id === 'data');
+
+    if (!clickedFeature || !clickedFeature.properties.projectId) {
+      return
     }
-  }
 
-  const [viewport, setViewport] = useState(getInitialViewport())
+    const project = results.projects.find(project => project.id === clickedFeature.properties.projectId)
+
+    if (!project) {
+      return
+    }
+
+    setPopupInfo({
+      project,
+      latitude: lngLat[1],
+      longitude: lngLat[0]
+    })
+  }
 
   const renderMarker = (project, latitude, longitude) => {
     return (
@@ -48,10 +53,49 @@ const ProjectMap = ({ project }) => {
         <Pin
           size={20}
           color="#2D65B1"
+          onClick={() => setPopupInfo({
+            project,
+            latitude,
+            longitude
+          })}
         />
       </Marker>
     )
   }
+
+  const renderPolygon = geojson => (
+    <Source
+      type="geojson"
+      key="line"
+      data={geojson}
+    >
+      <Layer
+        id="data"
+        type="line"
+        paint={{
+          'line-color': '#2D65B1',
+          'line-width': 3
+        }}
+      />
+    </Source>
+  )
+
+  const renderLineString = geojson => (
+    <Source
+      type="geojson"
+      key="fill"
+      data={geojson}
+    >
+      <Layer
+        id="data"
+        type="fill"
+        paint={{
+          'fill-color': '#2D65B1',
+          'fill-opacity': 0.8
+        }}
+      />
+    </Source>
+  )
 
   const renderGeography = project => {
     if (project.fields.Latitude && project.fields.Longitude) {
@@ -89,32 +133,10 @@ const ProjectMap = ({ project }) => {
             </React.Fragment>
           )
         } else {
-          const linePaint = {
-            'line-color': '#2D65B1',
-            'line-width': 3
-          }
-
-          const fillPaint = {
-            'fill-color': '#2D65B1',
-            'fill-opacity': 0.8
-          }
-
           return (
             <React.Fragment key={project.id}>
-              {hasLineString && <Source
-                type="geojson"
-                key="line"
-                data={geojson}
-              >
-                <Layer id="data" type="line" paint={linePaint} />
-              </Source>}
-              {hasPolygon && <Source
-                type="geojson"
-                key="fill"
-                data={geojson}
-              >
-                <Layer id="data" type="fill" paint={fillPaint} />
-              </Source>}
+              {hasLineString && renderPolygon(geojson)}
+              {hasPolygon && renderLineString(geojson)}
             </React.Fragment>
           )
         }
@@ -135,16 +157,52 @@ const ProjectMap = ({ project }) => {
         width="100%"
         height="100%"
         {...viewport}
+        interactiveLayerIds={["data"]}
         onViewportChange={viewport => setViewport(viewport)}
+        onClick={onMapClick}
       >
-        {renderGeography(project)}
+        {results.projects.map(renderGeography)}
+        {popupInfo && <Popup
+          offsetTop={-20}
+          latitude={popupInfo.latitude}
+          longitude={popupInfo.longitude}
+          closeButton={true}
+          closeOnClick={false}
+          onClose={() => setPopupInfo(null)}
+          anchor="bottom"
+        >
+          <div className="popup-title">
+            <a
+              href=""
+              onClick={e => {
+                e.preventDefault()
+                setProjectModalProject(popupInfo.project)
+              }}
+            >
+              {popupInfo.project.fields.Name}
+            </a>
+          </div>
+          <div className="popup-stat">
+            Category: {popupInfo.project.fields.Category.fields.Name}
+          </div>
+          <div className="popup-stat">
+            Grantee: {popupInfo.project.fields['Grantee Name']}
+          </div>
+          <div className="popup-stat">
+            Total Amount Awarded: {formatCurrencyWithUnit(popupInfo.project.fields.totalAwardAmount)}
+          </div>
+          <div className="popup-stat">
+            Total Payments: {formatCurrencyWithUnit(popupInfo.project.fields.totalPaymentAmount)}
+          </div>
+        </Popup>}
         <div className="nav" className="map-nav">
           <NavigationControl onViewportChange={viewport => setViewport(viewport)} />
         </div>
       </ReactMapGL>
       <style jsx>{`
         .map {
-          height: 200px;
+          clear: both;
+          height: 350px;
         }
 
         .map-nav {
@@ -153,9 +211,14 @@ const ProjectMap = ({ project }) => {
           left: 0;
           padding: 10px;
         }
+
+        .popup-title {
+          margin-right: 14px;
+          color: #2D65B1;
+        }
       `}</style>
     </div>
   )
 }
 
-export default ProjectMap
+export default ProjectsMap
