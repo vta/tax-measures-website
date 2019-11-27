@@ -29,11 +29,46 @@ const BarChart = ({ results }) => {
     groups = groupBy(results.items, item => item.fields['Parent Category'].fields.Name)
   }
 
-  const data = sortBy(Object.entries(groups).map(([categoryName, group], index) => {
+  if (Object.entries(groups).length === 1) {
+    // If all items are in one category, graph by project instead
+
+    groups = results.items.reduce((memo, item) => {
+      if (item.fields.Project) {
+        const project = results.projects.find(p => p.id === item.fields.Project[0].id)
+        if (project) {
+          if (!memo[project.fields.Name]) {
+            memo[project.fields.Name] = []
+          }
+          memo[project.fields.Name].push(item)
+        }
+      } else if (item.fields.Projects){
+        for (const projectId of item.fields.Projects) {
+          const project = results.projects.find(p => p.id === projectId)
+          if (project) {
+            if (!memo[project.fields.Name]) {
+              memo[project.fields.Name] = []
+            }
+            memo[project.fields.Name].push(item) 
+          }
+        }
+      } else {
+        if (!memo['Unallocated']) {
+          memo['Unallocated'] = []
+        }
+        memo['Unallocated'].push(item)
+      }
+      
+      return memo
+    }, {})
+  }
+
+  console.log(groups)
+
+  const data = sortBy(Object.entries(groups).map(([title, group], index) => {
     return {
       value: sumBy(group, i => i.fields.Amount),
-      title: categoryName,
-      color: colorPalate[index]
+      title,
+      color: colorPalate[index % colorPalate.length]
     }
   }), 'value')
 
