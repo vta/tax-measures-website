@@ -6,7 +6,7 @@ import ArrowButton from '../components/arrow-button'
 import FilterControls from '../components/filter-controls'
 import Footer from '../components/footer'
 import HeaderStats from '../components/header-stats'
-import ProjectsList from '../components/projects-list'
+import ProjectsTable from '../components/projects-table'
 import ProjectModal from '../components/project-modal'
 import Results from '../components/results'
 import '../css/index.scss'
@@ -144,7 +144,7 @@ const Home = ({
           </div>
         </div>
 
-        <ProjectsList
+        <ProjectsTable
           results={results}
           setProjectModalProject={setProjectModalProject}
         />
