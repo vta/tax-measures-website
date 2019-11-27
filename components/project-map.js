@@ -6,11 +6,12 @@ import MapLayer from '../components/map-layer'
 import { getViewport } from '../lib/util'
 
 const ProjectMap = ({ project, grantees }) => {
-  if ((!project.fields.Latitude || !project.fields.Longitude) && !project.fields.geometry) {
+  const { layers, bbox } = MapLayer([project], grantees)
+
+  if (!layers.length) {
     return null
   }
 
-  const { layers, bbox } = MapLayer([project], grantees)
   const [viewport, setViewport] = useState(getViewport(bbox))
 
   return (
