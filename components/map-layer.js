@@ -68,14 +68,14 @@ const MapLayer = (projects, grantees) => {
             />
           </Source>
         )
-        if (project.fields.geojson) {
+        if (project.fields.hasProjectGeometry) {
           memo.push(layer)
         } else {
           memo.unshift(layer)
         }
         layerIds.push(layerId)
 
-        const polygonOutlinePaint = project.fields.geojson ? {
+        const polygonOutlinePaint = project.fields.hasProjectGeometry ? {
           'line-color': '#2D65B1',
           'line-width': 3
         } : {
@@ -97,7 +97,7 @@ const MapLayer = (projects, grantees) => {
             />
           </Source>
         )
-        if (project.fields.geojson) {
+        if (project.fields.hasProjectGeometry) {
           memo.push(outlineLayer)
         } else {
           memo.unshift(outlineLayer)
@@ -123,7 +123,7 @@ const MapLayer = (projects, grantees) => {
             />
           </Source>
         )
-        if (project.fields.geojson) {
+        if (project.fields.hasProjectGeometry) {
           memo.push(layer)
         } else {
           memo.unshift(layer)
@@ -155,7 +155,7 @@ const MapLayer = (projects, grantees) => {
             />
           </Source>
         )
-        if (project.fields.geojson) {
+        if (project.fields.hasProjectGeometry) {
           memo.push(layer)
         } else {
           memo.unshift(layer)
