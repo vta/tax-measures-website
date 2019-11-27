@@ -3,7 +3,7 @@ import Spinner from 'react-bootstrap/Spinner'
 import BarChart from './bar-chart'
 import ProjectsMap from './projects-map'
 
-const Results = ({ loading, results, setProjectModalProject }) => {
+const Results = ({ loading, results, grantees, setProjectModalProject }) => {
   if (loading) {
     return (
       <div className='card'>
@@ -37,6 +37,7 @@ const Results = ({ loading, results, setProjectModalProject }) => {
           <div className='col-md-6'>
             <ProjectsMap
               results={results}
+              grantees={grantees}
               setProjectModalProject={setProjectModalProject}
             />
           </div>

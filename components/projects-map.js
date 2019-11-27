@@ -80,7 +80,7 @@ const PopupInfo = ({ popupInfo, onClose, setProjectModalProject }) => {
   )
 }
 
-const ProjectsMap = ({ results, setProjectModalProject }) => {
+const ProjectsMap = ({ results, grantees, setProjectModalProject }) => {
   const [popupInfo, setPopupInfo] = useState(null)
 
   const onMapClick = event => {
@@ -103,7 +103,7 @@ const ProjectsMap = ({ results, setProjectModalProject }) => {
     })
   }
 
-  const { layers, layerIds, bbox } = MapLayer(results.projects)
+  const { layers, layerIds, bbox } = MapLayer(results.projects, grantees)
   const [viewport, setViewport] = useState(getViewport(bbox))
 
   return (

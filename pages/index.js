@@ -138,6 +138,7 @@ const Home = ({
             <Results
               loading={loading}
               results={results}
+              grantees={grantees}
               setProjectModalProject={setProjectModalProject}
             />
           </div>
