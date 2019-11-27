@@ -5,7 +5,7 @@ import { faFileCsv } from '@fortawesome/free-solid-svg-icons'
 import { CSVLink } from "react-csv"
 import { formatCurrencyWithUnit, formatSubcategory } from '../lib/util'
 
-const ProjectsList = ({ results, setProjectModalProject }) => {
+const ProjectsTable = ({ results, setProjectModalProject }) => {
   if (!results || !results.projects || !results.projects.length) {
     return null
   }
@@ -102,4 +102,4 @@ const ProjectsList = ({ results, setProjectModalProject }) => {
   )
 }
 
-export default ProjectsList
+export default ProjectsTable
