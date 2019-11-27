@@ -6,7 +6,7 @@ import MapLayer from '../components/map-layer'
 import { getViewport } from '../lib/util'
 
 const ProjectMap = ({ project }) => {
-  if ((!project.fields.Latitude || !project.fields.Longitude) && !project.fields.Geometry) {
+  if ((!project.fields.Latitude || !project.fields.Longitude) && !project.fields.geometry) {
     return null
   }
 
