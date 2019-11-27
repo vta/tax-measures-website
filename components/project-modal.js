@@ -5,8 +5,10 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Table from 'react-bootstrap/Table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLinkAlt, faFileDownload } from '@fortawesome/free-solid-svg-icons'
-import { formatAwardAvailability, formatCurrency, formatDocumentLink } from '../lib/util'
+import { sortBy } from 'lodash'
+import { formatAwardAvailability, formatCurrency, getGranteeByProject } from '../lib/util'
 import ProjectMap from './project-map'
+import ProjectsTable from './projects-table'
 
 const DocumentLink = ({ document }) => {
   if (document.fields.URL) {
@@ -33,21 +35,23 @@ const DocumentLink = ({ document }) => {
 }
 
 const ProjectModal = ({
-  project,
+  selectedProjects,
   allocations,
   awards,
   documents,
   grantees,
   payments,
   onHide,
-  show
+  show,
+  setProjectModalProjects
 }) => {
   const [mapVisible, setMapVisible] = useState(false)
 
-  if (!project) {
+  if (!selectedProjects || !selectedProjects.length) {
     return null
   }
 
+  const project = selectedProjects[0]
   const handleHide = () => {
     setMapVisible(false)
     onHide()
@@ -56,7 +60,7 @@ const ProjectModal = ({
   const projectAllocations = project.fields.Allocations ? allocations.filter(a => project.fields.Allocations.includes(a.id)) : []
   const projectAwards = project.fields.Awards ? awards.filter(a => project.fields.Awards.includes(a.id)) : []
   const projectDocuments = project.fields.Documents ? documents.filter(d => project.fields.Documents.includes(d.id)) : []
-  const projectGrantee = grantees.find(g => g.id === project.fields.Grantee[0])
+  const projectGrantee = getGranteeByProject(project, grantees)
   const projectPayments = project.fields.Payments ? payments.filter(p => project.fields.Payments.includes(p.id)) : []
 
   const renderAllocations = () => {
@@ -152,6 +156,98 @@ const ProjectModal = ({
     )
   }
 
+  const renderModalBody = () => {
+    if (selectedProjects.length === 1) {
+      return (
+        <>
+          <div className="row">
+            <div className="col-md-6">
+              <div className="project-stat">
+                <b>Category:</b>{' '}
+                {project.fields.Category.fields.Name}
+              </div>
+              <div className="project-stat">  
+                <b>Grantee:</b>{' '}
+                {projectGrantee.fields.URL ? 
+                  <a href={projectGrantee.fields.URL}>
+                    {projectGrantee.fields.Name} <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
+                  </a> :
+                  projectGrantee.fields.Name
+                }
+              </div>
+              {project.fields.URL && <div className="project-stat">
+                <a href={project.fields.URL} target="_blank">Project Website <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" /></a>
+              </div>}
+            </div>
+            <div className="col-md-6">
+              {mapVisible && <ProjectMap project={project} grantees={grantees} />}
+            </div>
+          </div>
+          <div className="project-stat">
+            <b>Allocations:</b>{' '}
+            {renderAllocations()}
+          </div>
+          <div className="project-stat">
+            <b>Related Documents:</b>{' '}
+            {renderDocuments()}
+          </div>
+          <div className="project-stat">
+            <b>Awards:</b>{' '}
+            {renderAwards()}
+          </div>
+          <div className="project-stat">
+            <b>Payments:</b>{' '}
+            {renderPayments()}
+          </div>
+          <small className="float-right">Last Modified: {project.fields['Last Modified']}</small>
+          <style jsx>{`
+            .table-small td {
+              font-size: 12px;
+            }
+
+            .project-stat {
+              margin-top: 6px;
+            }
+          `}</style>
+        </>
+      )
+    } else {
+      const sortedProjects = sortBy(selectedProjects, project => {
+        // show countywide projects last
+        if (project.fields.hasProjectGeometry) {
+          return 0
+        }
+
+        const grantee = getGranteeByProject(project, grantees)
+
+        if (grantee && (grantee.fields.Name === 'VTA' || grantee.fields.Name === 'Santa Clara County')) {
+          return 1
+        }
+
+        return 0
+      })
+
+      return (
+        <ProjectsTable
+          selectedProjects={sortedProjects}
+          setProjectModalProjects={setProjectModalProjects}
+        />
+      )
+    }
+  }
+
+  const renderModalTitle = () => {
+    if (selectedProjects.length === 1) {
+      return (
+        <Modal.Title id="contained-modal-title-vcenter">
+          {project.fields.Name}
+        </Modal.Title>
+      )
+    }
+    
+    return null
+  }
+
   return (
     <Modal
       size="lg"
@@ -162,64 +258,14 @@ const ProjectModal = ({
       onHide={handleHide}
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          {project.fields.Name}
-        </Modal.Title>
+        {renderModalTitle()}
       </Modal.Header>
       <Modal.Body>
-        <div className="row">
-          <div className="col-md-6">
-            <div className="project-stat">
-              <b>Category:</b>{' '}
-              {project.fields.Category.fields.Name}
-            </div>
-            <div className="project-stat">  
-              <b>Grantee:</b>{' '}
-              {projectGrantee.fields.URL ? 
-                <a href={projectGrantee.fields.URL}>
-                  {projectGrantee.fields.Name} <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
-                </a> :
-                projectGrantee.fields.Name
-              }
-            </div>
-            {project.fields.URL && <div className="project-stat">
-              <a href={project.fields.URL} target="_blank">Project Website <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" /></a>
-            </div>}
-          </div>
-          <div className="col-md-6">
-            {mapVisible && <ProjectMap project={project} grantees={grantees} />}
-          </div>
-        </div>
-        <div className="project-stat">
-          <b>Allocations:</b>{' '}
-          {renderAllocations()}
-        </div>
-        <div className="project-stat">
-          <b>Related Documents:</b>{' '}
-          {renderDocuments()}
-        </div>
-        <div className="project-stat">
-          <b>Awards:</b>{' '}
-          {renderAwards()}
-        </div>
-        <div className="project-stat">
-          <b>Payments:</b>{' '}
-          {renderPayments()}
-        </div>
-        <small className="float-right">Last Modified: {project.fields['Last Modified']}</small>
+        {renderModalBody()}
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={handleHide} className='btn-secondary'>Close</Button>
       </Modal.Footer>
-      <style jsx>{`
-        .table-small td {
-          font-size: 12px;
-        }
-
-        .project-stat {
-          margin-top: 6px;
-        }
-      `}</style>
     </Modal>
   )
 }
