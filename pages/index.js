@@ -42,7 +42,7 @@ const Home = ({
   const [loading, setLoading] = useState(false)
   const [incomingFilters, setIncomingFilters] = useState(initialFilters)
   const [currentFilters, setCurrentFilters] = useState(initialFilters)
-  const [projectModalProject, setProjectModalProject] = useState()
+  const [projectModalProjects, setProjectModalProjects] = useState()
 
   const handleSearch = filters => {
     setLoading(true)
@@ -128,7 +128,7 @@ const Home = ({
 
             <FilterAlert results={results} currentFilters={currentFilters} />
 
-            {!results  && <div className='card mb-3'>
+            {!results && <div className='card mb-3'>
               <div className='card-body'>
                 <h3>See how much Measure B has collected to suport transportation, and how that money has been spent.</h3>
                 <div>This website provides a gateway to understanding Measure B spending. Use the filters above to pick the timeframe, categories, and grantees you're interested in examining the allocations, payments, and projects for. Below you'll see the data you requested visualized. On the "Money" mode, you'll see a cross section of the funding that fits your filter. If you switch to the "Map" tab, you'll see the relevant projects geographically. Below is a text list of those projects, as well as a tool to export that list of projects in a spreadsheet form. <a href="#" onClick={() => setAboutModalShow(true)}>Read more about Measure B &raquo;</a></div>
@@ -139,28 +139,41 @@ const Home = ({
               loading={loading}
               results={results}
               grantees={grantees}
-              setProjectModalProject={setProjectModalProject}
+              setProjectModalProjects={setProjectModalProjects}
             />
           </div>
         </div>
 
-        <ProjectsTable
-          results={results}
-          setProjectModalProject={setProjectModalProject}
-        />
+        {results && <div className='row'>
+          <div className='col'>
+            <div className='card bg-blue text-white mb-3'>
+              <div className='card-body'>
+                <h3>Projects List</h3>
+                <p>Below is a list of the projects correlated with the filter settings above</p>
+                <ProjectsTable
+                  selectedProjects={results && results.projects}
+                  setProjectModalProjects={setProjectModalProjects}
+                  showCSVDownloadLink={true}
+                  showTotalRow={true}
+                />
+              </div>
+            </div>
+          </div>
+        </div>}
 
         <Footer />
       </div>
 
       <ProjectModal
-        show={!!projectModalProject}
-        project={projectModalProject}
-        onHide={() => setProjectModalProject()}
+        show={!!projectModalProjects}
+        selectedProjects={projectModalProjects}
+        onHide={() => setProjectModalProjects()}
         allocations={allocations}
         awards={awards}
         documents={documents}
         grantees={grantees}
         payments={payments}
+        setProjectModalProjects={setProjectModalProjects}
       />
 
       <style jsx>{`

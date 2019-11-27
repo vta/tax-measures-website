@@ -5,8 +5,13 @@ import { faFileCsv } from '@fortawesome/free-solid-svg-icons'
 import { CSVLink } from "react-csv"
 import { formatCurrencyWithUnit, formatSubcategory } from '../lib/util'
 
-const ProjectsTable = ({ results, setProjectModalProject }) => {
-  if (!results || !results.projects || !results.projects.length) {
+const ProjectsTable = ({
+  selectedProjects,
+  setProjectModalProjects,
+  showCSVDownloadLink,
+  showTotalRow
+}) => {
+  if (!selectedProjects || !selectedProjects.length) {
     return null
   }
 
@@ -18,7 +23,7 @@ const ProjectsTable = ({ results, setProjectModalProject }) => {
             href=""
             onClick={e => {
               e.preventDefault()
-              setProjectModalProject(project)
+              setProjectModalProjects([project])
             }}
           >
             {project.fields.Name}
@@ -38,7 +43,7 @@ const ProjectsTable = ({ results, setProjectModalProject }) => {
 
   const csvData = [
     ["Project", "Category", "Subcategory", "URL", "Total Awards", "Total Payments"],
-    ...results.projects.map(project => {
+    ...selectedProjects.map(project => {
       return [
         project.fields.Name,
         project.fields.Category.fields.Name,
@@ -50,55 +55,47 @@ const ProjectsTable = ({ results, setProjectModalProject }) => {
     })
   ]
 
-  const totals = results.projects.reduce((memo, project) => {
+  const totals = selectedProjects.reduce((memo, project) => {
     memo.totalAwardAmount += project.fields.totalAwardAmount
     memo.totalPaymentAmount += project.fields.totalPaymentAmount
     return memo
   }, { totalAwardAmount: 0, totalPaymentAmount: 0 })
 
   return (
-    <div className='row'>
-      <div className='col'>
-        <div className='card bg-blue text-white mb-3'>
-          <div className='card-body'>
-            <h3>Projects List</h3>
-            <p>Below is a list of the projects correlated with the filter settings above</p>
-            <Table responsive size="sm" className='project-table'>
-              <thead>
-                <tr>
-                  <th>Project Name</th>
-                  <th>Category</th>
-                  <th>Subcategory</th>
-                  <th>Awards</th>
-                  <th>Payments</th>
-                </tr>
-              </thead>
-              <tbody>
-                {results.projects.map(renderProjectRow)}
-                <tr className="table-dark border-top-2">
-                  <td>Total</td>
-                  <td></td>
-                  <td></td>
-                  <td className="text-right">
-                    {formatCurrencyWithUnit(totals.totalAwardAmount)}
-                  </td>
-                  <td className="text-right">
-                    {formatCurrencyWithUnit(totals.totalPaymentAmount)}
-                  </td>
-                </tr>
-              </tbody>
-            </Table>
-            <CSVLink
-              data={csvData}
-              filename={"vta-tax-measures.csv"}
-              className="btn btn-primary btn-white-border float-right"
-            >
-              <FontAwesomeIcon icon={faFileCsv} className='mr-2' /> Download CSV
-            </CSVLink>
-          </div>
-        </div>
-      </div>
-    </div>
+    <>
+      <Table responsive size="sm" className='project-table'>
+        <thead>
+          <tr>
+            <th>Project Name</th>
+            <th>Category</th>
+            <th>Subcategory</th>
+            <th>Awards</th>
+            <th>Payments</th>
+          </tr>
+        </thead>
+        <tbody>
+          {selectedProjects.map(renderProjectRow)}
+          {showTotalRow && <tr className="table-dark border-top-2">
+            <td>Total</td>
+            <td></td>
+            <td></td>
+            <td className="text-right">
+              {formatCurrencyWithUnit(totals.totalAwardAmount)}
+            </td>
+            <td className="text-right">
+              {formatCurrencyWithUnit(totals.totalPaymentAmount)}
+            </td>
+          </tr>}
+        </tbody>
+      </Table>
+      {showCSVDownloadLink && <CSVLink
+        data={csvData}
+        filename={"vta-tax-measures.csv"}
+        className="btn btn-primary btn-white-border float-right"
+      >
+        <FontAwesomeIcon icon={faFileCsv} className='mr-2' /> Download CSV
+      </CSVLink>}
+    </>
   )
 }
 

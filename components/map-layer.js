@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
-import { mergeBboxes } from '../lib/util'
+import { mergeBboxes, getGranteeByProject } from '../lib/util'
 
 const MapLayer = (projects, grantees) => {
   const layerIds = []
@@ -10,7 +10,7 @@ const MapLayer = (projects, grantees) => {
 
     if (!geojson) {
       // Use geojson from grantee if exists
-      const grantee = grantees.find(g => g.id === project.fields.Grantee[0])
+      const grantee = getGranteeByProject(project, grantees)
 
       if (grantee && grantee.fields.geometry) {
         geojson = grantee.fields.geometry
