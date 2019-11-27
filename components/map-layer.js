@@ -51,82 +51,115 @@ const MapLayer = (projects, grantees) => {
       
       if (hasPolygon) {
         const layerId = `${project.id}fill`
-        memo.push(<Source
-          type="geojson"
-          key={layerId}
-          data={geojson}
-        >
-          <Layer
-            id={layerId}
-            type="fill"
-            paint={{
-              'fill-color': '#2D65B1',
-              'fill-opacity': 0,
-              'fill-outline-color': '#2D65B1',
-            }}
-          />
-        </Source>)
+        const layer = (
+          <Source
+            type="geojson"
+            key={layerId}
+            data={geojson}
+          >
+            <Layer
+              id={layerId}
+              type="fill"
+              paint={{
+                'fill-color': '#2D65B1',
+                'fill-opacity': 0,
+                'fill-outline-color': '#2D65B1',
+              }}
+            />
+          </Source>
+        )
+        if (project.fields.geojson) {
+          memo.push(layer)
+        } else {
+          memo.unshift(layer)
+        }
         layerIds.push(layerId)
 
+        const polygonOutlinePaint = project.fields.geojson ? {
+          'line-color': '#2D65B1',
+          'line-width': 3
+        } : {
+          'line-color': '#91a0ae',
+          'line-width': 2
+        }
+
         const outlineLayerId = `${project.id}filloutline`
-        memo.push(<Source
-          type="geojson"
-          key={outlineLayerId}
-          data={geojson}
-        >
-          <Layer
-            id={outlineLayerId}
-            type="line"
-            paint={{
-              'line-color': '#2D65B1',
-              'line-width': 4
-            }}
-          />
-        </Source>)
+        const outlineLayer = (
+          <Source
+            type="geojson"
+            key={outlineLayerId}
+            data={geojson}
+          >
+            <Layer
+              id={outlineLayerId}
+              type="line"
+              paint={polygonOutlinePaint}
+            />
+          </Source>
+        )
+        if (project.fields.geojson) {
+          memo.push(outlineLayer)
+        } else {
+          memo.unshift(outlineLayer)
+        }
         layerIds.push(outlineLayerId)
       }
 
       if (hasLineString) {
         const layerId = `${project.id}line`
-        memo.push(<Source
-          type="geojson"
-          key={layerId}
-          data={geojson}
-        >
-          <Layer
-            id={layerId}
-            type="line"
-            paint={{
-              'line-color': '#2D65B1',
-              'line-width': 4
-            }}
-          />
-        </Source>)
+        const layer = (
+          <Source
+            type="geojson"
+            key={layerId}
+            data={geojson}
+          >
+            <Layer
+              id={layerId}
+              type="line"
+              paint={{
+                'line-color': '#2D65B1',
+                'line-width': 4
+              }}
+            />
+          </Source>
+        )
+        if (project.fields.geojson) {
+          memo.push(layer)
+        } else {
+          memo.unshift(layer)
+        }
         layerIds.push(layerId)
       }
 
       if (hasPoint) {
         const layerId = `${project.id}circle`
-        memo.push(<Source
-          type="geojson"
-          key={layerId}
-          data={geojson}
-        >
-          <Layer
-            id={layerId}
-            type="circle"
-            paint={{
-              'circle-color': '#2D65B1',
-              'circle-opacity': 0.8,
-              'circle-radius': {
-                'base': 1.75,
-                'stops': [[10, 2], [22, 180]]
-              },
-              'circle-stroke-width': 2,
-              'circle-stroke-color': '#2D65B1',
-            }}
-          />
-        </Source>)
+        const layer = (
+          <Source
+            type="geojson"
+            key={layerId}
+            data={geojson}
+          >
+            <Layer
+              id={layerId}
+              type="circle"
+              paint={{
+                'circle-color': '#2D65B1',
+                'circle-opacity': 0.8,
+                'circle-radius': {
+                  'base': 1.75,
+                  'stops': [[10, 2], [22, 180]]
+                },
+                'circle-stroke-width': 2,
+                'circle-stroke-color': '#2D65B1',
+              }}
+            />
+          </Source>
+        )
+        if (project.fields.geojson) {
+          memo.push(layer)
+        } else {
+          memo.unshift(layer)
+        }
         layerIds.push(layerId)
       }
 
