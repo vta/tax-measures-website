@@ -73,6 +73,15 @@ const BarChart = ({ results }) => {
   const chartType = results.transactionType === 'allocation' ? 'Allocations' : 'Payments'
   const total = sumBy(results.items, i => i.fields.Amount)
 
+  if (data.length <= 1) {
+    return (
+      <div>
+        <p>Total {chartType}: {formatCurrencyWithUnit(total)}</p>
+        <div className="text-center font-weight-bold mt-5">Not enough data for chart</div>
+      </div>
+    )
+  }
+
   return (
     <Chart
       options={{
