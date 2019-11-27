@@ -106,6 +106,15 @@ const ProjectsMap = ({ results, grantees, setProjectModalProject }) => {
   const { layers, layerIds, bbox } = MapLayer(results.projects, grantees)
   const [viewport, setViewport] = useState(getViewport(bbox))
 
+  if  (layers.length === 0) {
+    return (
+      <div>
+        <p>&nbsp;</p>
+        <div className="text-center font-weight-bold mt-5">No map available</div>
+      </div>
+    )
+  }
+
   return (
     <div className="map">
       <ReactMapGL
