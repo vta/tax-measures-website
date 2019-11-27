@@ -2,7 +2,7 @@ import { airtableGet } from '../../lib/airtable'
 
 export default async (req, res) => {
   const grantees = await airtableGet('Grantees', {
-    'fields[]': ['Name', 'URL'],
+    'fields[]': ['Name', 'URL', 'geojson'],
     filterByFormula: 'NOT({Name} = "")',
     'sort[0][field]': 'Name'
   })

@@ -187,7 +187,7 @@ const ProjectModal = ({
             </div>}
           </div>
           <div className="col-md-6">
-            {mapVisible && <ProjectMap project={project} />}
+            {mapVisible && <ProjectMap project={project} grantees={grantees} />}
           </div>
         </div>
         <div className="project-stat">

@@ -62,8 +62,6 @@ const BarChart = ({ results }) => {
     }, {})
   }
 
-  console.log(groups)
-
   const data = sortBy(Object.entries(groups).map(([title, group], index) => {
     return {
       value: sumBy(group, i => i.fields.Amount),

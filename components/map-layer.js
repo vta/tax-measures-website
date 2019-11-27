@@ -1,12 +1,22 @@
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
-import { mergeBboxes, getGeojsonFromProject } from '../lib/util'
+import { mergeBboxes } from '../lib/util'
 
-const MapLayer = (projects) => {
+const MapLayer = (projects, grantees) => {
   const layerIds = []
   const bboxes = []
   const layers = projects.reduce((memo, project) => {
-    const { geometry: geojson } = project.fields
+    let { geometry: geojson, bbox: layerBbox } = project.fields
+
+    if (!geojson) {
+      // Use geojson from grantee if exists
+      const grantee = grantees.find(g => g.id === project.fields.Grantee[0])
+
+      if (grantee && grantee.fields.geometry) {
+        geojson = grantee.fields.geometry
+        layerBbox = grantee.fields.bbox
+      }
+    }
 
     if (geojson) {
       let hasLineString = false
@@ -120,7 +130,7 @@ const MapLayer = (projects) => {
         layerIds.push(layerId)
       }
 
-      bboxes.push(project.fields.bbox)
+      bboxes.push(layerBbox)
     }
 
     return memo
