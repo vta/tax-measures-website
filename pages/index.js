@@ -22,7 +22,7 @@ import {
 } from '../lib/api'
 import {
   applyFilters,
-  getInitialFiltersFromQuery,
+  getInitialFiltersFromUrlQuery,
   preprocessData,
   updateUrlWithFilters
 } from '../lib/util'
@@ -236,7 +236,7 @@ Home.getInitialProps = async ({ query }) => {
     fetchRevenue()
   ])
 
-  const initialFilters = getInitialFiltersFromQuery(query)
+  const initialFilters = getInitialFiltersFromUrlQuery(query)
 
   return preprocessData({
     allocations,
