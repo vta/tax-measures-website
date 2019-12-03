@@ -10,7 +10,7 @@ import {
 } from 'react-day-picker/moment'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
-import { isEmpty } from 'lodash'
+import { capitalize, isEmpty } from 'lodash'
 
 const FilterControls = ({
   categories,
@@ -74,15 +74,24 @@ const FilterControls = ({
     <div className='card bg-blue p-2 mb-3'>
       <div className='row'>
         <div className='col-md-3 mb-2'>
-          <Form.Control
-            as="select"
-            onChange={event => setTransactionType(event.target.value)}
-            value={transactionType}
-          >
-            <option value="">Transaction type</option>
-            <option value="payment">Payment</option>
-            <option value="allocation">Allocation</option>
-          </Form.Control>
+          <Select 
+            value={transactionType && [{
+              value: transactionType,
+              label: capitalize(transactionType)
+            }]}
+            onChange={selectedOption => setTransactionType(selectedOption.value)}
+            options={[
+              {
+                label: 'Payment',
+                value: 'payment'
+              },
+              {
+                label: 'Allocation',
+                value: 'allocation'
+              }
+            ]}
+            placeholder="Select Transaction Type"
+          />  
         </div>
         <div className='col-md-3 mb-2'>
           <Select 
