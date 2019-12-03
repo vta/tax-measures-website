@@ -118,16 +118,25 @@ const FilterControls = ({
       </div>
       <div className='row'>
         <div className='col-md-3 mb-2 mb-md-0'>
-          <Form.Control
-            as="select"
-            onChange={event => setCategory(event.target.value)}
-            value={category}
-          >
-            <option value="">Category</option>
-            {parentCategories && parentCategories.map(category => (
-              <option key={category.id}>{category.fields.Name}</option>
-            ))}
-          </Form.Control>
+          <Select 
+            value={category && category.map(c => ({
+              value: c,
+              label: c
+            }))}
+            onChange={selectedOptions => {
+              if (selectedOptions && selectedOptions.length) {
+                setCategory(selectedOptions.map(c => c.label))
+              } else {
+                setCategory(undefined)
+              }
+            }}
+            options={categories && categories.map(c => ({
+              value: c.fields.Name,
+              label: c.fields.Name
+            }))}
+            isMulti={true}
+            placeholder="Filter by Category"
+          />
         </div>
         <div className='col-md-3 mb-2 mb-md-0'>
           <DayPickerInput
