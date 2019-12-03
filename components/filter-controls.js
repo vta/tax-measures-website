@@ -73,7 +73,7 @@ const FilterControls = ({
   return (
     <div className='card bg-blue p-2 mb-3'>
       <div className='row'>
-        <div className='col-md-3 mb-2'>
+        <div className='col-lg-4 mb-2'>
           <Select 
             value={transactionType && [{
               value: transactionType,
@@ -93,7 +93,7 @@ const FilterControls = ({
             placeholder="Select Transaction Type"
           />  
         </div>
-        <div className='col-md-3 mb-2'>
+        <div className='col-lg-4 mb-2'>
           <Select 
             value={grantee && grantee.map(g => ({
               value: g,
@@ -114,7 +114,7 @@ const FilterControls = ({
             placeholder="Filter by Grantee"
           />
         </div>
-        <div className='col-md-6 mb-2'>
+        <div className='col-lg-4 mb-2'>
           <Typeahead
             ref={projectRef}
             options={projects ? projects.map(project => project.fields.Name) : []}
@@ -126,7 +126,7 @@ const FilterControls = ({
         </div>
       </div>
       <div className='row'>
-        <div className='col-md-3 mb-2 mb-md-0'>
+        <div className='col-lg-4 mb-2 mb-lg-0'>
           <Select 
             value={category && category.map(c => ({
               value: c,
@@ -147,7 +147,7 @@ const FilterControls = ({
             placeholder="Filter by Category"
           />
         </div>
-        <div className='col-md-3 mb-2 mb-md-0'>
+        <div className='col-lg-2 mb-2 mb-lg-0'>
           <DayPickerInput
             formatDate={formatDate}
             parseDate={parseDate}
@@ -157,7 +157,7 @@ const FilterControls = ({
             ref={startDateRef}
           />
         </div>
-        <div className='col-md-3 mb-2 mb-md-0'>
+        <div className='col-lg-2 mb-2 mb-lg-0'>
           <DayPickerInput
             formatDate={formatDate}
             parseDate={parseDate}
@@ -167,31 +167,34 @@ const FilterControls = ({
             ref={endDateRef}
           />
         </div>
-        <div className='col-md-2'>
-          <Button
-            variant="secondary"
-            onClick={() => validateFilters({
-              transactionType,
-              grantee,
-              project,
-              category,
-              startDate,
-              endDate
-            })}
-            block
-          >
-            <FontAwesomeIcon icon={faSearch} className='mr-2' /> Search
-          </Button>
-        </div>
-        <div className='col-md-1'>
-          <Button
-            variant="danger"
-            onClick={clearSearch}
-            block
-          >
-            Clear
-          </Button>
-          
+        <div className='col-lg-4'>
+          <div className='row'>
+            <div className='col'>
+              <Button
+                variant="secondary" 
+                onClick={() => validateFilters({
+                  transactionType,
+                  grantee,
+                  project,
+                  category,
+                  startDate,
+                  endDate
+                })}
+                block
+              >
+                <FontAwesomeIcon icon={faSearch} className='mr-2' /> Search
+              </Button>
+            </div>
+            <div  className='col'>
+              <Button
+                variant="danger"
+                onClick={clearSearch}
+                block
+              >
+                Clear
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
       <style jsx global>{`
