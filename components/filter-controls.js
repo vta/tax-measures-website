@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { Typeahead } from 'react-bootstrap-typeahead'
 import DayPickerInput from 'react-day-picker/DayPickerInput'
+import Select from 'react-select'
 import {
   formatDate,
   parseDate,
@@ -84,16 +85,25 @@ const FilterControls = ({
           </Form.Control>
         </div>
         <div className='col-md-3 mb-2'>
-          <Form.Control
-            as="select"
-            onChange={event => setGrantee(event.target.value)}
-            value={grantee}
-          >
-            <option value="">Grantee</option>
-            {grantees && grantees.map(grantee => (
-              <option key={grantee.id}>{grantee.fields.Name}</option>
-            ))}
-          </Form.Control>
+          <Select 
+            value={grantee && grantee.map(g => ({
+              value: g,
+              label: g
+            }))}
+            onChange={selectedOptions => {
+              if (selectedOptions && selectedOptions.length) {
+                setGrantee(selectedOptions.map(g => g.label))
+              } else {
+                setGrantee(undefined)
+              }
+            }}
+            options={grantees && grantees.map(g => ({
+              value: g.fields.Name,
+              label: g.fields.Name
+            }))}
+            isMulti={true}
+            placeholder="Filter by Grantee"
+          />
         </div>
         <div className='col-md-6 mb-2'>
           <Typeahead
