@@ -1,7 +1,7 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
 import { groupBy, sumBy, sortBy } from 'lodash'
-import { formatCurrencyWithUnit, getProjectByProjectId } from '../lib/util'
+import { formatCurrencyWithUnit, getProjectById } from '../lib/util'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -34,7 +34,7 @@ const BarChart = ({ results }) => {
 
     groups = results.items.reduce((memo, item) => {
       if (item.fields.Project) {
-        const project = getProjectByProjectId(item.fields.Project[0].id, results.projects)
+        const project = getProjectById(item.fields.Project[0].id, results.projects)
         if (project) {
           if (!memo[project.fields.Name]) {
             memo[project.fields.Name] = []
@@ -43,7 +43,7 @@ const BarChart = ({ results }) => {
         }
       } else if (item.fields.Projects){
         for (const projectId of item.fields.Projects) {
-          const project = getProjectByProjectId(projectId, results.projects)
+          const project = getProjectById(projectId, results.projects)
           if (project) {
             if (!memo[project.fields.Name]) {
               memo[project.fields.Name] = []
