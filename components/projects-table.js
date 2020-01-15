@@ -32,6 +32,9 @@ const ProjectsTable = ({
         <td>{project.fields['Parent Category'].fields.Name}</td>
         <td>{formatSubcategory(project)}</td>
         <td className="text-right">
+          {formatCurrencyWithUnit(project.fields.totalAllocationAmount)}
+        </td>
+        <td className="text-right">
           {formatCurrencyWithUnit(project.fields.totalAwardAmount)}
         </td>
         <td className="text-right">
@@ -42,13 +45,14 @@ const ProjectsTable = ({
   }
 
   const csvData = [
-    ["Project", "Category", "Subcategory", "URL", "Total Awards", "Total Payments"],
+    ["Project", "Category", "Subcategory", "URL", "Total Allocations", "Total Awards", "Total Payments"],
     ...selectedProjects.map(project => {
       return [
         project.fields.Name,
         project.fields.Category.fields.Name,
         formatSubcategory(project),
         project.fields.URL,
+        project.fields.totalAllocationAmount,
         project.fields.totalAwardAmount,
         project.fields.totalPaymentAmount
       ]
@@ -56,10 +60,11 @@ const ProjectsTable = ({
   ]
 
   const totals = selectedProjects.reduce((memo, project) => {
+    memo.totalAllocationAmount += project.fields.totalAllocationAmount
     memo.totalAwardAmount += project.fields.totalAwardAmount
     memo.totalPaymentAmount += project.fields.totalPaymentAmount
     return memo
-  }, { totalAwardAmount: 0, totalPaymentAmount: 0 })
+  }, { totalAllocationAmount: 0, totalAwardAmount: 0, totalPaymentAmount: 0 })
 
   return (
     <>
@@ -69,6 +74,7 @@ const ProjectsTable = ({
             <th>Project Name</th>
             <th>Category</th>
             <th>Subcategory</th>
+            <th>Allocations</th>
             <th>Awards</th>
             <th>Payments</th>
           </tr>
@@ -79,6 +85,9 @@ const ProjectsTable = ({
             <td>Total</td>
             <td></td>
             <td></td>
+            <td className="text-right">
+              {formatCurrencyWithUnit(totals.totalAllocationAmount)}
+            </td>
             <td className="text-right">
               {formatCurrencyWithUnit(totals.totalAwardAmount)}
             </td>
