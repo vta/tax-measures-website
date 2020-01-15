@@ -109,10 +109,17 @@ const BarChart = ({ results }) => {
           enabled: true,
           formatter: formatCurrencyWithUnit,
           textAnchor: 'start',
-          offsetX: 40,
+          offsetX: -6,
           style: {
             fontSize: '14px',
             colors: ['#4C4D55']
+          },
+          dropShadow: {
+            enabled: true,
+            color: '#fff',
+            top: 0,
+            left: 0,
+            blur: 3
           }
         },
         grid: {
