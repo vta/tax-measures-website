@@ -1,5 +1,6 @@
 import React from 'react'
 import Table from 'react-bootstrap/Table'
+import { some } from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileCsv } from '@fortawesome/free-solid-svg-icons'
 import { CSVLink } from "react-csv"
@@ -14,6 +15,8 @@ const ProjectsTable = ({
   if (!selectedProjects || !selectedProjects.length) {
     return null
   }
+
+  const hasSubcategoryColumn = some(selectedProjects, project => !!formatSubcategory(project))
 
   const renderProjectRow = project => {
     return (
@@ -30,7 +33,7 @@ const ProjectsTable = ({
           </a>
         </td>
         <td>{project.fields['Parent Category'].fields.Name}</td>
-        <td>{formatSubcategory(project)}</td>
+        {hasSubcategoryColumn && <td>{formatSubcategory(project)}</td>}
         <td className="text-right">
           {formatCurrencyWithUnit(project.fields.totalAllocationAmount)}
         </td>
@@ -73,7 +76,7 @@ const ProjectsTable = ({
           <tr>
             <th>Project Name</th>
             <th>Category</th>
-            <th>Subcategory</th>
+            {hasSubcategoryColumn && <th>Subcategory</th>}
             <th>Allocations</th>
             <th>Awards</th>
             <th>Payments</th>
@@ -84,7 +87,7 @@ const ProjectsTable = ({
           {showTotalRow && <tr className="table-dark border-top-2">
             <td>Total</td>
             <td></td>
-            <td></td>
+            {hasSubcategoryColumn && <td></td>}
             <td className="text-right">
               {formatCurrencyWithUnit(totals.totalAllocationAmount)}
             </td>
