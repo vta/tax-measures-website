@@ -66,7 +66,7 @@ const BarChart = ({ results }) => {
     }, {})
 
     // If fewer than 15 projects, chart by project
-    if (Object.entries(projectGroups).length < 15) {
+    if (Object.entries(projectGroups).length > 1 && Object.entries(projectGroups).length < 15) {
       return {
         chartType: 'Project',
         chartData: projectGroups
