@@ -95,7 +95,7 @@ const Home = ({
               <ArrowButton 
                 onClick={() => setIncomingFilters({
                   transactionType: 'payment',
-                  category: 'Bike/Ped'
+                  category: ['Bike/Ped']
                 })}
               >
                 How many dollars have been spent on bikes?
@@ -103,7 +103,7 @@ const Home = ({
               <ArrowButton 
                 onClick={() => setIncomingFilters({
                   transactionType: 'allocation',
-                  grantee: 'Palo Alto'
+                  grantee: ['Palo Alto']
                 })}
               >
                 How much has been allocated to Palo Alto?
