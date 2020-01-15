@@ -46,7 +46,7 @@ const Home = ({
 
   const handleSearch = filters => {
     setLoading(true)
-    setResults(applyFilters(filters, allocations, payments, projects, categories, grantees))
+    setResults(applyFilters(filters, awards, payments, projects, categories, grantees))
     setCurrentFilters(filters)
     
     setTimeout(() => {
@@ -76,7 +76,7 @@ const Home = ({
             <div>
               <ArrowButton 
                 onClick={() => setIncomingFilters({
-                  transactionType: 'allocation',
+                  transactionType: 'award',
                   startDate: '2017-1-1',
                   endDate: '2017-12-31'
                 })}
@@ -102,7 +102,7 @@ const Home = ({
               </ArrowButton>
               <ArrowButton 
                 onClick={() => setIncomingFilters({
-                  transactionType: 'allocation',
+                  transactionType: 'award',
                   grantee: ['Palo Alto']
                 })}
               >
