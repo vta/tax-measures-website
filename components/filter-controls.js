@@ -68,8 +68,6 @@ const FilterControls = ({
     handleSearch(filters)
   }
 
-  const parentCategories = categories.filter(c => !c.fields['Parent Category'])
-
   return (
     <div className='card bg-blue p-2 mb-3'>
       <div className='row'>
@@ -86,8 +84,8 @@ const FilterControls = ({
                 value: 'payment'
               },
               {
-                label: 'Allocation',
-                value: 'allocation'
+                label: 'Award',
+                value: 'award'
               }
             ]}
             placeholder="Select Transaction Type"

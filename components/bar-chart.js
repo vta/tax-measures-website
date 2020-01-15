@@ -6,6 +6,14 @@ import { formatCurrencyWithUnit, getProjectById } from '../lib/util'
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 const BarChart = ({ results }) => {
+  const getGraphAmount = item => {
+    if (results.transactionType === 'award') {
+      return item.fields['Award Amount']
+    } else if (results.transactionType === 'payment') {
+      return item.fields.Amount
+    }
+  }
+  
   const colorPalate = [
     '#33b2df',
     '#546E7A',
@@ -41,16 +49,6 @@ const BarChart = ({ results }) => {
           }
           memo[project.fields.Name].push(item)
         }
-      } else if (item.fields.Projects){
-        for (const projectId of item.fields.Projects) {
-          const project = getProjectById(projectId, results.projects)
-          if (project) {
-            if (!memo[project.fields.Name]) {
-              memo[project.fields.Name] = []
-            }
-            memo[project.fields.Name].push(item) 
-          }
-        }
       } else {
         if (!memo['Unallocated']) {
           memo['Unallocated'] = []
@@ -64,14 +62,14 @@ const BarChart = ({ results }) => {
 
   const data = sortBy(Object.entries(groups).map(([title, group], index) => {
     return {
-      value: sumBy(group, i => i.fields.Amount),
+      value: sumBy(group, getGraphAmount),
       title,
       color: colorPalate[index % colorPalate.length]
     }
   }), 'value')
 
-  const chartType = results.transactionType === 'allocation' ? 'Allocations' : 'Payments'
-  const total = sumBy(results.items, i => i.fields.Amount)
+  const chartType = results.transactionType === 'award' ? 'Awards' : 'Payments'
+  const total = sumBy(results.items, getGraphAmount)
 
   if (data.length <= 1) {
     return (
@@ -143,7 +141,7 @@ const BarChart = ({ results }) => {
           y: {
             formatter: formatCurrencyWithUnit,
             title: {
-              formatter: seriesName => seriesName === 'allocation' ? 'Allocations' : seriesName === 'payment' ? 'Payments' : seriesName
+              formatter: seriesName => seriesName === 'award' ? 'Awards' : seriesName === 'payment' ? 'Payments' : seriesName
             }
           }
         }
