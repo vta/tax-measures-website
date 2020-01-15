@@ -27,22 +27,28 @@ const BarChart = ({ results }) => {
     '#69d2e7'
   ]
 
-  let groups
+  const formatChartData = () => {
+    let categoryGroups
 
-  if (results.filters.category) {
-    // Use category
-    groups = groupBy(results.items, item => item.fields.Category.fields.Name)
-  } else {
-    // Use parent category
-    groups = groupBy(results.items, item => item.fields['Parent Category'].fields.Name)
-  }
+    if (results.filters.category) {
+      // Use category
+      categoryGroups = groupBy(results.items, item => item.fields.Category.fields.Name)
+    } else {
+      // Use parent category
+      categoryGroups = groupBy(results.items, item => item.fields['Parent Category'].fields.Name)
+    }
 
-  if (Object.entries(groups).length === 1) {
-    // If all items are in one category, graph by project instead
+    // If more than one category present, chart by category
+    if (Object.entries(categoryGroups).length > 1) {
+      return {
+        chartType: 'Category',
+        chartData: categoryGroups
+      }
+    }
 
-    groups = results.items.reduce((memo, item) => {
+    const projectGroups = results.items.reduce((memo, item) => {
       if (item.fields.Project) {
-        const project = getProjectById(item.fields.Project[0].id, results.projects)
+        const project = getProjectById(item.fields.Project[0], results.projects)
         if (project) {
           if (!memo[project.fields.Name]) {
             memo[project.fields.Name] = []
@@ -58,9 +64,43 @@ const BarChart = ({ results }) => {
       
       return memo
     }, {})
+
+    // If fewer than 15 projects, chart by project
+    if (Object.entries(projectGroups).length < 15) {
+      return {
+        chartType: 'Project',
+        chartData: projectGroups
+      }
+    }
+
+    const granteeGroups = results.items.reduce((memo, item) => {
+      if (item.fields.Project) {
+        const project = getProjectById(item.fields.Project[0], results.projects)
+        if (project) {
+          if (!memo[project.fields['Grantee Name']]) {
+            memo[project.fields['Grantee Name']] = []
+          }
+          memo[project.fields['Grantee Name']].push(item)
+        }
+      } else {
+        if (!memo['Unallocated']) {
+          memo['Unallocated'] = []
+        }
+        memo['Unallocated'].push(item)
+      }
+      
+      return memo
+    }, {})
+
+    return {
+      chartType: 'Grantee',
+      chartData: granteeGroups
+    }
   }
 
-  const data = sortBy(Object.entries(groups).map(([title, group], index) => {
+  const { chartType, chartData } = formatChartData()
+
+  const data = sortBy(Object.entries(chartData).map(([title, group], index) => {
     return {
       value: sumBy(group, getGraphAmount),
       title,
@@ -68,14 +108,21 @@ const BarChart = ({ results }) => {
     }
   }), 'value')
 
-  const chartType = results.transactionType === 'award' ? 'Awards' : 'Payments'
+  const dataType = results.transactionType === 'award' ? 'Awards' : 'Payments'
   const total = sumBy(results.items, getGraphAmount)
 
   if (data.length <= 1) {
     return (
       <div>
-        <p>Total {chartType}: {formatCurrencyWithUnit(total)}</p>
+        <p>Total {dataType}: {formatCurrencyWithUnit(total)}</p>
         <div className="text-center font-weight-bold mt-5">Not enough data for chart</div>
+      </div>
+    )
+  } else if (data.length > 15) {
+    return (
+      <div>
+        <p>Total {dataType}: {formatCurrencyWithUnit(total)}</p>
+        <div className="text-center font-weight-bold mt-5">Too much data for chart</div>
       </div>
     )
   }
@@ -87,13 +134,20 @@ const BarChart = ({ results }) => {
           toolbar: {
             show: false
           },
-          parentHeightOffset: 0
         },
         title: {
-          text: `Total ${chartType}: ${formatCurrencyWithUnit(total)}`,
+          text: `${dataType} by ${chartType}`,
           style: {
-            fontSize: 16
-          }
+            fontSize: 18
+          },
+          floating: true
+        },
+        subtitle: {
+          text: `Total ${dataType}: ${formatCurrencyWithUnit(total)}`,
+          style: {
+            fontSize: 14,
+          },
+          offsetY: 24
         },
         plotOptions: {
           bar: {
