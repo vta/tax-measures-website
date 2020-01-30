@@ -1,13 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
 import { Typeahead } from 'react-bootstrap-typeahead'
-import DayPickerInput from 'react-day-picker/DayPickerInput'
 import Select from 'react-select'
-import {
-  formatDate,
-  parseDate,
-} from 'react-day-picker/moment'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { capitalize, isEmpty } from 'lodash'
@@ -24,12 +18,8 @@ const FilterControls = ({
   const [grantee, setGrantee] = useState(incomingFilters.grantee)
   const [project, setProject] = useState(incomingFilters.project)
   const [category, setCategory] = useState(incomingFilters.category)
-  const [startDate, setStartDate] = useState(incomingFilters.startDate)
-  const [endDate, setEndDate] = useState(incomingFilters.endDate)
 
   const projectRef = useRef();
-  const startDateRef = useRef();
-  const endDateRef = useRef();
 
   useEffect(() => {
     setTransactionType(incomingFilters.transactionType || '')
@@ -40,19 +30,7 @@ const FilterControls = ({
       projectRef.current.getInstance().clear()
     } else {
       setProject(incomingFilters.project)
-    }
-
-    // Hack until react-day-picker v8 comes out 
-    if (!incomingFilters.startDate) {
-      startDateRef.current.setState({ value: '', typedValue: '' })
-    } else {
-      setStartDate(incomingFilters.startDate)
-    }
-
-    if (!incomingFilters.endDate) {
-      endDateRef.current.setState({ value: '', typedValue: '' })
-    } else {
-      setEndDate(incomingFilters.endDate)
+      projectRef.current.getInstance()
     }
 
     if (!isEmpty(incomingFilters)) {
@@ -145,27 +123,7 @@ const FilterControls = ({
             placeholder="Filter by Category"
           />
         </div>
-        <div className='col-lg-2 mb-2 mb-lg-0'>
-          <DayPickerInput
-            formatDate={formatDate}
-            parseDate={parseDate}
-            inputProps={{className: 'form-control', placeholder: 'Start Date'}}
-            onDayChange={selectedDay => setStartDate(selectedDay)}
-            value={startDate ? formatDate(startDate) : startDate}
-            ref={startDateRef}
-          />
-        </div>
-        <div className='col-lg-2 mb-2 mb-lg-0'>
-          <DayPickerInput
-            formatDate={formatDate}
-            parseDate={parseDate}
-            inputProps={{className: 'form-control', placeholder: 'End Date'}}
-            onDayChange={selectedDay => setEndDate(selectedDay)}
-            value={endDate ? formatDate(endDate) : endDate}
-            ref={endDateRef}
-          />
-        </div>
-        <div className='col-lg-4'>
+        <div className='col-lg-8'>
           <div className='row'>
             <div className='col'>
               <Button
@@ -174,9 +132,7 @@ const FilterControls = ({
                   transactionType,
                   grantee,
                   project,
-                  category,
-                  startDate,
-                  endDate
+                  category
                 })}
                 block
               >
