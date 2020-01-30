@@ -77,20 +77,18 @@ const Home = ({
               <ArrowButton 
                 onClick={() => setIncomingFilters({
                   transactionType: 'award',
-                  startDate: '2017-1-1',
-                  endDate: '2017-12-31'
+                  project: 'BART Phase 2'
                 })}
               >
-                How many funds were allocated in 2017?
+                How many funds were awarded to BART Phase 2?
               </ArrowButton>
               <ArrowButton 
                 onClick={() => setIncomingFilters({
                   transactionType: 'payment',
-                  startDate: '2019-1-1',
-                  endDate: '2019-12-31'
+                  category: ['Caltrain Grade Separation']
                 })}
               >
-                How many funds were spent in 2019?
+                How many funds have been spent on Caltrain Grade Separation?
               </ArrowButton>
               <ArrowButton 
                 onClick={() => setIncomingFilters({
