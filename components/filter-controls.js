@@ -119,7 +119,7 @@ const FilterControls = ({
             placeholder="Project Name"
             onChange={selected => setProject(selected.length ? selected[0] : undefined)}
             id="project-name"
-            defaultSelected={project ? [project]: undefined}
+            selected={project ? [project]: undefined}
           />
         </div>
       </div>
