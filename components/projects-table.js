@@ -21,6 +21,7 @@ const ProjectsTable = ({
   const renderProjectRow = project => {
     return (
       <tr key={project.id}>
+        <td className="text-right">{project.fields['Fiscal Year']}</td>
         <td>
           <a
             href=""
@@ -32,6 +33,7 @@ const ProjectsTable = ({
             {project.fields.Name}
           </a>
         </td>
+        <td>{project.fields['Grantee Name']}</td>
         <td>{project.fields['Parent Category'].fields.Name}</td>
         {hasSubcategoryColumn && <td>{formatSubcategory(project)}</td>}
         <td className="text-right">
@@ -74,7 +76,9 @@ const ProjectsTable = ({
       <Table responsive size="sm" className='project-table'>
         <thead>
           <tr>
+            <th>Fiscal Year</th>
             <th>Project Name</th>
+            <th>Grantee</th>
             <th>Category</th>
             {hasSubcategoryColumn && <th>Subcategory</th>}
             <th>Allocations</th>
@@ -85,7 +89,9 @@ const ProjectsTable = ({
         <tbody>
           {selectedProjects.map(renderProjectRow)}
           {showTotalRow && <tr className="table-dark border-top-2">
+            <td></td>
             <td>Total</td>
+            <td></td>
             <td></td>
             {hasSubcategoryColumn && <td></td>}
             <td className="text-right">
