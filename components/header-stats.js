@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle, faQuestion } from '@fortawesome/free-solid-svg-icons'
+import { faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { sumBy } from 'lodash'
+import Button from 'react-bootstrap/Button'
 import { formatCurrencyMillions } from '../lib/util'
 import AboutModal from '../components/about-modal'
 
@@ -36,16 +37,16 @@ const HeaderStats = ({ allocations, revenue }) => {
         </div>
       </div>
       <div className='col-md-2'>
-        <div
-          className='question-button float-right'
+        <Button
           onClick={() => setAboutModalShow(true)}
-          aria-label="About Measure B"
+          className="float-right mr-2 mt-4"
+          variant="primary"
+          size="lg"
+          title="About Measure B"
         >
-          <span className="fa-layers fa-fw">
-            <FontAwesomeIcon icon={faCircle} color="#51BAEC" />
-            <FontAwesomeIcon icon={faQuestion} color="white" transform="shrink-6" />
-          </span>
-        </div>
+          <FontAwesomeIcon icon={faQuestion} className="mr-2" />
+          <span>About</span>
+        </Button>
       </div>
 
       <AboutModal
