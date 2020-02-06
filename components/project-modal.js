@@ -6,7 +6,13 @@ import Table from 'react-bootstrap/Table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLinkAlt, faFileDownload } from '@fortawesome/free-solid-svg-icons'
 import { sortBy } from 'lodash'
-import { formatAwardAvailability, formatCurrency, getGranteeByProject } from '../lib/util'
+import {
+  formatAvailability,
+  formatCategory,
+  formatCurrency,
+  formatSubcategory,
+  getGranteeByProject
+} from '../lib/util'
 import ProjectMap from './project-map'
 import ProjectsTable from './projects-table'
 
@@ -72,8 +78,9 @@ const ProjectModal = ({
       <Table responsive size="sm" className='small-table'>
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Amount</th>
+            <th style={{ width: '33.3%' }}>Date</th>
+            <th style={{ width: '33.3%' }}>Amount</th>
+            <th style={{ width: '33.3%' }}>Availability</th>
           </tr>
         </thead>
         <tbody>
@@ -81,6 +88,7 @@ const ProjectModal = ({
             <tr key={allocation.id}>
               <td>{allocation.fields['Date Allocated']}</td>
               <td>{formatCurrency(allocation.fields.Amount)}</td>
+              <td>{formatAvailability(allocation)}</td>
             </tr>
           ))}
         </tbody>
@@ -97,9 +105,9 @@ const ProjectModal = ({
       <Table responsive size="sm" className='small-table'>
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Amount</th>
-            <th>Availability</th>
+            <th style={{ width: '33.3%' }}>Date</th>
+            <th style={{ width: '33.3%' }}>Amount</th>
+            <th style={{ width: '33.3%' }}>Availability</th>
           </tr>
         </thead>
         <tbody>
@@ -107,7 +115,7 @@ const ProjectModal = ({
             <tr key={award.id}>
               <td>{award.fields.Date}</td>
               <td>{formatCurrency(award.fields['Award Amount'])}</td>
-              <td>{formatAwardAvailability(award)}</td>
+              <td>{formatAvailability(award)}</td>
             </tr>
           ))}
         </tbody>
@@ -158,14 +166,27 @@ const ProjectModal = ({
 
   const renderModalBody = () => {
     if (selectedProjects.length === 1) {
+      const subcategoryName = formatSubcategory(project)
+
       return (
         <>
           <div className="row">
             <div className="col-md-6">
               <div className="project-stat">
                 <b>Category:</b>{' '}
-                {project.fields.Category.fields.Name}
+                {formatCategory(project)}
               </div>
+              {subcategoryName && <div className="project-stat">
+                <b>Subcategory:</b>{' '}
+                {subcategoryName}
+              </div>}
+              {project.fields['Fiscal Year'] && <div className="project-stat">
+                <b>Fiscal Year:</b>{' '}
+                {project.fields['Fiscal Year']}
+              </div>}
+              {project.fields.URL && <div className="project-stat">
+                <a href={project.fields.URL} target="_blank">Project Website <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" /></a>
+              </div>}
               <div className="project-stat">  
                 <b>Grantee:</b>{' '}
                 {projectGrantee.fields.URL ? 
@@ -175,9 +196,6 @@ const ProjectModal = ({
                   projectGrantee.fields.Name
                 }
               </div>
-              {project.fields.URL && <div className="project-stat">
-                <a href={project.fields.URL} target="_blank">Project Website <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" /></a>
-              </div>}
             </div>
             <div className="col-md-6">
               {mapVisible && <ProjectMap project={project} grantees={grantees} />}
@@ -188,16 +206,16 @@ const ProjectModal = ({
             {renderAllocations()}
           </div>
           <div className="project-stat">
-            <b>Related Documents:</b>{' '}
-            {renderDocuments()}
-          </div>
-          <div className="project-stat">
             <b>Awards:</b>{' '}
             {renderAwards()}
           </div>
           <div className="project-stat">
             <b>Payments:</b>{' '}
             {renderPayments()}
+          </div>
+          <div className="project-stat">
+            <b>Related Documents:</b>{' '}
+            {renderDocuments()}
           </div>
           <small className="float-right">Last Modified: {project.fields['Last Modified']}</small>
           <style jsx>{`
