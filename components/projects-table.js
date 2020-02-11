@@ -97,7 +97,9 @@ const ProjectsTable = ({
     } else if (sortOrder === 'category') {
       projects = orderBy(selectedProjects, 'fields.Parent Category.fields.Name', sortDirection)
     } else if (sortOrder === 'subcategory') {
-      projects = orderBy(selectedProjects, 'fields.Subcategory.fields.Name', sortDirection)
+      projects = orderBy(selectedProjects, (project) => {
+        return project.fields.Subcategory.fields.Name || 'zzzz'
+      }, sortDirection)
     } else if (sortOrder === 'allocations') {
       projects = orderBy(selectedProjects, 'fields.totalAllocationAmount', sortDirection)
     } else if (sortOrder === 'awards') {
