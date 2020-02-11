@@ -10,7 +10,6 @@ import {
   formatAvailability,
   formatCategory,
   formatCurrency,
-  formatSubcategory,
   getGranteeByProject
 } from '../lib/util'
 import ProjectMap from './project-map'
@@ -166,8 +165,6 @@ const ProjectModal = ({
 
   const renderModalBody = () => {
     if (selectedProjects.length === 1) {
-      const subcategoryName = formatSubcategory(project)
-
       return (
         <>
           <div className="row">
@@ -176,9 +173,9 @@ const ProjectModal = ({
                 <b>Category:</b>{' '}
                 {formatCategory(project)}
               </div>
-              {subcategoryName && <div className="project-stat">
+              {project.fields.Subcategory.id && <div className="project-stat">
                 <b>Subcategory:</b>{' '}
-                {subcategoryName}
+                {project.fields.Subcategory.fields.Name}
               </div>}
               {project.fields['Fiscal Year'] && <div className="project-stat">
                 <b>Fiscal Year:</b>{' '}

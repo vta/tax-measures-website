@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Table from 'react-bootstrap/Table'
-import { some } from 'lodash'
+import { some, orderBy } from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFileCsv } from '@fortawesome/free-solid-svg-icons'
+import { faFileCsv, faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
 import { CSVLink } from "react-csv"
-import { formatCurrencyWithUnit, formatSubcategory } from '../lib/util'
+import { formatCurrencyWithUnit } from '../lib/util'
 
 const ProjectsTable = ({
   selectedProjects,
@@ -16,7 +16,19 @@ const ProjectsTable = ({
     return null
   }
 
-  const hasSubcategoryColumn = some(selectedProjects, project => !!formatSubcategory(project))
+  const [sortOrder, setSortOrder] = useState()
+  const [sortDirection, setSortDirection] = useState('asc')
+
+  const hasSubcategoryColumn = some(selectedProjects, project => !!project.fields.Subcategory.id)
+
+  const setTableSort = (columnName) =>{
+    if (sortOrder === columnName) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
+    } else {
+      setSortOrder(columnName)
+      setSortDirection('asc')
+    }
+  }
 
   const renderProjectRow = project => {
     return (
@@ -35,7 +47,7 @@ const ProjectsTable = ({
         </td>
         <td>{project.fields['Grantee Name']}</td>
         <td>{project.fields['Parent Category'].fields.Name}</td>
-        {hasSubcategoryColumn && <td>{formatSubcategory(project)}</td>}
+        {hasSubcategoryColumn && <td>{project.fields.Subcategory.fields.Name}</td>}
         <td className="text-right">
           {formatCurrencyWithUnit(project.fields.totalAllocationAmount)}
         </td>
@@ -55,7 +67,7 @@ const ProjectsTable = ({
       return [
         project.fields.Name,
         project.fields.Category.fields.Name,
-        formatSubcategory(project),
+        project.fields.Subcategory.fields.Name,
         project.fields.URL,
         project.fields.totalAllocationAmount,
         project.fields.totalAwardAmount,
@@ -71,23 +83,71 @@ const ProjectsTable = ({
     return memo
   }, { totalAllocationAmount: 0, totalAwardAmount: 0, totalPaymentAmount: 0 })
 
+  let projects = selectedProjects
+
+  if (sortOrder) {
+    if (sortOrder === 'fiscal_year') {
+      projects = orderBy(selectedProjects, (project) => {
+        return project.fields['Fiscal Year'] || 0
+      }, sortDirection)
+    } else if (sortOrder === 'project_name') {
+      projects = orderBy(selectedProjects, 'fields.Name', sortDirection)
+    } else if (sortOrder === 'grantee') {
+      projects = orderBy(selectedProjects, 'fields.Grantee Name', sortDirection)
+    } else if (sortOrder === 'category') {
+      projects = orderBy(selectedProjects, 'fields.Parent Category.fields.Name', sortDirection)
+    } else if (sortOrder === 'subcategory') {
+      projects = orderBy(selectedProjects, 'fields.Subcategory.fields.Name', sortDirection)
+    } else if (sortOrder === 'allocations') {
+      projects = orderBy(selectedProjects, 'fields.totalAllocationAmount', sortDirection)
+    } else if (sortOrder === 'awards') {
+      projects = orderBy(selectedProjects, 'fields.totalAwardAmount', sortDirection)
+    } else if (sortOrder === 'payments') {
+      projects = orderBy(selectedProjects, 'fields.totalPaymentAmount', sortDirection)
+    }
+  }
+
+  const renderColumnHeader = (columnName, columnId) => {
+    let icon = faSort
+    if (columnId === sortOrder) {
+      icon = sortDirection === 'asc' ? faSortUp : faSortDown
+    }
+
+    return (
+      <th>
+        <div
+          className="d-flex justify-content-between align-items-center"
+          onClick={() => setTableSort(columnId)}
+        >
+          <span>{columnName}</span>
+          <FontAwesomeIcon icon={icon} />
+        </div>
+        <style jsx>{`
+          th {
+            cursor: pointer;
+          }
+        `}</style>
+      </th>
+    )
+  }
+
   return (
     <>
       <Table responsive size="sm" className='project-table'>
         <thead>
           <tr>
-            <th>Fiscal Year</th>
-            <th>Project Name</th>
-            <th>Grantee</th>
-            <th>Category</th>
-            {hasSubcategoryColumn && <th>Subcategory</th>}
-            <th>Allocations</th>
-            <th>Awards</th>
-            <th>Payments</th>
+            {renderColumnHeader('Fiscal Year', 'fiscal_year')}
+            {renderColumnHeader('Project Name', 'project_name')}
+            {renderColumnHeader('Grantee', 'grantee')}
+            {renderColumnHeader('Category', 'category')}
+            {hasSubcategoryColumn && renderColumnHeader('Subcategory', 'subcategory')}
+            {renderColumnHeader('Allocations', 'allocations')}
+            {renderColumnHeader('Awards', 'awards')}
+            {renderColumnHeader('Payments', 'payments')}
           </tr>
         </thead>
         <tbody>
-          {selectedProjects.map(renderProjectRow)}
+          {projects.map(renderProjectRow)}
           {showTotalRow && <tr className="table-dark border-top-2">
             <td></td>
             <td>Total</td>
