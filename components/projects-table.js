@@ -115,13 +115,14 @@ const ProjectsTable = ({
 
     return (
       <th>
-        <div
+        <a
           className="d-flex justify-content-between align-items-center"
           onClick={() => setTableSort(columnId)}
+          title={`Sort by ${columnName}`}
         >
           <span>{columnName}</span>
           <FontAwesomeIcon icon={icon} />
-        </div>
+        </a>
         <style jsx>{`
           th {
             cursor: pointer;
