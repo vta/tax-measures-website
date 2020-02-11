@@ -48,13 +48,13 @@ const ProjectsTable = ({
         <td>{project.fields['Grantee Name']}</td>
         <td>{project.fields['Parent Category'].fields.Name}</td>
         {hasSubcategoryColumn && <td>{project.fields.Subcategory.fields.Name}</td>}
-        <td className="text-right">
+        <td className="text-right" style={{ width: '110px' }}>
           {formatCurrencyWithUnit(project.fields.totalAllocationAmount)}
         </td>
-        <td className="text-right">
+        <td className="text-right" style={{ width: '80px' }}>
           {formatCurrencyWithUnit(project.fields.totalAwardAmount)}
         </td>
-        <td className="text-right">
+        <td className="text-right" style={{ width: '100px' }}>
           {formatCurrencyWithUnit(project.fields.totalPaymentAmount)}
         </td>
       </tr>
