@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLinkAlt, faFileDownload } from '@fortawesome/free-solid-svg-icons'
 import { sortBy } from 'lodash'
 import {
-  formatAvailability,
   formatCategory,
   formatCurrency,
   getGranteeByProject
@@ -87,7 +86,7 @@ const ProjectModal = ({
             <tr key={allocation.id}>
               <td>{allocation.fields['Date Allocated']}</td>
               <td>{formatCurrency(allocation.fields.Amount)}</td>
-              <td>{formatAvailability(allocation)}</td>
+              <td>{allocation.fields['Available Start']}</td>
             </tr>
           ))}
         </tbody>
@@ -105,8 +104,7 @@ const ProjectModal = ({
         <thead>
           <tr>
             <th style={{ width: '33.3%' }}>Date</th>
-            <th style={{ width: '33.3%' }}>Amount</th>
-            <th style={{ width: '33.3%' }}>Availability</th>
+            <th style={{ width: '66.6%' }}>Amount</th>
           </tr>
         </thead>
         <tbody>
@@ -114,7 +112,6 @@ const ProjectModal = ({
             <tr key={award.id}>
               <td>{award.fields.Date}</td>
               <td>{formatCurrency(award.fields['Award Amount'])}</td>
-              <td>{formatAvailability(award)}</td>
             </tr>
           ))}
         </tbody>
