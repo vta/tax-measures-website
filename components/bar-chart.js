@@ -47,8 +47,8 @@ const BarChart = ({ results }) => {
     }
 
     const projectGroups = results.items.reduce((memo, item) => {
-      if (item.fields.Project) {
-        const project = getProjectById(item.fields.Project[0], results.projects)
+      if (item.fields.ProjectId) {
+        const project = getProjectById(item.fields.ProjectId, results.projects)
         if (project) {
           if (!memo[project.fields.Name]) {
             memo[project.fields.Name] = []
@@ -74,8 +74,8 @@ const BarChart = ({ results }) => {
     }
 
     const granteeGroups = results.items.reduce((memo, item) => {
-      if (item.fields.Project) {
-        const project = getProjectById(item.fields.Project[0], results.projects)
+      if (item.fields.ProjectId) {
+        const project = getProjectById(item.fields.ProjectId, results.projects)
         if (project) {
           if (!memo[project.fields['Grantee Name']]) {
             memo[project.fields['Grantee Name']] = []
