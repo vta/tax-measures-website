@@ -27,6 +27,7 @@ const FilterControls = ({
     setCategory(incomingFilters.category || '')
 
     if (!incomingFilters.project) {
+      setProject()
       projectRef.current.getInstance().clear()
     } else {
       setProject(incomingFilters.project)
