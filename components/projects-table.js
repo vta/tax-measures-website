@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Alert from 'react-bootstrap/Alert'
 import Table from 'react-bootstrap/Table'
 import { some, orderBy } from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -13,7 +14,12 @@ const ProjectsTable = ({
   showTotalRow
 }) => {
   if (!selectedProjects || !selectedProjects.length) {
-    return null
+    return (
+      <Alert variant="warning" className="text-center">
+        <Alert.Heading>No matching projects</Alert.Heading>
+        <div>There were no projects that match the filter criteria.</div>
+      </Alert>
+    )
   }
 
   const [sortOrder, setSortOrder] = useState()
