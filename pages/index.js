@@ -77,26 +77,26 @@ const Home = ({
               <ArrowButton 
                 onClick={() => setIncomingFilters({
                   transactionType: 'award',
-                  project: 'BART Phase 2'
+                  project: 'Freeway Performance Initiative'
                 })}
               >
-                How many funds were awarded to BART Phase 2?
+                How many funds were awarded to the Freeway Performance Initiative?
               </ArrowButton>
               <ArrowButton 
                 onClick={() => setIncomingFilters({
                   transactionType: 'payment',
-                  category: ['Caltrain Grade Separation']
+                  category: ['Caltrain Corridor Capacity']
                 })}
               >
-                How many funds have been spent on Caltrain Grade Separation?
+                How many funds have been spent on Caltrain Corridor Capacity?
               </ArrowButton>
               <ArrowButton 
                 onClick={() => setIncomingFilters({
                   transactionType: 'payment',
-                  category: ['Bike/Ped']
+                  category: ['Transit Operations']
                 })}
               >
-                How many dollars have been spent on bikes?
+                How many dollars have been spent on transit operations?
               </ArrowButton>
               <ArrowButton 
                 onClick={() => setIncomingFilters({
