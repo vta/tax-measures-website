@@ -14,32 +14,34 @@ const HeaderStats = ({ allocations, revenue }) => {
   const totalAllocations = sumBy(allocations, 'fields.Amount')
 
   return (
-    <div className='row header-bar mb-3'>
-      <div className='col-md'>
-        <div className='header-stat'>
-          <div className='header-stat-value'>{formatCurrencyMillions(totalRevenue)}</div>
-          <div className='header-stat-unit'>million</div>
-          <div className='header-stat-label'>collected since 2017</div>
+    <div className="row bg-white">
+      <div className="col-auto">
+        <h1 className="bg-light-blue text-white p-3 m-0"><img src="/images/logo.png" alt="2016 Measure B" className="logo" /></h1>
+      </div>
+      <div className="col-md">
+        <div className="header-stat">
+          <div className="header-stat-value">{formatCurrencyMillions(totalRevenue)}</div>
+          <div className="header-stat-unit">million</div>
+          <div className="header-stat-label">collected since 2017</div>
         </div>
       </div>
-      <div className='col-md'>
-        <div className='header-stat'>
-          <div className='header-stat-value'>{formatCurrencyMillions(totalInterest)}</div>
-          <div className='header-stat-unit'>million</div>
-          <div className='header-stat-label'>interest earned</div>
+      <div className="col-md">
+        <div className="header-stat">
+          <div className="header-stat-value">{formatCurrencyMillions(totalInterest)}</div>
+          <div className="header-stat-unit">million</div>
+          <div className="header-stat-label">interest earned</div>
         </div>
       </div>
-      <div className='col-md'>
-        <div className='header-stat'>
-          <div className='header-stat-value'>{formatCurrencyMillions(totalAllocations)}</div>
-          <div className='header-stat-unit'>million</div>
-          <div className='header-stat-label'>allocated since 2017</div>
+      <div className="col-md">
+        <div className="header-stat">
+          <div className="header-stat-value">{formatCurrencyMillions(totalAllocations)}</div>
+          <div className="header-stat-unit">million</div>
+          <div className="header-stat-label">allocated since 2017</div>
         </div>
       </div>
-      <div className='col-md-2'>
+      <div className="col-md-2 d-flex align-items-center justify-content-center">
         <Button
           onClick={() => setAboutModalShow(true)}
-          className="float-right mr-2 mt-4"
           variant="primary"
           size="lg"
           title="About Measure B"
