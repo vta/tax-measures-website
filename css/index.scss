@@ -94,6 +94,10 @@ a.card {
   border-color: $white;
 }
 
+.logo {
+  height: 120px;
+}
+
 .header-bar {
   background-color: $white;
   border-top: 1px solid $dark-grey;
@@ -105,6 +109,7 @@ a.card {
   color: $dark-blue;
   padding-top: 20px;
   padding-bottom: 20px;
+  text-align: center;
 }
 
 .header-stat-value {
