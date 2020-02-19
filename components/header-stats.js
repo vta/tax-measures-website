@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { sumBy } from 'lodash'
 import Button from 'react-bootstrap/Button'
-import { formatCurrencyMillions } from '../lib/util'
+import { formatCurrencyMillions } from '../lib/formatters'
 import AboutModal from '../components/about-modal'
 
 const HeaderStats = ({ allocations, revenue }) => {
