@@ -5,7 +5,7 @@ import { some, orderBy } from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileCsv, faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
 import { CSVLink } from "react-csv"
-import { formatCurrencyWithUnit } from '../lib/util'
+import { formatCurrencyWithUnit } from '../lib/formatters'
 
 const ProjectsTable = ({
   selectedProjects,

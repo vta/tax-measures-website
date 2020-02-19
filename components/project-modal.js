@@ -6,11 +6,8 @@ import Table from 'react-bootstrap/Table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLinkAlt, faFileDownload } from '@fortawesome/free-solid-svg-icons'
 import { sortBy } from 'lodash'
-import {
-  formatCategory,
-  formatCurrency,
-  getGranteeByProject
-} from '../lib/util'
+import { getGranteeByProject } from '../lib/util'
+import { formatCategory, formatCurrency } from '../lib/formatters'
 import ProjectMap from './project-map'
 import ProjectsTable from './projects-table'
 

@@ -1,7 +1,8 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
 import { groupBy, sumBy, sortBy } from 'lodash'
-import { formatCurrencyWithUnit, getProjectById } from '../lib/util'
+import { formatCurrencyWithUnit } from '../lib/formatters'
+import { getProjectById } from '../lib/util'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
