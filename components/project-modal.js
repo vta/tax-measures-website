@@ -193,7 +193,7 @@ const ProjectModal = ({
             </div>
           </div>
           <div className="project-stat">
-            <b>Allocations:</b>{' '}
+            <b>{project.isPhantomProject && "Category "}Allocations:</b>{' '}
             {renderAllocations()}
           </div>
           <div className="project-stat">
