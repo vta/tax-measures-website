@@ -1,8 +1,8 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
-import { groupBy, sumBy, sortBy } from 'lodash'
+import { groupBy, sortBy } from 'lodash'
 import { formatCurrencyWithUnit } from '../lib/formatters'
-import { getProjectById } from '../lib/util'
+import { getProjectById, sumCurrency } from '../lib/util'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -103,14 +103,14 @@ const BarChart = ({ results }) => {
 
   const data = sortBy(Object.entries(chartData).map(([title, group], index) => {
     return {
-      value: sumBy(group, getGraphAmount),
+      value: sumCurrency(group.map(getGraphAmount)),
       title,
       color: colorPalate[index % colorPalate.length]
     }
   }), 'value')
 
   const dataType = results.transactionType === 'award' ? 'Awards' : 'Payments'
-  const total = sumBy(results.items, getGraphAmount)
+  const total = sumCurrency(results.items.map(getGraphAmount))
 
   if (data.length <= 1) {
     return (
