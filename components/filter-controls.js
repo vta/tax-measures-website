@@ -72,6 +72,27 @@ const FilterControls = ({
         </div>
         <div className="col-lg-2">
           <Select 
+            value={category && category.map(c => ({
+              value: c,
+              label: c
+            }))}
+            onChange={selectedOptions => {
+              if (selectedOptions && selectedOptions.length) {
+                setCategory(selectedOptions.map(c => c.label))
+              } else {
+                setCategory(undefined)
+              }
+            }}
+            options={categories && categories.map(c => ({
+              value: c.fields.Name,
+              label: c.fields.Name
+            }))}
+            isMulti={true}
+            placeholder="Filter by Category"
+          />
+        </div>
+        <div className="col-lg-2">
+          <Select 
             value={grantee && grantee.map(g => ({
               value: g,
               label: g
@@ -99,27 +120,6 @@ const FilterControls = ({
             onChange={selected => setProject(selected.length ? selected[0] : undefined)}
             id="project-name"
             selected={project ? [project]: undefined}
-          />
-        </div>
-        <div className="col-lg-2">
-          <Select 
-            value={category && category.map(c => ({
-              value: c,
-              label: c
-            }))}
-            onChange={selectedOptions => {
-              if (selectedOptions && selectedOptions.length) {
-                setCategory(selectedOptions.map(c => c.label))
-              } else {
-                setCategory(undefined)
-              }
-            }}
-            options={categories && categories.map(c => ({
-              value: c.fields.Name,
-              label: c.fields.Name
-            }))}
-            isMulti={true}
-            placeholder="Filter by Category"
           />
         </div>
         <div className="col-lg-2">
