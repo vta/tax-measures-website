@@ -141,8 +141,8 @@ const ProjectModal = ({
       <Table responsive size="sm" className='small-table'>
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Amount</th>
+            <th style={{ width: '33.3%' }}>Date</th>
+            <th style={{ width: '66.6%' }}>Amount</th>
           </tr>
         </thead>
         <tbody>
