@@ -6,7 +6,7 @@ import ProjectsMap from './projects-map'
 const Results = ({ loading, results, grantees, setProjectModalProjects }) => {
   if (loading) {
     return (
-      <div className='card'>
+      <div className='card mb-3'>
         <div className='card-body card-loading text-center'>
           <Spinner animation="border" role="status" size="xl" variant="primary" className='mb-4'>
             <span className="sr-only">Loading...</span>
@@ -28,7 +28,7 @@ const Results = ({ loading, results, grantees, setProjectModalProjects }) => {
   }
 
   return (
-    <div className='card'>
+    <div className='card mb-3'>
       <div className='card-body card-graph'>
         <div className='row'>
           <div className='col-md-6'>

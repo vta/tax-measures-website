@@ -90,8 +90,12 @@ const Home = ({
               <Alert.Heading>Unable to load project data</Alert.Heading>
               <div>Please try again later.</div>
             </Alert>}
+          </div>
+        </div>
 
-            {!results && <div className="card mb-3">
+        {!results && <div className="row mb-3">
+          <div className="col-md-6 offset-md-3">
+            <div className="card">
               <div className="card-body">
                 <h3>See how much 2016 Measure B has been collected to support transportation and how that money has been spent.</h3>
                 <div>This website is a window to see where 2016 Measure B funds are going.  You can:</div>
@@ -103,8 +107,12 @@ const Home = ({
                 </ul>
                 <div><a href="#" onClick={() => setAboutModalShow(true)}>Read more about Measure B &raquo;</a></div>
               </div>
-            </div>}
+            </div>
+          </div>
+        </div>}
 
+        <div className="row">
+          <div className="col">
             <Results
               loading={loading}
               results={results}
@@ -114,7 +122,7 @@ const Home = ({
           </div>
         </div>
 
-        {results && <div className="row pt-3">
+        {results && <div className="row mb-3">
           <div className="col">
             <div className="card bg-blue text-white mb-3">
               <div className="card-body">
