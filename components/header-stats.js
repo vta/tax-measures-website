@@ -4,11 +4,8 @@ import { faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { sumBy } from 'lodash'
 import Button from 'react-bootstrap/Button'
 import { formatCurrencyMillions } from '../lib/formatters'
-import AboutModal from '../components/about-modal'
 
-const HeaderStats = ({ allocations, revenue }) => {
-  const [aboutModalShow, setAboutModalShow] = useState(false)
-
+const HeaderStats = ({ allocations, revenue, setAboutModalShow }) => {
   const totalRevenue = sumBy(revenue, 'fields.Amount')
   const totalInterest = sumBy(revenue, 'fields.Interest')
   const totalAllocations = sumBy(allocations, 'fields.Amount')
@@ -50,11 +47,6 @@ const HeaderStats = ({ allocations, revenue }) => {
           <span>About</span>
         </Button>
       </div>
-
-      <AboutModal
-        show={aboutModalShow}
-        onHide={() => setAboutModalShow(false)}
-      />
     </div>
   )
 }

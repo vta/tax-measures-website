@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Head from 'next/head'
 import Alert from 'react-bootstrap/Alert'
 import { compact } from 'lodash'
+import AboutModal from '../components/about-modal'
 import FilterControls from '../components/filter-controls'
 import Footer from '../components/footer'
 import HeaderStats from '../components/header-stats'
@@ -43,6 +44,7 @@ const Home = ({
   const [incomingFilters, setIncomingFilters] = useState(initialFilters || {})
   const [currentFilters, setCurrentFilters] = useState(initialFilters || {})
   const [projectModalProjects, setProjectModalProjects] = useState()
+  const [aboutModalShow, setAboutModalShow] = useState(false)
 
   const handleSearch = filters => {
     setLoading(true)
@@ -70,6 +72,7 @@ const Home = ({
       <HeaderStats
         allocations={allocations}
         revenue={revenue}
+        setAboutModalShow={setAboutModalShow}
       />
 
       <div className="container-fluid">
@@ -105,7 +108,7 @@ const Home = ({
                   <li>Visualize the funding in a chart or the projects geographically on a map.</li>
                   <li>Download project list data as a CSV.</li>
                 </ul>
-                <div><a href="#" onClick={() => setAboutModalShow(true)}>Read more about Measure B &raquo;</a></div>
+                <div><a href="#" onClick={() => setAboutModalShow(true)}>Read more about 2016 Measure B &raquo;</a></div>
               </div>
             </div>
           </div>
@@ -141,6 +144,11 @@ const Home = ({
 
         <Footer />
       </div>
+
+      <AboutModal
+        show={aboutModalShow}
+        onHide={() => setAboutModalShow(false)}
+      />
 
       <ProjectModal
         show={!!projectModalProjects}
