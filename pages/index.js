@@ -35,12 +35,13 @@ const Home = ({
   payments,
   projects,
   revenue,
-  initialFilters
+  initialFilters,
+  loadingError,
 }) => {
   const [results, setResults] = useState()
   const [loading, setLoading] = useState(false)
-  const [incomingFilters, setIncomingFilters] = useState(initialFilters)
-  const [currentFilters, setCurrentFilters] = useState(initialFilters)
+  const [incomingFilters, setIncomingFilters] = useState(initialFilters || {})
+  const [currentFilters, setCurrentFilters] = useState(initialFilters || {})
   const [projectModalProjects, setProjectModalProjects] = useState()
 
   const handleSearch = filters => {
@@ -84,6 +85,11 @@ const Home = ({
             />
 
             <FilterAlert results={results} currentFilters={currentFilters} />
+
+            {loadingError && <Alert variant="danger" className="text-center">
+              <Alert.Heading>Unable to load project data</Alert.Heading>
+              <div>Please try again later.</div>
+            </Alert>}
 
             {!results && <div className="card mb-3">
               <div className="card-body">
@@ -174,39 +180,45 @@ const FilterAlert = ({ results, currentFilters }) => {
 }
 
 Home.getInitialProps = async ({ query }) => {
-  const [
-    allocations,
-    awards,
-    categories,
-    documents,
-    grantees,
-    payments,
-    projects,
-    revenue
-  ] = await Promise.all([
-    fetchAllocations(),
-    fetchAwards(),
-    fetchCategories(),
-    fetchDocuments(),
-    fetchGrantees(),
-    fetchPayments(),
-    fetchProjects(),
-    fetchRevenue()
-  ])
+  try {
+    const [
+      allocations,
+      awards,
+      categories,
+      documents,
+      grantees,
+      payments,
+      projects,
+      revenue
+    ] = await Promise.all([
+      fetchAllocations(),
+      fetchAwards(),
+      fetchCategories(),
+      fetchDocuments(),
+      fetchGrantees(),
+      fetchPayments(),
+      fetchProjects(),
+      fetchRevenue()
+    ])
 
-  const initialFilters = getInitialFiltersFromUrlQuery(query)
+    const initialFilters = getInitialFiltersFromUrlQuery(query)
 
-  return preprocessData({
-    allocations,
-    awards,
-    categories,
-    documents,
-    grantees,
-    payments,
-    projects,
-    revenue,
-    initialFilters
-  })
+    return preprocessData({
+      allocations,
+      awards,
+      categories,
+      documents,
+      grantees,
+      payments,
+      projects,
+      revenue,
+      initialFilters
+    })
+  } catch(error) {
+    return {
+      loadingError: error
+    }
+  }
 }
 
 export default Home
