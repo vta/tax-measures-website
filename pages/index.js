@@ -88,8 +88,15 @@ const Home = ({
 
             {!results && <div className="card mb-3">
               <div className="card-body">
-                <h3>See how much Measure B has collected to suport transportation, and how that money has been spent.</h3>
-                <div>This website provides a gateway to understanding Measure B spending. Use the filters above to pick the timeframe, categories, and grantees you're interested in examining the allocations, payments, and projects for. Below you'll see the data you requested visualized. On the "Money" mode, you'll see a cross section of the funding that fits your filter. If you switch to the "Map" tab, you'll see the relevant projects geographically. Below is a text list of those projects, as well as a tool to export that list of projects in a spreadsheet form. <a href="#" onClick={() => setAboutModalShow(true)}>Read more about Measure B &raquo;</a></div>
+                <h3>See how much 2016 Measure B has been collected to support transportation and how that money has been spent.</h3>
+                <div>This website is a window to see where 2016 Measure B funds are going.  You can:</div>
+                <ul>
+                  <li>Use the filters above to pick the categories or grantees to find out how much money has been awarded and see how much of that award has been spent.</li>
+                  <li>Search for specific project funding.</li>
+                  <li>Visualize the funding in a chart or the projects geographically on a map.</li>
+                  <li>Download project list data as a CSV.</li>
+                </ul>
+                <div><a href="#" onClick={() => setAboutModalShow(true)}>Read more about Measure B &raquo;</a></div>
               </div>
             </div>}
 
