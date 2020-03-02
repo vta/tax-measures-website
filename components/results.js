@@ -36,7 +36,7 @@ const Results = ({ loading, results, grantees, setProjectModalProjects }) => {
           </div>
           <div className='col-md-6'>
             <ProjectsMap
-              results={results}
+              projects={results.projects}
               grantees={grantees}
               setProjectModalProjects={setProjectModalProjects}
             />

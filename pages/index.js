@@ -6,6 +6,7 @@ import AboutModal from '../components/about-modal'
 import FilterControls from '../components/filter-controls'
 import Footer from '../components/footer'
 import HeaderStats from '../components/header-stats'
+import ProjectsMap from '../components/projects-map'
 import ProjectsTable from '../components/projects-table'
 import ProjectModal from '../components/project-modal'
 import Results from '../components/results'
@@ -127,6 +128,21 @@ const Home = ({
                   <li>Download project list data as a CSV.</li>
                 </ul>
                 <div><a href="#" onClick={() => setAboutModalShow(true)}>Read more about 2016 Measure B &raquo;</a></div>
+              </div>
+            </div>
+          </div>
+        </div>}
+
+        {!results && projects && <div className='card mb-3'>
+          <div className='card-body card-graph'>
+            <div className='row'>
+              <div className='col-md-6'>
+              </div>
+              <div className='col-md-6'>
+                <ProjectsMap
+                  projects={projects}
+                  setProjectModalProjects={setProjectModalProjects}
+                />
               </div>
             </div>
           </div>
