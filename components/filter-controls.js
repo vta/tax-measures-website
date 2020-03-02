@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Button from 'react-bootstrap/Button'
-import { Typeahead } from 'react-bootstrap-typeahead'
+import Form from 'react-bootstrap/Form'
 import Select from 'react-select'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
@@ -9,7 +9,6 @@ import { capitalize, isEmpty } from 'lodash'
 const FilterControls = ({
   categories,
   grantees,
-  projects,
   incomingFilters,
   handleSearch,
   clearSearch
@@ -19,20 +18,11 @@ const FilterControls = ({
   const [project, setProject] = useState(incomingFilters.project)
   const [category, setCategory] = useState(incomingFilters.category)
 
-  const projectRef = useRef();
-
   useEffect(() => {
     setTransactionType(incomingFilters.transactionType || '')
     setGrantee(incomingFilters.grantee || '')
     setCategory(incomingFilters.category || '')
-
-    if (!incomingFilters.project) {
-      setProject()
-      projectRef.current.getInstance().clear()
-    } else {
-      setProject(incomingFilters.project)
-      projectRef.current.getInstance()
-    }
+    setProject(incomingFilters.project)
 
     if (!isEmpty(incomingFilters)) {
       validateFilters(incomingFilters)
@@ -113,13 +103,21 @@ const FilterControls = ({
           />
         </div>
         <div className="col-lg-2">
-          <Typeahead
-            ref={projectRef}
-            options={projects ? projects.map(project => project.fields.Name) : []}
+          <Form.Control
+            type="text"
+            onChange={event => setProject(event.target.value)}
             placeholder="Project Name"
-            onChange={selected => setProject(selected.length ? selected[0] : undefined)}
-            id="project-name"
-            selected={project ? [project]: undefined}
+            value={project}
+            onKeyPress={event => {
+              if (event.key === "Enter") {
+                validateFilters({
+                  transactionType,
+                  grantee,
+                  project,
+                  category
+                })
+              }
+            }}
           />
         </div>
         <div className="col-lg-2">
