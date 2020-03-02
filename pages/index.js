@@ -75,6 +75,24 @@ const Home = ({
         setAboutModalShow={setAboutModalShow}
       />
 
+      {!results && <div className="row mt-3">
+        <div className="col-md-6 offset-md-3">
+          <div className="card">
+            <div className="card-body">
+              <div className="number-list-item">
+                <div className="number-list">1</div><div>Choose Transaction Type (required)</div>
+              </div>
+              <div className="number-list-item">
+                <div className="number-list">2</div><div>Filter by Program Category or Grantee (optional, you can select multiple, or none)</div>
+              </div>
+              <div className="number-list-item">
+                <div className="number-list">3</div><div>Search by keywords and select matching projects (optional)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>}
+
       <div className="container-fluid">
         <div className="row pt-3">
           <div className="col">
