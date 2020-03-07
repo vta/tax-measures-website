@@ -93,7 +93,7 @@ a.card {
 }
 
 .logo {
-  height: 120px;
+  height: 90px;
 }
 
 .header-bar {
@@ -105,25 +105,23 @@ a.card {
 
 .header-stat {
   color: $dark-blue;
-  padding-top: 20px;
-  padding-bottom: 20px;
   text-align: center;
 }
 
 .header-stat-value {
-  font-size: 48px;
+  font-size: 32px;
   display: inline;
   font-weight: bold;
 }
 
 .header-stat-unit {
-  font-size: 30px;
+  font-size: 20px;
   display: inline;
   padding-left: 6px;
 }
 
 .header-stat-label {
-  font-size: 21px;
+  font-size: 16px;
 }
 
 .question-button {
@@ -174,4 +172,27 @@ a.card {
   border-radius: 24px;
   margin-right: 14px;
   flex-shrink: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .logo {
+    height: 120px;
+  }
+
+  .header-stat {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .header-stat-value {
+    font-size: 48px;
+  }
+
+  .header-stat-unit {
+    font-size: 30px;
+  }
+
+  .header-stat-label {
+    font-size: 21px;
+  }
 }

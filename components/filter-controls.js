@@ -40,7 +40,7 @@ const FilterControls = ({
   return (
     <div className="card bg-blue p-2 mb-3">
       <div className="row">
-        <div className="col-lg-2">
+        <div className="col-lg-2 mb-2 mb-lg-0">
           <Select 
             value={transactionType && [{
               value: transactionType,
@@ -60,7 +60,7 @@ const FilterControls = ({
             placeholder="Select Transaction Type"
           />  
         </div>
-        <div className="col-lg-2">
+        <div className="col-lg-2 mb-2 mb-lg-0">
           <Select 
             value={category && category.map(c => ({
               value: c,
@@ -81,7 +81,7 @@ const FilterControls = ({
             placeholder="Filter by Category"
           />
         </div>
-        <div className="col-lg-2">
+        <div className="col-lg-2 mb-2 mb-lg-0">
           <Select 
             value={grantee && grantee.map(g => ({
               value: g,
@@ -102,7 +102,7 @@ const FilterControls = ({
             placeholder="Filter by Grantee"
           />
         </div>
-        <div className="col-lg-2">
+        <div className="col-lg-2 mb-2 mb-lg-0">
           <Form.Control
             type="text"
             onChange={event => setProject(event.target.value)}
@@ -120,7 +120,7 @@ const FilterControls = ({
             }}
           />
         </div>
-        <div className="col-lg-2">
+        <div className="col-lg-2 mb-2 mb-lg-0">
           <Button
             variant="secondary" 
             onClick={() => validateFilters({

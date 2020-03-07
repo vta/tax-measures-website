@@ -12,7 +12,7 @@ const HeaderStats = ({ allocations, revenue, setAboutModalShow }) => {
 
   return (
     <div className="row bg-white">
-      <div className="col-auto">
+      <div className="col col-md-auto">
         <h1 className="bg-light-blue text-white p-3 m-0"><img src="/images/logo.png" alt="2016 Measure B" className="logo" /></h1>
       </div>
       <div className="col-md">
@@ -42,6 +42,7 @@ const HeaderStats = ({ allocations, revenue, setAboutModalShow }) => {
           variant="primary"
           size="lg"
           title="About Measure B"
+          className="mb-2 mt-2"
         >
           <FontAwesomeIcon icon={faQuestion} className="mr-2" />
           <span>About</span>
