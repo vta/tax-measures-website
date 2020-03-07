@@ -196,8 +196,9 @@ const BarChart = ({ results }) => {
         },
         yaxis: {
           labels: {
-            maxWidth: 200,
-          }
+            maxWidth: 180,
+            offsetX: 16,
+          },
         },
         tooltip: {
           y: {
