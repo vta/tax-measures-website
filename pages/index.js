@@ -265,6 +265,7 @@ Home.getInitialProps = async ({ query }) => {
       initialFilters
     })
   } catch(error) {
+    console.error(error);
     return {
       loadingError: error
     }
