@@ -184,7 +184,7 @@ const BarChart = ({ results }) => {
             }
           },
           padding: {
-            left: 0,
+            left: 18,
             right: 0
           }
         },
@@ -197,7 +197,6 @@ const BarChart = ({ results }) => {
         yaxis: {
           labels: {
             maxWidth: 180,
-            offsetX: 16,
           },
         },
         tooltip: {
