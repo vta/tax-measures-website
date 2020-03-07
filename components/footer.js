@@ -4,15 +4,15 @@ import { faTwitter, faFacebook, faYoutube } from '@fortawesome/free-brands-svg-i
 
 const Footer = props => (
   <div className="row footer">
-    <div className="col bg-light-blue text-white pb-4 pt-5">
+    <div className="col bg-light-blue text-white pb-4 pt-4 pt-md-5">
       <div className="row">
-        <div className="col-md-3 text-center">
+        <div className="col-md-3 text-center mb-3">
           <img src="/images/logo.png" alt="2016 Measure B" className="footer-logo" />
         </div>
-        <div className="col-md-3">
+        <div className="col-md-3 mb-3">
           This webssite provides financial information about VTA's 2016 Measure B, updated quarterly or as new  information is released.
         </div>
-        <div className='col-md-3'>
+        <div className='col-md-3 mb-3'>
           Santa Clara Valley Transportation Authority<br />
           Community Outreach<br />
           (408) 321-7575<br />

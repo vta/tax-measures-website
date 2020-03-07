@@ -13,7 +13,7 @@ const HeaderStats = ({ allocations, revenue, setAboutModalShow }) => {
   return (
     <div className="row bg-white">
       <div className="col col-md-auto">
-        <h1 className="bg-light-blue text-white p-3 m-0"><img src="/images/logo.png" alt="2016 Measure B" className="logo" /></h1>
+        <h1 className="bg-light-blue text-white p-2 p-md-3 m-0"><img src="/images/logo.png" alt="2016 Measure B" className="logo" /></h1>
       </div>
       <div className="col-md">
         <div className="header-stat">

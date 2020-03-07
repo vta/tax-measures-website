@@ -120,7 +120,7 @@ const FilterControls = ({
             }}
           />
         </div>
-        <div className="col-lg-2 mb-2 mb-lg-0">
+        <div className="col-lg-2 col-6 mb-2 mb-lg-0">
           <Button
             variant="secondary" 
             onClick={() => validateFilters({
@@ -134,7 +134,7 @@ const FilterControls = ({
             <FontAwesomeIcon icon={faSearch} className="mr-2" /> Search
           </Button>
         </div>
-        <div className="col-lg-2">
+        <div className="col-lg-2 col-6">
           <Button
             variant="danger"
             onClick={clearSearch}
