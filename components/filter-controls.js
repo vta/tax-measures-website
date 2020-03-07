@@ -38,7 +38,18 @@ const FilterControls = ({
   }
 
   return (
-    <div className="card bg-blue p-2 mb-3">
+    <div className="card bg-blue text-white p-2 mb-3">
+      <div className="row mb-2">
+        <div className="col-lg-2 mb-2 mb-md-0">
+          <div className="number-list">1</div><div><b>Choose Transaction Type</b> (required)</div>
+        </div>
+        <div className="col-lg-4 mb-2 mb-md-0">
+          <div className="number-list">2</div><div><b>Filter by Program Category or Grantee</b> (optional, you can select multiple, or none)</div>
+        </div>
+        <div className="col-lg-3">
+          <div className="number-list">3</div><div><b>Search by keywords and select matching projects</b> (optional)</div>
+        </div>
+      </div>
       <div className="row">
         <div className="col-lg-2 mb-2 mb-lg-0">
           <Select 
