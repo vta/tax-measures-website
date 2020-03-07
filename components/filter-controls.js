@@ -38,8 +38,8 @@ const FilterControls = ({
   }
 
   return (
-    <div className="card bg-blue text-white p-2 mb-3">
-      <div className="row mb-2">
+    <div className="card bg-blue p-2 mb-3">
+      <div className="row mb-2 text-white">
         <div className="col-lg-2 mb-2 mb-md-0">
           <div className="number-list">1</div><div><b>Choose Transaction Type</b> (required)</div>
         </div>
