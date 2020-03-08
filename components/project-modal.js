@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import moment from 'moment'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
@@ -208,7 +209,7 @@ const ProjectModal = ({
             <b>Related Documents:</b>{' '}
             {renderDocuments()}
           </div>
-          <small className="float-right">Last Modified: {project.fields['Last Modified']}</small>
+          <small className="float-right">Last Modified: {moment(project.fields['Last Modified']).format('MMMM Do YYYY, h:mm a')}</small>
           <style jsx>{`
             .table-small td {
               font-size: 12px;
