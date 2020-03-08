@@ -6,6 +6,7 @@ import AboutModal from '../components/about-modal'
 import FilterControls from '../components/filter-controls'
 import Footer from '../components/footer'
 import HeaderStats from '../components/header-stats'
+import HomepageChart from '../components/homepage-chart'
 import ProjectsMap from '../components/projects-map'
 import ProjectsTable from '../components/projects-table'
 import ProjectModal from '../components/project-modal'
@@ -32,6 +33,7 @@ const Home = ({
   allocations,
   awards,
   categories,
+  parentCategories,
   documents,
   grantees,
   payments,
@@ -119,6 +121,10 @@ const Home = ({
           <div className='card-body card-graph'>
             <div className='row'>
               <div className='col-md-6'>
+                <HomepageChart
+                  parentCategories={parentCategories}
+                  allocations={allocations}
+                />
               </div>
               <div className='col-md-6'>
                 <ProjectsMap
