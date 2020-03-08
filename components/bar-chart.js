@@ -213,7 +213,7 @@ const BarChart = ({ results }) => {
         data: data.map(d => d.value)
       }]}
       type="bar"
-      height="350"
+      height={350}
     />
   )
 }

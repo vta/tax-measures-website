@@ -130,6 +130,7 @@ const Home = ({
                 <ProjectsMap
                   projects={projects}
                   setProjectModalProjects={setProjectModalProjects}
+                  height="490px"
                 />
               </div>
             </div>

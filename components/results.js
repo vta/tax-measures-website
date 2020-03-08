@@ -39,6 +39,7 @@ const Results = ({ loading, results, grantees, setProjectModalProjects }) => {
               projects={results.projects}
               grantees={grantees}
               setProjectModalProjects={setProjectModalProjects}
+              height="350px"
             />
           </div>
         </div>

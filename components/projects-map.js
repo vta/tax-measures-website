@@ -5,7 +5,7 @@ const { publicRuntimeConfig } = getConfig()
 import MapLayer from '../components/map-layer'
 import { getViewport } from '../lib/util'
 
-const ProjectsMap = ({ projects, grantees, setProjectModalProjects }) => {
+const ProjectsMap = ({ projects, grantees, setProjectModalProjects, height }) => {
   const onMapClick = event => {
     const { features } = event
 
@@ -32,7 +32,7 @@ const ProjectsMap = ({ projects, grantees, setProjectModalProjects }) => {
   }
 
   return (
-    <div className="map">
+    <div className="map" style={{height}}>
       <ReactMapGL
         mapboxApiAccessToken={publicRuntimeConfig.mapboxAccessToken}
         width="100%"
