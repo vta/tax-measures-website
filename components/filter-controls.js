@@ -12,13 +12,13 @@ const FilterControls = ({
   handleSearch,
   clearSearch
 }) => {
-  const [transactionType, setTransactionType] = useState(incomingFilters.transactionType)
+  const [transactionType, setTransactionType] = useState(incomingFilters.transactionType || 'award')
   const [grantee, setGrantee] = useState(incomingFilters.grantee)
   const [project, setProject] = useState(incomingFilters.project)
   const [category, setCategory] = useState(incomingFilters.category)
 
   useEffect(() => {
-    setTransactionType(incomingFilters.transactionType || '')
+    setTransactionType(incomingFilters.transactionType || 'award')
     setGrantee(incomingFilters.grantee || '')
     setCategory(incomingFilters.category || '')
     setProject(incomingFilters.project)
@@ -40,7 +40,7 @@ const FilterControls = ({
     <div className="card bg-blue p-2 mb-3">
       <div className="row mb-2 text-white">
         <div className="col-lg-2 mb-2 mb-md-0">
-          <div className="number-list">1</div><div><b>Choose Transaction Type</b> (required)</div>
+          <div className="number-list">1</div><div><b>Choose Transaction Type</b></div>
         </div>
         <div className="col-lg-4 mb-2 mb-md-0">
           <div className="number-list">2</div><div><b>Filter by Program Category or Grantee</b> (optional, you can select multiple, or none)</div>
