@@ -17,8 +17,9 @@ const HomepageChart = ({ data: { allocations, parentCategories } }) => {
     }, 0)
   })
 
-  const remainingAllocateds = parentCategories.map((category, index) => category.fields['Ballot Allocation'] - actualAllocateds[index])
-  const total = sumCurrency(parentCategories.map(category => category.fields['Ballot Allocation']))
+  // If no category.fields['Ballot Allocation'] treat it as the actual allocated
+  const remainingAllocateds = parentCategories.map((category, index) => (category.fields['Ballot Allocation'] || actualAllocateds[index]) - actualAllocateds[index])
+  const total = sumCurrency(parentCategories.map((category, index) => category.fields['Ballot Allocation'] || actualAllocateds[index]))
 
   return (
     <Chart
@@ -53,7 +54,7 @@ const HomepageChart = ({ data: { allocations, parentCategories } }) => {
             },
           }
         },
-        colors: ['#d4526e', '#b1b1b1'],
+        colors: ['#BAD739', '#BDBEBD'],
         dataLabels: {
           enabled: true,
           textAnchor: 'start',
@@ -94,8 +95,9 @@ const HomepageChart = ({ data: { allocations, parentCategories } }) => {
         tooltip: {
           y: {
             formatter: (value, data) => {
-              const percent = formatPercent(data.series[data.seriesIndex][data.dataPointIndex] / (data.series[0][data.dataPointIndex] + data.series[1][data.dataPointIndex]) * 100)
-              return `${formatCurrencyWithUnit(value)} (${percent})`
+              const total = data.series[0][data.dataPointIndex] + data.series[1][data.dataPointIndex]
+              const percent = formatPercent(data.series[data.seriesIndex][data.dataPointIndex] / total * 100)
+              return `${formatCurrencyWithUnit(value)} (${percent} of ${formatCurrencyWithUnit(total)})`
             }
           }
         },
