@@ -6,7 +6,7 @@ import { sumCurrency } from '../lib/util'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
-const HomepageChart = ({ allocations, parentCategories }) => {
+const HomepageChart = ({ data: { allocations, parentCategories } }) => {
   const actualAllocatedGroups = groupBy(allocations, allocation => allocation.fields['Parent Category'].id)
 
   const actualAllocateds = parentCategories.map(category => {

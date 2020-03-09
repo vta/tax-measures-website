@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Select from 'react-select'
@@ -7,8 +7,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { capitalize, isEmpty } from 'lodash'
 
 const FilterControls = ({
-  categories,
-  grantees,
+  data,
   incomingFilters,
   handleSearch,
   clearSearch
@@ -84,7 +83,7 @@ const FilterControls = ({
                 setCategory(undefined)
               }
             }}
-            options={categories && categories.map(c => ({
+            options={data && data.categories && data.categories.map(c => ({
               value: c.fields.Name,
               label: c.fields.Name
             }))}
@@ -105,12 +104,13 @@ const FilterControls = ({
                 setGrantee(undefined)
               }
             }}
-            options={grantees && grantees.map(g => ({
+            options={data && data.grantees && data.grantees.map(g => ({
               value: g.fields.Name,
               label: g.fields.Name
             }))}
             isMulti={true}
             placeholder="Filter by Grantee"
+            disabled={!data}
           />
         </div>
         <div className="col-lg-2 mb-2 mb-lg-0">
@@ -141,6 +141,7 @@ const FilterControls = ({
               category
             })}
             block
+            disabled={!data}
           >
             <FontAwesomeIcon icon={faSearch} className="mr-2" /> Search
           </Button>
@@ -150,6 +151,7 @@ const FilterControls = ({
             variant="danger"
             onClick={clearSearch}
             block
+            disabled={!data}
           >
             Clear
           </Button>

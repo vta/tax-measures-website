@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Alert from 'react-bootstrap/Alert'
-import { compact } from 'lodash'
+import { compact, isEmpty } from 'lodash'
 import AboutModal from '../components/about-modal'
 import FilterControls from '../components/filter-controls'
 import Footer from '../components/footer'
-import HeaderStats from '../components/header-stats'
+import Header from '../components/header'
 import HomepageChart from '../components/homepage-chart'
+import Loading from '../components/loading'
 import ProjectsMap from '../components/projects-map'
 import ProjectsTable from '../components/projects-table'
 import ProjectModal from '../components/project-modal'
@@ -29,40 +30,83 @@ import {
   updateUrlWithFilters
 } from '../lib/util'
 
-const Home = ({
-  allocations,
-  awards,
-  categories,
-  parentCategories,
-  documents,
-  grantees,
-  payments,
-  projects,
-  revenue,
-  initialFilters,
-  loadingError,
-}) => {
+const Home = ({ initialFilters }) => {
   const [results, setResults] = useState()
-  const [loading, setLoading] = useState(false)
-  const [incomingFilters, setIncomingFilters] = useState(initialFilters || {})
-  const [currentFilters, setCurrentFilters] = useState(initialFilters || {})
+  const [loading, setLoading] = useState(true)
+  const [incomingFilters, setIncomingFilters] = useState({})
+  const [currentFilters, setCurrentFilters] = useState({})
   const [projectModalProjects, setProjectModalProjects] = useState()
   const [aboutModalShow, setAboutModalShow] = useState(false)
+  const [data, setData] = useState()
+  const [loadingError, setLoadingError] = useState();
+
+
+  useEffect(() => {
+    // Wait to set initialFilters until data is loaded
+    if (data && !isEmpty(initialFilters)) {
+      setIncomingFilters(initialFilters)
+      handleSearch(initialFilters)
+    }
+  }, [data])
 
   const handleSearch = filters => {
     setLoading(true)
-    setResults(applyFilters(filters, awards, payments, projects, categories, grantees))
+    setResults(applyFilters(filters, data.awards, data.payments, data.projects, data.categories, data.grantees))
     setCurrentFilters(filters)
-    
+
     setTimeout(() => {
       setLoading(false)
-    }, 500)
+    }, 400)
   }
 
   const clearSearch = () => {
     setResults()
     setIncomingFilters({})
     updateUrlWithFilters()
+  }
+
+  const loadInitialData = async () => {
+    try {
+      const [
+        allocations,
+        awards,
+        categories,
+        documents,
+        grantees,
+        payments,
+        projects,
+        revenue
+      ] = await Promise.all([
+        fetchAllocations(),
+        fetchAwards(),
+        fetchCategories(),
+        fetchDocuments(),
+        fetchGrantees(),
+        fetchPayments(),
+        fetchProjects(),
+        fetchRevenue()
+      ])
+
+      setData(await preprocessData({
+        allocations,
+        awards,
+        categories,
+        documents,
+        grantees,
+        payments,
+        projects,
+        revenue,
+      }))
+      setLoading(false)
+    } catch(error) {
+      console.error(error);
+      setLoadingError(error)
+      setLoading(false)
+    }
+  }
+
+  if (!data) {
+    loadInitialData();
   }
 
   return (
@@ -72,23 +116,20 @@ const Home = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <HeaderStats
-        allocations={allocations}
-        revenue={revenue}
+      <Header
+        data={data}
         setAboutModalShow={setAboutModalShow}
       />
 
       <div className="container-fluid">
         <div className="row pt-3">
           <div className="col">
-            <FilterControls
+            {<FilterControls
               handleSearch={handleSearch}
               clearSearch={clearSearch}
-              projects={projects}
-              grantees={grantees}
-              categories={categories}
+              data={data}
               incomingFilters={incomingFilters}
-            />
+            />}
 
             <FilterAlert results={results} currentFilters={currentFilters} />
 
@@ -117,18 +158,19 @@ const Home = ({
           </div>
         </div>}
 
-        {!results && projects && <div className='card mb-3'>
+
+       <Loading loading={loading} />
+
+        {!results && data && <div className='card mb-3'>
           <div className='card-body card-graph'>
             <div className='row'>
               <div className='col-md-6'>
-                <HomepageChart
-                  parentCategories={parentCategories}
-                  allocations={allocations}
-                />
+                <HomepageChart data={data} />
               </div>
               <div className='col-md-6'>
                 <ProjectsMap
-                  projects={projects}
+                  data={data}
+                  projectsToMap={data.projects}
                   setProjectModalProjects={setProjectModalProjects}
                   height="490px"
                 />
@@ -139,12 +181,12 @@ const Home = ({
 
         <div className="row">
           <div className="col">
-            <Results
+            {data && <Results
               loading={loading}
               results={results}
-              grantees={grantees}
+              data={data}
               setProjectModalProjects={setProjectModalProjects}
-            />
+            />}
           </div>
         </div>
 
@@ -177,11 +219,7 @@ const Home = ({
         show={!!projectModalProjects}
         selectedProjects={projectModalProjects}
         onHide={() => setProjectModalProjects()}
-        allocations={allocations}
-        awards={awards}
-        documents={documents}
-        grantees={grantees}
-        payments={payments}
+        data={data || {}}
         setProjectModalProjects={setProjectModalProjects}
       />
     </div>
@@ -219,46 +257,9 @@ const FilterAlert = ({ results, currentFilters }) => {
 }
 
 Home.getInitialProps = async ({ query }) => {
-  try {
-    const [
-      allocations,
-      awards,
-      categories,
-      documents,
-      grantees,
-      payments,
-      projects,
-      revenue
-    ] = await Promise.all([
-      fetchAllocations(),
-      fetchAwards(),
-      fetchCategories(),
-      fetchDocuments(),
-      fetchGrantees(),
-      fetchPayments(),
-      fetchProjects(),
-      fetchRevenue()
-    ])
+  const initialFilters = getInitialFiltersFromUrlQuery(query)
 
-    const initialFilters = getInitialFiltersFromUrlQuery(query)
-
-    return preprocessData({
-      allocations,
-      awards,
-      categories,
-      documents,
-      grantees,
-      payments,
-      projects,
-      revenue,
-      initialFilters
-    })
-  } catch(error) {
-    console.error(error);
-    return {
-      loadingError: error
-    }
-  }
+  return { initialFilters }
 }
 
 export default Home

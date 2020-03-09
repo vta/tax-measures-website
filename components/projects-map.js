@@ -5,12 +5,12 @@ const { publicRuntimeConfig } = getConfig()
 import MapLayer from '../components/map-layer'
 import { getViewport } from '../lib/util'
 
-const ProjectsMap = ({ projects, grantees, setProjectModalProjects, height }) => {
+const ProjectsMap = ({ data: { grantees }, projectsToMap, setProjectModalProjects, height }) => {
   const onMapClick = event => {
     const { features } = event
 
     const projectIds = features.map(f => f.properties.projectId)
-    const filteredProjects = projects.filter(project => projectIds.includes(project.id))
+    const filteredProjects = projectsToMap.filter(project => projectIds.includes(project.id))
 
     if (!filteredProjects.length) {
       return
@@ -19,7 +19,7 @@ const ProjectsMap = ({ projects, grantees, setProjectModalProjects, height }) =>
     setProjectModalProjects(filteredProjects)
   }
 
-  const { layers, layerIds, bbox } = MapLayer(projects, grantees)
+  const { layers, layerIds, bbox } = MapLayer(projectsToMap, grantees)
   const [viewport, setViewport] = useState(getViewport(bbox))
 
   if  (layers.length === 0) {

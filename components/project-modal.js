@@ -38,11 +38,13 @@ const DocumentLink = ({ document }) => {
 
 const ProjectModal = ({
   selectedProjects,
-  allocations,
-  awards,
-  documents,
-  grantees,
-  payments,
+  data: {
+    allocations,
+    awards,
+    documents,
+    grantees,
+    payments,
+  },
   onHide,
   show,
   setProjectModalProjects
