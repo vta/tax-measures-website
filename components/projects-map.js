@@ -41,6 +41,7 @@ const ProjectsMap = ({ data: { grantees }, projectsToMap, setProjectModalProject
         interactiveLayerIds={layerIds}
         onViewportChange={viewport => setViewport(viewport)}
         onClick={onMapClick}
+        scrollZoom={false}
       >
         {layers}
         <div className="nav" className="map-nav">
