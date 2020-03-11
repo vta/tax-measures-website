@@ -145,7 +145,8 @@ const ProjectModal = ({
         <thead>
           <tr>
             <th style={{ width: '33.3%' }}>Date</th>
-            <th style={{ width: '66.6%' }}>Amount</th>
+            <th style={{ width: '33.3%' }}>Amount</th>
+            <th style={{ width: '33.3%' }}>Description</th>
           </tr>
         </thead>
         <tbody>
@@ -153,6 +154,7 @@ const ProjectModal = ({
             <tr key={payment.id}>
               <td>{payment.fields.Date}</td>
               <td>{formatCurrency(payment.fields.Amount)}</td>
+              <td>{payment.fields['Payment Description']}</td>
             </tr>
           ))}
         </tbody>
