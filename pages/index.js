@@ -105,7 +105,7 @@ const Home = ({ initialFilters }) => {
     }
   }
 
-  if (!data) {
+  if (!data && !loadingError) {
     loadInitialData();
   }
 
