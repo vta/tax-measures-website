@@ -10,7 +10,7 @@ const Footer = props => (
           <img src="/images/logo.png" alt="2016 Measure B" className="footer-logo" />
         </div>
         <div className="col-md-3 mb-3">
-          This webssite provides financial information about VTA's 2016 Measure B, updated quarterly or as new  information is released.
+          This website provides financial information about VTA's 2016 Measure B, updated quarterly or as new information is released.
         </div>
         <div className='col-md-3 mb-3'>
           Santa Clara Valley Transportation Authority<br />
