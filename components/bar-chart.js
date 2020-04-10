@@ -1,8 +1,8 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
-import { groupBy, sumBy, sortBy } from 'lodash'
+import { groupBy, sortBy } from 'lodash'
 import { formatCurrencyWithUnit } from '../lib/formatters'
-import { getProjectById } from '../lib/util'
+import { getProjectById, sumCurrency } from '../lib/util'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -48,8 +48,8 @@ const BarChart = ({ results }) => {
     }
 
     const projectGroups = results.items.reduce((memo, item) => {
-      if (item.fields.ProjectId) {
-        const project = getProjectById(item.fields.ProjectId, results.projects)
+      if (item.fields.Project) {
+        const project = getProjectById(item.fields.Project[0], results.projects)
         if (project) {
           if (!memo[project.fields.Name]) {
             memo[project.fields.Name] = []
@@ -75,8 +75,8 @@ const BarChart = ({ results }) => {
     }
 
     const granteeGroups = results.items.reduce((memo, item) => {
-      if (item.fields.ProjectId) {
-        const project = getProjectById(item.fields.ProjectId, results.projects)
+      if (item.fields.Project) {
+        const project = getProjectById(item.fields.Project[0], results.projects)
         if (project) {
           if (!memo[project.fields['Grantee Name']]) {
             memo[project.fields['Grantee Name']] = []
@@ -103,14 +103,14 @@ const BarChart = ({ results }) => {
 
   const data = sortBy(Object.entries(chartData).map(([title, group], index) => {
     return {
-      value: sumBy(group, getGraphAmount),
+      value: sumCurrency(group.map(getGraphAmount)),
       title,
       color: colorPalate[index % colorPalate.length]
     }
   }), 'value')
 
   const dataType = results.transactionType === 'award' ? 'Awards' : 'Payments'
-  const total = sumBy(results.items, getGraphAmount)
+  const total = sumCurrency(results.items.map(getGraphAmount))
 
   if (data.length <= 1) {
     return (
@@ -184,7 +184,7 @@ const BarChart = ({ results }) => {
             }
           },
           padding: {
-            left: 0,
+            left: 18,
             right: 0
           }
         },
@@ -196,8 +196,8 @@ const BarChart = ({ results }) => {
         },
         yaxis: {
           labels: {
-            maxWidth: 200,
-          }
+            maxWidth: 180,
+          },
         },
         tooltip: {
           y: {
@@ -213,7 +213,7 @@ const BarChart = ({ results }) => {
         data: data.map(d => d.value)
       }]}
       type="bar"
-      height="350"
+      height={350}
     />
   )
 }

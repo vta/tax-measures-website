@@ -1,55 +1,45 @@
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTwitter, faFacebook, faYoutube } from '@fortawesome/free-brands-svg-icons'
 
 const Footer = props => (
-  <div className='row footer'>
-    <div className='col bg-light-blue text-white pb-4 pt-5'>
-      <div className='row'>
-        <div className='col-md-2 offset-md-1'>
+  <div className="row footer">
+    <div className="col bg-light-blue text-white pb-4 pt-4 pt-md-5">
+      <div className="row">
+        <div className="col-md-3 text-center mb-3">
           <img src="/images/logo.png" alt="2016 Measure B" className="footer-logo" />
         </div>
-        <div className='col-md-4'>
-          Downtown Customer Service Center<br />
-          55-A West Santa Clara Street<br />
-          San Jose, CA 95113<br />
-          Weekdays: 9 a.m. - 6 p.m.<br />
-          Closed weekends and most holidays
+        <div className="col-md-3 mb-3">
+          This website provides financial information about VTA's 2016 Measure B, updated quarterly or as new information is released.
         </div>
-        <div className='col-md-4'>
-          River Oaks Administrative Offices<br />
-          3331 North First Street<br />
-          San Jose, CA 94134<br />
-          Weekdays: 8 a.m. - 4:30 p.m.<br />
-          Closed weekends and most holidays
+        <div className='col-md-3 mb-3'>
+          Santa Clara Valley Transportation Authority<br />
+          Community Outreach<br />
+          (408) 321-7575<br />
+          community.outreach@vta.org<br />
+          3331 N First Street<br />
+          San Jose, CA 95134
         </div>
-      </div>
-      <div className='row'>
-        <div className='col text-center'>
+        <div className='col-md-3'>
           <ul className="footer-menu">
             <li>
-              <a href="https://www.vta.org//about/contact">Contact</a>
+              <a href="https://www.vta.org/about">About VTA</a>
             </li>
             <li>
-              <a href="https://www.vta.org//about/careers">Careers</a>
+              <a href="https://www.vta.org/projects/funding/2016-measure-b">2016 Measure B</a>
             </li>
             <li>
-              <a href="https://www.vta.org//business-center">Business Center</a>
+              <a href="https://www.vta.org/about/contact">Contact</a>
             </li>
             <li>
-              <a href="http://santaclaravta.iqm2.com/Citizens/default.aspx">Board Agendas</a>
-            </li>
-            <li>
-              <a href="https://www.vta.org//go/accessibility">Accessibility</a>
-            </li>
-            <li>
-              <a href="https://www.vta.org//about/title-vi">Title VI</a>
+              <a href="https://www.vta.org/privacy-policy">Privacy Policy</a>
             </li>
           </ul>
-        </div>
-      </div>
-      <div className='row'>
-        <div className='col'>
-          <div className='copyright text-center'>
-            Copyright 2018 Santa Clara Valley Transportation Authority (VTA). All Rights Reserved.
+
+          <div className="mt-3">
+            <a href="https://twitter.com/VTA" className="footer-icon"><FontAwesomeIcon icon={faTwitter} title="Twitter" /></a>
+            <a href="https://www.facebook.com/scvta" className="footer-icon"><FontAwesomeIcon icon={faFacebook} title="Facebook" /></a>
+            <a href="https://www.youtube.com/SCVTA" className="footer-icon"><FontAwesomeIcon icon={faYoutube} title="Youtube" /></a>
           </div>
         </div>
       </div>
@@ -62,19 +52,8 @@ const Footer = props => (
 
       .footer-menu {
         list-style-type: none;
-        display: block;
-        padding: 40px 0 10px;
+        padding: 0;
         margin: 0;
-      }
-
-      .footer-menu li {
-        display: inline-block;
-        padding: 0 12px;
-        border-right: 1px solid #FFFFFF;
-      }
-
-      .footer-menu li:last-child {
-        border-right: none;
       }
 
       .footer-menu li a {
@@ -83,9 +62,10 @@ const Footer = props => (
         font-size: 18px;
       }
 
-      .copyright {
-        text-transform: uppercase;
-        font-size: 14px;
+      .footer-icon {
+        color: #FFFFFF;
+        margin-right: 15px;
+        font-size: 30px;
       }
     `}</style>
   </div>

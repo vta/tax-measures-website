@@ -5,21 +5,21 @@ const { publicRuntimeConfig } = getConfig()
 import MapLayer from '../components/map-layer'
 import { getViewport } from '../lib/util'
 
-const ProjectsMap = ({ results, grantees, setProjectModalProjects }) => {
+const ProjectsMap = ({ data: { grantees }, projectsToMap, setProjectModalProjects, height }) => {
   const onMapClick = event => {
     const { features } = event
 
     const projectIds = features.map(f => f.properties.projectId)
-    const projects = results.projects.filter(project => projectIds.includes(project.id))
+    const filteredProjects = projectsToMap.filter(project => projectIds.includes(project.id))
 
-    if (!projects.length) {
+    if (!filteredProjects.length) {
       return
     }
 
-    setProjectModalProjects(projects)
+    setProjectModalProjects(filteredProjects)
   }
 
-  const { layers, layerIds, bbox } = MapLayer(results.projects, grantees)
+  const { layers, layerIds, bbox } = MapLayer(projectsToMap, grantees)
   const [viewport, setViewport] = useState(getViewport(bbox))
 
   if  (layers.length === 0) {
@@ -32,7 +32,7 @@ const ProjectsMap = ({ results, grantees, setProjectModalProjects }) => {
   }
 
   return (
-    <div className="map">
+    <div className="map" style={{height}}>
       <ReactMapGL
         mapboxApiAccessToken={publicRuntimeConfig.mapboxAccessToken}
         width="100%"
@@ -41,6 +41,7 @@ const ProjectsMap = ({ results, grantees, setProjectModalProjects }) => {
         interactiveLayerIds={layerIds}
         onViewportChange={viewport => setViewport(viewport)}
         onClick={onMapClick}
+        scrollZoom={false}
       >
         {layers}
         <div className="nav" className="map-nav">

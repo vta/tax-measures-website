@@ -1,7 +1,5 @@
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import "../node_modules/@fortawesome/fontawesome-svg-core/styles.css";
-@import "../node_modules/react-bootstrap-typeahead/css/Typeahead.css";
-@import "../node_modules/react-bootstrap-typeahead/css/Typeahead-bs4.css";
 @import "../node_modules/mapbox-gl/dist/mapbox-gl.css";
 
 $light-blue: #51BAEC;
@@ -95,7 +93,7 @@ a.card {
 }
 
 .logo {
-  height: 120px;
+  height: 90px;
 }
 
 .header-bar {
@@ -107,25 +105,23 @@ a.card {
 
 .header-stat {
   color: $dark-blue;
-  padding-top: 20px;
-  padding-bottom: 20px;
   text-align: center;
 }
 
 .header-stat-value {
-  font-size: 48px;
+  font-size: 32px;
   display: inline;
   font-weight: bold;
 }
 
 .header-stat-unit {
-  font-size: 30px;
+  font-size: 20px;
   display: inline;
   padding-left: 6px;
 }
 
 .header-stat-label {
-  font-size: 21px;
+  font-size: 16px;
 }
 
 .question-button {
@@ -151,5 +147,39 @@ a.card {
     td:first-child {
       font-size: 18px;
     }
+  }
+}
+
+.number-list {
+  font-size: 30px;
+  margin-right: 14px;
+  float: left;
+  width: 42px;
+  height: 42px;
+  border-radius: 21px;
+  background-color: $light-blue;
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+  .logo {
+    height: 120px;
+  }
+
+  .header-stat {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .header-stat-value {
+    font-size: 48px;
+  }
+
+  .header-stat-unit {
+    font-size: 30px;
+  }
+
+  .header-stat-label {
+    font-size: 21px;
   }
 }

@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Alert from 'react-bootstrap/Alert'
-import { compact } from 'lodash'
-import ArrowButton from '../components/arrow-button'
+import { compact, isEmpty } from 'lodash'
+import AboutModal from '../components/about-modal'
 import FilterControls from '../components/filter-controls'
 import Footer from '../components/footer'
-import HeaderStats from '../components/header-stats'
+import Header from '../components/header'
+import HomepageChart from '../components/homepage-chart'
+import Loading from '../components/loading'
+import ProjectsMap from '../components/projects-map'
 import ProjectsTable from '../components/projects-table'
 import ProjectModal from '../components/project-modal'
 import Results from '../components/results'
@@ -27,37 +30,83 @@ import {
   updateUrlWithFilters
 } from '../lib/util'
 
-const Home = ({
-  allocations,
-  awards,
-  categories,
-  documents,
-  grantees,
-  payments,
-  projects,
-  revenue,
-  initialFilters
-}) => {
+const Home = ({ initialFilters }) => {
   const [results, setResults] = useState()
-  const [loading, setLoading] = useState(false)
-  const [incomingFilters, setIncomingFilters] = useState(initialFilters)
-  const [currentFilters, setCurrentFilters] = useState(initialFilters)
+  const [loading, setLoading] = useState(true)
+  const [incomingFilters, setIncomingFilters] = useState({})
+  const [currentFilters, setCurrentFilters] = useState({})
   const [projectModalProjects, setProjectModalProjects] = useState()
+  const [aboutModalShow, setAboutModalShow] = useState(false)
+  const [data, setData] = useState()
+  const [loadingError, setLoadingError] = useState();
+
+
+  useEffect(() => {
+    // Wait to set initialFilters until data is loaded
+    if (data && !isEmpty(initialFilters)) {
+      setIncomingFilters(initialFilters)
+      handleSearch(initialFilters)
+    }
+  }, [data])
 
   const handleSearch = filters => {
     setLoading(true)
-    setResults(applyFilters(filters, awards, payments, projects, categories, grantees))
+    setResults(applyFilters(filters, data.awards, data.payments, data.projects, data.categories, data.grantees))
     setCurrentFilters(filters)
-    
+
     setTimeout(() => {
       setLoading(false)
-    }, 500)
+    }, 400)
   }
 
   const clearSearch = () => {
     setResults()
     setIncomingFilters({})
     updateUrlWithFilters()
+  }
+
+  const loadInitialData = async () => {
+    try {
+      const [
+        allocations,
+        awards,
+        categories,
+        documents,
+        grantees,
+        payments,
+        projects,
+        revenue
+      ] = await Promise.all([
+        fetchAllocations(),
+        fetchAwards(),
+        fetchCategories(),
+        fetchDocuments(),
+        fetchGrantees(),
+        fetchPayments(),
+        fetchProjects(),
+        fetchRevenue()
+      ])
+
+      setData(await preprocessData({
+        allocations,
+        awards,
+        categories,
+        documents,
+        grantees,
+        payments,
+        projects,
+        revenue,
+      }))
+      setLoading(false)
+    } catch(error) {
+      console.error(error);
+      setLoadingError(error)
+      setLoading(false)
+    }
+  }
+
+  if (!data && !loadingError) {
+    loadInitialData();
   }
 
   return (
@@ -67,42 +116,81 @@ const Home = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <HeaderStats
-        allocations={allocations}
-        revenue={revenue}
+      <Header
+        data={data}
+        setAboutModalShow={setAboutModalShow}
       />
 
       <div className="container-fluid">
         <div className="row pt-3">
           <div className="col">
-            <FilterControls
+            {<FilterControls
               handleSearch={handleSearch}
               clearSearch={clearSearch}
-              projects={projects}
-              grantees={grantees}
-              categories={categories}
+              data={data}
               incomingFilters={incomingFilters}
-            />
+            />}
 
             <FilterAlert results={results} currentFilters={currentFilters} />
 
-            {!results && <div className="card mb-3">
-              <div className="card-body">
-                <h3>See how much Measure B has collected to suport transportation, and how that money has been spent.</h3>
-                <div>This website provides a gateway to understanding Measure B spending. Use the filters above to pick the timeframe, categories, and grantees you're interested in examining the allocations, payments, and projects for. Below you'll see the data you requested visualized. On the "Money" mode, you'll see a cross section of the funding that fits your filter. If you switch to the "Map" tab, you'll see the relevant projects geographically. Below is a text list of those projects, as well as a tool to export that list of projects in a spreadsheet form. <a href="#" onClick={() => setAboutModalShow(true)}>Read more about Measure B &raquo;</a></div>
-              </div>
-            </div>}
-
-            <Results
-              loading={loading}
-              results={results}
-              grantees={grantees}
-              setProjectModalProjects={setProjectModalProjects}
-            />
+            {loadingError && <Alert variant="danger" className="text-center">
+              <Alert.Heading>Unable to load project data</Alert.Heading>
+              <div>Please try again later.</div>
+            </Alert>}
           </div>
         </div>
 
-        {results && <div className="row pt-3">
+        {!results && <div className="row mb-3">
+          <div className="col-md-6 offset-md-3">
+            <div className="card">
+              <div className="card-body">
+                <h3>See how much 2016 Measure B has been collected to support transportation and how that money has been spent.</h3>
+                <div>This website is a window to see where 2016 Measure B funds are going.  You can:</div>
+                <ul>
+                  <li>Use the filters above to pick the categories or grantees to find out how much money has been awarded and see how much of that award has been spent.</li>
+                  <li>Search for specific project funding.</li>
+                  <li>Visualize the funding in a chart or the projects geographically on a map.</li>
+                  <li>Download project list data as a CSV.</li>
+                </ul>
+                <div><a href="#" onClick={() => setAboutModalShow(true)}>Read more about 2016 Measure B &raquo;</a></div>
+              </div>
+            </div>
+          </div>
+        </div>}
+
+
+       <Loading loading={loading} />
+
+        {!results && data && <div className='card mb-3'>
+          <div className='card-body card-graph'>
+            <div className='row'>
+              <div className='col-md-6'>
+                <HomepageChart data={data} />
+              </div>
+              <div className='col-md-6'>
+                <ProjectsMap
+                  data={data}
+                  projectsToMap={data.projects}
+                  setProjectModalProjects={setProjectModalProjects}
+                  height="490px"
+                />
+              </div>
+            </div>
+          </div>
+        </div>}
+
+        <div className="row">
+          <div className="col">
+            {data && <Results
+              loading={loading}
+              results={results}
+              data={data}
+              setProjectModalProjects={setProjectModalProjects}
+            />}
+          </div>
+        </div>
+
+        {results && <div className="row mb-3">
           <div className="col">
             <div className="card bg-blue text-white mb-3">
               <div className="card-body">
@@ -122,15 +210,16 @@ const Home = ({
         <Footer />
       </div>
 
+      <AboutModal
+        show={aboutModalShow}
+        onHide={() => setAboutModalShow(false)}
+      />
+
       <ProjectModal
         show={!!projectModalProjects}
         selectedProjects={projectModalProjects}
         onHide={() => setProjectModalProjects()}
-        allocations={allocations}
-        awards={awards}
-        documents={documents}
-        grantees={grantees}
-        payments={payments}
+        data={data || {}}
         setProjectModalProjects={setProjectModalProjects}
       />
     </div>
@@ -168,39 +257,9 @@ const FilterAlert = ({ results, currentFilters }) => {
 }
 
 Home.getInitialProps = async ({ query }) => {
-  const [
-    allocations,
-    awards,
-    categories,
-    documents,
-    grantees,
-    payments,
-    projects,
-    revenue
-  ] = await Promise.all([
-    fetchAllocations(),
-    fetchAwards(),
-    fetchCategories(),
-    fetchDocuments(),
-    fetchGrantees(),
-    fetchPayments(),
-    fetchProjects(),
-    fetchRevenue()
-  ])
-
   const initialFilters = getInitialFiltersFromUrlQuery(query)
 
-  return preprocessData({
-    allocations,
-    awards,
-    categories,
-    documents,
-    grantees,
-    payments,
-    projects,
-    revenue,
-    initialFilters
-  })
+  return { initialFilters }
 }
 
 export default Home

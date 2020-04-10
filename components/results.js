@@ -1,26 +1,11 @@
 import React from 'react'
-import Spinner from 'react-bootstrap/Spinner'
 import BarChart from './bar-chart'
+import Loading from './loading'
 import ProjectsMap from './projects-map'
 
-const Results = ({ loading, results, grantees, setProjectModalProjects }) => {
+const Results = ({ loading, results, data, setProjectModalProjects }) => {
   if (loading) {
-    return (
-      <div className='card'>
-        <div className='card-body card-loading text-center'>
-          <Spinner animation="border" role="status" size="xl" variant="primary" className='mb-4'>
-            <span className="sr-only">Loading...</span>
-          </Spinner>
-          <h1>Loading...</h1>
-        </div>
-        <style jsx>{`
-          .card-loading {
-            min-height: 400px;
-            padding-top: 80px;
-          }
-        `}</style>
-      </div>
-    )
+    return <Loading loading={loading} />
   }
 
   if (!results || !results.items || !results.items.length) {
@@ -28,7 +13,7 @@ const Results = ({ loading, results, grantees, setProjectModalProjects }) => {
   }
 
   return (
-    <div className='card'>
+    <div className='card mb-3'>
       <div className='card-body card-graph'>
         <div className='row'>
           <div className='col-md-6'>
@@ -36,9 +21,10 @@ const Results = ({ loading, results, grantees, setProjectModalProjects }) => {
           </div>
           <div className='col-md-6'>
             <ProjectsMap
-              results={results}
-              grantees={grantees}
+              data={data}
+              projectsToMap={results.projects}
               setProjectModalProjects={setProjectModalProjects}
+              height="350px"
             />
           </div>
         </div>

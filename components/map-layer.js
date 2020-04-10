@@ -25,7 +25,7 @@ const MapLayer = (projects, grantees) => {
 
       if (geojson.type === 'Feature') {
         geojson.properties.projectId = project.id
-        if (geojson.geometry.type === 'LineString') {
+        if (geojson.geometry.type === 'LineString' || geojson.geometry.type === 'MultiLineString') {
           hasLineString = true
         }
         if (geojson.geometry.type === 'MultiPolygon' || geojson.geometry.type === 'Polygon') {
@@ -37,7 +37,7 @@ const MapLayer = (projects, grantees) => {
       } else if (geojson.type === 'FeatureCollection') {
         for (const feature of geojson.features) {
           feature.properties.projectId = project.id
-          if (feature.geometry.type === 'LineString') {
+          if (feature.geometry.type === 'LineString' || feature.geometry.type === 'MultiLineString') {
             hasLineString = true
           }
           if (feature.geometry.type === 'MultiPolygon' || feature.geometry.type === 'Polygon') {

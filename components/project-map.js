@@ -22,6 +22,7 @@ const ProjectMap = ({ project, grantees }) => {
         height="100%"
         {...viewport}
         onViewportChange={viewport => setViewport(viewport)}
+        scrollZoom={false}
       >
         {layers}
         <div className="nav" className="map-nav">

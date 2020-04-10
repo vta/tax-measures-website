@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import moment from 'moment'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
@@ -37,11 +38,13 @@ const DocumentLink = ({ document }) => {
 
 const ProjectModal = ({
   selectedProjects,
-  allocations,
-  awards,
-  documents,
-  grantees,
-  payments,
+  data: {
+    allocations,
+    awards,
+    documents,
+    grantees,
+    payments,
+  },
   onHide,
   show,
   setProjectModalProjects
@@ -141,8 +144,9 @@ const ProjectModal = ({
       <Table responsive size="sm" className='small-table'>
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Amount</th>
+            <th style={{ width: '33.3%' }}>Date</th>
+            <th style={{ width: '33.3%' }}>Amount</th>
+            <th style={{ width: '33.3%' }}>Description</th>
           </tr>
         </thead>
         <tbody>
@@ -150,6 +154,7 @@ const ProjectModal = ({
             <tr key={payment.id}>
               <td>{payment.fields.Date}</td>
               <td>{formatCurrency(payment.fields.Amount)}</td>
+              <td>{payment.fields['Payment Description']}</td>
             </tr>
           ))}
         </tbody>
@@ -208,7 +213,7 @@ const ProjectModal = ({
             <b>Related Documents:</b>{' '}
             {renderDocuments()}
           </div>
-          <small className="float-right">Last Modified: {project.fields['Last Modified']}</small>
+          <small className="float-right">Last Modified: {moment(project.fields['Last Modified']).format('MMMM Do YYYY, h:mm a')}</small>
           <style jsx>{`
             .table-small td {
               font-size: 12px;
