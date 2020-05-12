@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import ReactMapGL, { NavigationControl } from 'react-map-gl'
-import getConfig from 'next/config'
-const { publicRuntimeConfig } = getConfig()
 import MapLayer from '../components/map-layer'
 import { getViewport } from '../lib/util'
 
@@ -17,7 +15,7 @@ const ProjectMap = ({ project, grantees }) => {
   return (
     <div className="map">
       <ReactMapGL
-        mapboxApiAccessToken={publicRuntimeConfig.mapboxAccessToken}
+        mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
         width="100%"
         height="100%"
         {...viewport}

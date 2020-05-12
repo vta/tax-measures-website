@@ -12,7 +12,6 @@ import ProjectsMap from '../components/projects-map'
 import ProjectsTable from '../components/projects-table'
 import ProjectModal from '../components/project-modal'
 import Results from '../components/results'
-import '../css/index.scss'
 import {
   fetchAllocations,
   fetchAwards,
