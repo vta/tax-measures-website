@@ -8,18 +8,18 @@ const Results = ({ loading, results, data, setProjectModalProjects }) => {
     return <Loading loading={loading} />
   }
 
-  if (!results || !results.items || !results.items.length) {
+  if (!results || !results.items || results.items.length === 0) {
     return null
   }
 
   return (
-    <div className='card mb-3'>
-      <div className='card-body card-graph'>
-        <div className='row'>
-          <div className='col-md-6'>
+    <div className="card mb-3">
+      <div className="card-body card-graph">
+        <div className="row">
+          <div className="col-md-6">
             <BarChart results={results} />
           </div>
-          <div className='col-md-6'>
+          <div className="col-md-6">
             <ProjectsMap
               data={data}
               projectsToMap={results.projects}

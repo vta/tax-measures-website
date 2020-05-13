@@ -2,6 +2,46 @@ import React from 'react'
 import { Layer, Source } from 'react-map-gl'
 import { mergeBboxes, getGranteeByProject } from '../lib/util'
 
+const detectGeometryTypes = (geojson, project) => {
+  const typesPresent = {
+    lineString: false,
+    polygon: false,
+    point: false
+  }
+
+  if (geojson.type === 'Feature') {
+    geojson.properties.projectId = project.id
+    if (geojson.geometry.type === 'LineString' || geojson.geometry.type === 'MultiLineString') {
+      typesPresent.lineString = true
+    }
+
+    if (geojson.geometry.type === 'MultiPolygon' || geojson.geometry.type === 'Polygon') {
+      typesPresent.polygon = true
+    }
+
+    if (geojson.geometry.type === 'Point') {
+      typesPresent.point = true
+    }
+  } else if (geojson.type === 'FeatureCollection') {
+    for (const feature of geojson.features) {
+      feature.properties.projectId = project.id
+      if (feature.geometry.type === 'LineString' || feature.geometry.type === 'MultiLineString') {
+        typesPresent.lineString = true
+      }
+
+      if (feature.geometry.type === 'MultiPolygon' || feature.geometry.type === 'Polygon') {
+        typesPresent.polygon = true
+      }
+
+      if (feature.geometry.type === 'Point') {
+        typesPresent.point = true
+      }
+    }
+  }
+
+  return typesPresent
+}
+
 const MapLayer = (projects, grantees) => {
   const layerIds = []
   const bboxes = []
@@ -19,37 +59,9 @@ const MapLayer = (projects, grantees) => {
     }
 
     if (geojson) {
-      let hasLineString = false
-      let hasPolygon = false
-      let hasPoint = false
+      const typesPresent = detectGeometryTypes(geojson, project)
 
-      if (geojson.type === 'Feature') {
-        geojson.properties.projectId = project.id
-        if (geojson.geometry.type === 'LineString' || geojson.geometry.type === 'MultiLineString') {
-          hasLineString = true
-        }
-        if (geojson.geometry.type === 'MultiPolygon' || geojson.geometry.type === 'Polygon') {
-          hasPolygon = true
-        }
-        if (geojson.geometry.type === 'Point') {
-          hasPoint = true
-        }
-      } else if (geojson.type === 'FeatureCollection') {
-        for (const feature of geojson.features) {
-          feature.properties.projectId = project.id
-          if (feature.geometry.type === 'LineString' || feature.geometry.type === 'MultiLineString') {
-            hasLineString = true
-          }
-          if (feature.geometry.type === 'MultiPolygon' || feature.geometry.type === 'Polygon') {
-            hasPolygon = true
-          }
-          if (feature.geometry.type === 'Point') {
-            hasPoint = true
-          }
-        }
-      }
-      
-      if (hasPolygon) {
+      if (typesPresent.polygon) {
         const layerId = `${project.id}fill`
         const layer = (
           <Source
@@ -63,7 +75,7 @@ const MapLayer = (projects, grantees) => {
               paint={{
                 'fill-color': '#2D65B1',
                 'fill-opacity': 0,
-                'fill-outline-color': '#2D65B1',
+                'fill-outline-color': '#2D65B1'
               }}
             />
           </Source>
@@ -73,6 +85,7 @@ const MapLayer = (projects, grantees) => {
         } else {
           memo.unshift(layer)
         }
+
         layerIds.push(layerId)
 
         const polygonOutlinePaint = project.fields.hasProjectGeometry ? {
@@ -102,10 +115,11 @@ const MapLayer = (projects, grantees) => {
         } else {
           memo.unshift(outlineLayer)
         }
+
         layerIds.push(outlineLayerId)
       }
 
-      if (hasLineString) {
+      if (typesPresent.lineString) {
         const layerId = `${project.id}line`
         const layer = (
           <Source
@@ -128,10 +142,11 @@ const MapLayer = (projects, grantees) => {
         } else {
           memo.unshift(layer)
         }
+
         layerIds.push(layerId)
       }
 
-      if (hasPoint) {
+      if (typesPresent.point) {
         const layerId = `${project.id}circle`
         const layer = (
           <Source
@@ -146,11 +161,11 @@ const MapLayer = (projects, grantees) => {
                 'circle-color': '#2D65B1',
                 'circle-opacity': 0.8,
                 'circle-radius': {
-                  'base': 1.75,
-                  'stops': [[10, 2], [22, 180]]
+                  base: 1.75,
+                  stops: [[10, 2], [22, 180]]
                 },
                 'circle-stroke-width': 2,
-                'circle-stroke-color': '#2D65B1',
+                'circle-stroke-color': '#2D65B1'
               }}
             />
           </Source>
@@ -160,6 +175,7 @@ const MapLayer = (projects, grantees) => {
         } else {
           memo.unshift(layer)
         }
+
         layerIds.push(layerId)
       }
 

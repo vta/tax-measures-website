@@ -2,7 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook, faYoutube } from '@fortawesome/free-brands-svg-icons'
 
-const Footer = props => (
+const Footer = () => (
   <div className="row footer">
     <div className="col bg-light-blue text-white pb-4 pt-4 pt-md-5">
       <div className="row">
@@ -12,7 +12,7 @@ const Footer = props => (
         <div className="col-md-3 mb-3">
           This website provides financial information about VTA's 2016 Measure B, updated quarterly or as new information is released.
         </div>
-        <div className='col-md-3 mb-3'>
+        <div className="col-md-3 mb-3">
           Santa Clara Valley Transportation Authority<br />
           Community Outreach<br />
           (408) 321-7575<br />
@@ -20,7 +20,7 @@ const Footer = props => (
           3331 N First Street<br />
           San Jose, CA 95134
         </div>
-        <div className='col-md-3'>
+        <div className="col-md-3">
           <ul className="footer-menu">
             <li>
               <a href="https://www.vta.org/about">About VTA</a>

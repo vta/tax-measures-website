@@ -19,21 +19,25 @@ const DocumentLink = ({ document }) => {
         {document.fields.Name} <FontAwesomeIcon icon={faFileDownload} size="xs" />
       </a>
     )
-  } else if (document.fields.Attachment && document.fields.Attachment.length === 1) {
+  }
+
+  if (document.fields.Attachment && document.fields.Attachment.length === 1) {
     return (
       <a href={document.fields.Attachment[0].url} target="_blank">
         {document.fields.Name} <FontAwesomeIcon icon={faFileDownload} size="xs" />
       </a>
     )
-  } else if (document.fields.Attachment) {
+  }
+
+  if (document.fields.Attachment) {
     return document.fields.Attachment.map((attachment, index) => (
       <a href={attachment.url} target="_blank" key={index} className="mr-4">
-        {index === 0 ? document.fields.Name : attachment.filename} <FontAwesomeIcon icon={faFileDownload} size="xs" />  
+        {index === 0 ? document.fields.Name : attachment.filename} <FontAwesomeIcon icon={faFileDownload} size="xs" />
       </a>
     ))
-  } else {
-    return document.fields.Name
   }
+
+  return document.fields.Name
 }
 
 const ProjectModal = ({
@@ -43,7 +47,7 @@ const ProjectModal = ({
     awards,
     documents,
     grantees,
-    payments,
+    payments
   },
   onHide,
   show,
@@ -51,7 +55,7 @@ const ProjectModal = ({
 }) => {
   const [mapVisible, setMapVisible] = useState(false)
 
-  if (!selectedProjects || !selectedProjects.length) {
+  if (!selectedProjects || selectedProjects.length === 0) {
     return null
   }
 
@@ -68,12 +72,12 @@ const ProjectModal = ({
   const projectPayments = project.fields.Payments ? payments.filter(p => project.fields.Payments.includes(p.id)) : []
 
   const renderAllocations = () => {
-    if (!projectAllocations.length) {
+    if (projectAllocations.length === 0) {
       return 'None'
     }
 
     return (
-      <Table responsive size="sm" className='small-table'>
+      <Table responsive size="sm" className="small-table">
         <thead>
           <tr>
             <th style={{ width: '33.3%' }}>Date</th>
@@ -95,12 +99,12 @@ const ProjectModal = ({
   }
 
   const renderAwards = () => {
-    if (!projectAwards.length) {
+    if (projectAwards.length === 0) {
       return 'None'
     }
 
     return (
-      <Table responsive size="sm" className='small-table'>
+      <Table responsive size="sm" className="small-table">
         <thead>
           <tr>
             <th style={{ width: '33.3%' }}>Date</th>
@@ -120,12 +124,12 @@ const ProjectModal = ({
   }
 
   const renderDocuments = () => {
-    if (!projectDocuments.length) {
+    if (projectDocuments.length === 0) {
       return 'None'
     }
 
     return (
-      <ListGroup className='small-list-group'>
+      <ListGroup className="small-list-group">
         {projectDocuments.map(document => (
           <ListGroup.Item key={document.id}>
             <DocumentLink document={document} />
@@ -136,12 +140,12 @@ const ProjectModal = ({
   }
 
   const renderPayments = () => {
-    if (!projectPayments.length) {
+    if (projectPayments.length === 0) {
       return 'None'
     }
 
     return (
-      <Table responsive size="sm" className='small-table'>
+      <Table responsive size="sm" className="small-table">
         <thead>
           <tr>
             <th style={{ width: '33.3%' }}>Date</th>
@@ -183,9 +187,9 @@ const ProjectModal = ({
               {project.fields.URL && <div className="project-stat">
                 <a href={project.fields.URL} target="_blank">Project Website <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" /></a>
               </div>}
-              <div className="project-stat">  
+              <div className="project-stat">
                 <b>Grantee:</b>{' '}
-                {projectGrantee.fields.URL ? 
+                {projectGrantee.fields.URL ?
                   <a href={projectGrantee.fields.URL}>
                     {projectGrantee.fields.Name} <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
                   </a> :
@@ -225,29 +229,29 @@ const ProjectModal = ({
           `}</style>
         </>
       )
-    } else {
-      const sortedProjects = sortBy(selectedProjects, project => {
-        // show countywide projects last
-        if (project.fields.hasProjectGeometry) {
-          return 0
-        }
-
-        const grantee = getGranteeByProject(project, grantees)
-
-        if (grantee && (grantee.fields.Name === 'VTA' || grantee.fields.Name === 'Santa Clara County')) {
-          return 1
-        }
-
-        return 0
-      })
-
-      return (
-        <ProjectsTable
-          selectedProjects={sortedProjects}
-          setProjectModalProjects={setProjectModalProjects}
-        />
-      )
     }
+
+    const sortedProjects = sortBy(selectedProjects, project => {
+      // Show countywide projects last
+      if (project.fields.hasProjectGeometry) {
+        return 0
+      }
+
+      const grantee = getGranteeByProject(project, grantees)
+
+      if (grantee && (grantee.fields.Name === 'VTA' || grantee.fields.Name === 'Santa Clara County')) {
+        return 1
+      }
+
+      return 0
+    })
+
+    return (
+      <ProjectsTable
+        selectedProjects={sortedProjects}
+        setProjectModalProjects={setProjectModalProjects}
+      />
+    )
   }
 
   const renderModalTitle = () => {
@@ -258,7 +262,7 @@ const ProjectModal = ({
         </Modal.Title>
       )
     }
-    
+
     return null
   }
 
@@ -278,7 +282,7 @@ const ProjectModal = ({
         {renderModalBody()}
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={handleHide} className='btn-secondary'>Close</Button>
+        <Button onClick={handleHide} className="btn-secondary">Close</Button>
       </Modal.Footer>
     </Modal>
   )

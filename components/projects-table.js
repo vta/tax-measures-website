@@ -4,7 +4,7 @@ import Table from 'react-bootstrap/Table'
 import { some, orderBy } from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileCsv, faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
-import { CSVLink } from "react-csv"
+import { CSVLink } from 'react-csv'
 import { formatCurrencyWithUnit } from '../lib/formatters'
 
 const ProjectsTable = ({
@@ -25,9 +25,9 @@ const ProjectsTable = ({
   const [sortOrder, setSortOrder] = useState()
   const [sortDirection, setSortDirection] = useState('asc')
 
-  const hasSubcategoryColumn = some(selectedProjects, project => !!project.fields.Subcategory.id)
+  const hasSubcategoryColumn = some(selectedProjects, project => Boolean(project.fields.Subcategory.id))
 
-  const setTableSort = (columnName) =>{
+  const setTableSort = columnName => {
     if (sortOrder === columnName) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
     } else {
@@ -43,8 +43,8 @@ const ProjectsTable = ({
         <td>
           <a
             href=""
-            onClick={e => {
-              e.preventDefault()
+            onClick={event => {
+              event.preventDefault()
               setProjectModalProjects([project])
             }}
           >
@@ -68,7 +68,7 @@ const ProjectsTable = ({
   }
 
   const csvData = [
-    ["Project", "Category", "Subcategory", "URL", "Total Allocations", "Total Awards", "Total Payments"],
+    ['Project', 'Category', 'Subcategory', 'URL', 'Total Allocations', 'Total Awards', 'Total Payments'],
     ...selectedProjects.map(project => {
       return [
         project.fields.Name,
@@ -93,7 +93,7 @@ const ProjectsTable = ({
 
   if (sortOrder) {
     if (sortOrder === 'fiscal_year') {
-      projects = orderBy(selectedProjects, (project) => {
+      projects = orderBy(selectedProjects, project => {
         return project.fields['Fiscal Year'] || 0
       }, sortDirection)
     } else if (sortOrder === 'project_name') {
@@ -103,7 +103,7 @@ const ProjectsTable = ({
     } else if (sortOrder === 'category') {
       projects = orderBy(selectedProjects, 'fields.Parent Category.fields.Name', sortDirection)
     } else if (sortOrder === 'subcategory') {
-      projects = orderBy(selectedProjects, (project) => {
+      projects = orderBy(selectedProjects, project => {
         return project.fields.Subcategory.fields.Name || 'zzzz'
       }, sortDirection)
     } else if (sortOrder === 'allocations') {
@@ -142,7 +142,7 @@ const ProjectsTable = ({
 
   return (
     <>
-      <Table responsive size="sm" className='project-table'>
+      <Table responsive size="sm" className="project-table">
         <thead>
           <tr>
             {renderColumnHeader('Fiscal Year', 'fiscal_year')}
@@ -156,7 +156,7 @@ const ProjectsTable = ({
           </tr>
         </thead>
         <tbody>
-          {projects.map(renderProjectRow)}
+          {projects.map(project => renderProjectRow(project))}
           {showTotalRow && <tr className="table-dark border-top-2">
             <td></td>
             <td>Total</td>
@@ -177,10 +177,10 @@ const ProjectsTable = ({
       </Table>
       {showCSVDownloadLink && <CSVLink
         data={csvData}
-        filename={"vta-tax-measures.csv"}
+        filename={'vta-tax-measures.csv'}
         className="btn btn-primary btn-white-border float-right"
       >
-        <FontAwesomeIcon icon={faFileCsv} className='mr-2' /> Download CSV
+        <FontAwesomeIcon icon={faFileCsv} className="mr-2" /> Download CSV
       </CSVLink>}
     </>
   )
