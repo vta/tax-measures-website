@@ -24,7 +24,7 @@ const Header = ({ data, setAboutModalShow }) => {
         {data && <div className="header-stat">
           <div className="header-stat-value">
             {formatCurrencyMillions(sumBy(data.revenue, 'fields.Interest'))}
-            </div>
+          </div>
           <div className="header-stat-unit">million</div>
           <div className="header-stat-label">interest earned</div>
         </div>}

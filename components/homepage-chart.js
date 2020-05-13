@@ -1,6 +1,6 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
-import { groupBy, sortBy } from 'lodash'
+import { groupBy } from 'lodash'
 import { formatCurrencyWithUnit, formatPercent } from '../lib/formatters'
 import { sumCurrency } from '../lib/util'
 
@@ -10,7 +10,7 @@ const HomepageChart = ({ data: { allocations, parentCategories } }) => {
   const actualAllocatedGroups = groupBy(allocations, allocation => allocation.fields['Parent Category'].id)
 
   const actualAllocateds = parentCategories.map(category => {
-    const group = actualAllocatedGroups[category.id];
+    const group = actualAllocatedGroups[category.id]
 
     return group.reduce((memo, allocation) => {
       return memo + allocation.fields.Amount
@@ -30,7 +30,7 @@ const HomepageChart = ({ data: { allocations, parentCategories } }) => {
           stacked: true,
           toolbar: {
             show: false
-          },
+          }
         },
         title: {
           text: 'Percentage of Allocation through FY2021 vs. Total Ballot Allocation',
@@ -42,7 +42,7 @@ const HomepageChart = ({ data: { allocations, parentCategories } }) => {
         subtitle: {
           text: `Total Ballot Allocation: ${formatCurrencyWithUnit(total)}`,
           style: {
-            fontSize: 14,
+            fontSize: 14
           },
           offsetY: 24
         },
@@ -50,8 +50,8 @@ const HomepageChart = ({ data: { allocations, parentCategories } }) => {
           bar: {
             horizontal: true,
             dataLabels: {
-              position: 'top',
-            },
+              position: 'top'
+            }
           }
         },
         colors: ['#BAD739', '#BDBEBD'],
@@ -60,7 +60,7 @@ const HomepageChart = ({ data: { allocations, parentCategories } }) => {
           textAnchor: 'start',
           offsetX: 25,
           formatter: (value, data) => {
-            const series = data.w.config.series
+            const { series } = data.w.config
             const percent = formatPercent(series[0].data[data.dataPointIndex] / (series[0].data[data.dataPointIndex] + series[1].data[data.dataPointIndex]) * 100)
             return percent
           },
@@ -89,8 +89,8 @@ const HomepageChart = ({ data: { allocations, parentCategories } }) => {
         },
         yaxis: {
           labels: {
-            maxWidth: 180,
-          },
+            maxWidth: 180
+          }
         },
         tooltip: {
           y: {
@@ -100,18 +100,18 @@ const HomepageChart = ({ data: { allocations, parentCategories } }) => {
               return `${formatCurrencyWithUnit(value)} (${percent} of ${formatCurrencyWithUnit(total)})`
             }
           }
-        },
+        }
       }}
       series={[{
         name: 'Actual Allocated through FY21',
-        data: actualAllocateds,
+        data: actualAllocateds
       }, {
         name: 'Remaining Ballot Allocation',
-        data: remainingAllocateds,
+        data: remainingAllocateds
       }]}
       type="bar"
     />
   )
 }
 
-export default HomepageChart 
+export default HomepageChart

@@ -1,8 +1,8 @@
 import { airtableGet } from '../../lib/airtable'
 
-export default async (req, res) => {
+export default async (request, response) => {
   const documents = await airtableGet('Documents', {
-    'fields[]': ['Name', 'Attachment', 'URL'],
+    'fields[]': ['Name', 'Attachment', 'URL']
   })
-  res.status(200).json(documents)
+  response.status(200).json(documents)
 }

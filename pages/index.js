@@ -37,8 +37,7 @@ const Home = ({ initialFilters }) => {
   const [projectModalProjects, setProjectModalProjects] = useState()
   const [aboutModalShow, setAboutModalShow] = useState(false)
   const [data, setData] = useState()
-  const [loadingError, setLoadingError] = useState();
-
+  const [loadingError, setLoadingError] = useState()
 
   useEffect(() => {
     // Wait to set initialFilters until data is loaded
@@ -94,18 +93,18 @@ const Home = ({ initialFilters }) => {
         grantees,
         payments,
         projects,
-        revenue,
+        revenue
       }))
       setLoading(false)
-    } catch(error) {
-      console.error(error);
+    } catch (error) {
+      console.error(error)
       setLoadingError(error)
       setLoading(false)
     }
   }
 
   if (!data && !loadingError) {
-    loadInitialData();
+    loadInitialData()
   }
 
   return (
@@ -157,16 +156,15 @@ const Home = ({ initialFilters }) => {
           </div>
         </div>}
 
+        <Loading loading={loading} />
 
-       <Loading loading={loading} />
-
-        {!results && data && <div className='card mb-3'>
-          <div className='card-body card-graph'>
-            <div className='row'>
-              <div className='col-md-6'>
+        {!results && data && <div className="card mb-3">
+          <div className="card-body card-graph">
+            <div className="row">
+              <div className="col-md-6">
                 <HomepageChart data={data} />
               </div>
-              <div className='col-md-6'>
+              <div className="col-md-6">
                 <ProjectsMap
                   data={data}
                   projectsToMap={data.projects}
@@ -215,7 +213,7 @@ const Home = ({ initialFilters }) => {
       />
 
       <ProjectModal
-        show={!!projectModalProjects}
+        show={Boolean(projectModalProjects)}
         selectedProjects={projectModalProjects}
         onHide={() => setProjectModalProjects()}
         data={data || {}}
@@ -229,21 +227,27 @@ const FilterAlert = ({ results, currentFilters }) => {
   const filterCount = currentFilters ? compact(Object.values(currentFilters)).length : 0
   if (!results) {
     return null
-  } else if (results.items.length === 0) {
+  }
+
+  if (results.items.length === 0) {
     return (
       <Alert variant="warning" className="text-center">
         <Alert.Heading>No matching results</Alert.Heading>
         <div>Please adjust the search filters and try again</div>
       </Alert>
     )
-  } else if (results.items.length < 5) {
+  }
+
+  if (results.items.length < 5) {
     return (
       <Alert variant="warning" className="text-center">
         <Alert.Heading>Limited results</Alert.Heading>
         <div>Consider broadening your search if you're not seeing enough results. Select a broader date range or choose additional categories, grantees or projects.</div>
       </Alert>
     )
-  } else if (filterCount < 2) {
+  }
+
+  if (filterCount < 2) {
     return (
       <Alert variant="warning" className="text-center">
         <Alert.Heading>Numerous results</Alert.Heading>

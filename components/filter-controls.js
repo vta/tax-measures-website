@@ -1,3 +1,4 @@
+/*  global alert */
 import React, { useState, useEffect } from 'react'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
@@ -30,6 +31,7 @@ const FilterControls = ({
 
   const validateFilters = filters => {
     if (!filters.transactionType) {
+      /*  eslint-disable-next-line no-alert */
       return alert('You must specify a transaction type')
     }
 
@@ -51,7 +53,7 @@ const FilterControls = ({
       </div>
       <div className="row">
         <div className="col-lg-2 mb-2 mb-lg-0">
-          <Select 
+          <Select
             value={transactionType && [{
               value: transactionType,
               label: capitalize(transactionType)
@@ -68,16 +70,16 @@ const FilterControls = ({
               }
             ]}
             placeholder="Select Transaction Type"
-          />  
+          />
         </div>
         <div className="col-lg-2 mb-2 mb-lg-0">
-          <Select 
+          <Select
             value={category && category.map(c => ({
               value: c,
               label: c
             }))}
             onChange={selectedOptions => {
-              if (selectedOptions && selectedOptions.length) {
+              if (selectedOptions && selectedOptions.length > 0) {
                 setCategory(selectedOptions.map(c => c.label))
               } else {
                 setCategory(undefined)
@@ -92,13 +94,13 @@ const FilterControls = ({
           />
         </div>
         <div className="col-lg-2 mb-2 mb-lg-0">
-          <Select 
+          <Select
             value={grantee && grantee.map(g => ({
               value: g,
               label: g
             }))}
             onChange={selectedOptions => {
-              if (selectedOptions && selectedOptions.length) {
+              if (selectedOptions && selectedOptions.length > 0) {
                 setGrantee(selectedOptions.map(g => g.label))
               } else {
                 setGrantee(undefined)
@@ -120,7 +122,7 @@ const FilterControls = ({
             placeholder="Project Name"
             value={project}
             onKeyPress={event => {
-              if (event.key === "Enter") {
+              if (event.key === 'Enter') {
                 validateFilters({
                   transactionType,
                   grantee,
@@ -133,7 +135,7 @@ const FilterControls = ({
         </div>
         <div className="col-lg-2 col-6 mb-2 mb-lg-0">
           <Button
-            variant="secondary" 
+            variant="secondary"
             onClick={() => validateFilters({
               transactionType,
               grantee,

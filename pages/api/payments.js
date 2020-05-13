@@ -1,10 +1,10 @@
 import { airtableGet } from '../../lib/airtable'
 
-export default async (req, res) => {
+export default async (request, response) => {
   const payments = await airtableGet('Payments', {
     'fields[]': ['Date', 'Amount', 'Payment Description', 'Award'],
     filterByFormula: 'NOT({Amount} = "")',
     'sort[0][field]': 'Date'
   })
-  res.status(200).json(payments)
+  response.status(200).json(payments)
 }

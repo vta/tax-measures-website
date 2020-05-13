@@ -10,11 +10,13 @@ const BarChart = ({ results }) => {
   const getGraphAmount = item => {
     if (results.transactionType === 'award') {
       return item.fields['Award Amount']
-    } else if (results.transactionType === 'payment') {
+    }
+
+    if (results.transactionType === 'payment') {
       return item.fields.Amount
     }
   }
-  
+
   const colorPalate = [
     '#33b2df',
     '#546E7A',
@@ -54,15 +56,17 @@ const BarChart = ({ results }) => {
           if (!memo[project.fields.Name]) {
             memo[project.fields.Name] = []
           }
+
           memo[project.fields.Name].push(item)
         }
       } else {
-        if (!memo['Unallocated']) {
-          memo['Unallocated'] = []
+        if (!memo.Unallocated) {
+          memo.Unallocated = []
         }
-        memo['Unallocated'].push(item)
+
+        memo.Unallocated.push(item)
       }
-      
+
       return memo
     }, {})
 
@@ -81,15 +85,17 @@ const BarChart = ({ results }) => {
           if (!memo[project.fields['Grantee Name']]) {
             memo[project.fields['Grantee Name']] = []
           }
+
           memo[project.fields['Grantee Name']].push(item)
         }
       } else {
-        if (!memo['Unallocated']) {
-          memo['Unallocated'] = []
+        if (!memo.Unallocated) {
+          memo.Unallocated = []
         }
-        memo['Unallocated'].push(item)
+
+        memo.Unallocated.push(item)
       }
-      
+
       return memo
     }, {})
 
@@ -103,14 +109,14 @@ const BarChart = ({ results }) => {
 
   const data = sortBy(Object.entries(chartData).map(([title, group], index) => {
     return {
-      value: sumCurrency(group.map(getGraphAmount)),
+      value: sumCurrency(group.map(g => getGraphAmount(g))),
       title,
       color: colorPalate[index % colorPalate.length]
     }
   }), 'value')
 
   const dataType = results.transactionType === 'award' ? 'Awards' : 'Payments'
-  const total = sumCurrency(results.items.map(getGraphAmount))
+  const total = sumCurrency(results.items.map(g => getGraphAmount(g)))
 
   if (data.length <= 1) {
     return (
@@ -119,7 +125,9 @@ const BarChart = ({ results }) => {
         <div className="text-center font-weight-bold mt-5">Not enough data for chart</div>
       </div>
     )
-  } else if (data.length > 15) {
+  }
+
+  if (data.length > 15) {
     return (
       <div>
         <p>Total {dataType}: {formatCurrencyWithUnit(total)}</p>
@@ -134,7 +142,7 @@ const BarChart = ({ results }) => {
         chart: {
           toolbar: {
             show: false
-          },
+          }
         },
         title: {
           text: `${dataType} by ${chartType}`,
@@ -146,7 +154,7 @@ const BarChart = ({ results }) => {
         subtitle: {
           text: `Total ${dataType}: ${formatCurrencyWithUnit(total)}`,
           style: {
-            fontSize: 14,
+            fontSize: 14
           },
           offsetY: 24
         },
@@ -155,8 +163,8 @@ const BarChart = ({ results }) => {
             distributed: true,
             horizontal: true,
             dataLabels: {
-              position: 'top',
-          },
+              position: 'top'
+            }
           }
         },
         colors: data.map(d => d.color),
@@ -196,14 +204,14 @@ const BarChart = ({ results }) => {
         },
         yaxis: {
           labels: {
-            maxWidth: 180,
-          },
+            maxWidth: 180
+          }
         },
         tooltip: {
           y: {
             formatter: formatCurrencyWithUnit,
             title: {
-              formatter: seriesName => seriesName === 'award' ? 'Awards' : seriesName === 'payment' ? 'Payments' : seriesName
+              formatter: seriesName => seriesName === 'award' ? 'Awards' : (seriesName === 'payment' ? 'Payments' : seriesName)
             }
           }
         }
@@ -218,4 +226,4 @@ const BarChart = ({ results }) => {
   )
 }
 
-export default BarChart 
+export default BarChart

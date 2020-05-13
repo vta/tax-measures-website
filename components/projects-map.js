@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import ReactMapGL, { NavigationControl, Popup } from 'react-map-gl'
+import ReactMapGL, { NavigationControl } from 'react-map-gl'
 import MapLayer from '../components/map-layer'
 import { getViewport } from '../lib/util'
 
@@ -7,20 +7,21 @@ const ProjectsMap = ({ data: { grantees }, projectsToMap, setProjectModalProject
   const onMapClick = event => {
     const { features } = event
 
-    const projectIds = features.map(f => f.properties.projectId)
-    const filteredProjects = projectsToMap.filter(project => projectIds.includes(project.id))
+    const projectIds = new Set(features.map(f => f.properties.projectId))
+    const filteredProjects = projectsToMap.filter(project => projectIds.has(project.id))
 
-    if (!filteredProjects.length) {
+    if (filteredProjects.length === 0) {
       return
     }
 
     setProjectModalProjects(filteredProjects)
   }
 
+  /* eslint-disable-next-line new-cap */
   const { layers, layerIds, bbox } = MapLayer(projectsToMap, grantees)
   const [viewport, setViewport] = useState(getViewport(bbox))
 
-  if  (layers.length === 0) {
+  if (layers.length === 0) {
     return (
       <div>
         <p>&nbsp;</p>
@@ -30,7 +31,7 @@ const ProjectsMap = ({ data: { grantees }, projectsToMap, setProjectModalProject
   }
 
   return (
-    <div className="map" style={{height}}>
+    <div className="map" style={{ height }}>
       <ReactMapGL
         mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
         width="100%"
