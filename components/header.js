@@ -16,17 +16,7 @@ const Header = ({ data, setAboutModalShow }) => {
           <div className="header-stat-value">
             {formatCurrencyMillions(sumBy(data.revenue, 'fields.Amount'))}
           </div>
-          <div className="header-stat-unit">million</div>
-          <div className="header-stat-label">collected since 2017</div>
-        </div>}
-      </div>
-      <div className="col-md">
-        {data && <div className="header-stat">
-          <div className="header-stat-value">
-            {formatCurrencyMillions(sumBy(data.revenue, 'fields.Interest'))}
-          </div>
-          <div className="header-stat-unit">million</div>
-          <div className="header-stat-label">interest earned</div>
+          <div className="header-stat-label">Million Collected</div>
         </div>}
       </div>
       <div className="col-md">
@@ -34,8 +24,7 @@ const Header = ({ data, setAboutModalShow }) => {
           <div className="header-stat-value">
             {formatCurrencyMillions(sumBy(data.allocations, 'fields.Amount'))}
           </div>
-          <div className="header-stat-unit">million</div>
-          <div className="header-stat-label">allocated since 2017</div>
+          <div className="header-stat-label">Million Allocated</div>
         </div>}
       </div>
       <div className="col-md-2 d-flex align-items-center justify-content-center">
