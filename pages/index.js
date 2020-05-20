@@ -142,18 +142,17 @@ const Home = () => {
         </div>
 
         {!results && <div className="row mb-3">
-          <div className="col-md-6 offset-md-3">
+          <div className="col-lg-6 offset-lg-3">
             <div className="card">
               <div className="card-body">
-                <h3>See how much 2016 Measure B has been collected to support transportation and how that money has been spent.</h3>
-                <div>This website is a window to see where 2016 Measure B funds are going.  You can:</div>
+                <h3>See how 2016 Measure B has been spent</h3>
                 <ul>
-                  <li>Use the filters above to pick the categories or grantees to find out how much money has been awarded and see how much of that award has been spent.</li>
-                  <li>Search for specific project funding.</li>
-                  <li>Visualize the funding in a chart or the projects geographically on a map.</li>
-                  <li>Download project list data as a CSV.</li>
+                  <li>Filter by program categories or grantees</li>
+                  <li>Search for a specific project by name</li>
+                  <li>Visualize funding in a chart or map</li>
+                  <li>Download project data as a PDF or CSV</li>
                 </ul>
-                <div><a href="#" onClick={() => setAboutModalShow(true)}>Read more about 2016 Measure B &raquo;</a></div>
+                <div><a href="#" onClick={() => setAboutModalShow(true)}>Read More &raquo;</a></div>
               </div>
             </div>
           </div>
