@@ -141,6 +141,7 @@ a.card {
 }
 
 .number-list {
+  flex-shrink: 0;
   font-size: 30px;
   margin-right: 14px;
   float: left;
