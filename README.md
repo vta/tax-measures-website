@@ -2,21 +2,18 @@
 
 ## Setup
 
-Requires node.js and yarn to be installed.
+Requires [node.js](https://nodejs.org/) and [yarn](https://yarnpkg.com/) to be installed.
 
-Install node.js
+On OS X:
 
-https://nodejs.org/
+    brew install node yarn
 
-Install Yarn
 
-https://yarnpkg.com/
-
-Install dependencies
+Install project dependencies:
 
     yarn
 
-Setup configurtion by  creating a `.env` file in the project root with the following:
+Setup configurtion by creating a `.env` file in the project root with the following:
 
     AIRTABLE_API_KEY=your-airtable-api-key
     AIRTABLE_BASE_ID=your-airtable-base-id
@@ -33,7 +30,7 @@ Open http://localhost:3000 in your browser
     
 ## Building a staticly compiled version for production
 
-Rollow the setup inistructions above, and then run:
+Follow the setup inistructions above, and then run:
 
     yarn build
 
