@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import Alert from 'react-bootstrap/Alert'
 import { compact, isEmpty } from 'lodash'
 import AboutModal from '../components/about-modal'
@@ -29,7 +30,8 @@ import {
   updateUrlWithFilters
 } from '../lib/util'
 
-const Home = ({ initialFilters }) => {
+const Home = () => {
+  const router = useRouter()
   const [results, setResults] = useState()
   const [loading, setLoading] = useState(true)
   const [incomingFilters, setIncomingFilters] = useState({})
@@ -40,6 +42,7 @@ const Home = ({ initialFilters }) => {
   const [loadingError, setLoadingError] = useState()
 
   useEffect(() => {
+    const initialFilters = getInitialFiltersFromUrlQuery(router.query)
     // Wait to set initialFilters until data is loaded
     if (data && !isEmpty(initialFilters)) {
       setIncomingFilters(initialFilters)
@@ -257,12 +260,6 @@ const FilterAlert = ({ results, currentFilters }) => {
   }
 
   return null
-}
-
-Home.getInitialProps = async ({ query }) => {
-  const initialFilters = getInitialFiltersFromUrlQuery(query)
-
-  return { initialFilters }
 }
 
 export default Home
