@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLinkAlt, faFileDownload } from '@fortawesome/free-solid-svg-icons'
 import { sortBy } from 'lodash'
 import { getGranteeByProject } from '../lib/util'
-import { formatCategory, formatCurrency } from '../lib/formatters'
+import { formatCategory, formatCurrency, formatProjectUrl } from '../lib/formatters'
 import ProjectMap from './project-map'
 import ProjectsTable from './projects-table'
 
@@ -168,6 +168,7 @@ const ProjectModal = ({
 
   const renderModalBody = () => {
     if (selectedProjects.length === 1) {
+      const projectUrl = formatProjectUrl(project, projectGrantee);
       return (
         <>
           <div className="row">
@@ -184,8 +185,8 @@ const ProjectModal = ({
                 <b>Fiscal Year:</b>{' '}
                 {project.fields['Fiscal Year']}
               </div>}
-              {project.fields.URL && <div className="project-stat">
-                <a href={project.fields.URL} target="_blank">Project Website <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" /></a>
+              {projectUrl && <div className="project-stat">
+                <a href={projectUrl} target="_blank">Project Website <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" /></a>
               </div>}
               <div className="project-stat">
                 <b>Grantee:</b>{' '}
