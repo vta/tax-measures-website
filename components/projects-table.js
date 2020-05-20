@@ -16,8 +16,8 @@ const ProjectsTable = ({
   if (!selectedProjects || !selectedProjects.length) {
     return (
       <Alert variant="warning" className="text-center">
-        <Alert.Heading>No matching projects</Alert.Heading>
-        <div>There were no projects that match the filter criteria.</div>
+        <Alert.Heading>No funded projects meet these criteria.</Alert.Heading>
+        <div>Try adjusting search filters.</div>
       </Alert>
     )
   }

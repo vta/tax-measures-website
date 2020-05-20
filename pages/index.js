@@ -235,8 +235,8 @@ const FilterAlert = ({ results, currentFilters }) => {
   if (results.items.length === 0) {
     return (
       <Alert variant="warning" className="text-center">
-        <Alert.Heading>No matching results</Alert.Heading>
-        <div>Please adjust the search filters and try again</div>
+        <Alert.Heading>No funded projects meet these criteria.</Alert.Heading>
+        <div>Try adjusting search filters.</div>
       </Alert>
     )
   }
