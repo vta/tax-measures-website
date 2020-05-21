@@ -29,45 +29,7 @@ import {
   preprocessData,
   updateUrlWithFilters
 } from '../lib/util'
-
-const categoryCards = [
-  {
-    key: 'BART Phase II',
-    image: 'bart_phase_ii.jpg'
-  },
-  {
-    key: 'Bicycle & Pedestrian',
-    image: 'bicycle_&_pedestrian.jpg'
-  },
-  {
-    key: 'Caltrain Corridor Capacity',
-    image: 'caltrain_corridor_capacity.jpg'
-  },
-  {
-    key: 'Caltrain Grade Separatiion',
-    image: 'caltrain_grade_separation.jpg'
-  },
-  {
-    key: 'County Expressways',
-    image: 'county_expressways.jpg'
-  },
-  {
-    key: 'Highway Interchanges',
-    image: 'highway_interchanges.jpg'
-  },
-  {
-    key: 'Local Streets & Roads',
-    image: 'local_streets_&_roads.jpg'
-  },
-  {
-    key: 'SR 85 Corridor',
-    image: 'sr_85_corridor.jpg'
-  },
-  {
-    key: 'Transit Operations',
-    image: 'transit_operations.jpg'
-  }
-]
+import { categoryCards } from '../lib/category-cards'
 
 const Home = () => {
   const router = useRouter()
@@ -82,6 +44,15 @@ const Home = () => {
 
   useEffect(() => {
     const initialFilters = getInitialFiltersFromUrlQuery(router.query)
+
+    // Merge category cards and categories
+    if (data && data.categories) {
+      categoryCards.forEach(categoryCard => {
+        const category = data.categories.find(c => c.fields.Name === categoryCard.key)
+        categoryCard.description = category && category.fields.Description
+      })
+    }
+
     // Wait to set initialFilters until data is loaded
     if (data && !isEmpty(initialFilters)) {
       setIncomingFilters(initialFilters)
@@ -149,6 +120,8 @@ const Home = () => {
     loadInitialData()
   }
 
+  const currentSingleCategoryCard = currentFilters && currentFilters.category && currentFilters.category.length === 1 && categoryCards.find(c => c.key === currentFilters.category[0])
+
   return (
     <div>
       <Head>
@@ -212,6 +185,20 @@ const Home = () => {
                   setProjectModalProjects={setProjectModalProjects}
                   height="490px"
                 />
+              </div>
+            </div>
+          </div>
+        </div>}
+
+        {currentSingleCategoryCard && <div className="row mb-3">
+          <div className="col-lg-6 offset-lg-3">
+            <div className="card h-100">
+              <div className="card-body d-flex">
+                <img src={`/images/programs/${currentSingleCategoryCard.image}`} alt={currentSingleCategoryCard.key} width="150" height="150" className="mr-3 flex-shrink-0" />
+                <div>
+                  <h3>{currentSingleCategoryCard.key}</h3>
+                  <p>{currentSingleCategoryCard.description}</p>
+                </div>
               </div>
             </div>
           </div>
