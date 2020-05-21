@@ -285,8 +285,8 @@ const ProjectModal = ({
         {renderModalBody()}
       </Modal.Body>
       <Modal.Footer>
-        <PrintButton className="btn btn-green mr-2" />
-        <ShareButton className="btn btn-green mr-2" />
+        <ShareButton className="btn btn-red mr-2" />
+        <PrintButton className="btn btn-magenta mr-2" />
         <Button onClick={handleHide} className="btn-secondary">Close</Button>
       </Modal.Footer>
     </Modal>
