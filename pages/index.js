@@ -30,6 +30,45 @@ import {
   updateUrlWithFilters
 } from '../lib/util'
 
+const categoryCards = [
+  {
+    key: 'BART Phase II',
+    image: 'bart_phase_ii.jpg'
+  },
+  {
+    key: 'Bicycle & Pedestrian',
+    image: 'bicycle_&_pedestrian.jpg'
+  },
+  {
+    key: 'Caltrain Corridor Capacity',
+    image: 'caltrain_corridor_capacity.jpg'
+  },
+  {
+    key: 'Caltrain Grade Separatiion',
+    image: 'caltrain_grade_separation.jpg'
+  },
+  {
+    key: 'County Expressways',
+    image: 'county_expressways.jpg'
+  },
+  {
+    key: 'Highway Interchanges',
+    image: 'highway_interchanges.jpg'
+  },
+  {
+    key: 'Local Streets & Roads',
+    image: 'local_streets_&_roads.jpg'
+  },
+  {
+    key: 'SR 85 Corridor',
+    image: 'sr_85_corridor.jpg'
+  },
+  {
+    key: 'Transit Operations',
+    image: 'transit_operations.jpg'
+  }
+]
+
 const Home = () => {
   const router = useRouter()
   const [results, setResults] = useState()
@@ -204,6 +243,30 @@ const Home = () => {
               </div>
             </div>
           </div>
+        </div>}
+
+        {!results && data && <div className="row">
+          {categoryCards.map(({ key, image }) => (
+            <div className="col-md-3 mb-3" key={key}>
+              <a className="card" title={`Show all ${key} projects`} href="#" onClick={event => {
+                event.preventDefault()
+
+                const categoryFilters = {
+                  transactionType: 'award',
+                  category: [key]
+                }
+
+                setIncomingFilters(categoryFilters)
+                handleSearch(categoryFilters)
+                window.scrollTo(0, 0)
+              }}>
+                <div className="card-body">
+                  <h3>{key}</h3>
+                  <img src={`/images/programs/${image}`} alt={key} className="w-100" />
+                </div>
+              </a>
+            </div>
+          ))}
         </div>}
 
         <Footer />
