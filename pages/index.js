@@ -64,10 +64,7 @@ const Home = () => {
     setLoading(true)
     setResults(applyFilters(filters, data.awards, data.payments, data.projects, data.categories, data.grantees))
     setCurrentFilters(filters)
-
-    setTimeout(() => {
-      setLoading(false)
-    }, 400)
+    setLoading(false)
   }
 
   const clearSearch = () => {
