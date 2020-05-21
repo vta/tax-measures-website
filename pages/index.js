@@ -54,32 +54,35 @@ const Home = () => {
   }, [projectModalProjects])
 
   useEffect(() => {
-    const initialFilters = getInitialFiltersFromUrlQuery(router.query)
-    const modalProjectIds = router.query.project_ids ? router.query.project_ids.split(',') : undefined
+    const handleDataLoaded = async () => {
+      const initialFilters = getInitialFiltersFromUrlQuery(router.query)
+      const modalProjectIds = router.query.project_ids ? router.query.project_ids.split(',') : undefined
 
-    // Merge category cards and categories
-    if (data && data.categories) {
-      categoryCards.forEach(categoryCard => {
-        const category = data.categories.find(c => c.fields.Name === categoryCard.key)
-        categoryCard.description = category && category.fields.Description
-      })
-    }
+      // Merge category cards and categories
+      if (data && data.categories) {
+        categoryCards.forEach(categoryCard => {
+          const category = data.categories.find(c => c.fields.Name === categoryCard.key)
+          categoryCard.description = category && category.fields.Description
+        })
+      }
 
-    // Wait to set initialFilters until data is loaded
-    if (data && !isEmpty(initialFilters)) {
-      setIncomingFilters(initialFilters)
-      handleSearch(initialFilters)
-    }
+      // Wait to set initialFilters until data is loaded
+      if (data && !isEmpty(initialFilters)) {
+        setIncomingFilters(initialFilters)
+        await handleSearch(initialFilters)
+      }
 
-    // Wait to set modal projects until data is loaded
-    if (data && modalProjectIds) {
-      setProjectModalProjects(modalProjectIds.map(projectId => data.projects.find(p => p.id === projectId)))
+      // Wait to set modal projects until data is loaded
+      if (data && modalProjectIds) {
+        setProjectModalProjects(modalProjectIds.map(projectId => data.projects.find(p => p.id === projectId)))
+      }
     }
+    handleDataLoaded()
   }, [data])
 
-  const handleSearch = filters => {
+  const handleSearch = async filters => {
     setLoading(true)
-    setResults(applyFilters(filters, data.awards, data.payments, data.projects, data.categories, data.grantees))
+    setResults(await applyFilters(filters, data.awards, data.payments, data.projects, data.categories, data.grantees))
     updateUrlWithFilters(filters)
     setCurrentFilters(filters)
     setLoading(false)
