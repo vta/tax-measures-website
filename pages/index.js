@@ -5,6 +5,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Alert from 'react-bootstrap/Alert'
 import { compact, isEmpty } from 'lodash'
+import { NextSeo } from 'next-seo'
 import AboutModal from '../components/about-modal'
 import FilterControls from '../components/filter-controls'
 import Footer from '../components/footer'
@@ -138,6 +139,24 @@ const Home = () => {
 
   return (
     <div>
+      <NextSeo
+        title="2016 Measure B"
+        description="A 30-year, half-cent countywide sales tax to enhance transit, highways, expressways and active transportation (bicycles, pedestrians and complete streets). The measure passed by nearly 72%, the highest level of support for any Santa Clara County transportation tax."
+        canonical="https://2016measureb-beta.vta.org/"
+        openGraph={{
+          url: 'https://2016measureb-beta.vta.org/',
+          title: '2016 Measure B',
+          description: '"A 30-year, half-cent countywide sales tax to enhance transit, highways, expressways and active transportation (bicycles, pedestrians and complete streets). The measure passed by nearly 72%, the highest level of support for any Santa Clara County transportation tax.',
+          images: [
+            {
+              url: 'https://2016measureb-beta.vta.org/meta/measureb-logo-square.png',
+              width: 1200,
+              height: 1200,
+              alt: '2016 Measure B'
+            }
+          ]
+        }}
+      />
       <Head>
         <title>2016 Measure B</title>
         <link rel="icon" href="/favicon.ico" />
