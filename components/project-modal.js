@@ -168,7 +168,7 @@ const ProjectModal = ({
 
   const renderModalBody = () => {
     if (selectedProjects.length === 1) {
-      const projectUrl = formatProjectUrl(project, projectGrantee);
+      const projectUrl = formatProjectUrl(project, projectGrantee)
       return (
         <>
           <div className="row">

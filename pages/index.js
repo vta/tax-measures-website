@@ -1,3 +1,5 @@
+/* global window */
+
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -43,7 +45,7 @@ const Home = () => {
   const [loadingError, setLoadingError] = useState()
 
   useEffect(() => {
-    if (!projectModalProjects || projectModalProjects.length === 0 ) {
+    if (!projectModalProjects || projectModalProjects.length === 0) {
       updateUrlWithFilters(currentFilters)
     } else {
       updateUrlWithFilters(currentFilters, projectModalProjects.map(p => p.id))
@@ -236,7 +238,6 @@ const Home = () => {
                 <ProjectsTable
                   selectedProjects={results && results.projects}
                   setProjectModalProjects={setProjectModalProjects}
-                  showCSVDownloadLink={true}
                   showTotalRow={true}
                 />
               </div>
