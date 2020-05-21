@@ -5,6 +5,8 @@ import { some, orderBy } from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileCsv, faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
 import { CSVLink } from 'react-csv'
+import PrintButton from './print-button'
+import ShareButton from './share-button'
 import { formatCurrencyWithUnit } from '../lib/formatters'
 
 const ProjectsTable = ({
@@ -175,13 +177,17 @@ const ProjectsTable = ({
         </tbody>
       </Table>
 
-      <CSVLink
-        data={csvData}
-        filename={'vta-tax-measures.csv'}
-        className="btn btn-primary btn-white-border float-right"
-      >
-        <FontAwesomeIcon icon={faFileCsv} className="mr-2" /> Download CSV
-      </CSVLink>
+      <div className="d-flex justify-content-end">
+        <PrintButton className="btn btn-green mr-2" />
+        <ShareButton className="btn btn-green mr-2" />
+        <CSVLink
+          data={csvData}
+          filename={'vta-tax-measures.csv'}
+          className="btn btn-green"
+        >
+          <FontAwesomeIcon icon={faFileCsv} className="mr-2" /> Download CSV
+        </CSVLink>
+      </div>
     </>
   )
 }
