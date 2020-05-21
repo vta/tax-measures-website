@@ -10,7 +10,6 @@ import { formatCurrencyWithUnit } from '../lib/formatters'
 const ProjectsTable = ({
   selectedProjects,
   setProjectModalProjects,
-  showCSVDownloadLink,
   showTotalRow
 }) => {
   if (!selectedProjects || !selectedProjects.length) {
@@ -175,13 +174,14 @@ const ProjectsTable = ({
           </tr>}
         </tbody>
       </Table>
-      {showCSVDownloadLink && <CSVLink
+
+      <CSVLink
         data={csvData}
         filename={'vta-tax-measures.csv'}
         className="btn btn-primary btn-white-border float-right"
       >
         <FontAwesomeIcon icon={faFileCsv} className="mr-2" /> Download CSV
-      </CSVLink>}
+      </CSVLink>
     </>
   )
 }
