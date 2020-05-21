@@ -77,6 +77,7 @@ const Home = () => {
         setProjectModalProjects(modalProjectIds.map(projectId => data.projects.find(p => p.id === projectId)))
       }
     }
+
     handleDataLoaded()
   }, [data])
 

@@ -54,7 +54,7 @@ airtableGet('Projects', {
       ]
     }).then(() => {
       console.log(`Published ${objectIDs.length} projects for search`)
-    });
+    })
   })
 }).catch(error => {
   console.error(error)
