@@ -43,7 +43,16 @@ const Home = () => {
   const [loadingError, setLoadingError] = useState()
 
   useEffect(() => {
+    if (!projectModalProjects || projectModalProjects.length === 0 ) {
+      updateUrlWithFilters(currentFilters)
+    } else {
+      updateUrlWithFilters(currentFilters, projectModalProjects.map(p => p.id))
+    }
+  }, [projectModalProjects])
+
+  useEffect(() => {
     const initialFilters = getInitialFiltersFromUrlQuery(router.query)
+    const modalProjectIds = router.query.project_ids ? router.query.project_ids.split(',') : undefined
 
     // Merge category cards and categories
     if (data && data.categories) {
@@ -57,12 +66,17 @@ const Home = () => {
     if (data && !isEmpty(initialFilters)) {
       setIncomingFilters(initialFilters)
       handleSearch(initialFilters)
+
+      if (modalProjectIds) {
+        setProjectModalProjects(modalProjectIds.map(projectId => data.projects.find(p => p.id === projectId)))
+      }
     }
   }, [data])
 
   const handleSearch = filters => {
     setLoading(true)
     setResults(applyFilters(filters, data.awards, data.payments, data.projects, data.categories, data.grantees))
+    updateUrlWithFilters(filters)
     setCurrentFilters(filters)
     setLoading(false)
   }
