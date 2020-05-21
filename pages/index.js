@@ -36,7 +36,7 @@ const Home = () => {
   const [results, setResults] = useState()
   const [loading, setLoading] = useState(true)
   const [incomingFilters, setIncomingFilters] = useState({})
-  const [currentFilters, setCurrentFilters] = useState({})
+  const [currentFilters, setCurrentFilters] = useState()
   const [projectModalProjects, setProjectModalProjects] = useState()
   const [aboutModalShow, setAboutModalShow] = useState(false)
   const [data, setData] = useState()
@@ -66,10 +66,11 @@ const Home = () => {
     if (data && !isEmpty(initialFilters)) {
       setIncomingFilters(initialFilters)
       handleSearch(initialFilters)
+    }
 
-      if (modalProjectIds) {
-        setProjectModalProjects(modalProjectIds.map(projectId => data.projects.find(p => p.id === projectId)))
-      }
+    // Wait to set modal projects until data is loaded
+    if (data && modalProjectIds) {
+      setProjectModalProjects(modalProjectIds.map(projectId => data.projects.find(p => p.id === projectId)))
     }
   }, [data])
 
