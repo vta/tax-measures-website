@@ -9,6 +9,8 @@ import { faExternalLinkAlt, faFileDownload } from '@fortawesome/free-solid-svg-i
 import { sortBy } from 'lodash'
 import { getGranteeByProject } from '../lib/util'
 import { formatCategory, formatCurrency, formatProjectUrl } from '../lib/formatters'
+import PrintButton from './print-button'
+import ShareButton from './share-button'
 import ProjectMap from './project-map'
 import ProjectsTable from './projects-table'
 
@@ -283,6 +285,8 @@ const ProjectModal = ({
         {renderModalBody()}
       </Modal.Body>
       <Modal.Footer>
+        <PrintButton className="btn btn-green mr-2" />
+        <ShareButton className="btn btn-green mr-2" />
         <Button onClick={handleHide} className="btn-secondary">Close</Button>
       </Modal.Footer>
     </Modal>

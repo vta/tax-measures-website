@@ -88,6 +88,21 @@ a.card {
   border-color: $white;
 }
 
+.btn-green {
+  background: #4DB938;
+  border-color: #4DB938;
+  color: #ffffff;
+}
+
+.btn-green:hover,
+.btn-green:focus,
+.btn-green:not(:disabled):not(.disabled):active,
+.show > .btn-green.dropdown-toggle {
+  background: darken(#4DB938, 15%);
+  border-color: darken(#4DB938, 15%);
+  color: #ffffff;
+}
+
 .logo {
   height: 90px;
 }
