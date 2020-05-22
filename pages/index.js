@@ -206,24 +206,6 @@ const Home = () => {
 
         <Loading loading={loading} />
 
-        {!results && !loading && data && <div className="card mb-3">
-          <div className="card-body card-graph">
-            <div className="row">
-              <div className="col-md-6">
-                <HomepageChart data={data} />
-              </div>
-              <div className="col-md-6">
-                <ProjectsMap
-                  data={data}
-                  projectsToMap={data.projects}
-                  setProjectModalProjects={setProjectModalProjects}
-                  height="490px"
-                />
-              </div>
-            </div>
-          </div>
-        </div>}
-
         {currentSingleCategoryCard && <div className="row mb-3">
           <div className="col-lg-6 offset-lg-3">
             <div className="card h-100">
@@ -265,7 +247,7 @@ const Home = () => {
           </div>
         </div>}
 
-        {!results && data && <div className="row">
+        {data && <div className="row">
           {categoryCards.map(({ key, image }) => (
             <div className="col-md-3 mb-3" key={key}>
               <a className="card" title={`Show all ${key} projects`} href="#" onClick={event => {
@@ -287,6 +269,24 @@ const Home = () => {
               </a>
             </div>
           ))}
+        </div>}
+
+        {!results && !loading && data && <div className="card mb-3">
+          <div className="card-body card-graph">
+            <div className="row">
+              <div className="col-md-6">
+                <HomepageChart data={data} />
+              </div>
+              <div className="col-md-6">
+                <ProjectsMap
+                  data={data}
+                  projectsToMap={data.projects}
+                  setProjectModalProjects={setProjectModalProjects}
+                  height="490px"
+                />
+              </div>
+            </div>
+          </div>
         </div>}
 
         <Footer />
