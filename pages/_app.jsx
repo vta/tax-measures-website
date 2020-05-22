@@ -3,10 +3,11 @@ import '../node_modules/@fortawesome/fontawesome-svg-core/styles.css'
 import '../node_modules/mapbox-gl/dist/mapbox-gl.css'
 import '../css/index.scss'
 import { DefaultSeo } from 'next-seo'
+import HttpsRedirect from 'react-https-redirect'
 
 export default function MyApp({ Component, pageProps }) {
   return (
-    <>
+    <HttpsRedirect>
       <DefaultSeo
         openGraph={{
           type: 'website',
@@ -21,6 +22,6 @@ export default function MyApp({ Component, pageProps }) {
         }}
       />
       <Component {...pageProps} />
-    </>
+    </HttpsRedirect>
   )
 }
