@@ -88,6 +88,7 @@ const Home = () => {
   const clearSearch = () => {
     setResults()
     setIncomingFilters({})
+    setCurrentFilters()
     updateUrlWithFilters()
   }
 
