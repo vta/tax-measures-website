@@ -28,6 +28,7 @@ import {
 } from '../lib/api'
 import {
   applyFilters,
+  getSingleCategoryCard,
   getInitialFiltersFromUrlQuery,
   preprocessData,
   updateUrlWithFilters
@@ -135,8 +136,8 @@ const Home = () => {
   if (!data && !loadingError) {
     loadInitialData()
   }
-
-  const currentSingleCategoryCard = currentFilters && currentFilters.category && currentFilters.category.length === 1 && categoryCards.find(c => c.key === currentFilters.category[0])
+  
+  const currentSingleCategoryCard = getSingleCategoryCard(currentFilters, data && data.categories)
 
   return (
     <div>
