@@ -249,8 +249,8 @@ const Home = () => {
 
         {data && <div className="row">
           {categoryCards.map(({ key, image }) => (
-            <div className="col-md-3 mb-3" key={key}>
-              <a className="card" title={`Show all ${key} projects`} href="#" onClick={event => {
+            <div className="col-xl-2 col-lg-3 col-md-4 col-xs-6 mb-3" key={key}>
+              <a className="card h-100" title={`Show all ${key} projects`} href="#" onClick={event => {
                 event.preventDefault()
 
                 const categoryFilters = {
@@ -262,8 +262,8 @@ const Home = () => {
                 handleSearch(categoryFilters)
                 window.scrollTo(0, 0)
               }}>
-                <div className="card-body">
-                  <h3>{key}</h3>
+                <div className="card-body d-flex flex-column justify-content-between">
+                  <h3 className="text-center">{key}</h3>
                   <img src={`/images/programs/${image}`} alt={key} className="w-100" />
                 </div>
               </a>
