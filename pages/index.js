@@ -80,7 +80,7 @@ const Home = () => {
   const handleSearch = async filters => {
     setLoading(true)
     setResults(await applyFilters(filters, data.awards, data.payments, data.projects, data.categories, data.grantees))
-    updateUrlWithFilters(filters)
+    updateUrlWithFilters(filters, (projectModalProjects || []).map(p => p.id))
     setCurrentFilters(filters)
     setLoading(false)
   }
