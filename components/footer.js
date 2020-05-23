@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook, faYoutube } from '@fortawesome/free-brands-svg-icons'
 
 const Footer = () => (
-  <div className="row footer">
+  <div className="row footer d-print-none">
     <div className="col bg-light-blue text-white pb-4 pt-4 pt-md-5">
       <div className="row">
         <div className="col-md-3 text-center mb-3">

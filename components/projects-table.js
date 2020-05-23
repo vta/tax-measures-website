@@ -177,7 +177,7 @@ const ProjectsTable = ({
         </tbody>
       </Table>
 
-      <div className="d-flex justify-content-end">
+      <div className="d-flex justify-content-end d-print-none">
         <ShareButton className="btn btn-red mr-2" />
         <PrintButton className="btn btn-magenta mr-2" />
         <CSVLink
