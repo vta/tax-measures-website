@@ -131,8 +131,8 @@ const Home = ({ data }) => {
         setAboutModalShow={setAboutModalShow}
       />
 
-      <div className="container-fluid">
-        <div className="row pt-3">
+      <div className="container-fluid main-container">
+        <div className="row pt-3 d-print-none">
           <div className="col">
             {<FilterControls
               handleSearch={handleSearch}
@@ -205,7 +205,7 @@ const Home = ({ data }) => {
           </div>
         </div>}
 
-        <div className="row">
+        <div className="row d-print-none">
           {categoryCards.map(({ key, image }) => (
             <div className="col-xl-2 col-lg-3 col-md-4 col-xs-6 mb-3" key={key}>
               <a className="card h-100" title={`Show all ${key} projects`} href="#" onClick={event => {

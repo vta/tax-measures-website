@@ -261,6 +261,7 @@ const ProjectModal = ({
     if (selectedProjects.length === 1) {
       return (
         <Modal.Title id="contained-modal-title-vcenter">
+          <img src="/images/logo.png" alt="2016 Measure B" className="logo d-none d-print-block mb-3" />
           {project.fields.Name}
         </Modal.Title>
       )
@@ -278,13 +279,13 @@ const ProjectModal = ({
       onEntering={() => setMapVisible(true)}
       onHide={handleHide}
     >
-      <Modal.Header closeButton>
+      <Modal.Header>
         {renderModalTitle()}
       </Modal.Header>
       <Modal.Body>
         {renderModalBody()}
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer className="d-print-none">
         <ShareButton className="btn btn-red mr-2" />
         <PrintButton className="btn btn-magenta mr-2" />
         <Button onClick={handleHide} className="btn-secondary">Close</Button>

@@ -11,7 +11,7 @@ const Header = ({ data, setAboutModalShow }) => {
       <div className="col col-md-auto">
         <h1 className="bg-light-blue text-white p-2 p-md-3 m-0"><img src="/images/logo.png" alt="2016 Measure B" className="logo" /></h1>
       </div>
-      <div className="col-md">
+      <div className="col-md d-print-none">
         {data && <div className="header-stat">
           <div className="header-stat-value">
             {formatCurrencyMillions(sumBy(data.revenue, 'fields.Amount'))}
@@ -19,7 +19,7 @@ const Header = ({ data, setAboutModalShow }) => {
           <div className="header-stat-label">Million Collected</div>
         </div>}
       </div>
-      <div className="col-md">
+      <div className="col-md d-print-none">
         {data && <div className="header-stat">
           <div className="header-stat-value">
             {formatCurrencyMillions(sumBy(data.allocations, 'fields.Amount'))}
@@ -27,7 +27,7 @@ const Header = ({ data, setAboutModalShow }) => {
           <div className="header-stat-label">Million Allocated</div>
         </div>}
       </div>
-      <div className="col-md-2 d-flex align-items-center justify-content-center">
+      <div className="col-md-2 d-flex align-items-center justify-content-center d-print-none">
         <Button
           onClick={() => setAboutModalShow(true)}
           variant="primary"

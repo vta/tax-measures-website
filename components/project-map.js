@@ -39,6 +39,12 @@ const ProjectMap = ({ project, grantees }) => {
           left: 0;
           padding: 10px;
         }
+
+        @media print {
+          .map {
+            height: 600px;
+          }
+        }
       `}</style>
     </div>
   )

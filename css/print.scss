@@ -1,0 +1,28 @@
+@media print {
+  .main-container {
+    padding: 0;
+  }
+
+  .modal.show {
+    background: #ffffff;
+  }
+
+  .modal.show .modal-dialog {
+    max-width: initial;
+    margin: 0;
+    height: 100%;
+  }
+
+  .modal.show .modal-dialog-centered {
+   align-items: flex-start;
+  }
+
+  .modal.show .close {
+    display: none;
+  }
+
+  .col-print-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
