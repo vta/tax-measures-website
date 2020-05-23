@@ -3,7 +3,11 @@ import ReactMapGL, { NavigationControl } from 'react-map-gl'
 import MapLayer from '../components/map-layer'
 import { getViewport } from '../lib/util'
 
-const ProjectsMap = ({ data: { grantees }, projectsToMap, setProjectModalProjects, height }) => {
+const ProjectsMap = ({ data: { grantees }, geojsons, projectsToMap, setProjectModalProjects, height }) => {
+  if (!geojsons) {
+    return null
+  }
+
   const onMapClick = event => {
     const { features } = event
 
@@ -18,7 +22,7 @@ const ProjectsMap = ({ data: { grantees }, projectsToMap, setProjectModalProject
   }
 
   /* eslint-disable-next-line new-cap */
-  const { layers, layerIds, bbox } = MapLayer(projectsToMap, grantees)
+  const { layers, layerIds, bbox } = MapLayer(projectsToMap, geojsons, grantees)
   const [viewport, setViewport] = useState(getViewport(bbox))
 
   if (layers.length === 0) {

@@ -12,7 +12,7 @@ import { formatCurrencyWithUnit } from '../lib/formatters'
 const ProjectsTable = ({
   selectedProjects,
   setProjectModalProjects,
-  showTotalRow
+  showButtons
 }) => {
   if (!selectedProjects || !selectedProjects.length) {
     return (
@@ -158,7 +158,7 @@ const ProjectsTable = ({
         </thead>
         <tbody>
           {projects.map(project => renderProjectRow(project))}
-          {showTotalRow && <tr className="table-dark border-top-2">
+          <tr className="table-dark border-top-2">
             <td></td>
             <td>Total</td>
             <td></td>
@@ -173,11 +173,11 @@ const ProjectsTable = ({
             <td className="text-right">
               {formatCurrencyWithUnit(totals.totalPaymentAmount)}
             </td>
-          </tr>}
+          </tr>
         </tbody>
       </Table>
 
-      <div className="d-flex justify-content-end d-print-none">
+      {showButtons && <div className="d-flex justify-content-end d-print-none">
         <ShareButton className="btn btn-red mr-2" />
         <PrintButton className="btn btn-magenta mr-2" />
         <CSVLink
@@ -187,7 +187,7 @@ const ProjectsTable = ({
         >
           <FontAwesomeIcon icon={faFileCsv} className="mr-2" /> Download CSV
         </CSVLink>
-      </div>
+      </div>}
     </>
   )
 }

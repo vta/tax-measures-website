@@ -3,9 +3,13 @@ import ReactMapGL, { NavigationControl } from 'react-map-gl'
 import MapLayer from '../components/map-layer'
 import { getViewport } from '../lib/util'
 
-const ProjectMap = ({ project, grantees }) => {
+const ProjectMap = ({ project, grantees, geojsons }) => {
+  if (!geojsons) {
+    return null
+  }
+
   /* eslint-disable-next-line new-cap */
-  const { layers, bbox } = MapLayer([project], grantees)
+  const { layers, bbox } = MapLayer([project], geojsons, grantees)
 
   if (layers.length === 0) {
     return null

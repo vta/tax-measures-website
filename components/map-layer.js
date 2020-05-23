@@ -42,19 +42,23 @@ const detectGeometryTypes = (geojson, project) => {
   return typesPresent
 }
 
-const MapLayer = (projects, grantees) => {
+const MapLayer = (projects, geojsons, grantees) => {
   const layerIds = []
   const bboxes = []
   const layers = projects.reduce((memo, project) => {
-    let { geometry: geojson, bbox: layerBbox } = project.fields
-
-    if (!geojson) {
+    let geojson
+    let layerBbox
+  
+    if (geojsons[project.id]) {
+      geojson = geojsons[project.id].geojson
+      layerBbox = geojsons[project.id].bbox
+    } else {
       // Use geojson from grantee if exists
       const grantee = getGranteeByProject(project, grantees)
 
-      if (grantee && grantee.fields.geometry) {
-        geojson = grantee.fields.geometry
-        layerBbox = grantee.fields.bbox
+      if (grantee && geojsons[grantee.id]) {
+        geojson = geojsons[grantee.id].geojson
+        layerBbox = geojsons[grantee.id].bbox
       }
     }
 
