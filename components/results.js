@@ -2,8 +2,9 @@ import React from 'react'
 import BarChart from './bar-chart'
 import Loading from './loading'
 import ProjectsMap from './projects-map'
+import ProjectsTable from './projects-table'
 
-const Results = ({ loading, results, data, setProjectModalProjects }) => {
+const Results = ({ loading, results, data, geojsons, setProjectModalProjects }) => {
   if (loading) {
     return <Loading loading={loading} />
   }
@@ -13,28 +14,42 @@ const Results = ({ loading, results, data, setProjectModalProjects }) => {
   }
 
   return (
-    <div className="card mb-3">
-      <div className="card-body card-graph">
-        <div className="row">
-          <div className="col-md-6 col-print-12">
-            <BarChart results={results} />
-          </div>
-          <div className="col-md-6 col-print-12">
-            <ProjectsMap
-              data={data}
-              projectsToMap={results.projects}
-              setProjectModalProjects={setProjectModalProjects}
-              height="350px"
-            />
+    <>
+      <div className="card mb-3">
+        <div className="card-body card-graph">
+          <div className="row">
+            <div className="col-md-6 col-print-12">
+              <BarChart results={results} />
+            </div>
+            <div className="col-md-6 col-print-12">
+              <ProjectsMap
+                data={data}
+                geojsons={geojsons}
+                projectsToMap={results.projects}
+                setProjectModalProjects={setProjectModalProjects}
+                height="350px"
+              />
+            </div>
           </div>
         </div>
       </div>
+      {results && <div className="card bg-blue text-white mb-3">
+        <div className="card-body">
+          <h3>Projects List</h3>
+          <p>Below is a list of the projects correlated with the filter settings above</p>
+          <ProjectsTable
+            selectedProjects={results && results.projects}
+            setProjectModalProjects={setProjectModalProjects}
+            showButtons={true}
+          />
+        </div>
+      </div>}
       <style jsx>{`
         .card-graph {
           min-height: 400px;
         }
       `}</style>
-    </div>
+    </>
   )
 }
 

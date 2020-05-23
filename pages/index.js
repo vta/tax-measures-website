@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { isEmpty } from 'lodash'
+import { isEmpty, keyBy } from 'lodash'
 import { NextSeo } from 'next-seo'
 import AboutModal from '../components/about-modal'
 import FilterAlert from '../components/filter-alert'
@@ -13,7 +13,6 @@ import Header from '../components/header'
 import HomepageChart from '../components/homepage-chart'
 import Loading from '../components/loading'
 import ProjectsMap from '../components/projects-map'
-import ProjectsTable from '../components/projects-table'
 import ProjectModal from '../components/project-modal'
 import Results from '../components/results'
 import {
@@ -44,6 +43,7 @@ const Home = ({ data }) => {
   const [currentFilters, setCurrentFilters] = useState()
   const [projectModalProjects, setProjectModalProjects] = useState()
   const [aboutModalShow, setAboutModalShow] = useState(false)
+  const [geojsons, setGeojsons] = useState()
 
   useEffect(() => {
     if (!projectModalProjects || projectModalProjects.length === 0) {
@@ -68,14 +68,17 @@ const Home = ({ data }) => {
   }, [router.query])
 
   useEffect(() => {
-    // Fetch geojson
-    fetchGeoJson(data.projects)
-    fetchGeoJson(data.grantees)
+    const fetchMapData = async () => {
+      const mapData = [
+        ...await fetchGeoJson(data.projects),
+        ...await fetchGeoJson(data.grantees)
+      ]
 
-    // Set timeout for initial load to wait for URL query params to show up
-    setTimeout(() => {
+      setGeojsons(keyBy(mapData, 'id'))
       setLoading(false)
-    }, 500)
+    }
+
+    fetchMapData();
   }, [])
 
   const handleSearch = async filters => {
@@ -178,32 +181,13 @@ const Home = ({ data }) => {
           </div>
         </div>}
 
-        <div className="row">
-          <div className="col">
-            {<Results
-              loading={loading}
-              results={results}
-              data={data}
-              setProjectModalProjects={setProjectModalProjects}
-            />}
-          </div>
-        </div>
-
-        {results && <div className="row mb-3">
-          <div className="col">
-            <div className="card bg-blue text-white mb-3">
-              <div className="card-body">
-                <h3>Projects List</h3>
-                <p>Below is a list of the projects correlated with the filter settings above</p>
-                <ProjectsTable
-                  selectedProjects={results && results.projects}
-                  setProjectModalProjects={setProjectModalProjects}
-                  showTotalRow={true}
-                />
-              </div>
-            </div>
-          </div>
-        </div>}
+        <Results
+          loading={loading}
+          results={results}
+          data={data}
+          geojsons={geojsons}
+          setProjectModalProjects={setProjectModalProjects}
+        />
 
         <div className="row d-print-none">
           {categoryCards.map(({ key, image }) => (
@@ -238,6 +222,7 @@ const Home = ({ data }) => {
               <div className="col-md-6">
                 <ProjectsMap
                   data={data}
+                  geojsons={geojsons}
                   projectsToMap={data.projects}
                   setProjectModalProjects={setProjectModalProjects}
                   height="490px"
@@ -260,6 +245,7 @@ const Home = ({ data }) => {
         selectedProjects={projectModalProjects}
         onHide={() => setProjectModalProjects()}
         data={data}
+        geojsons={geojsons}
         setProjectModalProjects={setProjectModalProjects}
       />
     </div>

@@ -51,6 +51,7 @@ const ProjectModal = ({
     grantees,
     payments
   },
+  geojsons,
   onHide,
   show,
   setProjectModalProjects
@@ -201,7 +202,11 @@ const ProjectModal = ({
               </div>
             </div>
             <div className="col-md-6">
-              {mapVisible && <ProjectMap project={project} grantees={grantees} />}
+              {mapVisible && <ProjectMap
+                project={project}
+                geojsons={geojsons}
+                grantees={grantees}
+              />}
             </div>
           </div>
           <div className="project-stat">
@@ -253,6 +258,7 @@ const ProjectModal = ({
       <ProjectsTable
         selectedProjects={sortedProjects}
         setProjectModalProjects={setProjectModalProjects}
+        showButtons={false}
       />
     )
   }
