@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import Alert from 'react-bootstrap/Alert'
-import { compact, isEmpty } from 'lodash'
+import { isEmpty } from 'lodash'
 import { NextSeo } from 'next-seo'
 import AboutModal from '../components/about-modal'
+import FilterAlert from '../components/filter-alert'
 import FilterControls from '../components/filter-controls'
 import Footer from '../components/footer'
 import Header from '../components/header'
@@ -264,42 +264,6 @@ const Home = ({ data }) => {
       />
     </div>
   )
-}
-
-const FilterAlert = ({ results, currentFilters }) => {
-  const filterCount = currentFilters ? compact(Object.values(currentFilters)).length : 0
-  if (!results) {
-    return null
-  }
-
-  if (results.items.length === 0) {
-    return (
-      <Alert variant="warning" className="text-center">
-        <Alert.Heading>No funded projects meet these criteria.</Alert.Heading>
-        <div>Try adjusting search filters.</div>
-      </Alert>
-    )
-  }
-
-  if (results.items.length < 5) {
-    return (
-      <Alert variant="warning" className="text-center">
-        <Alert.Heading>Limited results</Alert.Heading>
-        <div>Consider broadening your search if you're not seeing enough results. Select a broader date range or choose additional categories, grantees or projects.</div>
-      </Alert>
-    )
-  }
-
-  if (filterCount < 2) {
-    return (
-      <Alert variant="warning" className="text-center">
-        <Alert.Heading>Numerous results</Alert.Heading>
-        <div>Consider selecting additional filters to narrow down your results or focus on the information you're interested in.</div>
-      </Alert>
-    )
-  }
-
-  return null
 }
 
 export async function getStaticProps() {
