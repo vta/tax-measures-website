@@ -29,13 +29,13 @@ import {
 import {
   applyFilters,
   getSingleCategoryCard,
-  getInitialFiltersFromUrlQuery,
+  getFiltersFromQuery,
   preprocessData,
   updateUrlWithFilters
 } from '../lib/util'
 import { categoryCards } from '../lib/category-cards'
 
-const Home = () => {
+const Home = ({ data }) => {
   const router = useRouter()
   const [results, setResults] = useState()
   const [loading, setLoading] = useState(true)
@@ -43,8 +43,6 @@ const Home = () => {
   const [currentFilters, setCurrentFilters] = useState()
   const [projectModalProjects, setProjectModalProjects] = useState()
   const [aboutModalShow, setAboutModalShow] = useState(false)
-  const [data, setData] = useState()
-  const [loadingError, setLoadingError] = useState()
 
   useEffect(() => {
     if (!projectModalProjects || projectModalProjects.length === 0) {
@@ -55,28 +53,25 @@ const Home = () => {
   }, [projectModalProjects])
 
   useEffect(() => {
-    const initialFilters = getInitialFiltersFromUrlQuery(router.query)
+    const filters = getFiltersFromQuery(router.query)
     const modalProjectIds = router.query.project_ids ? router.query.project_ids.split(',') : undefined
 
-    // Merge category cards and categories
-    if (data && data.categories) {
-      categoryCards.forEach(categoryCard => {
-        const category = data.categories.find(c => c.fields.Name === categoryCard.key)
-        categoryCard.description = category && category.fields.Description
-      })
+    if (!isEmpty(filters)) {
+      setIncomingFilters(filters)
+      handleSearch(filters)
     }
 
-    // Wait to set initialFilters until data is loaded
-    if (data && !isEmpty(initialFilters)) {
-      setIncomingFilters(initialFilters)
-      handleSearch(initialFilters)
-    }
-
-    // Wait to set modal projects until data is loaded
-    if (data && modalProjectIds) {
+    if (modalProjectIds) {
       setProjectModalProjects(modalProjectIds.map(projectId => data.projects.find(p => p.id === projectId)))
     }
-  }, [data])
+  }, [router.query])
+
+  useEffect(() => {
+    // Set timeout for initial load to wait for URL query params to show up
+    setTimeout(() => {
+      setLoading(false)
+    }, 500)
+  }, [])
 
   const handleSearch = async filters => {
     setLoading(true)
@@ -93,51 +88,13 @@ const Home = () => {
     updateUrlWithFilters()
   }
 
-  const loadInitialData = async () => {
-    try {
-      const [
-        allocations,
-        awards,
-        categories,
-        documents,
-        grantees,
-        payments,
-        projects,
-        revenue
-      ] = await Promise.all([
-        fetchAllocations(),
-        fetchAwards(),
-        fetchCategories(),
-        fetchDocuments(),
-        fetchGrantees(),
-        fetchPayments(),
-        fetchProjects(),
-        fetchRevenue()
-      ])
+  // Merge category cards and categories
+  categoryCards.forEach(categoryCard => {
+    const category = data.categories.find(c => c.fields.Name === categoryCard.key)
+    categoryCard.description = category && category.fields.Description
+  })
 
-      setData(await preprocessData({
-        allocations,
-        awards,
-        categories,
-        documents,
-        grantees,
-        payments,
-        projects,
-        revenue
-      }))
-      setLoading(false)
-    } catch (error) {
-      console.error(error)
-      setLoadingError(error)
-      setLoading(false)
-    }
-  }
-
-  if (!data && !loadingError) {
-    loadInitialData()
-  }
-  
-  const currentSingleCategoryCard = getSingleCategoryCard(currentFilters, data && data.categories)
+  const currentSingleCategoryCard = getSingleCategoryCard(currentFilters, data.categories)
 
   return (
     <div>
@@ -180,11 +137,6 @@ const Home = () => {
             />}
 
             <FilterAlert results={results} currentFilters={currentFilters} />
-
-            {loadingError && <Alert variant="danger" className="text-center">
-              <Alert.Heading>Unable to load project data</Alert.Heading>
-              <div>Please try again later.</div>
-            </Alert>}
           </div>
         </div>
 
@@ -223,7 +175,7 @@ const Home = () => {
 
         <div className="row">
           <div className="col">
-            {data && <Results
+            {<Results
               loading={loading}
               results={results}
               data={data}
@@ -248,7 +200,7 @@ const Home = () => {
           </div>
         </div>}
 
-        {data && <div className="row">
+        <div className="row">
           {categoryCards.map(({ key, image }) => (
             <div className="col-xl-2 col-lg-3 col-md-4 col-xs-6 mb-3" key={key}>
               <a className="card h-100" title={`Show all ${key} projects`} href="#" onClick={event => {
@@ -270,9 +222,9 @@ const Home = () => {
               </a>
             </div>
           ))}
-        </div>}
+        </div>
 
-        {!results && !loading && data && <div className="card mb-3">
+        {!results && !loading && <div className="card mb-3">
           <div className="card-body card-graph">
             <div className="row">
               <div className="col-md-6">
@@ -302,7 +254,7 @@ const Home = () => {
         show={Boolean(projectModalProjects)}
         selectedProjects={projectModalProjects}
         onHide={() => setProjectModalProjects()}
-        data={data || {}}
+        data={data}
         setProjectModalProjects={setProjectModalProjects}
       />
     </div>
@@ -343,6 +295,47 @@ const FilterAlert = ({ results, currentFilters }) => {
   }
 
   return null
+}
+
+export async function getStaticProps() {
+  const [
+    allocations,
+    awards,
+    categories,
+    documents,
+    grantees,
+    payments,
+    projects,
+    revenue
+  ] = await Promise.all([
+    fetchAllocations(),
+    fetchAwards(),
+    fetchCategories(),
+    fetchDocuments(),
+    fetchGrantees(),
+    fetchPayments(),
+    fetchProjects(),
+    fetchRevenue()
+  ])
+
+  const data = await preprocessData({
+    allocations,
+    awards,
+    categories,
+    documents,
+    grantees,
+    payments,
+    projects,
+    revenue
+  })
+
+  return {
+    props: {
+      data
+    },
+    // attempt to re-generate the page at most every 10 minutes
+    unstable_revalidate: 600
+  }
 }
 
 export default Home
