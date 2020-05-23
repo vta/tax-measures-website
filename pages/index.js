@@ -31,6 +31,7 @@ import {
   getSingleCategoryCard,
   getFiltersFromQuery,
   preprocessData,
+  fetchGeoJson,
   updateUrlWithFilters
 } from '../lib/util'
 import { categoryCards } from '../lib/category-cards'
@@ -67,6 +68,10 @@ const Home = ({ data }) => {
   }, [router.query])
 
   useEffect(() => {
+    // Fetch geojson
+    fetchGeoJson(data.projects)
+    fetchGeoJson(data.grantees)
+
     // Set timeout for initial load to wait for URL query params to show up
     setTimeout(() => {
       setLoading(false)
