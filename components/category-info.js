@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactMarkdown from 'react-markdown'
 
 const CategoryInfo = ({ categoryCard }) => {
   if (!categoryCard) {
@@ -13,7 +14,7 @@ const CategoryInfo = ({ categoryCard }) => {
             <img src={`/images/programs/${categoryCard.image}`} alt={categoryCard.key} width="150" height="150" className="mr-3 flex-shrink-0" />
             <div>
               <h3>{categoryCard.key}</h3>
-              <p>{categoryCard.description}</p>
+              <ReactMarkdown source={categoryCard.description} linkTarget="_blank" />
             </div>
           </div>
         </div>
