@@ -103,36 +103,6 @@ a.card {
   color: #ffffff;
 }
 
-.btn-red {
-  background: #E74536;
-  border-color: #E74536;
-  color: #ffffff;
-}
-
-.btn-red:hover,
-.btn-red:focus,
-.btn-red:not(:disabled):not(.disabled):active,
-.show > .btn-red.dropdown-toggle {
-  background: darken(#E74536, 15%);
-  border-color: darken(#E74536, 15%);
-  color: #ffffff;
-}
-
-.btn-magenta {
-  background: #CE57B3;
-  border-color: #CE57B3;
-  color: #ffffff;
-}
-
-.btn-magenta:hover,
-.btn-magenta:focus,
-.btn-magenta:not(:disabled):not(.disabled):active,
-.show > .btn-magenta.dropdown-toggle {
-  background: darken(#CE57B3, 15%);
-  border-color: darken(#CE57B3, 15%);
-  color: #ffffff;
-}
-
 .logo {
   height: 90px;
 }
