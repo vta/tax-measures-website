@@ -14,7 +14,7 @@ const ProjectsTable = ({
   setProjectModalProjects,
   showButtons
 }) => {
-  if (!selectedProjects || !selectedProjects.length) {
+  if (!selectedProjects || selectedProjects.length === 0) {
     return (
       <Alert variant="warning" className="text-center">
         <Alert.Heading>No funded projects meet these criteria.</Alert.Heading>

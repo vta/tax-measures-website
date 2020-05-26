@@ -1,9 +1,27 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
+import ListGroup from 'react-bootstrap/ListGroup'
+import DocumentLink from './document-link'
 
 const CategoryInfo = ({ categoryCard }) => {
   if (!categoryCard) {
     return null
+  }
+
+  const renderDocuments = () => {
+    if (categoryCard.documents.length === 0) {
+      return null
+    }
+
+    return (
+      <ListGroup className="small-list-group">
+        {categoryCard.documents.map(document => (
+          <ListGroup.Item key={document.id}>
+            <DocumentLink document={document} />
+          </ListGroup.Item>
+        ))}
+      </ListGroup>
+    )
   }
 
   return (
@@ -15,6 +33,7 @@ const CategoryInfo = ({ categoryCard }) => {
             <div>
               <h3>{categoryCard.key}</h3>
               <ReactMarkdown source={categoryCard.description} linkTarget="_blank" />
+              {renderDocuments()}
             </div>
           </div>
         </div>

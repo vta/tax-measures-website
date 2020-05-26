@@ -1,4 +1,4 @@
-/* global window */
+/* global window, navigator */
 import React from 'react'
 import Dropdown from 'react-bootstrap/Dropdown'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -20,7 +20,7 @@ const ShareButton = ({ className }) => {
         title: shareTitle,
         url: shareUrl
       })
-      .catch(console.error)
+        .catch(console.error)
     }
   }
 

@@ -27,6 +27,7 @@ import {
 } from '../lib/api'
 import {
   applyFilters,
+  getDocumentById,
   getFiltersFromQuery,
   preprocessData,
   fetchGeoJson,
@@ -77,7 +78,7 @@ const Home = ({ data }) => {
       setLoading(false)
     }
 
-    fetchMapData();
+    fetchMapData()
   }, [])
 
   const handleSearch = async filters => {
@@ -99,6 +100,7 @@ const Home = ({ data }) => {
   categoryCards.forEach(categoryCard => {
     const category = data.categories.find(c => c.fields.Name === categoryCard.key)
     categoryCard.description = category && category.fields.Description
+    categoryCard.documents = category && category.fields.Documents && category.fields.Documents.map(id => getDocumentById(id, data.documents))
   })
 
   return (
@@ -271,7 +273,7 @@ export async function getStaticProps() {
     props: {
       data
     },
-    // attempt to re-generate the page at most every 10 minutes
+    // Attempt to re-generate the page at most every 10 minutes
     unstable_revalidate: 600
   }
 }
