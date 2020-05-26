@@ -27,7 +27,6 @@ import {
 } from '../lib/api'
 import {
   applyFilters,
-  getSingleCategoryCard,
   getFiltersFromQuery,
   preprocessData,
   fetchGeoJson,
@@ -102,8 +101,6 @@ const Home = ({ data }) => {
     categoryCard.description = category && category.fields.Description
   })
 
-  const currentSingleCategoryCard = getSingleCategoryCard(currentFilters, data.categories)
-
   return (
     <div>
       <NextSeo
@@ -166,20 +163,6 @@ const Home = ({ data }) => {
         </div>}
 
         <Loading loading={loading} />
-
-        {currentSingleCategoryCard && <div className="row mb-3">
-          <div className="col-lg-6 offset-lg-3">
-            <div className="card h-100">
-              <div className="card-body d-flex">
-                <img src={`/images/programs/${currentSingleCategoryCard.image}`} alt={currentSingleCategoryCard.key} width="150" height="150" className="mr-3 flex-shrink-0" />
-                <div>
-                  <h3>{currentSingleCategoryCard.key}</h3>
-                  <p>{currentSingleCategoryCard.description}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>}
 
         <Results
           loading={loading}
