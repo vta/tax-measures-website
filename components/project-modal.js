@@ -5,42 +5,15 @@ import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Table from 'react-bootstrap/Table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faExternalLinkAlt, faFileDownload } from '@fortawesome/free-solid-svg-icons'
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 import { compact, flatMap, sortBy, uniq } from 'lodash'
-import { getGranteeByProject } from '../lib/util'
+import { getDocumentById, getGranteeByProject } from '../lib/util'
 import { formatCategory, formatCurrency, formatProjectUrl } from '../lib/formatters'
+import DocumentLink from './document-link'
 import PrintButton from './print-button'
 import ShareButton from './share-button'
 import ProjectMap from './project-map'
 import ProjectsTable from './projects-table'
-
-const DocumentLink = ({ document }) => {
-  if (document.fields.URL) {
-    return (
-      <a href={document.fields.URL} target="_blank">
-        {document.fields.Name} <FontAwesomeIcon icon={faFileDownload} size="xs" />
-      </a>
-    )
-  }
-
-  if (document.fields.Attachment && document.fields.Attachment.length === 1) {
-    return (
-      <a href={document.fields.Attachment[0].url} target="_blank">
-        {document.fields.Name} <FontAwesomeIcon icon={faFileDownload} size="xs" />
-      </a>
-    )
-  }
-
-  if (document.fields.Attachment) {
-    return document.fields.Attachment.map((attachment, index) => (
-      <a href={attachment.url} target="_blank" key={index} className="mr-4">
-        {index === 0 ? document.fields.Name : attachment.filename} <FontAwesomeIcon icon={faFileDownload} size="xs" />
-      </a>
-    ))
-  }
-
-  return document.fields.Name
-}
 
 const ProjectModal = ({
   selectedProjects,
@@ -74,12 +47,9 @@ const ProjectModal = ({
     ...(project.fields.Documents || []),
     ...flatMap(projectAwards, 'fields.Documents')
   ]))
-  const projectDocuments = projectDocumentIds.map(id => documents.find(d => d.id === id))
+  const projectDocuments = projectDocumentIds.map(id => getDocumentById(id, documents))
   const projectGrantee = getGranteeByProject(project, grantees)
   const projectPayments = project.fields.Payments ? payments.filter(p => project.fields.Payments.includes(p.id)) : []
-
-  console.log(projectDocumentIds)
-  console.log(projectDocuments)
 
   const renderAllocations = () => {
     if (projectAllocations.length === 0) {
@@ -232,7 +202,7 @@ const ProjectModal = ({
             <b>Related Documents:</b>{' '}
             {renderDocuments()}
           </div>
-          <small className="float-right">Last Modified: {moment(project.fields['Last Modified']).format('MMMM Do YYYY, h:mm a')}</small>
+          <small className="float-right mt-2">Last Modified: {moment(project.fields['Last Modified']).format('MMMM Do YYYY, h:mm a')}</small>
           <style jsx>{`
             .table-small td {
               font-size: 12px;

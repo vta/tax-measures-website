@@ -48,7 +48,7 @@ const MapLayer = (projects, geojsons, grantees) => {
   const layers = projects.reduce((memo, project) => {
     let geojson
     let layerBbox
-  
+
     if (geojsons[project.id]) {
       geojson = geojsons[project.id].geojson
       layerBbox = geojsons[project.id].bbox
