@@ -178,8 +178,8 @@ const ProjectsTable = ({
       </Table>
 
       {showButtons && <div className="d-flex justify-content-end d-print-none">
-        <ShareButton className="btn btn-red mr-2" />
-        <PrintButton className="btn btn-magenta mr-2" />
+        <ShareButton className="btn btn-green mr-2" />
+        <PrintButton className="btn btn-green mr-2" />
         <CSVLink
           data={csvData}
           filename={'vta-tax-measures.csv'}
