@@ -64,6 +64,14 @@ h3 {
   font-size: 1.5rem;
 }
 
+
+@media (min-width: 992px) {
+  .col-lg-5col {
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+}
+
 a.card {
   text-decoration: none;
 }

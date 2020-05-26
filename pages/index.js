@@ -176,7 +176,7 @@ const Home = ({ data }) => {
 
         <div className="row d-print-none">
           {categoryCards.map(({ key, image }) => (
-            <div className="col-xl-2 col-lg-3 col-md-4 col-xs-6 mb-3" key={key}>
+            <div className="col-lg-5col col-md-4 col-xs-6 mb-3" key={key}>
               <a className="card h-100" title={`Show all ${key} projects`} href="#" onClick={event => {
                 event.preventDefault()
 
