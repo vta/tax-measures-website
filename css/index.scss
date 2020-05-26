@@ -8,7 +8,7 @@ $text: #4C4D55;
 @font-face {
   font-family: 'Museo Sans 500';
   src: url('/fonts/MuseoSans-500.woff2') format('woff2'),
-      url('/fonts/MuseoSans-500.woff') format('woff');
+    url('/fonts/MuseoSans-500.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -16,7 +16,7 @@ $text: #4C4D55;
 @font-face {
   font-family: 'Museo Sans 500';
   src: url('/fonts/MuseoSans-500Italic.woff2') format('woff2'),
-      url('/fonts/MuseoSans-500Italic.woff') format('woff');
+    url('/fonts/MuseoSans-500Italic.woff') format('woff');
   font-weight: normal;
   font-style: italic;
 }
@@ -25,7 +25,9 @@ $text: #4C4D55;
 body {
   background-color: $light-grey;
   color: $text;
-  font-family: 'Museo Sans 500'; font-weight: normal; font-style: normal;
+  font-family: 'Museo Sans 500';
+  font-weight: normal;
+  font-style: normal;
 }
 
 a {
@@ -36,13 +38,24 @@ a {
   color: $text;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: $dark-blue;
   font-weight: bold;
 }
 
 .text-white {
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     color: $white;
   }
 }
@@ -56,11 +69,11 @@ a.card {
 }
 
 .bg-light-blue {
-  background-color: $light-blue!important;
+  background-color: $light-blue !important;
 }
 
 .bg-blue {
-  background-color: $dark-blue!important;
+  background-color: $dark-blue !important;
 }
 
 .btn-primary {
@@ -97,7 +110,7 @@ a.card {
 .btn-green:hover,
 .btn-green:focus,
 .btn-green:not(:disabled):not(.disabled):active,
-.show > .btn-green.dropdown-toggle {
+.show>.btn-green.dropdown-toggle {
   background: darken(#4DB938, 15%);
   border-color: darken(#4DB938, 15%);
   color: #ffffff;
