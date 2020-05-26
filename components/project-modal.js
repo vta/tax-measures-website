@@ -6,7 +6,7 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Table from 'react-bootstrap/Table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLinkAlt, faFileDownload } from '@fortawesome/free-solid-svg-icons'
-import { sortBy } from 'lodash'
+import { compact, flatMap, sortBy, uniq } from 'lodash'
 import { getGranteeByProject } from '../lib/util'
 import { formatCategory, formatCurrency, formatProjectUrl } from '../lib/formatters'
 import PrintButton from './print-button'
@@ -70,9 +70,16 @@ const ProjectModal = ({
 
   const projectAllocations = project.fields.Allocations ? allocations.filter(a => project.fields.Allocations.includes(a.id)) : []
   const projectAwards = project.fields.Awards ? awards.filter(a => project.fields.Awards.includes(a.id)) : []
-  const projectDocuments = project.fields.Documents ? documents.filter(d => project.fields.Documents.includes(d.id)) : []
+  const projectDocumentIds = compact(uniq([
+    ...(project.fields.Documents || []),
+    ...flatMap(projectAwards, 'fields.Documents')
+  ]))
+  const projectDocuments = projectDocumentIds.map(id => documents.find(d => d.id === id))
   const projectGrantee = getGranteeByProject(project, grantees)
   const projectPayments = project.fields.Payments ? payments.filter(p => project.fields.Payments.includes(p.id)) : []
+
+  console.log(projectDocumentIds)
+  console.log(projectDocuments)
 
   const renderAllocations = () => {
     if (projectAllocations.length === 0) {
