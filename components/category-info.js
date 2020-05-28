@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
+import breaks from 'remark-breaks'
 import ListGroup from 'react-bootstrap/ListGroup'
 import DocumentLink from './document-link'
 
@@ -9,7 +10,7 @@ const CategoryInfo = ({ categoryCard }) => {
   }
 
   const renderDocuments = () => {
-    if (categoryCard.documents.length === 0) {
+    if (!categoryCard.documents || categoryCard.documents.length === 0) {
       return null
     }
 
@@ -32,7 +33,7 @@ const CategoryInfo = ({ categoryCard }) => {
             <img src={`/images/programs/${categoryCard.image}`} alt={categoryCard.key} width="150" height="150" className="mr-3 flex-shrink-0" />
             <div>
               <h3>{categoryCard.key}</h3>
-              <ReactMarkdown source={categoryCard.description} linkTarget="_blank" />
+              <ReactMarkdown source={categoryCard.description} linkTarget="_blank" plugins={[breaks]} />
               {renderDocuments()}
             </div>
           </div>
