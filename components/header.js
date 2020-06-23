@@ -7,7 +7,7 @@ import { formatCurrencyMillions } from '../lib/formatters'
 
 const Header = ({ data, setAboutModalShow }) => {
   return (
-    <div className="row bg-white">
+    <div className="row bg-white no-gutters d-block d-md-flex">
       <div className="col col-md-auto">
         <h1 className="bg-light-blue text-white p-2 p-md-3 m-0"><img src="/images/logo.png" alt="2016 Measure B" className="logo" /></h1>
       </div>
