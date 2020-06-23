@@ -42,6 +42,7 @@ const Results = ({ loading, results, data, geojsons, setProjectModalProjects }) 
           <ProjectsTable
             selectedProjects={results && results.projects}
             setProjectModalProjects={setProjectModalProjects}
+            faqs={data.faqs}
             showButtons={true}
           />
         </div>

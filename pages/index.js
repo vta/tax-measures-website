@@ -23,7 +23,8 @@ import {
   fetchGrantees,
   fetchPayments,
   fetchProjects,
-  fetchRevenue
+  fetchRevenue,
+  fetchFaq
 } from '../lib/api'
 import {
   applyFilters,
@@ -246,7 +247,8 @@ export async function getStaticProps() {
     grantees,
     payments,
     projects,
-    revenue
+    revenue,
+    faqs
   ] = await Promise.all([
     fetchAllocations(),
     fetchAwards(),
@@ -255,7 +257,8 @@ export async function getStaticProps() {
     fetchGrantees(),
     fetchPayments(),
     fetchProjects(),
-    fetchRevenue()
+    fetchRevenue(),
+    fetchFaq()
   ])
 
   const data = await preprocessData({
@@ -266,7 +269,8 @@ export async function getStaticProps() {
     grantees,
     payments,
     projects,
-    revenue
+    revenue,
+    faqs
   })
 
   return {

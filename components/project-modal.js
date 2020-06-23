@@ -22,7 +22,8 @@ const ProjectModal = ({
     awards,
     documents,
     grantees,
-    payments
+    payments,
+    faqs,
   },
   geojsons,
   onHide,
@@ -235,6 +236,7 @@ const ProjectModal = ({
       <ProjectsTable
         selectedProjects={sortedProjects}
         setProjectModalProjects={setProjectModalProjects}
+        faqs={faqs}
         showButtons={false}
       />
     )
