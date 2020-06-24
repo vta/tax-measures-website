@@ -6,7 +6,7 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Table from 'react-bootstrap/Table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
-import { compact, flatMap, sortBy, uniq } from 'lodash'
+import { compact, flatMap, sortBy, sumBy, uniq } from 'lodash'
 import { getDocumentById, getGranteeByProject } from '../lib/util'
 import { formatCategory, formatCurrency, formatProjectUrl } from '../lib/formatters'
 import DocumentLink from './document-link'
@@ -75,6 +75,13 @@ const ProjectModal = ({
             </tr>
           ))}
         </tbody>
+        {projectAllocations.length > 1 && <tfoot>
+          <tr>
+              <th scope="row">Total</th>
+              <th>{formatCurrency(sumBy(projectAllocations, 'fields.Amount'))}</th>
+              <th></th>
+          </tr>
+        </tfoot>}
       </Table>
     )
   }
@@ -100,23 +107,14 @@ const ProjectModal = ({
             </tr>
           ))}
         </tbody>
+        {projectAwards.length > 1 && <tfoot>
+          <tr>
+              <th scope="row">Total</th>
+              <th>{formatCurrency(sumBy(projectAwards, 'fields.Award Amount'))}</th>
+              <th></th>
+          </tr>
+        </tfoot>}
       </Table>
-    )
-  }
-
-  const renderDocuments = () => {
-    if (projectDocuments.length === 0) {
-      return 'None'
-    }
-
-    return (
-      <ListGroup className="small-list-group">
-        {projectDocuments.map(document => (
-          <ListGroup.Item key={document.id}>
-            <DocumentLink document={document} />
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
     )
   }
 
@@ -143,7 +141,30 @@ const ProjectModal = ({
             </tr>
           ))}
         </tbody>
+        {projectPayments.length > 1 && <tfoot>
+          <tr>
+              <th scope="row">Total</th>
+              <th>{formatCurrency(sumBy(projectPayments, 'fields.Amount'))}</th>
+              <th></th>
+          </tr>
+        </tfoot>}
       </Table>
+    )
+  }
+
+  const renderDocuments = () => {
+    if (projectDocuments.length === 0) {
+      return 'None'
+    }
+
+    return (
+      <ListGroup className="small-list-group">
+        {projectDocuments.map(document => (
+          <ListGroup.Item key={document.id}>
+            <DocumentLink document={document} />
+          </ListGroup.Item>
+        ))}
+      </ListGroup>
     )
   }
 
