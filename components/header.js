@@ -30,7 +30,7 @@ const Header = ({ data, setAboutModalShow }) => {
           </div>
           <div className="header-stat-label">
             Million Allocated
-            <FaqTerm id="1293891" term="Allocations" faqs={data.faqs} placement="auto" />
+            <FaqTerm id="1327856" term="Allocations" faqs={data.faqs} placement="auto" />
           </div>
         </div>
       </div>

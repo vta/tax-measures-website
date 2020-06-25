@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { capitalize, isEmpty } from 'lodash'
 
+import FaqTerm from './faq-term'
+
 const FilterControls = ({
   data,
   incomingFilters,
@@ -47,7 +49,9 @@ const FilterControls = ({
         </div>
         <div className="col-lg-4 mb-2 mb-lg-0 d-flex align-items-center justify-content-start">
           <div className="number-list">2</div>
-          <div><b>Program Categories or Grantees</b> (optional)</div>
+          <div>
+            <b><FaqTerm id="1293896" term="Program Categories" faqs={data.faqs} placement="auto" showTerm /> or <FaqTerm id="1293956" term="Grantees" faqs={data.faqs} placement="auto" showTerm /></b> (optional)
+          </div>
         </div>
         <div className="col-lg-3 d-flex align-items-center justify-content-start">
           <div className="number-list">3</div>
