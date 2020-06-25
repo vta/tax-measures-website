@@ -13,15 +13,12 @@ const FaqTerm = ({ id, term, faqs, placement }) => {
     return null
   }
 
-  console.log(faq)
-
   const popover = (
     <Popover id="popover-basic">
       <Popover.Title as="h3">{term}</Popover.Title>
       <Popover.Content dangerouslySetInnerHTML={{ __html: faq['faq-answer'] }} />
     </Popover>
   );
-
 
   return (
     <>
