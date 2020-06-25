@@ -25,11 +25,14 @@ const FaqTerm = ({ id, term, faqs, placement, showTerm }) => {
       overlay={popover}
       rootClose={true}
     >
-      {showTerm ? <span role="button" className="text-decoration-underline">{term}</span> : <span className="fa-layers fa-fw faq-term" role="button">
-        <FontAwesomeIcon icon={faCircleSolid} color="#c8d3d9" transform="shrink-1" />
-        <FontAwesomeIcon icon={faCircle} color="#2D65B1" transform="shrink-1" />
-        <FontAwesomeIcon icon={faQuestion} title={`Define ${term}`} color="#2D65B1" transform="shrink-8" />
-      </span>}
+      {showTerm ? 
+        <span role="button" className="text-decoration-underline" onClick={event => event.stopPropagation()}>{term}</span> :
+        <span className="fa-layers fa-fw faq-term" role="button" onClick={event => event.stopPropagation()}>
+          <FontAwesomeIcon icon={faCircleSolid} color="#c8d3d9" transform="shrink-1" />
+          <FontAwesomeIcon icon={faCircle} color="#2D65B1" transform="shrink-1" />
+          <FontAwesomeIcon icon={faQuestion} title={`Define ${term}`} color="#2D65B1" transform="shrink-8" />
+        </span>
+      }
     </OverlayTrigger>
   )
 }
