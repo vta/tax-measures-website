@@ -104,7 +104,7 @@ const HomepageChart = ({ data: { allocations, parentCategories, faqs } }) => {
       />
       <style jsx>{`
         h2 {
-          font-size: 1.25rem;
+          font-size: 1.5rem;
           margin: 0;
         }
       `}</style>

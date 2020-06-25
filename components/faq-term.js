@@ -5,8 +5,7 @@ import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 
-
-const FaqTerm = ({ id, term, faqs, placement }) => {
+const FaqTerm = ({ id, term, faqs, placement, showTerm }) => {
   const faq = faqs && faqs.find(f => f.nid === id)
 
   if (!faq) {
@@ -15,23 +14,23 @@ const FaqTerm = ({ id, term, faqs, placement }) => {
 
   const popover = (
     <Popover id="popover-basic">
-      <Popover.Title as="h3">{term}</Popover.Title>
       <Popover.Content dangerouslySetInnerHTML={{ __html: faq['faq-answer'] }} />
     </Popover>
   );
 
   return (
-    <>
-      <OverlayTrigger trigger={['hover', 'focus']} placement={placement} overlay={popover}>
-        <span className="fa-layers fa-fw faq-term">
-          <FontAwesomeIcon icon={faCircleSolid} color="#c8d3d9" transform="shrink-1" />
-          <FontAwesomeIcon icon={faCircle} color="#2D65B1" transform="shrink-1" />
-          <FontAwesomeIcon icon={faQuestion} title={`Define ${term}`} color="#2D65B1" transform="shrink-8" />
-        </span>
-      </OverlayTrigger>
-      <style jsx>{`
-      `}</style>
-    </>
+    <OverlayTrigger
+      trigger={['click']}
+      placement={placement}
+      overlay={popover}
+      rootClose={true}
+    >
+      {showTerm ? <span role="button" className="text-decoration-underline">{term}</span> : <span className="fa-layers fa-fw faq-term" role="button">
+        <FontAwesomeIcon icon={faCircleSolid} color="#c8d3d9" transform="shrink-1" />
+        <FontAwesomeIcon icon={faCircle} color="#2D65B1" transform="shrink-1" />
+        <FontAwesomeIcon icon={faQuestion} title={`Define ${term}`} color="#2D65B1" transform="shrink-8" />
+      </span>}
+    </OverlayTrigger>
   )
 }
 

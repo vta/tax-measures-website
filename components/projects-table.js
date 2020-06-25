@@ -177,13 +177,13 @@ const ProjectsTable = ({
             {renderColumnHeader((
               <>
                 Awards
-                <FaqTerm id="1293891" term="Awards" faqs={faqs} placement="bottom" />
+                <FaqTerm id="1327821" term="Awards" faqs={faqs} placement="bottom" />
               </>
             ), 'awards')}
             {renderColumnHeader((
               <>
                 Payments
-                <FaqTerm id="1293891" term="Payments" faqs={faqs} placement="bottom" />
+                <FaqTerm id="1327826" term="Payments" faqs={faqs} placement="bottom" />
               </>
             ), 'payments')}
           </tr>
