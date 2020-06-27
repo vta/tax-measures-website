@@ -7,7 +7,9 @@ const Footer = () => (
     <div className="col bg-light-blue text-white pb-4 pt-4 pt-md-5">
       <div className="row">
         <div className="col-md-3 text-center mb-3">
-          <img src="/images/logo.png" alt="2016 Measure B" className="footer-logo" />
+          <div className="bg-white p-3 footer-logo mx-auto">
+            <img src="/images/vta-logo.png" alt="2016 Measure B" className="w-100" />
+          </div>
         </div>
         <div className="col-md-3 mb-3">
           This website provides financial information about VTA's 2016 Measure B, updated quarterly or as new information is released.
@@ -47,7 +49,7 @@ const Footer = () => (
 
     <style jsx>{`
       .footer-logo {
-        height: 105px;
+        max-width: 300px;
       }
 
       .footer-menu {
