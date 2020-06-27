@@ -6,6 +6,8 @@ import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 import { faCopy, faEnvelope, faShare } from '@fortawesome/free-solid-svg-icons'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
+import { isMobile } from '../lib/util'
+
 const ShareButton = ({ className }) => {
   const shareTitle = '2016 Measure B'
   const shareUrl = window.location.href
@@ -27,18 +29,18 @@ const ShareButton = ({ className }) => {
   return (
     <Dropdown>
       <Dropdown.Toggle className={className}>
-        <FontAwesomeIcon icon={faShare} title="Share" /> Share
+        <FontAwesomeIcon icon={faShare} /> Share
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
         <Dropdown.Item>
           <CopyToClipboard text={shareUrl}>
-            <span><FontAwesomeIcon icon={faCopy} title="Copy" /> Copy URL</span>
+            <span><FontAwesomeIcon icon={faCopy} /> Copy URL</span>
           </CopyToClipboard>
         </Dropdown.Item>
-        <Dropdown.Item href={emailShareUrl} onClick={triggerShare} target="_blank"><FontAwesomeIcon icon={faEnvelope} title="Email" /> Email</Dropdown.Item>
-        <Dropdown.Item href={twitterShareUrl} target="_blank"><FontAwesomeIcon icon={faTwitter} title="Twitter" /> Twitter</Dropdown.Item>
-        <Dropdown.Item href={facebookShareUrl} target="_blank"><FontAwesomeIcon icon={faFacebook} title="Facebook" /> Facebook</Dropdown.Item>
+        {isMobile(navigator.userAgent) && <Dropdown.Item href={emailShareUrl} onClick={triggerShare} target="_blank"><FontAwesomeIcon icon={faEnvelope} /> Email</Dropdown.Item>}
+        <Dropdown.Item href={twitterShareUrl} target="_blank"><FontAwesomeIcon icon={faTwitter} /> Twitter</Dropdown.Item>
+        <Dropdown.Item href={facebookShareUrl} target="_blank"><FontAwesomeIcon icon={faFacebook} /> Facebook</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   )
