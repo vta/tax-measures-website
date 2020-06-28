@@ -24,7 +24,7 @@ const FilterControls = ({
     setTransactionType(incomingFilters.transactionType || 'award')
     setGrantee(incomingFilters.grantee || '')
     setCategory(incomingFilters.category || '')
-    setProject(incomingFilters.project)
+    setProject(incomingFilters.project || '')
 
     if (!isEmpty(incomingFilters)) {
       validateFilters(incomingFilters)
