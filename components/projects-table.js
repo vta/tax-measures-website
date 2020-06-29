@@ -220,8 +220,7 @@ const ProjectsTable = ({
           onClick={event => trackEvent({
             action: 'click',
             category: 'download',
-            label: 'csv',
-            value: window.location.href
+            label: 'csv'
           })}
         >
           <FontAwesomeIcon icon={faFileCsv} className="mr-2" /> Download CSV

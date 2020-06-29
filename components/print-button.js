@@ -9,8 +9,7 @@ import { trackEvent } from '../lib/ga'
 const print = () => {
   trackEvent({
     action: 'click',
-    category: 'print',
-    value: window.location.href
+    category: 'print'
   })
   window.print()
 }

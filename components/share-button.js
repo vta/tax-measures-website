@@ -39,8 +39,7 @@ const ShareButton = ({ className }) => {
             <span onClick={event => trackEvent({
             action: 'click',
             category: 'share',
-            label: 'copy',
-            value: shareUrl
+            label: 'copy'
           })}>
               <FontAwesomeIcon icon={faCopy} /> Copy URL
             </span>
@@ -52,8 +51,7 @@ const ShareButton = ({ className }) => {
               trackEvent({
                 action: 'click',
                 category: 'share',
-                label: 'email',
-                value: shareUrl
+                label: 'email'
               })
               triggerShare()
             }}
@@ -67,8 +65,7 @@ const ShareButton = ({ className }) => {
           onClick={event => trackEvent({
             action: 'click',
             category: 'share',
-            label: 'twitter',
-            value: shareUrl
+            label: 'twitter'
           })}
         >
           <FontAwesomeIcon icon={faTwitter} /> Twitter
@@ -79,8 +76,7 @@ const ShareButton = ({ className }) => {
           onClick={event => trackEvent({
             action: 'click',
             category: 'share',
-            label: 'facebook',
-            value: shareUrl
+            label: 'facebook'
           })}
         >
           <FontAwesomeIcon icon={faFacebook} /> Facebook
