@@ -7,6 +7,7 @@ import { faCopy, faEnvelope, faShare } from '@fortawesome/free-solid-svg-icons'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 import { isMobile } from '../lib/util'
+import { trackEvent } from '../lib/ga'
 
 const ShareButton = ({ className }) => {
   const shareTitle = '2016 Measure B'
@@ -35,12 +36,55 @@ const ShareButton = ({ className }) => {
       <Dropdown.Menu>
         <Dropdown.Item>
           <CopyToClipboard text={shareUrl}>
-            <span><FontAwesomeIcon icon={faCopy} /> Copy URL</span>
+            <span onClick={event => trackEvent({
+            action: 'click',
+            category: 'share',
+            label: 'copy',
+            value: shareUrl
+          })}>
+              <FontAwesomeIcon icon={faCopy} /> Copy URL
+            </span>
           </CopyToClipboard>
         </Dropdown.Item>
-        {isMobile(navigator.userAgent) && <Dropdown.Item href={emailShareUrl} onClick={triggerShare} target="_blank"><FontAwesomeIcon icon={faEnvelope} /> Email</Dropdown.Item>}
-        <Dropdown.Item href={twitterShareUrl} target="_blank"><FontAwesomeIcon icon={faTwitter} /> Twitter</Dropdown.Item>
-        <Dropdown.Item href={facebookShareUrl} target="_blank"><FontAwesomeIcon icon={faFacebook} /> Facebook</Dropdown.Item>
+        {isMobile(navigator.userAgent) && <Dropdown.Item 
+            href={emailShareUrl}
+            onClick={event => {
+              trackEvent({
+                action: 'click',
+                category: 'share',
+                label: 'email',
+                value: shareUrl
+              })
+              triggerShare()
+            }}
+          >
+            <FontAwesomeIcon icon={faEnvelope} /> Email
+          </Dropdown.Item>
+        }
+        <Dropdown.Item
+          href={twitterShareUrl}
+          target="_blank"
+          onClick={event => trackEvent({
+            action: 'click',
+            category: 'share',
+            label: 'twitter',
+            value: shareUrl
+          })}
+        >
+          <FontAwesomeIcon icon={faTwitter} /> Twitter
+        </Dropdown.Item>
+        <Dropdown.Item
+          href={facebookShareUrl}
+          target="_blank"
+          onClick={event => trackEvent({
+            action: 'click',
+            category: 'share',
+            label: 'facebook',
+            value: shareUrl
+          })}
+        >
+          <FontAwesomeIcon icon={faFacebook} /> Facebook
+        </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   )

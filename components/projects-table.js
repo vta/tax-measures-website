@@ -9,6 +9,7 @@ import FaqTerm from './faq-term'
 import PrintButton from './print-button'
 import ShareButton from './share-button'
 import { formatCurrencyWithUnit } from '../lib/formatters'
+import { trackEvent } from '../lib/ga'
 
 const ProjectsTable = ({
   selectedProjects,
@@ -216,6 +217,12 @@ const ProjectsTable = ({
           data={csvData}
           filename={'vta-tax-measures.csv'}
           className="btn btn-green"
+          onClick={event => trackEvent({
+            action: 'click',
+            category: 'download',
+            label: 'csv',
+            value: window.location.href
+          })}
         >
           <FontAwesomeIcon icon={faFileCsv} className="mr-2" /> Download CSV
         </CSVLink>
