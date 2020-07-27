@@ -26,9 +26,9 @@ const AboutModal = props => {
           A tool for tracking the funding of 2016 Measure B programs and projects.
         </p>
 
-        <h4>Where can I submit questions?</h4>
+        <h4>Where can I submit questions or feedback?</h4>
         <p>
-          Email us at <a href="mailto:2016MeasureB@vta.org">2016MeasureB@vta.org</a>.
+          Email us at <a href="mailto:2016MeasureB@vta.org">2016MeasureB@vta.org</a> or <a href="https://surveys.hotjar.com/s?siteId=1873169&surveyId=162313" target="_blank">complete this survey</a> to provide feedback.
         </p>
       </Modal.Body>
       <Modal.Footer>
