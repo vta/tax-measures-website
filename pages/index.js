@@ -278,7 +278,7 @@ export async function getStaticProps() {
       data
     },
     // Attempt to re-generate the page at most every 10 minutes
-    unstable_revalidate: 600
+    revalidate: 600
   }
 }
 
