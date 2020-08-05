@@ -5,8 +5,17 @@ import { sumBy } from 'lodash'
 import Button from 'react-bootstrap/Button'
 import FaqTerm from './faq-term'
 import { formatCurrencyMillions } from '../lib/formatters'
+import { getCurrentFiscalYear } from '../lib/util'
 
 const Header = ({ data, setAboutModalShow }) => {
+  const currentFiscalYear = getCurrentFiscalYear()
+  const allocationsThroughCurrentFiscalYear = data.allocations.filter(allocation => {
+    if (allocation.fields['Available Start']) {
+      return parseInt(allocation.fields['Available Start'], 10) <= currentFiscalYear
+    }
+    return false
+  })
+
   return (
     <div className="row bg-white no-gutters d-block d-md-flex">
       <div className="col col-md-auto">
@@ -26,7 +35,7 @@ const Header = ({ data, setAboutModalShow }) => {
       <div className="col-md d-print-none">
         <div className="header-stat">
           <div className="header-stat-value">
-            {formatCurrencyMillions(sumBy(data.allocations, 'fields.Amount'))}
+            {formatCurrencyMillions(sumBy(allocationsThroughCurrentFiscalYear, 'fields.Amount'))}
           </div>
           <div className="header-stat-label">
             Million Allocated
