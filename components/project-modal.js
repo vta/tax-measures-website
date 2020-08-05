@@ -175,6 +175,9 @@ const ProjectModal = ({
         <>
           <div className="row">
             <div className="col-md-6">
+              {project.fields.Notes && <div className="project-stat">
+                {project.fields.Notes}
+              </div>}
               <div className="project-stat">
                 <b>Category:</b>{' '}
                 {formatCategory(project)}
