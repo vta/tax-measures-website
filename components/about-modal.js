@@ -23,7 +23,7 @@ const AboutModal = props => {
 
         <h4>What is this website?</h4>
         <p>
-          A tool for tracking the funding of 2016 Measure B programs and projects.
+          This website is a window into 2016 Measure B revenue and spending. You can search, view and share unaudited financial information about programs and projects, updated quarterly or as new information is released.
         </p>
 
         <h4>Where can I submit questions or feedback?</h4>
