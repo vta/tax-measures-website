@@ -2,7 +2,16 @@ import React from 'react'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
-const AboutModal = props => {
+const Faq = ({ faq }) => {
+  return (
+    <>
+      <h4 dangerouslySetInnerHTML={{ __html: faq['faq-question'] }} />
+      <p dangerouslySetInnerHTML={{ __html: faq['faq-answer'] }} />
+    </>
+  )
+}
+
+const AboutModal = ({ faqs, ...props }) => {
   return (
     <Modal
       {...props}
@@ -30,6 +39,7 @@ const AboutModal = props => {
         <p>
           Email us at <a href="mailto:2016MeasureB@vta.org">2016MeasureB@vta.org</a> or <a href="https://surveys.hotjar.com/s?siteId=1873169&surveyId=162313" target="_blank">complete this survey</a> to provide feedback.
         </p>
+        {faqs.map(faq => (<Faq faq={faq} />))}
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide} className="btn-secondary">Close</Button>

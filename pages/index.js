@@ -222,6 +222,7 @@ const Home = ({ data }) => {
       </div>
 
       <AboutModal
+        faqs={data.faqs}
         show={aboutModalShow}
         onHide={() => setAboutModalShow(false)}
       />
