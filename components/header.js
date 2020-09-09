@@ -2,10 +2,11 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { sumBy } from 'lodash'
+import moment  from 'moment'
 import Button from 'react-bootstrap/Button'
 import FaqTerm from './faq-term'
 import { formatCurrencyMillions } from '../lib/formatters'
-import { getCurrentFiscalYear } from '../lib/util'
+import { getCurrentFiscalYear, findLatestDate } from '../lib/util'
 
 const Header = ({ data, setAboutModalShow }) => {
   const currentFiscalYear = getCurrentFiscalYear()
@@ -30,6 +31,9 @@ const Header = ({ data, setAboutModalShow }) => {
             Million Collected
             <FaqTerm id="1293871" term="Revenue Collected" faqs={data.faqs} placement="auto" />
           </div>
+          <div className="header-state-date">
+            Through {moment(findLatestDate(data.revenue.map(r => r.fields.Date))).format('MMM D, YYYY')}
+          </div>
         </div>
       </div>
       <div className="col-md d-print-none">
@@ -40,6 +44,9 @@ const Header = ({ data, setAboutModalShow }) => {
           <div className="header-stat-label">
             Million Allocated
             <FaqTerm id="1327856" term="Allocations" faqs={data.faqs} placement="auto" />
+          </div>
+          <div className="header-state-date">
+            Through {moment(findLatestDate(allocationsThroughCurrentFiscalYear.map(r => r.fields['Date Allocated']))).format('MMM D, YYYY')}
           </div>
         </div>
       </div>
