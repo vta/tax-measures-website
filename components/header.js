@@ -6,13 +6,13 @@ import moment  from 'moment'
 import Button from 'react-bootstrap/Button'
 import FaqTerm from './faq-term'
 import { formatCurrencyMillions } from '../lib/formatters'
-import { getCurrentFiscalYear, findLatestDate } from '../lib/util'
+import { getCurrentFiscalYear, findLatestDate, findLatestYear } from '../lib/util'
 
 const Header = ({ data, setAboutModalShow }) => {
   const currentFiscalYear = getCurrentFiscalYear()
-  const allocationsThroughCurrentFiscalYear = data.allocations.filter(allocation => {
+  const allocationsThroughTwoYearsIntoTheFuture = data.allocations.filter(allocation => {
     if (allocation.fields['Available Start']) {
-      return parseInt(allocation.fields['Available Start'], 10) <= currentFiscalYear
+      return parseInt(allocation.fields['Available Start'], 10) <= currentFiscalYear + 2
     }
     return false
   })
@@ -39,14 +39,14 @@ const Header = ({ data, setAboutModalShow }) => {
       <div className="col-md d-print-none">
         <div className="header-stat">
           <div className="header-stat-value">
-            {formatCurrencyMillions(sumBy(allocationsThroughCurrentFiscalYear, 'fields.Amount'))}
+            {formatCurrencyMillions(sumBy(allocationsThroughTwoYearsIntoTheFuture, 'fields.Amount'))}
           </div>
           <div className="header-stat-label">
             Million Allocated
             <FaqTerm id="1327856" term="Allocations" faqs={data.faqs} placement="auto" />
           </div>
           <div className="header-state-date">
-            Through {moment(findLatestDate(allocationsThroughCurrentFiscalYear.map(r => r.fields['Date Allocated']))).format('MMM D, YYYY')}
+            Through {moment(findLatestYear(allocationsThroughTwoYearsIntoTheFuture.map(r => parseInt(r.fields['Available Start'], 10))), 'YYYY').date('30').month('Junes').format('MMM D, YYYY')}
           </div>
         </div>
       </div>
