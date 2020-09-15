@@ -39,7 +39,7 @@ const AboutModal = ({ faqs, ...props }) => {
         <p>
           Email us at <a href="mailto:2016MeasureB@vta.org">2016MeasureB@vta.org</a> or <a href="https://surveys.hotjar.com/s?siteId=1873169&surveyId=162313" target="_blank">complete this survey</a> to provide feedback.
         </p>
-        {faqs.map(faq => (<Faq faq={faq} />))}
+        {faqs.map((faq, index) => (<Faq faq={faq} key={index} />))}
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide} className="btn-secondary">Close</Button>
