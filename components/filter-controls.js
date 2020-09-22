@@ -16,9 +16,9 @@ const FilterControls = ({
   clearSearch
 }) => {
   const [transactionType, setTransactionType] = useState(incomingFilters.transactionType || 'award')
-  const [grantee, setGrantee] = useState(incomingFilters.grantee)
-  const [project, setProject] = useState(incomingFilters.project)
-  const [category, setCategory] = useState(incomingFilters.category)
+  const [grantee, setGrantee] = useState(incomingFilters.grantee || '')
+  const [project, setProject] = useState(incomingFilters.project || '')
+  const [category, setCategory] = useState(incomingFilters.category || '')
 
   useEffect(() => {
     setTransactionType(incomingFilters.transactionType || 'award')
