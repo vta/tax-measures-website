@@ -65,14 +65,14 @@ const ProjectsTable = ({
           {formatCurrencyWithUnit(project.fields.totalAwardAmount)}
         </td>
         <td className="text-right" style={{ width: '100px' }}>
-          {formatCurrencyWithUnit(project.fields.totalPaymentAmount)}
+          {formatCurrencyWithUnit(project.fields.totalExpenditureAmount)}
         </td>
       </tr>
     )
   }
 
   const csvData = [
-    ['Project', 'Category', 'Subcategory', 'URL', 'Total Allocations', 'Total Awards', 'Total Payments'],
+    ['Project', 'Category', 'Subcategory', 'URL', 'Total Allocations', 'Total Awards', 'Total Expenditures'],
     ...selectedProjects.map(project => {
       return [
         project.fields.Name,
@@ -81,7 +81,7 @@ const ProjectsTable = ({
         project.fields.URL,
         project.fields.totalAllocationAmount,
         project.fields.totalAwardAmount,
-        project.fields.totalPaymentAmount
+        project.fields.totalExpenditureAmount
       ]
     })
   ]
@@ -89,9 +89,9 @@ const ProjectsTable = ({
   const totals = selectedProjects.reduce((memo, project) => {
     memo.totalAllocationAmount += project.fields.totalAllocationAmount
     memo.totalAwardAmount += project.fields.totalAwardAmount
-    memo.totalPaymentAmount += project.fields.totalPaymentAmount
+    memo.totalExpenditureAmount += project.fields.totalExpenditureAmount
     return memo
-  }, { totalAllocationAmount: 0, totalAwardAmount: 0, totalPaymentAmount: 0 })
+  }, { totalAllocationAmount: 0, totalAwardAmount: 0, totalExpenditureAmount: 0 })
 
   let projects = selectedProjects
 
@@ -114,8 +114,8 @@ const ProjectsTable = ({
       projects = orderBy(selectedProjects, 'fields.totalAllocationAmount', sortDirection)
     } else if (sortOrder === 'awards') {
       projects = orderBy(selectedProjects, 'fields.totalAwardAmount', sortDirection)
-    } else if (sortOrder === 'payments') {
-      projects = orderBy(selectedProjects, 'fields.totalPaymentAmount', sortDirection)
+    } else if (sortOrder === 'expenditures') {
+      projects = orderBy(selectedProjects, 'fields.totalExpenditureAmount', sortDirection)
     }
   }
 
@@ -183,10 +183,10 @@ const ProjectsTable = ({
             ), 'awards')}
             {renderColumnHeader((
               <>
-                Payments
-                <FaqTerm id="1327826" term="Payments" faqs={faqs} placement="bottom" />
+                Expenditures
+                <FaqTerm id="1327826" term="Expenditures" faqs={faqs} placement="bottom" />
               </>
-            ), 'payments')}
+            ), 'expenditures')}
           </tr>
         </thead>
         <tbody>
@@ -204,7 +204,7 @@ const ProjectsTable = ({
               {formatCurrencyWithUnit(totals.totalAwardAmount)}
             </td>
             <td className="text-right">
-              {formatCurrencyWithUnit(totals.totalPaymentAmount)}
+              {formatCurrencyWithUnit(totals.totalExpenditureAmount)}
             </td>
           </tr>
         </tbody>

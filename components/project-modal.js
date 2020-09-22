@@ -22,7 +22,7 @@ const ProjectModal = ({
     awards,
     documents,
     grantees,
-    payments,
+    expenditures,
     faqs,
   },
   geojsons,
@@ -50,7 +50,7 @@ const ProjectModal = ({
   ]))
   const projectDocuments = projectDocumentIds.map(id => getDocumentById(id, documents))
   const projectGrantee = getGranteeByProject(project, grantees)
-  const projectPayments = project.fields.Payments ? payments.filter(p => project.fields.Payments.includes(p.id)) : []
+  const projectExpenditures = project.fields.Expenditures ? expenditures.filter(p => project.fields.Expenditures.includes(p.id)) : []
 
   const renderAllocations = () => {
     if (projectAllocations.length === 0) {
@@ -118,8 +118,8 @@ const ProjectModal = ({
     )
   }
 
-  const renderPayments = () => {
-    if (projectPayments.length === 0) {
+  const renderExpenditures = () => {
+    if (projectExpenditures.length === 0) {
       return 'None'
     }
 
@@ -133,18 +133,18 @@ const ProjectModal = ({
           </tr>
         </thead>
         <tbody>
-          {projectPayments.map(payment => (
-            <tr key={payment.id}>
-              <td>{payment.fields.Date}</td>
-              <td>{formatCurrency(payment.fields.Amount)}</td>
-              <td>{payment.fields['Payment Description']}</td>
+          {projectExpenditures.map(expenditure => (
+            <tr key={expenditure.id}>
+              <td>{expenditure.fields.Date}</td>
+              <td>{formatCurrency(expenditure.fields.Amount)}</td>
+              <td>{expenditure.fields['Expenditure Description']}</td>
             </tr>
           ))}
         </tbody>
-        {projectPayments.length > 1 && <tfoot>
+        {projectExpenditures.length > 1 && <tfoot>
           <tr>
               <th scope="row">Total</th>
-              <th>{formatCurrency(sumBy(projectPayments, 'fields.Amount'))}</th>
+              <th>{formatCurrency(sumBy(projectExpenditures, 'fields.Amount'))}</th>
               <th></th>
           </tr>
         </tfoot>}
@@ -220,8 +220,8 @@ const ProjectModal = ({
             {renderAwards()}
           </div>
           <div className="project-stat">
-            <b>Payments:</b>{' '}
-            {renderPayments()}
+            <b>Expenditures:</b>{' '}
+            {renderExpenditures()}
           </div>
           <div className="project-stat">
             <b>Related Documents:</b>{' '}
