@@ -68,8 +68,8 @@ const FilterControls = ({
             onChange={selectedOption => setTransactionType(selectedOption.value)}
             options={[
               {
-                label: 'Payment',
-                value: 'payment'
+                label: 'Expenditure',
+                value: 'expenditure'
               },
               {
                 label: 'Award',

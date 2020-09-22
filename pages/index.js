@@ -21,7 +21,7 @@ import {
   fetchCategories,
   fetchDocuments,
   fetchGrantees,
-  fetchPayments,
+  fetchExpenditures,
   fetchProjects,
   fetchRevenue,
   fetchFaq
@@ -84,7 +84,7 @@ const Home = ({ data }) => {
 
   const handleSearch = async filters => {
     setLoading(true)
-    setResults(await applyFilters(filters, data.awards, data.payments, data.projects, data.categories, data.grantees))
+    setResults(await applyFilters(filters, data.awards, data.expenditures, data.projects, data.categories, data.grantees))
     updateUrlWithFilters(filters, (projectModalProjects || []).map(p => p.id))
     setCurrentFilters(filters)
     setLoading(false)
@@ -246,7 +246,7 @@ export async function getStaticProps() {
     categories,
     documents,
     grantees,
-    payments,
+    expenditures,
     projects,
     revenue,
     faqs
@@ -256,7 +256,7 @@ export async function getStaticProps() {
     fetchCategories(),
     fetchDocuments(),
     fetchGrantees(),
-    fetchPayments(),
+    fetchExpenditures(),
     fetchProjects(),
     fetchRevenue(),
     fetchFaq()
@@ -268,7 +268,7 @@ export async function getStaticProps() {
     categories,
     documents,
     grantees,
-    payments,
+    expenditures,
     projects,
     revenue,
     faqs

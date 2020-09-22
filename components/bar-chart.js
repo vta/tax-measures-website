@@ -12,7 +12,7 @@ const BarChart = ({ results }) => {
       return item.fields['Award Amount']
     }
 
-    if (results.transactionType === 'payment') {
+    if (results.transactionType === 'expenditure') {
       return item.fields.Amount
     }
   }
@@ -115,7 +115,7 @@ const BarChart = ({ results }) => {
     }
   }), 'value')
 
-  const dataType = results.transactionType === 'award' ? 'Awards' : 'Payments'
+  const dataType = results.transactionType === 'award' ? 'Awards' : 'Expenditures'
   const total = sumCurrency(results.items.map(g => getGraphAmount(g)))
 
   if (data.length <= 1) {
@@ -211,7 +211,7 @@ const BarChart = ({ results }) => {
           y: {
             formatter: formatCurrencyWithUnit,
             title: {
-              formatter: seriesName => seriesName === 'award' ? 'Awards' : (seriesName === 'payment' ? 'Payments' : seriesName)
+              formatter: seriesName => seriesName === 'award' ? 'Awards' : (seriesName === 'expenditure' ? 'Expenditures' : seriesName)
             }
           }
         }
