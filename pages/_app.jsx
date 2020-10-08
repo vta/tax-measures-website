@@ -1,8 +1,8 @@
-import '../node_modules/bootstrap/scss/bootstrap.scss'
-import '../node_modules/@fortawesome/fontawesome-svg-core/styles.css'
-import '../node_modules/mapbox-gl/dist/mapbox-gl.css'
-import '../css/print.scss'
-import '../css/index.scss'
+import 'bootstrap/dist/css/bootstrap.css'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+import 'mapbox-gl/dist/mapbox-gl.css'
+import '../css/print.css'
+import '../css/index.css'
 import { DefaultSeo } from 'next-seo'
 import HttpsRedirect from 'react-https-redirect'
 
