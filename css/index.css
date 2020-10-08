@@ -1,41 +1,31 @@
-$light-blue: #51BAEC;
-$dark-blue: #2D65B1;
-$light-grey: #EBEAE6;
-$dark-grey: #979797;
-$white: #FFFFFF;
-$text: #4C4D55;
-
 @font-face {
   font-family: 'Museo Sans 500';
-  src: url('/fonts/MuseoSans-500.woff2') format('woff2'),
-    url('/fonts/MuseoSans-500.woff') format('woff');
+  src: url("/public/fonts/MuseoSans-500.woff2") format("woff2"), url("/public/fonts/MuseoSans-500.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Museo Sans 500';
-  src: url('/fonts/MuseoSans-500Italic.woff2') format('woff2'),
-    url('/fonts/MuseoSans-500Italic.woff') format('woff');
+  src: url("/public/fonts/MuseoSans-500Italic.woff2") format("woff2"), url("/public/fonts/MuseoSans-500Italic.woff") format("woff");
   font-weight: normal;
   font-style: italic;
 }
 
-
 body {
-  background-color: $light-grey;
-  color: $text;
+  background-color: #EBEAE6;
+  color: #4C4D55;
   font-family: 'Museo Sans 500';
   font-weight: normal;
   font-style: normal;
 }
 
 a {
-  color: $dark-blue;
+  color: #2D65B1;
 }
 
 .table {
-  color: $text;
+  color: #4C4D55;
 }
 
 h1,
@@ -44,20 +34,17 @@ h3,
 h4,
 h5,
 h6 {
-  color: $dark-blue;
+  color: #2D65B1;
   font-weight: bold;
 }
 
-.text-white {
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    color: $white;
-  }
+.text-white h1,
+.text-white h2,
+.text-white h3,
+.text-white h4,
+.text-white h5,
+.text-white h6 {
+  color: #FFFFFF;
 }
 
 h3 {
@@ -70,7 +57,9 @@ h3 {
 
 @media (min-width: 992px) {
   .col-lg-5col {
-    flex: 0 0 20%;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 20%;
+            flex: 0 0 20%;
     max-width: 20%;
   }
 }
@@ -80,36 +69,36 @@ a.card {
 }
 
 .bg-light-blue {
-  background-color: $light-blue !important;
+  background-color: #51BAEC !important;
 }
 
 .bg-blue {
-  background-color: $dark-blue !important;
+  background-color: #2D65B1 !important;
 }
 
 .btn-primary {
-  color: $white;
-  background-color: $dark-blue;
-  border-color: darken($dark-blue, 5%);
+  color: #FFFFFF;
+  background-color: #2D65B1;
+  border-color: #28599d;
+}
 
-  &:hover {
-    background-color: darken($dark-blue, 15%);
-  }
+.btn-primary:hover {
+  background-color: #1d4274;
 }
 
 .btn-secondary {
-  color: $white;
-  background-color: $light-blue;
-  border-color: darken($light-blue, 5%);
+  color: #FFFFFF;
+  background-color: #51BAEC;
+  border-color: #3ab1e9;
+}
 
-  &:hover {
-    background-color: darken($light-blue, 15%);
-    border-color: darken($light-blue, 20%);
-  }
+.btn-secondary:hover {
+  background-color: #189bd9;
+  border-color: #158ac2;
 }
 
 .btn-white-border {
-  border-color: $white;
+  border-color: #FFFFFF;
 }
 
 .btn-green {
@@ -121,9 +110,9 @@ a.card {
 .btn-green:hover,
 .btn-green:focus,
 .btn-green:not(:disabled):not(.disabled):active,
-.show>.btn-green.dropdown-toggle {
-  background: darken(#4DB938, 15%);
-  border-color: darken(#4DB938, 15%);
+.show > .btn-green.dropdown-toggle {
+  background: #357e26;
+  border-color: #357e26;
   color: #ffffff;
 }
 
@@ -133,14 +122,14 @@ a.card {
 }
 
 .header-bar {
-  background-color: $white;
-  border-top: 1px solid $dark-grey;
-  border-bottom: 2px solid $dark-grey;
-  border-left: 1px solid $dark-grey;
+  background-color: #FFFFFF;
+  border-top: 1px solid #979797;
+  border-bottom: 2px solid #979797;
+  border-left: 1px solid #979797;
 }
 
 .header-stat {
-  color: $dark-blue;
+  color: #2D65B1;
   text-align: center;
 }
 
@@ -164,31 +153,30 @@ a.card {
 }
 
 .project-table {
-  background-color: $white;
+  background-color: #FFFFFF;
+}
 
-  tr {
-    th {
-      background: $light-blue;
-      color: $white;
-      border-top: none;
-      font-weight: bold;
-    }
+.project-table tr th {
+  background: #51BAEC;
+  color: #FFFFFF;
+  border-top: none;
+  font-weight: bold;
+}
 
-    td:first-child {
-      font-size: 18px;
-    }
-  }
+.project-table tr td:first-child {
+  font-size: 18px;
 }
 
 .number-list {
-  flex-shrink: 0;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
   font-size: 30px;
   margin-right: 14px;
   float: left;
   width: 42px;
   height: 42px;
   border-radius: 21px;
-  background-color: $light-blue;
+  background-color: #51BAEC;
   text-align: center;
 }
 
@@ -197,16 +185,13 @@ a.card {
     height: 120px;
     width: 148px;
   }
-
   .header-stat {
     padding-top: 20px;
     padding-bottom: 20px;
   }
-
   .header-stat-value {
     font-size: 48px;
   }
-
   .header-stat-label {
     font-size: 21px;
   }
