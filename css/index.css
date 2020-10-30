@@ -1,13 +1,13 @@
 @font-face {
   font-family: 'Museo Sans 500';
-  src: url("/public/fonts/MuseoSans-500.woff2") format("woff2"), url("/public/fonts/MuseoSans-500.woff") format("woff");
+  src: url("/fonts/MuseoSans-500.woff2") format("woff2"), url("/fonts/MuseoSans-500.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Museo Sans 500';
-  src: url("/public/fonts/MuseoSans-500Italic.woff2") format("woff2"), url("/public/fonts/MuseoSans-500Italic.woff") format("woff");
+  src: url("/fonts/MuseoSans-500Italic.woff2") format("woff2"), url("/fonts/MuseoSans-500Italic.woff") format("woff");
   font-weight: normal;
   font-style: italic;
 }
