@@ -13,7 +13,7 @@ const ShareButton = ({ className }) => {
   const shareTitle = '2016 Measure B'
   const shareUrl = window.location.href
   const emailShareUrl = `mailto:?subject=2016%20Measure%20B&body=${encodeURIComponent(shareUrl)}`
-  const twitterShareUrl = `https://twitter.com/intent/tweet/?text=${encodeURIComponent(shareTitle)}&amp;url=${encodeURIComponent(shareUrl)}`
+  const twitterShareUrl = `https://twitter.com/intent/tweet/?text=${encodeURIComponent(shareTitle)}&url=${encodeURIComponent(shareUrl)}`
   const facebookShareUrl = `https://facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`
 
   function triggerShare(event) {
