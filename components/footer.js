@@ -44,6 +44,9 @@ const Footer = () => {
                 <a href="https://www.vta.org/projects/funding/2016-measure-b">2016 Measure B</a>
               </li>
               <li>
+                <a href="http://santaclaravta.iqm2.com/Citizens/Board/1100-2016-Measure-B-Citizens-Oversight-Committee">Oversight Committee</a>
+              </li>
+              <li>
                 <a href="https://www.vta.org/about/contact">Contact</a>
               </li>
               <li>
