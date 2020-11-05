@@ -1,8 +1,13 @@
 import React, { useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook, faYoutube } from '@fortawesome/free-brands-svg-icons'
+import { trans } from '../lib/translations'
 
 const Footer = () => {
+  const router = useRouter()
+  const { locale } = router
+
   useEffect(() => {
     const googleTranslateElementInit = () => {
       new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.FloatPosition.TOP_RIGHT}, 'google_translate_element');
@@ -17,15 +22,15 @@ const Footer = () => {
         <div className="row">
           <div className="col-md-3 text-center mb-3">
             <div className="bg-white p-3 footer-logo mx-auto">
-              <img src="/images/vta-logo.png" alt="2016 Measure B" className="w-100" />
+              <img src="/images/vta-logo.png" alt={trans('title', locale)} className="w-100" />
             </div>
 
             <div id="google_translate_element" className="google-translate-control mt-3"></div>
             <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
           </div>
           <div className="col-md-3 mb-3">
-            <p>This website provides unaudited financial information about VTA's 2016 Measure B, updated quarterly or as new information is released.</p>
-            <a href="https://surveys.hotjar.com/s?siteId=1873169&surveyId=162313" target="_blank" className="text-white">Submit Feedback</a>
+            <p>{trans('footer-info-text', locale)}</p>
+            <a href="https://surveys.hotjar.com/s?siteId=1873169&surveyId=162313" target="_blank" className="text-white">{trans('footer-feedback', locale)}</a>
           </div>
           <div className="col-md-3 mb-3">
             Santa Clara Valley Transportation Authority<br />
@@ -38,19 +43,19 @@ const Footer = () => {
           <div className="col-md-3">
             <ul className="footer-menu">
               <li>
-                <a href="https://www.vta.org/about">About VTA</a>
+                <a href="https://www.vta.org/about">{trans('footer-menu-about', locale)}</a>
               </li>
               <li>
-                <a href="https://www.vta.org/projects/funding/2016-measure-b">2016 Measure B</a>
+                <a href="https://www.vta.org/projects/funding/2016-measure-b">{trans('footer-menu-measureb', locale)}</a>
               </li>
               <li>
-                <a href="http://santaclaravta.iqm2.com/Citizens/Board/1100-2016-Measure-B-Citizens-Oversight-Committee">Oversight Committee</a>
+                <a href="http://santaclaravta.iqm2.com/Citizens/Board/1100-2016-Measure-B-Citizens-Oversight-Committee">{trans('footer-menu-oversight', locale)}</a>
               </li>
               <li>
-                <a href="https://www.vta.org/about/contact">Contact</a>
+                <a href="https://www.vta.org/about/contact">{trans('footer-menu-contact', locale)}</a>
               </li>
               <li>
-                <a href="https://www.vta.org/privacy-policy">Privacy Policy</a>
+                <a href="https://www.vta.org/privacy-policy">{trans('footer-menu-privacy', locale)}</a>
               </li>
             </ul>
 

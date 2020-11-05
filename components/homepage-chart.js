@@ -1,13 +1,18 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
 import { groupBy } from 'lodash'
 import FaqTerm from './faq-term'
 import { formatCurrencyWithUnit, formatPercent } from '../lib/formatters'
 import { sumCurrency } from '../lib/util'
+import { trans } from '../lib/translations'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 const HomepageChart = ({ data: { allocations, parentCategories, faqs } }) => {
+  const router = useRouter()
+  const { locale } = router
+
   const actualAllocatedGroups = groupBy(allocations, allocation => allocation.fields['Parent Category'].id)
 
   const actualAllocateds = parentCategories.map(category => {
@@ -24,8 +29,8 @@ const HomepageChart = ({ data: { allocations, parentCategories, faqs } }) => {
 
   return (
     <>
-      <h2>Percentage of Allocation through FY2021 vs. Total Ballot Allocation<FaqTerm id="1293971" term="Total Ballot Allocation" faqs={faqs} placement="bottom" /></h2>
-      <div>Total Ballot Allocation: {formatCurrencyWithUnit(total)}</div>
+      <h2>{trans('homepagechart-title', locale)}<FaqTerm id="1293971" term={trans('homepagechart-subtitle', locale)} faqs={faqs} placement="bottom" /></h2>
+      <div>{trans('homepagechart-subtitle', locale)}: {formatCurrencyWithUnit(total)}</div>
       <Chart
         options={{
           chart: {
@@ -88,16 +93,16 @@ const HomepageChart = ({ data: { allocations, parentCategories, faqs } }) => {
               formatter: (value, data) => {
                 const total = data.series[0][data.dataPointIndex] + data.series[1][data.dataPointIndex]
                 const percent = formatPercent(data.series[data.seriesIndex][data.dataPointIndex] / total * 100)
-                return `${formatCurrencyWithUnit(value)} (${percent} of ${formatCurrencyWithUnit(total)})`
+                return `${formatCurrencyWithUnit(value)} (${percent} ${trans('homepagechart-of', locale)} ${formatCurrencyWithUnit(total)})`
               }
             }
           }
         }}
         series={[{
-          name: 'Actual Allocated through FY21',
+          name: trans('homepagechart-actual-allocated', locale),
           data: actualAllocateds
         }, {
-          name: 'Remaining Ballot Allocation',
+          name: trans('homepagechart-remaining-allocation', locale),
           data: remainingAllocateds
         }]}
         type="bar"

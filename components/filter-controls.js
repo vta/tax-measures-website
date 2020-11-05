@@ -1,5 +1,6 @@
 /*  global alert */
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Select from 'react-select'
@@ -7,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { capitalize, isEmpty } from 'lodash'
 
+import { trans } from '../lib/translations'
 import FaqTerm from './faq-term'
 
 const FilterControls = ({
@@ -15,6 +17,8 @@ const FilterControls = ({
   handleSearch,
   clearSearch
 }) => {
+  const router = useRouter()
+  const { locale } = router
   const [transactionType, setTransactionType] = useState(incomingFilters.transactionType || 'award')
   const [grantee, setGrantee] = useState(incomingFilters.grantee || '')
   const [project, setProject] = useState(incomingFilters.project || '')
@@ -34,7 +38,7 @@ const FilterControls = ({
   const validateFilters = filters => {
     if (!filters.transactionType) {
       /*  eslint-disable-next-line no-alert */
-      return alert('You must specify a transaction type')
+      return alert(trans('filter-invalid-filter-alert', locale))
     }
 
     handleSearch(filters)
@@ -45,17 +49,17 @@ const FilterControls = ({
       <div className="row mb-2 text-white">
         <div className="col-lg-2 mb-2 mb-lg-0 d-flex align-items-center justify-content-start">
           <div className="number-list">1</div>
-          <div><b>Transaction Type</b></div>
+          <div><b>{trans('filter-transaction-type', locale)}</b></div>
         </div>
         <div className="col-lg-4 mb-2 mb-lg-0 d-flex align-items-center justify-content-start">
           <div className="number-list">2</div>
           <div>
-            <b><FaqTerm id="1293896" term="Program Categories" faqs={data.faqs} placement="auto" showTerm /> or <FaqTerm id="1293956" term="Grantees" faqs={data.faqs} placement="auto" showTerm /></b> (optional)
+            <b><FaqTerm id="1293896" term={trans('filter-program-categories', locale)} faqs={data.faqs} placement="auto" showTerm /> {trans('filter-or', locale)} <FaqTerm id="1293956" term={trans('label-grantees', locale)} faqs={data.faqs} placement="auto" showTerm /></b> ({trans('filter-optional', locale)})
           </div>
         </div>
         <div className="col-lg-3 d-flex align-items-center justify-content-start">
           <div className="number-list">3</div>
-          <div><b>Search and select projects</b> (optional)</div>
+          <div><b>{trans('filter-project', locale)}</b> ({trans('filter-optional', locale)})</div>
         </div>
       </div>
       <div className="row">
@@ -68,15 +72,15 @@ const FilterControls = ({
             onChange={selectedOption => setTransactionType(selectedOption.value)}
             options={[
               {
-                label: 'Expenditure',
+                label: trans('expenditure', locale),
                 value: 'expenditure'
               },
               {
-                label: 'Award',
+                label: trans('award', locale),
                 value: 'award'
               }
             ]}
-            placeholder="Select Transaction Type"
+            placeholder={trans('filter-transaction-type-placeholder', locale)}
           />
         </div>
         <div className="col-lg-2 mb-2 mb-lg-0">
@@ -97,7 +101,7 @@ const FilterControls = ({
               label: c.fields.Name
             }))}
             isMulti={true}
-            placeholder="Filter by Category"
+            placeholder={trans('filter-category-placeholder', locale)}
           />
         </div>
         <div className="col-lg-2 mb-2 mb-lg-0">
@@ -118,7 +122,7 @@ const FilterControls = ({
               label: g.fields.Name
             }))}
             isMulti={true}
-            placeholder="Filter by Grantee"
+            placeholder={trans('filter-grantee-placeholder', locale)}
             disabled={!data}
           />
         </div>
@@ -126,7 +130,7 @@ const FilterControls = ({
           <Form.Control
             type="text"
             onChange={event => setProject(event.target.value)}
-            placeholder="Project Name"
+            placeholder={trans('filter-project-placeholder', locale)}
             value={project}
             onKeyPress={event => {
               if (event.key === 'Enter') {
@@ -152,7 +156,7 @@ const FilterControls = ({
             block
             disabled={!data}
           >
-            <FontAwesomeIcon icon={faSearch} className="mr-2" /> Search
+            <FontAwesomeIcon icon={faSearch} className="mr-2" /> {trans('search', locale)}
           </Button>
         </div>
         <div className="col-lg-2 col-6">
@@ -162,7 +166,7 @@ const FilterControls = ({
             block
             disabled={!data}
           >
-            Clear
+            {trans('clear', locale)}
           </Button>
         </div>
       </div>

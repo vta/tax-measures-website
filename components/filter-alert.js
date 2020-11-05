@@ -1,8 +1,13 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import Alert from 'react-bootstrap/Alert'
 import { compact } from 'lodash'
+import { trans } from '../lib/translations'
 
 const FilterAlert = ({ results, currentFilters }) => {
+  const router = useRouter()
+  const { locale } = router
+
   const filterCount = currentFilters ? compact(Object.values(currentFilters)).length : 0
   if (!results) {
     return null
@@ -11,8 +16,8 @@ const FilterAlert = ({ results, currentFilters }) => {
   if (results.items.length === 0) {
     return (
       <Alert variant="warning" className="text-center">
-        <Alert.Heading>No funded projects meet these criteria.</Alert.Heading>
-        <div>Try adjusting search filters.</div>
+        <Alert.Heading>{trans('filteralert-no-results-title', locale)}</Alert.Heading>
+        <div>{trans('filteralert-no-results-text', locale)}</div>
       </Alert>
     )
   }
@@ -20,8 +25,8 @@ const FilterAlert = ({ results, currentFilters }) => {
   if (results.items.length < 5) {
     return (
       <Alert variant="warning" className="text-center">
-        <Alert.Heading>Limited results</Alert.Heading>
-        <div>Consider broadening your search if you're not seeing enough results. Select a broader date range or choose additional categories, grantees or projects.</div>
+        <Alert.Heading>{trans('filteralert-limited-results-title', locale)}</Alert.Heading>
+        <div>{trans('filteralert-limited-results-text', locale)}</div>
       </Alert>
     )
   }
@@ -29,8 +34,8 @@ const FilterAlert = ({ results, currentFilters }) => {
   if (filterCount < 2) {
     return (
       <Alert variant="warning" className="text-center">
-        <Alert.Heading>Numerous results</Alert.Heading>
-        <div>Consider selecting additional filters to narrow down your results or focus on the information you're interested in.</div>
+        <Alert.Heading>{trans('filteralert-numerous-results-title', locale)}</Alert.Heading>
+        <div>{trans('filteralert-numerous-results-text', locale)}</div>
       </Alert>
     )
   }

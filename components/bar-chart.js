@@ -1,12 +1,17 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 import { groupBy, sortBy } from 'lodash'
 import { formatCurrencyWithUnit } from '../lib/formatters'
 import { getProjectById, sumCurrency } from '../lib/util'
+import { trans } from '../lib/translations'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 const BarChart = ({ results }) => {
+  const router = useRouter()
+  const { locale } = router
+
   const getGraphAmount = item => {
     if (results.transactionType === 'award') {
       return item.fields['Award Amount']
@@ -121,8 +126,8 @@ const BarChart = ({ results }) => {
   if (data.length <= 1) {
     return (
       <div>
-        <p>Total {dataType}: {formatCurrencyWithUnit(total)}</p>
-        <div className="text-center font-weight-bold mt-5">Not enough data for chart</div>
+        <p>{trans('total', locale)} {dataType}: {formatCurrencyWithUnit(total)}</p>
+        <div className="text-center font-weight-bold mt-5">{trans('barchart-not-enough', locale)}</div>
       </div>
     )
   }
@@ -130,8 +135,8 @@ const BarChart = ({ results }) => {
   if (data.length > 15) {
     return (
       <div>
-        <p>Total {dataType}: {formatCurrencyWithUnit(total)}</p>
-        <div className="text-center font-weight-bold mt-5">Too much data for chart</div>
+        <p>{trans('total', locale)} {dataType}: {formatCurrencyWithUnit(total)}</p>
+        <div className="text-center font-weight-bold mt-5">{trans('barchart-too-much', locale)}</div>
       </div>
     )
   }
@@ -145,14 +150,14 @@ const BarChart = ({ results }) => {
           }
         },
         title: {
-          text: `${dataType} by ${chartType}`,
+          text: `${dataType} ${trans('barchart-by', locale)} ${chartType}`,
           style: {
             fontSize: 18
           },
           floating: true
         },
         subtitle: {
-          text: `Total ${dataType}: ${formatCurrencyWithUnit(total)}`,
+          text: `${trans('total', locale)} ${dataType}: ${formatCurrencyWithUnit(total)}`,
           style: {
             fontSize: 14
           },
@@ -211,7 +216,7 @@ const BarChart = ({ results }) => {
           y: {
             formatter: formatCurrencyWithUnit,
             title: {
-              formatter: seriesName => seriesName === 'award' ? 'Awards' : (seriesName === 'expenditure' ? 'Expenditures' : seriesName)
+              formatter: seriesName => seriesName === 'award' ? trans('label-awards', locale) : (seriesName === 'expenditure' ? trans('label-expenditures', locale) : seriesName)
             }
           }
         }

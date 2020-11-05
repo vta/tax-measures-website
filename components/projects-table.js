@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 import Alert from 'react-bootstrap/Alert'
 import Table from 'react-bootstrap/Table'
 import { some, orderBy } from 'lodash'
@@ -10,6 +11,7 @@ import PrintButton from './print-button'
 import ShareButton from './share-button'
 import { formatCurrencyWithUnit } from '../lib/formatters'
 import { trackEvent } from '../lib/ga'
+import { trans } from '../lib/translations'
 
 const ProjectsTable = ({
   selectedProjects,
@@ -17,11 +19,14 @@ const ProjectsTable = ({
   faqs,
   showButtons
 }) => {
+  const router = useRouter()
+  const { locale } = router
+
   if (!selectedProjects || selectedProjects.length === 0) {
     return (
       <Alert variant="warning" className="text-center">
-        <Alert.Heading>No funded projects meet these criteria.</Alert.Heading>
-        <div>Try adjusting search filters.</div>
+        <Alert.Heading>{trans('projectstable-no-results-title', locale)}</Alert.Heading>
+        <div>{trans('projectstable-no-results-title', locale)}</div>
       </Alert>
     )
   }
@@ -151,40 +156,40 @@ const ProjectsTable = ({
           <tr>
             {renderColumnHeader((
               <>
-                Fiscal Year
-                <FaqTerm id="1293911" term="Fiscal Year" faqs={faqs} placement="bottom" />
+                {trans('label-fiscal-year', locale)}
+                <FaqTerm id="1293911" term={trans('label-fiscal-year', locale)} faqs={faqs} placement="bottom" />
               </>
             ), 'fiscal_year')}
-            {renderColumnHeader('Project Name', 'project_name')}
+            {renderColumnHeader(trans('label-project-name', locale), 'project_name')}
             {renderColumnHeader((
               <>
-                Grantee
-                <FaqTerm id="1293956" term="Grantee" faqs={faqs} placement="bottom" />
+                {trans('label-grantee', locale)}
+                <FaqTerm id="1293956" term={trans('label-grantee', locale)} faqs={faqs} placement="bottom" />
               </>
             ), 'grantee')}
             {renderColumnHeader((
               <>
-                Category
-                <FaqTerm id="1293896" term="Category" faqs={faqs} placement="bottom" />
+                {trans('label-category', locale)}
+                <FaqTerm id="1293896" term={trans('label-category', locale)} faqs={faqs} placement="bottom" />
               </>
             ), 'category')}
-            {hasSubcategoryColumn && renderColumnHeader('Subcategory', 'subcategory')}
+            {hasSubcategoryColumn && renderColumnHeader(trans('label-subcategory', locale), 'subcategory')}
             {renderColumnHeader((
               <>
-                Allocations
-                <FaqTerm id="1293891" term="Allocations" faqs={faqs} placement="bottom" />
+                {trans('label-allocations', locale)}
+                <FaqTerm id="1293891" term={trans('label-allocations', locale)} faqs={faqs} placement="bottom" />
               </>
             ), 'allocations')}
             {renderColumnHeader((
               <>
-                Awards
-                <FaqTerm id="1327821" term="Awards" faqs={faqs} placement="bottom" />
+                {trans('label-awards', locale)}
+                <FaqTerm id="1327821" term={trans('label-awards', locale)} faqs={faqs} placement="bottom" />
               </>
             ), 'awards')}
             {renderColumnHeader((
               <>
-                Expenditures
-                <FaqTerm id="1327826" term="Expenditures" faqs={faqs} placement="bottom" />
+                {trans('label-expenditures', locale)}
+                <FaqTerm id="1327826" term={trans('label-expenditures', locale)} faqs={faqs} placement="bottom" />
               </>
             ), 'expenditures')}
           </tr>
@@ -193,7 +198,7 @@ const ProjectsTable = ({
           {projects.map(project => renderProjectRow(project))}
           <tr className="table-dark border-top-2">
             <td></td>
-            <td>Total</td>
+            <td>{trans('total', locale)}</td>
             <td></td>
             <td></td>
             {hasSubcategoryColumn && <td></td>}
@@ -223,7 +228,7 @@ const ProjectsTable = ({
             label: 'csv'
           })}
         >
-          <FontAwesomeIcon icon={faFileCsv} className="mr-2" /> Download CSV
+          <FontAwesomeIcon icon={faFileCsv} className="mr-2" /> {trans('download-csv', locale)}
         </CSVLink>
       </div>}
     </>

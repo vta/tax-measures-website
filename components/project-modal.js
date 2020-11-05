@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 import moment from 'moment'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
@@ -14,6 +15,7 @@ import PrintButton from './print-button'
 import ShareButton from './share-button'
 import ProjectMap from './project-map'
 import ProjectsTable from './projects-table'
+import { trans } from '../lib/translations'
 
 const ProjectModal = ({
   selectedProjects,
@@ -30,6 +32,8 @@ const ProjectModal = ({
   show,
   setProjectModalProjects
 }) => {
+  const router = useRouter()
+  const { locale } = router
   const [mapVisible, setMapVisible] = useState(false)
 
   if (!selectedProjects || selectedProjects.length === 0) {
@@ -61,9 +65,9 @@ const ProjectModal = ({
       <Table responsive size="sm" className="small-table">
         <thead>
           <tr>
-            <th style={{ width: '33.3%' }}>Date</th>
-            <th style={{ width: '33.3%' }}>Amount</th>
-            <th style={{ width: '33.3%' }}>Availability</th>
+            <th style={{ width: '33.3%' }}>{trans('label-date', locale)}</th>
+            <th style={{ width: '33.3%' }}>{trans('label-amount', locale)}</th>
+            <th style={{ width: '33.3%' }}>{trans('label-availability', locale)}</th>
           </tr>
         </thead>
         <tbody>
@@ -77,7 +81,7 @@ const ProjectModal = ({
         </tbody>
         {projectAllocations.length > 1 && <tfoot>
           <tr>
-              <th scope="row">Total</th>
+              <th scope="row">{trans('total', locale)}</th>
               <th>{formatCurrency(sumBy(projectAllocations, 'fields.Amount'))}</th>
               <th></th>
           </tr>
@@ -95,8 +99,8 @@ const ProjectModal = ({
       <Table responsive size="sm" className="small-table">
         <thead>
           <tr>
-            <th style={{ width: '33.3%' }}>Date</th>
-            <th style={{ width: '66.6%' }}>Amount</th>
+            <th style={{ width: '33.3%' }}>{trans('label-date', locale)}</th>
+            <th style={{ width: '66.6%' }}>{trans('label-amount', locale)}</th>
           </tr>
         </thead>
         <tbody>
@@ -109,7 +113,7 @@ const ProjectModal = ({
         </tbody>
         {projectAwards.length > 1 && <tfoot>
           <tr>
-              <th scope="row">Total</th>
+              <th scope="row">{trans('total', locale)}</th>
               <th>{formatCurrency(sumBy(projectAwards, 'fields.Award Amount'))}</th>
               <th></th>
           </tr>
@@ -127,9 +131,9 @@ const ProjectModal = ({
       <Table responsive size="sm" className="small-table">
         <thead>
           <tr>
-            <th style={{ width: '33.3%' }}>Date</th>
-            <th style={{ width: '33.3%' }}>Amount</th>
-            <th style={{ width: '33.3%' }}>Description</th>
+            <th style={{ width: '33.3%' }}>{trans('label-date', locale)}</th>
+            <th style={{ width: '33.3%' }}>{trans('label-amount', locale)}</th>
+            <th style={{ width: '33.3%' }}>{trans('label-description', locale)}</th>
           </tr>
         </thead>
         <tbody>
@@ -143,9 +147,9 @@ const ProjectModal = ({
         </tbody>
         {projectExpenditures.length > 1 && <tfoot>
           <tr>
-              <th scope="row">Total</th>
-              <th>{formatCurrency(sumBy(projectExpenditures, 'fields.Amount'))}</th>
-              <th></th>
+            <th scope="row">{trans('total', locale)}</th>
+            <th>{formatCurrency(sumBy(projectExpenditures, 'fields.Amount'))}</th>
+            <th></th>
           </tr>
         </tfoot>}
       </Table>
@@ -179,22 +183,22 @@ const ProjectModal = ({
                 {project.fields.Description}
               </div>}
               <div className="project-stat">
-                <b>Category:</b>{' '}
+                <b>{trans('label-category', locale)}:</b>{' '}
                 {formatCategory(project)}
               </div>
               {project.fields.Subcategory.id && <div className="project-stat">
-                <b>Subcategory:</b>{' '}
+                <b>{trans('label-subcategory', locale)}:</b>{' '}
                 {project.fields.Subcategory.fields.Name}
               </div>}
               {project.fields['Fiscal Year'] && <div className="project-stat">
-                <b>Fiscal Year:</b>{' '}
+                <b>{trans('label-fiscal-year', locale)}:</b>{' '}
                 {project.fields['Fiscal Year']}
               </div>}
               {projectUrl && <div className="project-stat">
-                <a href={projectUrl} target="_blank">Project Website <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" /></a>
+                <a href={projectUrl} target="_blank">{trans('label-website', locale)} <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" /></a>
               </div>}
               <div className="project-stat">
-                <b>Grantee:</b>{' '}
+                <b>{trans('label-grantee', locale)}:</b>{' '}
                 {projectGrantee.fields.URL ?
                   <a href={projectGrantee.fields.URL}>
                     {projectGrantee.fields.Name} <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
@@ -212,22 +216,22 @@ const ProjectModal = ({
             </div>
           </div>
           <div className="project-stat">
-            <b>Allocations:</b>{' '}
+            <b>{trans('label-allocations', locale)}:</b>{' '}
             {renderAllocations()}
           </div>
           <div className="project-stat">
-            <b>Awards:</b>{' '}
+            <b>{trans('label-awards', locale)}:</b>{' '}
             {renderAwards()}
           </div>
           <div className="project-stat">
-            <b>Expenditures:</b>{' '}
+            <b>{trans('label-expenditures', locale)}:</b>{' '}
             {renderExpenditures()}
           </div>
           <div className="project-stat">
-            <b>Related Documents:</b>{' '}
+            <b>{trans('label-documents', locale)}:</b>{' '}
             {renderDocuments()}
           </div>
-          <small className="float-right mt-2">Last Modified: {moment(project.fields['Last Modified']).format('MMMM Do YYYY, h:mm a')}</small>
+          <small className="float-right mt-2">{trans('projectmodal-last-modified', locale)}: {moment(project.fields['Last Modified']).format('MMMM Do YYYY, h:mm a')}</small>
           <style jsx>{`
             .table-small td {
               font-size: 12px;
@@ -270,7 +274,7 @@ const ProjectModal = ({
     if (selectedProjects.length === 1) {
       return (
         <Modal.Title id="contained-modal-title-vcenter">
-          <img src="/images/logo.png" alt="2016 Measure B" className="logo d-none d-print-block mb-3" />
+          <img src="/images/logo.png" alt={trans('title', locale)} className="logo d-none d-print-block mb-3" />
           {project.fields.Name}
         </Modal.Title>
       )
@@ -297,7 +301,7 @@ const ProjectModal = ({
       <Modal.Footer className="d-print-none">
         <ShareButton className="btn btn-green mr-2" />
         <PrintButton className="btn btn-green mr-2" />
-        <Button onClick={handleHide} className="btn-secondary">Close</Button>
+        <Button onClick={handleHide} className="btn-secondary">{trans('close', locale)}</Button>
       </Modal.Footer>
     </Modal>
   )

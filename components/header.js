@@ -1,4 +1,5 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { sumBy } from 'lodash'
@@ -7,8 +8,11 @@ import Button from 'react-bootstrap/Button'
 import FaqTerm from './faq-term'
 import { formatCurrencyMillions } from '../lib/formatters'
 import { getCurrentFiscalYear, findLatestDate, findLatestYear } from '../lib/util'
+import { trans } from '../lib/translations'
 
 const Header = ({ data, setAboutModalShow }) => {
+  const router = useRouter()
+  const { locale } = router
   const currentFiscalYear = getCurrentFiscalYear()
   const allocationsThroughTwoYearsIntoTheFuture = data.allocations.filter(allocation => {
     if (allocation.fields['Available Start']) {
@@ -20,7 +24,7 @@ const Header = ({ data, setAboutModalShow }) => {
   return (
     <div className="row bg-white no-gutters d-block d-md-flex">
       <div className="col col-md-auto">
-        <a href="/"><h1 className="bg-light-blue text-white p-2 p-md-3 m-0"><img src="/images/logo.png" alt="2016 Measure B" className="logo" /></h1></a>
+        <a href="/"><h1 className="bg-light-blue text-white p-2 p-md-3 m-0"><img src="/images/logo.png" alt={trans('title', locale)} className="logo" /></h1></a>
       </div>
       <div className="col-md d-print-none">
         <div className="header-stat">
@@ -28,8 +32,11 @@ const Header = ({ data, setAboutModalShow }) => {
             {formatCurrencyMillions(sumBy(data.revenue, 'fields.Amount'))}
           </div>
           <div className="header-stat-label">
-            Million Collected
-            <FaqTerm id="1293871" term="Revenue Collected" faqs={data.faqs} placement="auto" />
+            {trans('header-revenue-label', locale)}
+            <FaqTerm id="1293871" term={trans('header-revenue-collected', locale)} faqs={data.faqs} placement="auto" />
+          </div>
+          <div className="header-state-date">
+            {trans('header-through', locale)} {moment(findLatestDate(data.revenue.map(r => r.fields.Date))).format('MMM D, YYYY')}
           </div>
           <div className="header-state-date">
             Through {moment(findLatestDate(data.revenue.map(r => r.fields.Date))).format('MMM D, YYYY')}
@@ -42,8 +49,11 @@ const Header = ({ data, setAboutModalShow }) => {
             {formatCurrencyMillions(sumBy(allocationsThroughTwoYearsIntoTheFuture, 'fields.Amount'))}
           </div>
           <div className="header-stat-label">
-            Million Allocated
-            <FaqTerm id="1327856" term="Allocations" faqs={data.faqs} placement="auto" />
+            {trans('header-allocation-label', locale)}
+            <FaqTerm id="1327856" term={trans('label-allocations', locale)} faqs={data.faqs} placement="auto" />
+          </div>
+          <div className="header-state-date">
+            {trans('header-through', locale)} {moment(findLatestYear(allocationsThroughTwoYearsIntoTheFuture.map(r => parseInt(r.fields['Available Start'], 10))), 'YYYY').date('30').month('June').format('MMM D, YYYY')}
           </div>
           <div className="header-state-date">
             Through {moment(findLatestYear(allocationsThroughTwoYearsIntoTheFuture.map(r => parseInt(r.fields['Available Start'], 10))), 'YYYY').date('30').month('Junes').format('MMM D, YYYY')}
@@ -55,11 +65,10 @@ const Header = ({ data, setAboutModalShow }) => {
           onClick={() => setAboutModalShow(true)}
           variant="primary"
           size="lg"
-          title="About Measure B"
           className="mb-2 mt-2"
         >
           <FontAwesomeIcon icon={faQuestion} className="mr-2" />
-          <span>About</span>
+          <span>{trans('header-about', locale)}</span>
         </Button>
       </div>
     </div>

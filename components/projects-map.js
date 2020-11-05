@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 import ReactMapGL, { NavigationControl } from 'react-map-gl'
 import MapLayer from '../components/map-layer'
 import { getViewport } from '../lib/util'
+import { trans } from '../lib/translations'
 
 const ProjectsMap = ({ data: { grantees }, geojsons, projectsToMap, setProjectModalProjects, height }) => {
+  const router = useRouter()
+  const { locale } = router
+
   if (!geojsons) {
     return null
   }
@@ -29,7 +34,7 @@ const ProjectsMap = ({ data: { grantees }, geojsons, projectsToMap, setProjectMo
     return (
       <div>
         <p>&nbsp;</p>
-        <div className="text-center font-weight-bold mt-5">No map available</div>
+        <div className="text-center font-weight-bold mt-5">{trans('projectsmap-no-map', locale)}</div>
       </div>
     )
   }

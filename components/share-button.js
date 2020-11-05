@@ -1,5 +1,6 @@
 /* global window, navigator */
 import React from 'react'
+import { useRouter } from 'next/router'
 import Dropdown from 'react-bootstrap/Dropdown'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
@@ -7,9 +8,13 @@ import { faCopy, faEnvelope, faShare } from '@fortawesome/free-solid-svg-icons'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 import { isMobile } from '../lib/util'
+import { trans } from '../lib/translations'
 import { trackEvent } from '../lib/ga'
 
 const ShareButton = ({ className }) => {
+  const router = useRouter()
+  const { locale } = router
+
   const shareTitle = '2016 Measure B'
   const shareUrl = window.location.href
   const emailShareUrl = `mailto:?subject=2016%20Measure%20B&body=${encodeURIComponent(shareUrl)}`
@@ -30,7 +35,7 @@ const ShareButton = ({ className }) => {
   return (
     <Dropdown>
       <Dropdown.Toggle className={className}>
-        <FontAwesomeIcon icon={faShare} /> Share
+        <FontAwesomeIcon icon={faShare} /> {trans('share', locale)}
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
@@ -41,7 +46,7 @@ const ShareButton = ({ className }) => {
             category: 'share',
             label: 'copy'
           })}>
-              <FontAwesomeIcon icon={faCopy} /> Copy URL
+              <FontAwesomeIcon icon={faCopy} /> {trans('copy-url', locale)}
             </span>
           </CopyToClipboard>
         </Dropdown.Item>
@@ -56,7 +61,7 @@ const ShareButton = ({ className }) => {
               triggerShare()
             }}
           >
-            <FontAwesomeIcon icon={faEnvelope} /> Email
+            <FontAwesomeIcon icon={faEnvelope} /> {trans('email', locale)}
           </Dropdown.Item>
         }
         <Dropdown.Item

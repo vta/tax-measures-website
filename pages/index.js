@@ -35,6 +35,7 @@ import {
   updateUrlWithFilters
 } from '../lib/util'
 import { categoryCards } from '../lib/category-cards'
+import { trans } from '../lib/translations'
 
 const Home = ({ data }) => {
   const router = useRouter()
@@ -45,6 +46,8 @@ const Home = ({ data }) => {
   const [projectModalProjects, setProjectModalProjects] = useState()
   const [aboutModalShow, setAboutModalShow] = useState(false)
   const [geojsons, setGeojsons] = useState()
+
+  const { locale } = router
 
   useEffect(() => {
     if (!projectModalProjects || projectModalProjects.length === 0) {
@@ -107,25 +110,25 @@ const Home = ({ data }) => {
   return (
     <div>
       <NextSeo
-        title="2016 Measure B"
-        description="A 30-year, half-cent countywide sales tax to enhance transit, highways, expressways and active transportation (bicycles, pedestrians and complete streets). The measure passed by nearly 72%, the highest level of support for any Santa Clara County transportation tax."
+        title={trans('title', locale)}
+        description={trans('seo-description', locale)}
         canonical="https://2016measureb-beta.vta.org/"
         openGraph={{
           url: 'https://2016measureb-beta.vta.org/',
-          title: '2016 Measure B',
-          description: '"A 30-year, half-cent countywide sales tax to enhance transit, highways, expressways and active transportation (bicycles, pedestrians and complete streets). The measure passed by nearly 72%, the highest level of support for any Santa Clara County transportation tax.',
+          title: trans('title', locale),
+          description: trans('seo-description', locale),
           images: [
             {
               url: 'https://2016measureb-beta.vta.org/meta/measureb-logo-square.png',
               width: 1200,
               height: 1200,
-              alt: '2016 Measure B'
+              alt: trans('title', locale)
             }
           ]
         }}
       />
       <Head>
-        <title>2016 Measure B</title>
+        <title>{trans('title', locale)}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -152,14 +155,14 @@ const Home = ({ data }) => {
           <div className="col-lg-6 offset-lg-3">
             <div className="card">
               <div className="card-body">
-                <h3>See how 2016 Measure B has been spent</h3>
+                <h3>{trans('intro-card-title', locale)}</h3>
                 <ul>
-                  <li>Filter by program categories or grantees</li>
-                  <li>Search for a specific project by name</li>
-                  <li>Visualize funding in a chart or map</li>
-                  <li>Download project data as a PDF or CSV</li>
+                  <li>{trans('intro-card-item1', locale)}</li>
+                  <li>{trans('intro-card-item2', locale)}</li>
+                  <li>{trans('intro-card-item3', locale)}</li>
+                  <li>{trans('intro-card-item4', locale)}</li>
                 </ul>
-                <div><a href="#" onClick={() => setAboutModalShow(true)}>Read More &raquo;</a></div>
+                <div><a href="#" onClick={() => setAboutModalShow(true)}>{trans('read-more', locale)} &raquo;</a></div>
               </div>
             </div>
           </div>

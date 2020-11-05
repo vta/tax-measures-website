@@ -1,11 +1,16 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import BarChart from './bar-chart'
 import CategoryInfo from './category-info'
 import Loading from './loading'
 import ProjectsMap from './projects-map'
 import ProjectsTable from './projects-table'
+import { trans } from '../lib/translations'
 
 const Results = ({ loading, results, data, geojsons, setProjectModalProjects }) => {
+  const router = useRouter()
+  const { locale } = router
+
   if (loading) {
     return <Loading loading={loading} />
   }
@@ -37,8 +42,8 @@ const Results = ({ loading, results, data, geojsons, setProjectModalProjects }) 
       </div>
       <div className="card bg-blue text-white mb-3">
         <div className="card-body">
-          <h3>Projects List</h3>
-          <p>Below is a list of the projects correlated with the filter settings above</p>
+          <h3>{trans('results-title', locale)}</h3>
+          <p>{trans('results-text', locale)}</p>
           <ProjectsTable
             selectedProjects={results && results.projects}
             setProjectModalProjects={setProjectModalProjects}
