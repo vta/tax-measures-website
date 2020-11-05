@@ -14,6 +14,9 @@ const Faq = ({ faq }) => {
 }
 
 const AboutModal = ({ faqs, ...props }) => {
+  const router = useRouter()
+  const { locale } = router
+
   return (
     <Modal
       {...props}
