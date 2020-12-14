@@ -3,13 +3,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook, faYoutube } from '@fortawesome/free-brands-svg-icons'
 
 const Footer = () => {
-  useEffect(() => {
-    const googleTranslateElementInit = () => {
-      new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.FloatPosition.TOP_RIGHT}, 'google_translate_element');
-    }
 
-    window.googleTranslateElementInit = googleTranslateElementInit
-  }, [])
+  const googleTranslateElementInit = () => {
+    new window.google.translate.TranslateElement({ pageLanguage: 'en', layout: window.google.translate.TranslateElement.FloatPosition.TOP_RIGHT }, 'google_translate_element')
+   }
+   
+   useEffect(() => {
+     var addScript = document.createElement('script');
+     addScript.setAttribute('src', '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit');
+     document.body.appendChild(addScript);
+     window.googleTranslateElementInit = googleTranslateElementInit;
+   }, [])
 
   return (
     <div className="row footer d-print-none">
@@ -21,7 +25,6 @@ const Footer = () => {
             </div>
 
             <div id="google_translate_element" className="google-translate-control mt-3"></div>
-            <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
           </div>
           <div className="col-md-3 mb-3">
             <p>This website provides unaudited financial information about VTA's 2016 Measure B, updated quarterly or as new information is released.</p>
