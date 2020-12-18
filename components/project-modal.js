@@ -159,7 +159,7 @@ const ProjectModal = ({
 
     return (
       <ListGroup className="small-list-group">
-        {projectDocuments.map(document => (
+        {sortBy(projectDocuments, 'fields.Name').map(document => (
           <ListGroup.Item key={document.id}>
             <DocumentLink document={document} />
           </ListGroup.Item>
