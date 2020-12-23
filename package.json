@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "14.15.2"
+    "node": "14.15.3"
   },
   "scripts": {
     "dev": "next dev",
@@ -17,15 +17,15 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.1",
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
-    "@fortawesome/react-fontawesome": "^0.1.13",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "@turf/bbox": "^6.0.1",
     "algoliasearch": "^4.8.3",
-    "apexcharts": "^3.22.3",
+    "apexcharts": "^3.23.0",
     "bootstrap": "^4.5.3",
     "cross-fetch": "^3.0.6",
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
-    "next": "10.0.3",
+    "next": "10.0.4",
     "next-seo": "^4.17.0",
     "react": "17.0.1",
     "react-apexcharts": "^1.3.7",
@@ -34,7 +34,7 @@
     "react-csv": "^2.0.3",
     "react-dom": "17.0.1",
     "react-https-redirect": "^1.1.0",
-    "react-map-gl": "^5.2.11",
+    "react-map-gl": "^6.0.2",
     "react-markdown": "^5.0.3",
     "react-select": "^3.1.1",
     "remark-breaks": "^2.0.1"
