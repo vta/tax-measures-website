@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
-import { mergeBboxes, getGranteeByProject } from '../lib/util'
+import { mergeBboxes, getGranteeByProject } from '../lib/util.js'
 
 const detectGeometryTypes = (geojson, project) => {
   const typesPresent = {

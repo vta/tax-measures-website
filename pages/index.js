@@ -5,16 +5,16 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { isEmpty, keyBy } from 'lodash'
 import { NextSeo } from 'next-seo'
-import AboutModal from '../components/about-modal'
-import FilterAlert from '../components/filter-alert'
-import FilterControls from '../components/filter-controls'
-import Footer from '../components/footer'
-import Header from '../components/header'
-import HomepageChart from '../components/homepage-chart'
-import Loading from '../components/loading'
-import ProjectsMap from '../components/projects-map'
-import ProjectModal from '../components/project-modal'
-import Results from '../components/results'
+import AboutModal from '../components/about-modal.js'
+import FilterAlert from '../components/filter-alert.js'
+import FilterControls from '../components/filter-controls.js'
+import Footer from '../components/footer.js'
+import Header from '../components/header.js'
+import HomepageChart from '../components/homepage-chart.js'
+import Loading from '../components/loading.js'
+import ProjectsMap from '../components/projects-map.js'
+import ProjectModal from '../components/project-modal.js'
+import Results from '../components/results.js'
 import {
   fetchAllocations,
   fetchAwards,
@@ -25,7 +25,7 @@ import {
   fetchProjects,
   fetchRevenue,
   fetchFaq
-} from '../lib/api'
+} from '../lib/api.js'
 import {
   applyFilters,
   getDocumentById,
@@ -33,8 +33,8 @@ import {
   preprocessData,
   fetchGeoJson,
   updateUrlWithFilters
-} from '../lib/util'
-import { categoryCards } from '../lib/category-cards'
+} from '../lib/util.js'
+import { categoryCards } from '../lib/category-cards.js'
 
 const Home = ({ data }) => {
   const router = useRouter()
@@ -98,11 +98,11 @@ const Home = ({ data }) => {
   }
 
   // Merge category cards and categories
-  categoryCards.forEach(categoryCard => {
+  for (const categoryCard of categoryCards) {
     const category = data.categories.find(c => c.fields.Name === categoryCard.key)
     categoryCard.description = category && category.fields.Description
     categoryCard.documents = category && category.fields.Documents && category.fields.Documents.map(id => getDocumentById(id, data.documents))
-  })
+  }
 
   return (
     <div>

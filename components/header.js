@@ -2,18 +2,19 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { sumBy } from 'lodash'
-import moment  from 'moment'
+import moment from 'moment'
 import Button from 'react-bootstrap/Button'
-import FaqTerm from './faq-term'
-import { formatCurrencyMillions } from '../lib/formatters'
-import { getCurrentFiscalYear, findLatestDate, findLatestYear } from '../lib/util'
+import FaqTerm from './faq-term.js'
+import { formatCurrencyMillions } from '../lib/formatters.js'
+import { getCurrentFiscalYear, findLatestDate, findLatestYear } from '../lib/util.js'
 
 const Header = ({ data, setAboutModalShow }) => {
   const currentFiscalYear = getCurrentFiscalYear()
   const allocationsThroughTwoYearsIntoTheFuture = data.allocations.filter(allocation => {
     if (allocation.fields['Available Start']) {
-      return parseInt(allocation.fields['Available Start'], 10) <= currentFiscalYear + 2
+      return Number.parseInt(allocation.fields['Available Start'], 10) <= currentFiscalYear + 2
     }
+
     return false
   })
 
@@ -46,7 +47,7 @@ const Header = ({ data, setAboutModalShow }) => {
             <FaqTerm id="1327856" term="Allocations" faqs={data.faqs} placement="auto" />
           </div>
           <div className="header-state-date">
-            Through {moment(findLatestYear(allocationsThroughTwoYearsIntoTheFuture.map(r => parseInt(r.fields['Available Start'], 10))), 'YYYY').date('30').month('Junes').format('MMM D, YYYY')}
+            Through {moment(findLatestYear(allocationsThroughTwoYearsIntoTheFuture.map(r => Number.parseInt(r.fields['Available Start'], 10))), 'YYYY').date('30').month('Junes').format('MMM D, YYYY')}
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ReactMapGL, { NavigationControl } from 'react-map-gl'
-import MapLayer from '../components/map-layer'
-import { getViewport } from '../lib/util'
+import MapLayer from '../components/map-layer.js'
+import { getViewport } from '../lib/util.js'
 
 const ProjectMap = ({ project, grantees, geojsons }) => {
   if (!geojsons) {

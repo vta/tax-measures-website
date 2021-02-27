@@ -3,17 +3,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook, faYoutube } from '@fortawesome/free-brands-svg-icons'
 
 const Footer = () => {
-
   const googleTranslateElementInit = () => {
     new window.google.translate.TranslateElement({ pageLanguage: 'en', layout: window.google.translate.TranslateElement.FloatPosition.TOP_RIGHT }, 'google_translate_element')
-   }
-   
-   useEffect(() => {
-     var addScript = document.createElement('script');
-     addScript.setAttribute('src', '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit');
-     document.body.appendChild(addScript);
-     window.googleTranslateElementInit = googleTranslateElementInit;
-   }, [])
+  }
+
+  useEffect(() => {
+    const addScript = document.createElement('script')
+    addScript.setAttribute('src', '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit')
+    document.body.append(addScript)
+    window.googleTranslateElementInit = googleTranslateElementInit
+  }, [])
 
   return (
     <div className="row footer d-print-none">

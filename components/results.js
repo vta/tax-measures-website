@@ -1,9 +1,9 @@
 import React from 'react'
-import BarChart from './bar-chart'
-import CategoryInfo from './category-info'
-import Loading from './loading'
-import ProjectsMap from './projects-map'
-import ProjectsTable from './projects-table'
+import BarChart from './bar-chart.js'
+import CategoryInfo from './category-info.js'
+import Loading from './loading.js'
+import ProjectsMap from './projects-map.js'
+import ProjectsTable from './projects-table.js'
 
 const Results = ({ loading, results, data, geojsons, setProjectModalProjects }) => {
   if (loading) {
