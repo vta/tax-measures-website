@@ -1,8 +1,8 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
 import { groupBy, sortBy } from 'lodash'
-import { formatCurrencyWithUnit } from '../lib/formatters'
-import { getProjectById, sumCurrency } from '../lib/util'
+import { formatCurrencyWithUnit } from '../lib/formatters.js'
+import { getProjectById, sumCurrency } from '../lib/util.js'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -33,13 +33,7 @@ const BarChart = ({ results }) => {
   const formatChartData = () => {
     let categoryGroups
 
-    if (results.filters.category) {
-      // Use category
-      categoryGroups = groupBy(results.items, item => item.fields.Category.fields.Name)
-    } else {
-      // Use parent category
-      categoryGroups = groupBy(results.items, item => item.fields['Parent Category'].fields.Name)
-    }
+    categoryGroups = results.filters.category ? groupBy(results.items, item => item.fields.Category.fields.Name) : groupBy(results.items, item => item.fields['Parent Category'].fields.Name)
 
     // If more than one category present, chart by category
     if (Object.entries(categoryGroups).length > 1) {

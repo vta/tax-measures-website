@@ -16,7 +16,7 @@ const FaqTerm = ({ id, term, faqs, placement, showTerm }) => {
     <Popover id="popover-basic">
       <Popover.Content dangerouslySetInnerHTML={{ __html: faq['faq-answer'] }} />
     </Popover>
-  );
+  )
 
   return (
     <OverlayTrigger
@@ -25,7 +25,7 @@ const FaqTerm = ({ id, term, faqs, placement, showTerm }) => {
       overlay={popover}
       rootClose={true}
     >
-      {showTerm ? 
+      {showTerm ?
         <span role="button" className="text-decoration-underline" onClick={event => event.stopPropagation()}>{term}</span> :
         <span className="fa-layers fa-fw faq-term" role="button" onClick={event => event.stopPropagation()}>
           <FontAwesomeIcon icon={faCircleSolid} color="#c8d3d9" transform="shrink-1" />

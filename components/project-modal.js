@@ -7,13 +7,13 @@ import Table from 'react-bootstrap/Table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 import { compact, flatMap, sortBy, sumBy, uniq } from 'lodash'
-import { getDocumentById, getGranteeByProject } from '../lib/util'
-import { formatCategory, formatCurrency, formatProjectUrl } from '../lib/formatters'
-import DocumentLink from './document-link'
-import PrintButton from './print-button'
-import ShareButton from './share-button'
-import ProjectMap from './project-map'
-import ProjectsTable from './projects-table'
+import { getDocumentById, getGranteeByProject } from '../lib/util.js'
+import { formatCategory, formatCurrency, formatProjectUrl } from '../lib/formatters.js'
+import DocumentLink from './document-link.js'
+import PrintButton from './print-button.js'
+import ShareButton from './share-button.js'
+import ProjectMap from './project-map.js'
+import ProjectsTable from './projects-table.js'
 
 const ProjectModal = ({
   selectedProjects,
@@ -23,7 +23,7 @@ const ProjectModal = ({
     documents,
     grantees,
     expenditures,
-    faqs,
+    faqs
   },
   geojsons,
   onHide,
@@ -77,9 +77,9 @@ const ProjectModal = ({
         </tbody>
         {projectAllocations.length > 1 && <tfoot>
           <tr>
-              <th scope="row">Total</th>
-              <th>{formatCurrency(sumBy(projectAllocations, 'fields.Amount'))}</th>
-              <th></th>
+            <th scope="row">Total</th>
+            <th>{formatCurrency(sumBy(projectAllocations, 'fields.Amount'))}</th>
+            <th></th>
           </tr>
         </tfoot>}
       </Table>
@@ -109,9 +109,9 @@ const ProjectModal = ({
         </tbody>
         {projectAwards.length > 1 && <tfoot>
           <tr>
-              <th scope="row">Total</th>
-              <th>{formatCurrency(sumBy(projectAwards, 'fields.Award Amount'))}</th>
-              <th></th>
+            <th scope="row">Total</th>
+            <th>{formatCurrency(sumBy(projectAwards, 'fields.Award Amount'))}</th>
+            <th></th>
           </tr>
         </tfoot>}
       </Table>
@@ -143,9 +143,9 @@ const ProjectModal = ({
         </tbody>
         {projectExpenditures.length > 1 && <tfoot>
           <tr>
-              <th scope="row">Total</th>
-              <th>{formatCurrency(sumBy(projectExpenditures, 'fields.Amount'))}</th>
-              <th></th>
+            <th scope="row">Total</th>
+            <th>{formatCurrency(sumBy(projectExpenditures, 'fields.Amount'))}</th>
+            <th></th>
           </tr>
         </tfoot>}
       </Table>

@@ -6,8 +6,8 @@ import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 import { faCopy, faEnvelope, faShare } from '@fortawesome/free-solid-svg-icons'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
-import { isMobile } from '../lib/util'
-import { trackEvent } from '../lib/ga'
+import { isMobile } from '../lib/util.js'
+import { trackEvent } from '../lib/ga.js'
 
 const ShareButton = ({ className }) => {
   const shareTitle = '2016 Measure B'
@@ -37,27 +37,27 @@ const ShareButton = ({ className }) => {
         <Dropdown.Item>
           <CopyToClipboard text={shareUrl}>
             <span onClick={event => trackEvent({
-            action: 'click',
-            category: 'share',
-            label: 'copy'
-          })}>
+              action: 'click',
+              category: 'share',
+              label: 'copy'
+            })}>
               <FontAwesomeIcon icon={faCopy} /> Copy URL
             </span>
           </CopyToClipboard>
         </Dropdown.Item>
-        {isMobile(navigator.userAgent) && <Dropdown.Item 
-            href={emailShareUrl}
-            onClick={event => {
-              trackEvent({
-                action: 'click',
-                category: 'share',
-                label: 'email'
-              })
-              triggerShare()
-            }}
-          >
-            <FontAwesomeIcon icon={faEnvelope} /> Email
-          </Dropdown.Item>
+        {isMobile(navigator.userAgent) && <Dropdown.Item
+          href={emailShareUrl}
+          onClick={event => {
+            trackEvent({
+              action: 'click',
+              category: 'share',
+              label: 'email'
+            })
+            triggerShare()
+          }}
+        >
+          <FontAwesomeIcon icon={faEnvelope} /> Email
+        </Dropdown.Item>
         }
         <Dropdown.Item
           href={twitterShareUrl}

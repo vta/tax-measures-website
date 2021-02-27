@@ -2,7 +2,7 @@ import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import breaks from 'remark-breaks'
 import ListGroup from 'react-bootstrap/ListGroup'
-import DocumentLink from './document-link'
+import DocumentLink from './document-link.js'
 
 const CategoryInfo = ({ categoryCard }) => {
   if (!categoryCard) {

@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { capitalize, isEmpty } from 'lodash'
 
-import FaqTerm from './faq-term'
+import FaqTerm from './faq-term.js'
 
 const FilterControls = ({
   data,
