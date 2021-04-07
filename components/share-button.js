@@ -36,7 +36,7 @@ const ShareButton = ({ className }) => {
       <Dropdown.Menu>
         <Dropdown.Item>
           <CopyToClipboard text={shareUrl}>
-            <span onClick={event => trackEvent({
+            <span onClick={() => trackEvent({
               action: 'click',
               category: 'share',
               label: 'copy'
@@ -47,7 +47,7 @@ const ShareButton = ({ className }) => {
         </Dropdown.Item>
         {isMobile(navigator.userAgent) && <Dropdown.Item
           href={emailShareUrl}
-          onClick={event => {
+          onClick={() => {
             trackEvent({
               action: 'click',
               category: 'share',
@@ -62,7 +62,7 @@ const ShareButton = ({ className }) => {
         <Dropdown.Item
           href={twitterShareUrl}
           target="_blank"
-          onClick={event => trackEvent({
+          onClick={() => trackEvent({
             action: 'click',
             category: 'share',
             label: 'twitter'
@@ -73,7 +73,7 @@ const ShareButton = ({ className }) => {
         <Dropdown.Item
           href={facebookShareUrl}
           target="_blank"
-          onClick={event => trackEvent({
+          onClick={() => trackEvent({
             action: 'click',
             category: 'share',
             label: 'facebook'
