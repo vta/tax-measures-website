@@ -31,9 +31,7 @@ const BarChart = ({ results }) => {
   ]
 
   const formatChartData = () => {
-    let categoryGroups
-
-    categoryGroups = results.filters.category ? groupBy(results.items, item => item.fields.Category.fields.Name) : groupBy(results.items, item => item.fields['Parent Category'].fields.Name)
+    const categoryGroups = results.filters.category ? groupBy(results.items, item => item.fields.Category.fields.Name) : groupBy(results.items, item => item.fields['Parent Category'].fields.Name)
 
     // If more than one category present, chart by category
     if (Object.entries(categoryGroups).length > 1) {
