@@ -1,5 +1,5 @@
-const algoliasearch = require('algoliasearch')
 const querystring = require('querystring')
+const algoliasearch = require('algoliasearch')
 const fetch = require('cross-fetch')
 
 const client = algoliasearch(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID, process.env.ALGOLIA_ADMIN_API_KEY)
