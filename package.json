@@ -23,7 +23,7 @@
     "apexcharts": "^3.24.0",
     "bootstrap": "^4.6.0",
     "cross-fetch": "^3.0.6",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "next": "10.0.6",
     "next-seo": "^4.19.0",
