@@ -5,11 +5,11 @@ import { some, orderBy } from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileCsv, faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
 import { CSVLink } from 'react-csv'
+import { formatCurrencyWithUnit } from '../lib/formatters.js'
+import { trackEvent } from '../lib/ga.js'
 import FaqTerm from './faq-term.js'
 import PrintButton from './print-button.js'
 import ShareButton from './share-button.js'
-import { formatCurrencyWithUnit } from '../lib/formatters.js'
-import { trackEvent } from '../lib/ga.js'
 
 const ProjectsTable = ({
   selectedProjects,

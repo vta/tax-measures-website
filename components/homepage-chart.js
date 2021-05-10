@@ -1,9 +1,9 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
 import { groupBy } from 'lodash'
-import FaqTerm from './faq-term.js'
 import { formatCurrencyWithUnit, formatPercent } from '../lib/formatters.js'
 import { sumCurrency } from '../lib/util.js'
+import FaqTerm from './faq-term.js'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 

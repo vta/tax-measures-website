@@ -4,9 +4,9 @@ import { faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { sumBy } from 'lodash'
 import moment from 'moment'
 import Button from 'react-bootstrap/Button'
-import FaqTerm from './faq-term.js'
 import { formatCurrencyMillions } from '../lib/formatters.js'
 import { getCurrentFiscalYear, findLatestDate, findLatestYear } from '../lib/util.js'
+import FaqTerm from './faq-term.js'
 
 const Header = ({ data, setAboutModalShow }) => {
   const currentFiscalYear = getCurrentFiscalYear()
