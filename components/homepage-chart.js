@@ -11,7 +11,7 @@ const HomepageChart = ({ data: { allocations, parentCategories, faqs } }) => {
   const actualAllocatedGroups = groupBy(allocations, allocation => allocation.fields['Parent Category'].id)
 
   const actualAllocateds = parentCategories.map(category => {
-    const group = actualAllocatedGroups[category.id]
+    const group = actualAllocatedGroups[category.id] || []
 
     return group.reduce((memo, allocation) => {
       return memo + allocation.fields.Amount
