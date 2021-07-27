@@ -1,13 +1,29 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import breaks from 'remark-breaks'
+import moment from 'moment'
 import ListGroup from 'react-bootstrap/ListGroup'
+import { sumBy } from 'lodash'
 import DocumentLink from './document-link.js'
+import { formatCurrencyMillions } from '../lib/formatters.js'
+import { getCurrentFiscalYear, findLatestYear } from '../lib/util.js'
 
-const CategoryInfo = ({ categoryCard }) => {
+const CategoryInfo = ({ data, categoryCard }) => {
   if (!categoryCard) {
     return null
   }
+
+  const currentFiscalYear = getCurrentFiscalYear()
+  const allocationsThroughTwoYearsIntoTheFuture = data.allocations.filter(allocation => {
+    if (allocation.fields['Available Start']) {
+      return Number.parseInt(allocation.fields['Available Start'], 10) <= currentFiscalYear + 2 &&
+      allocation.fields['Parent Category'].fields.Name === categoryCard.key
+    }
+
+    return false
+  })
+
+  console.log(allocationsThroughTwoYearsIntoTheFuture)
 
   const renderDocuments = () => {
     if (!categoryCard.documents || categoryCard.documents.length === 0) {
@@ -34,6 +50,10 @@ const CategoryInfo = ({ categoryCard }) => {
             <div>
               <h3>{categoryCard.key}</h3>
               <ReactMarkdown source={categoryCard.description} linkTarget="_blank" plugins={[breaks]} />
+              <div>
+                Program Category Total Allocation through {moment(findLatestYear(allocationsThroughTwoYearsIntoTheFuture.map(r => Number.parseInt(r.fields['Available Start'], 10))), 'YYYY').date('30').month('Junes').format('MMM D, YYYY')}:
+                <div className="font-weight-bold d-inline-block pl-2 pb-2">{formatCurrencyMillions(sumBy(allocationsThroughTwoYearsIntoTheFuture, 'fields.Amount'))}m</div>
+              </div>
               {renderDocuments()}
             </div>
           </div>

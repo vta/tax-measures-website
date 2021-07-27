@@ -16,7 +16,10 @@ const Results = ({ loading, results, data, geojsons, setProjectModalProjects }) 
 
   return (
     <>
-      <CategoryInfo categoryCard={results.categoryCard} />
+      <CategoryInfo
+        categoryCard={results.categoryCard}
+        data={data}
+      />
       <div className="card mb-3">
         <div className="card-body card-graph">
           <div className="row">
