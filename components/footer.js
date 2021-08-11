@@ -29,7 +29,7 @@ const Footer = () => {
           </div>
           <div className="col-md-3 mb-3">
             <p>This website provides unaudited financial information about VTA's 2016 Measure B, updated quarterly or as new information is released.</p>
-            <a href="https://surveys.hotjar.com/s?siteId=1873169&surveyId=162313" target="_blank" className="text-white">Submit Feedback</a>
+            <a href="https://surveys.hotjar.com/s?siteId=1873169&surveyId=162313" target="_blank" className="text-white" rel="noreferrer">Submit Feedback</a>
           </div>
           <div className="col-md-3 mb-3">
             Santa Clara Valley Transportation Authority<br />
