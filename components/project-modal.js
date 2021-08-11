@@ -191,7 +191,7 @@ const ProjectModal = ({
                 {project.fields['Fiscal Year']}
               </div>}
               {projectUrl && <div className="project-stat">
-                <a href={projectUrl} target="_blank">Project Website <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" /></a>
+                <a href={projectUrl} target="_blank" rel="noreferrer">Project Website <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" /></a>
               </div>}
               <div className="project-stat">
                 <b>Grantee:</b>{' '}
