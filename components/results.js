@@ -27,13 +27,13 @@ const Results = ({ loading, results, data, geojsons, setProjectModalProjects }) 
               <BarChart results={results} />
             </div>
             <div className="col-md-6 col-print-12">
-              <ProjectsMap
+              {geojsons && <ProjectsMap
                 data={data}
                 geojsons={geojsons}
                 projectsToMap={results.projects}
                 setProjectModalProjects={setProjectModalProjects}
                 height="350px"
-              />
+              />}
             </div>
           </div>
         </div>
