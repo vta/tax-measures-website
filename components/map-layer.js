@@ -44,7 +44,7 @@ const detectGeometryTypes = (geojson, project) => {
 
 const MapLayer = (projects, geojsons, grantees) => {
   if (!projects || !geojsons) {
-    return null
+    return {}
   }
 
   const layerIds = []
