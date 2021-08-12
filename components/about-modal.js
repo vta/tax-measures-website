@@ -27,7 +27,7 @@ const AboutModal = ({ faqs, ...props }) => {
       <Modal.Body>
         <h4>What is 2016 Measure B?</h4>
         <p>
-          A 30-year, half-cent countywide sales tax to enhance transit, highways, expressways and active transportation (bicycles, pedestrians and complete streets). The measure passed by nearly 72%, the highest level of support for any Santa Clara County transportation tax. The <a href="http://santaclaravta.iqm2.com/Citizens/Board/1100-2016-Measure-B-Citizens-Oversight-Committee">2016 Measure B Citizens' Oversight Committee</a> ensures funds are expended as approved. <a href="https://www.vta.org/projects/funding/2016-measure-b">Read More &raquo;</a>
+          A 30-year, half-cent countywide sales tax to enhance transit, highways, expressways and active transportation (bicycles, pedestrians and complete streets). The measure passed by nearly 72%, the highest level of support for any Santa Clara County transportation tax. The <a href="http://santaclaravta.iqm2.com/Citizens/Board/1100-2016-Measure-B-Citizens-Oversight-Committee">2016 Measure B Citizens&apos; Oversight Committee</a> ensures funds are expended as approved. <a href="https://www.vta.org/projects/funding/2016-measure-b">Read More &raquo;</a>
         </p>
 
         <h4>What is this website?</h4>

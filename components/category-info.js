@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import ReactMarkdown from 'react-markdown'
 import breaks from 'remark-breaks'
 import moment from 'moment'
@@ -46,7 +47,7 @@ const CategoryInfo = ({ data, categoryCard }) => {
       <div className="col-lg-6 offset-lg-3">
         <div className="card h-100">
           <div className="card-body d-flex">
-            <img src={`/images/programs/${categoryCard.image}`} alt={categoryCard.key} width="150" height="150" className="mr-3 flex-shrink-0" />
+            <Image src={`/images/programs/${categoryCard.image}`} alt={categoryCard.key} width="150" height="150" className="mr-3 flex-shrink-0" />
             <div>
               <h3>{categoryCard.key}</h3>
               <ReactMarkdown source={categoryCard.description} linkTarget="_blank" plugins={[breaks]} />

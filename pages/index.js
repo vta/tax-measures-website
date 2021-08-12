@@ -1,6 +1,7 @@
 /* global window */
 
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import Image from 'next/image'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { isEmpty, keyBy } from 'lodash'
@@ -46,27 +47,39 @@ const Home = ({ data }) => {
   const [aboutModalShow, setAboutModalShow] = useState(false)
   const [geojsons, setGeojsons] = useState()
 
+  const handleSearch = useCallback(async filters => {
+    console.log('handle search')
+    setLoading(true)
+    setResults(await applyFilters(filters, data.awards, data.expenditures, data.projects, data.categories, data.grantees))
+    updateUrlWithFilters(filters, (projectModalProjects || []).map(p => p.id))
+    setCurrentFilters(filters)
+    setLoading(false)
+  }, [data.awards, data.expenditures, data.projects, data.categories, data.grantees, projectModalProjects])
+
   useEffect(() => {
     if (!projectModalProjects || projectModalProjects.length === 0) {
       updateUrlWithFilters(currentFilters)
     } else {
       updateUrlWithFilters(currentFilters, projectModalProjects.map(p => p.id))
     }
-  }, [projectModalProjects])
+  }, [projectModalProjects, currentFilters])
 
   useEffect(() => {
     const filters = getFiltersFromQuery(router.query)
-    const modalProjectIds = router.query.project_ids ? router.query.project_ids.split(',') : undefined
-
+  
     if (!isEmpty(filters)) {
       setIncomingFilters(filters)
       handleSearch(filters)
     }
+  }, [router.query, handleSearch])
+
+  useEffect(() => {
+    const modalProjectIds = router.query.project_ids ? router.query.project_ids.split(',') : undefined
 
     if (modalProjectIds) {
       setProjectModalProjects(modalProjectIds.map(projectId => data.projects.find(p => p.id === projectId)))
     }
-  }, [router.query])
+  }, [router.query, data.projects])
 
   useEffect(() => {
     const fetchMapData = async () => {
@@ -80,15 +93,7 @@ const Home = ({ data }) => {
     }
 
     fetchMapData()
-  }, [])
-
-  const handleSearch = async filters => {
-    setLoading(true)
-    setResults(await applyFilters(filters, data.awards, data.expenditures, data.projects, data.categories, data.grantees))
-    updateUrlWithFilters(filters, (projectModalProjects || []).map(p => p.id))
-    setCurrentFilters(filters)
-    setLoading(false)
-  }
+  }, [data.projects, data.grantees])
 
   const clearSearch = () => {
     setResults()
@@ -192,7 +197,7 @@ const Home = ({ data }) => {
               }}>
                 <div className="card-body d-flex flex-column justify-content-between">
                   <h3 className="text-center">{key}</h3>
-                  <img src={`/images/programs/${image}`} alt={key} className="w-100" />
+                  <Image src={`/images/programs/${image}`} alt={key} width="300" height="300" layout="responsive" />
                 </div>
               </a>
             </div>
