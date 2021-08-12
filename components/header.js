@@ -1,4 +1,6 @@
 import React from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { sumBy } from 'lodash'
@@ -20,8 +22,10 @@ const Header = ({ data, setAboutModalShow }) => {
 
   return (
     <div className="row bg-white no-gutters d-block d-md-flex">
-      <div className="col col-md-auto">
-        <a href="/"><h1 className="bg-light-blue text-white p-2 p-md-3 m-0"><img src="/images/logo.png" alt="2016 Measure B" className="logo" /></h1></a>
+      <div className="col col-md-auto bg-light-blue text-white ">
+        <Link href="/">
+          <a><h1 className="p-2 p-md-3 m-0 h-100" style={{ width: '167px' }}><Image src="/images/logo.png" alt="2016 Measure B" className="logo" width="738" height="598" /></h1></a>
+        </Link>
       </div>
       <div className="col-md d-print-none">
         <div className="header-stat">

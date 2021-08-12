@@ -1,6 +1,7 @@
 /* global window, document */
 
 import React, { useEffect } from 'react'
+import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook, faYoutube } from '@fortawesome/free-brands-svg-icons'
 
@@ -22,13 +23,13 @@ const Footer = () => {
         <div className="row">
           <div className="col-md-3 text-center mb-3">
             <div className="bg-white p-3 footer-logo mx-auto">
-              <img src="/images/vta-logo.png" alt="2016 Measure B" className="w-100" />
+              <Image src="/images/vta-logo.png" alt="2016 Measure B" className="w-100" width="262" height="62" />
             </div>
 
             <div id="google_translate_element" className="google-translate-control mt-3"></div>
           </div>
           <div className="col-md-3 mb-3">
-            <p>This website provides unaudited financial information about VTA's 2016 Measure B, updated quarterly or as new information is released.</p>
+            <p>This website provides unaudited financial information about VTA&apos;s 2016 Measure B, updated quarterly or as new information is released.</p>
             <a href="https://surveys.hotjar.com/s?siteId=1873169&surveyId=162313" target="_blank" className="text-white" rel="noreferrer">Submit Feedback</a>
           </div>
           <div className="col-md-3 mb-3">

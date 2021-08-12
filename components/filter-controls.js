@@ -1,5 +1,5 @@
 /*  global alert */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Select from 'react-select'
@@ -20,6 +20,16 @@ const FilterControls = ({
   const [project, setProject] = useState(incomingFilters.project || '')
   const [category, setCategory] = useState(incomingFilters.category || '')
 
+  const validateFilters = useCallback(filters => {
+    if (!filters.transactionType) {
+      /*  eslint-disable-next-line no-alert */
+      return alert('You must specify a transaction type')
+    }
+    console.log('validating')
+
+    handleSearch(filters)
+  }, [handleSearch])
+
   useEffect(() => {
     setTransactionType(incomingFilters.transactionType || 'award')
     setGrantee(incomingFilters.grantee || '')
@@ -29,16 +39,7 @@ const FilterControls = ({
     if (!isEmpty(incomingFilters)) {
       validateFilters(incomingFilters)
     }
-  }, [incomingFilters])
-
-  const validateFilters = filters => {
-    if (!filters.transactionType) {
-      /*  eslint-disable-next-line no-alert */
-      return alert('You must specify a transaction type')
-    }
-
-    handleSearch(filters)
-  }
+  }, [incomingFilters, validateFilters])
 
   return (
     <div className="card bg-blue p-2 mb-3">

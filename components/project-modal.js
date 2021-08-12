@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Image from 'next/image'
 import moment from 'moment'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
@@ -270,7 +271,9 @@ const ProjectModal = ({
     if (selectedProjects.length === 1) {
       return (
         <Modal.Title id="contained-modal-title-vcenter">
-          <img src="/images/logo.png" alt="2016 Measure B" className="logo d-none d-print-block mb-3" />
+          <div className="d-none d-print-block">
+            <Image src="/images/logo.png" alt="2016 Measure B" className="logo" width="100" height="100" />
+          </div>
           {project.fields.Name}
         </Modal.Title>
       )

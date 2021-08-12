@@ -4,6 +4,10 @@ import MapLayer from '../components/map-layer.js'
 import { getViewport } from '../lib/util.js'
 
 const ProjectsMap = ({ data: { grantees }, geojsons, projectsToMap, setProjectModalProjects, height }) => {
+  /* eslint-disable-next-line new-cap */
+  const { layers, layerIds, bbox } = MapLayer(projectsToMap, geojsons, grantees)
+  const [viewport, setViewport] = useState(getViewport(bbox))
+
   if (!geojsons) {
     return null
   }
@@ -20,10 +24,6 @@ const ProjectsMap = ({ data: { grantees }, geojsons, projectsToMap, setProjectMo
 
     setProjectModalProjects(filteredProjects)
   }
-
-  /* eslint-disable-next-line new-cap */
-  const { layers, layerIds, bbox } = MapLayer(projectsToMap, geojsons, grantees)
-  const [viewport, setViewport] = useState(getViewport(bbox))
 
   if (layers.length === 0) {
     return (
@@ -47,7 +47,7 @@ const ProjectsMap = ({ data: { grantees }, geojsons, projectsToMap, setProjectMo
         scrollZoom={false}
       >
         {layers}
-        <div className="nav" className="map-nav">
+        <div className="nav map-nav">
           <NavigationControl onViewportChange={viewport => setViewport(viewport)} />
         </div>
       </ReactMapGL>

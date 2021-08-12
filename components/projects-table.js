@@ -17,6 +17,9 @@ const ProjectsTable = ({
   faqs,
   showButtons
 }) => {
+  const [sortOrder, setSortOrder] = useState()
+  const [sortDirection, setSortDirection] = useState('asc')
+
   if (!selectedProjects || selectedProjects.length === 0) {
     return (
       <Alert variant="warning" className="text-center">
@@ -25,9 +28,6 @@ const ProjectsTable = ({
       </Alert>
     )
   }
-
-  const [sortOrder, setSortOrder] = useState()
-  const [sortDirection, setSortDirection] = useState('asc')
 
   const hasSubcategoryColumn = some(selectedProjects, project => Boolean(project.fields.Subcategory.id))
 
@@ -217,7 +217,7 @@ const ProjectsTable = ({
           data={csvData}
           filename={'vta-tax-measures.csv'}
           className="btn btn-green"
-          onClick={event => trackEvent({
+          onClick={() => trackEvent({
             action: 'click',
             category: 'download',
             label: 'csv'

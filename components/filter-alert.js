@@ -21,7 +21,7 @@ const FilterAlert = ({ results, currentFilters }) => {
     return (
       <Alert variant="warning" className="text-center">
         <Alert.Heading>Limited results</Alert.Heading>
-        <div>Consider broadening your search if you're not seeing enough results. Select a broader date range or choose additional categories, grantees or projects.</div>
+        <div>Consider broadening your search if you&apos;re not seeing enough results. Select a broader date range or choose additional categories, grantees or projects.</div>
       </Alert>
     )
   }
@@ -30,7 +30,7 @@ const FilterAlert = ({ results, currentFilters }) => {
     return (
       <Alert variant="warning" className="text-center">
         <Alert.Heading>Numerous results</Alert.Heading>
-        <div>Consider selecting additional filters to narrow down your results or focus on the information you're interested in.</div>
+        <div>Consider selecting additional filters to narrow down your results or focus on the information you&apos;re interested in.</div>
       </Alert>
     )
   }

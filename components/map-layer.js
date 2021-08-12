@@ -43,6 +43,10 @@ const detectGeometryTypes = (geojson, project) => {
 }
 
 const MapLayer = (projects, geojsons, grantees) => {
+  if (!projects || !geojsons) {
+    return null
+  }
+
   const layerIds = []
   const bboxes = []
   const layers = projects.reduce((memo, project) => {
