@@ -24,8 +24,6 @@ const CategoryInfo = ({ data, categoryCard }) => {
     return false
   })
 
-  console.log(allocationsThroughTwoYearsIntoTheFuture)
-
   const renderDocuments = () => {
     if (!categoryCard.documents || categoryCard.documents.length === 0) {
       return null

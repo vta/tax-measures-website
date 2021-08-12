@@ -25,7 +25,6 @@ const FilterControls = ({
       /*  eslint-disable-next-line no-alert */
       return alert('You must specify a transaction type')
     }
-    console.log('validating')
 
     handleSearch(filters)
   }, [handleSearch])

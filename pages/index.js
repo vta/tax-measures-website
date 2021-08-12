@@ -48,7 +48,6 @@ const Home = ({ data }) => {
   const [geojsons, setGeojsons] = useState()
 
   const handleSearch = useCallback(async filters => {
-    console.log('handle search')
     setLoading(true)
     setResults(await applyFilters(filters, data.awards, data.expenditures, data.projects, data.categories, data.grantees))
     updateUrlWithFilters(filters, (projectModalProjects || []).map(p => p.id))
