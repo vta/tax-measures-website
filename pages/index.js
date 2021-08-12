@@ -210,13 +210,13 @@ const Home = ({ data }) => {
                 <HomepageChart data={data} />
               </div>
               <div className="col-md-6">
-                <ProjectsMap
+                {geojsons && <ProjectsMap
                   data={data}
                   geojsons={geojsons}
                   projectsToMap={data.projects}
                   setProjectModalProjects={setProjectModalProjects}
                   height="490px"
-                />
+                />}
               </div>
             </div>
           </div>
