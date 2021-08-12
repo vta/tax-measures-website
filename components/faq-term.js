@@ -9,7 +9,9 @@ const FaqTerm = ({ id, term, faqs, placement, showTerm }) => {
   const faq = faqs && faqs.find(f => f.nid === id)
 
   if (!faq) {
-    return null
+    return showTerm ? (
+      <span>{term}</span>
+    ) : null
   }
 
   const popover = (
