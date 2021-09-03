@@ -44,11 +44,13 @@ const CategoryInfo = ({ data, categoryCard }) => {
     <div className="row mb-3">
       <div className="col-lg-6 offset-lg-3">
         <div className="card h-100">
-          <div className="card-body d-flex">
-            <Image src={`/images/programs/${categoryCard.image}`} alt={categoryCard.key} width="150" height="150" className="mr-3 flex-shrink-0" />
+          <div className="card-body d-sm-flex">
+            <div className="mr-3 flex-shrink-0">
+              <Image src={`/images/programs/${categoryCard.image}`} alt={categoryCard.key} width="150" height="150" />
+            </div>
             <div>
               <h3>{categoryCard.key}</h3>
-              <ReactMarkdown source={categoryCard.description} linkTarget="_blank" plugins={[breaks]} />
+              <ReactMarkdown linkTarget="_blank" remarkPlugins={[breaks]}>{categoryCard.description}</ReactMarkdown>
               <div>
                 Program Category Total Allocation through {moment(findLatestYear(allocationsThroughTwoYearsIntoTheFuture.map(r => Number.parseInt(r.fields['Available Start'], 10))), 'YYYY').date('30').month('Junes').format('MMM D, YYYY')}:
                 <div className="font-weight-bold d-inline-block pl-2 pb-2">{formatCurrencyMillions(sumBy(allocationsThroughTwoYearsIntoTheFuture, 'fields.Amount'))}m</div>
