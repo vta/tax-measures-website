@@ -37,7 +37,7 @@ const AboutModal = ({ faqs, ...props }) => {
 
         <h4>Where can I submit questions or feedback?</h4>
         <p>
-          Email us at <a href="mailto:2016MeasureB@vta.org">2016MeasureB@vta.org</a> or <a href="https://surveys.hotjar.com/s?siteId=1873169&surveyId=162313" target="_blank" rel="noreferrer">complete this survey</a> to provide feedback.
+          Email us at <a href="mailto:2016MeasureB@vta.org">2016MeasureB@vta.org</a>.
         </p>
         {faqs.map((faq, index) => (<Faq faq={faq} key={index} />))}
       </Modal.Body>
