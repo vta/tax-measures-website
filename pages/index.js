@@ -266,7 +266,7 @@ export async function getStaticProps() {
     fetchFaq()
   ])
 
-  const data = await preprocessData({
+  const data = preprocessData({
     allocations,
     awards,
     categories,
