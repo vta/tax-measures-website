@@ -24,7 +24,7 @@ const HomepageChart = ({ data: { allocations, parentCategories, faqs } }) => {
 
   return (
     <>
-      <h2>Percentage of Allocation through FY2021 vs. Total Ballot Allocation<FaqTerm id="1293971" term="Total Ballot Allocation" faqs={faqs} placement="bottom" /></h2>
+      <h2>Percentage of Allocation through FY2023 vs. Total Ballot Allocation<FaqTerm id="1293971" term="Total Ballot Allocation" faqs={faqs} placement="bottom" /></h2>
       <div>Total Ballot Allocation: {formatCurrencyWithUnit(total)}</div>
       <Chart
         options={{
@@ -94,7 +94,7 @@ const HomepageChart = ({ data: { allocations, parentCategories, faqs } }) => {
           }
         }}
         series={[{
-          name: 'Actual Allocated through FY21',
+          name: 'Actual Allocated through FY23',
           data: actualAllocateds
         }, {
           name: 'Remaining Ballot Allocation',
