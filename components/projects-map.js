@@ -1,16 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import ReactMapGL, { NavigationControl } from 'react-map-gl'
 import MapLayer from '../components/map-layer.js'
 import { getViewport } from '../lib/util.js'
 
 const ProjectsMap = ({ data: { grantees }, geojsons, projectsToMap, setProjectModalProjects, height }) => {
+  const [cursor, setCursor] = useState('auto')
   /* eslint-disable-next-line new-cap */
   const { layers, layerIds, bbox } = MapLayer(projectsToMap, geojsons, grantees)
-  const [viewport, setViewport] = useState(getViewport(bbox))
-
-  if (!geojsons) {
-    return null
-  }
+  const viewport = getViewport(bbox)
 
   const onMapClick = event => {
     const { features } = event
@@ -25,6 +22,13 @@ const ProjectsMap = ({ data: { grantees }, geojsons, projectsToMap, setProjectMo
     setProjectModalProjects(filteredProjects)
   }
 
+  const onMouseEnter = useCallback(() => setCursor('pointer'), [])
+  const onMouseLeave = useCallback(() => setCursor('auto'), [])
+
+  if (!geojsons) {
+    return null
+  }
+
   if (layers.length === 0) {
     return (
       <div>
@@ -37,18 +41,20 @@ const ProjectsMap = ({ data: { grantees }, geojsons, projectsToMap, setProjectMo
   return (
     <div className="map" style={{ height }}>
       <ReactMapGL
-        mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
-        width="100%"
-        height="100%"
-        {...viewport}
+        mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
+        initialViewState={viewport}
         interactiveLayerIds={layerIds}
-        onViewportChange={viewport => setViewport(viewport)}
         onClick={onMapClick}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        cursor={cursor}
         scrollZoom={false}
+        mapStyle="mapbox://styles/mapbox/light-v9"
+        style={{ width: '100%', height: '100%' }}
       >
         {layers}
         <div className="nav map-nav">
-          <NavigationControl onViewportChange={viewport => setViewport(viewport)} />
+          <NavigationControl />
         </div>
       </ReactMapGL>
       <style jsx>{`
