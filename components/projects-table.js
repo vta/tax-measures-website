@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileCsv, faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
 import { CSVLink } from 'react-csv'
 import { formatCurrencyWithUnit } from '../lib/formatters.js'
-import { trackEvent } from '../lib/ga.js'
+import { event } from '../lib/gtag.js'
 import FaqTerm from './faq-term.js'
 import PrintButton from './print-button.js'
 import ShareButton from './share-button.js'
@@ -217,7 +217,7 @@ const ProjectsTable = ({
           data={csvData}
           filename={'vta-tax-measures.csv'}
           className="btn btn-green"
-          onClick={() => trackEvent({
+          onClick={() => event({
             action: 'click',
             category: 'download',
             label: 'csv'
