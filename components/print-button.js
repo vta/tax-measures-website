@@ -4,10 +4,10 @@ import Button from 'react-bootstrap/Button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPrint } from '@fortawesome/free-solid-svg-icons'
 
-import { trackEvent } from '../lib/ga.js'
+import { event } from '../lib/gtag.js'
 
 const print = () => {
-  trackEvent({
+  event({
     action: 'click',
     category: 'print'
   })
