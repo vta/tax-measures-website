@@ -20,6 +20,7 @@ class MyDocument extends Document {
               })(window,document,'script','dataLayer','GTM-KKPVLG9');
             ` }}
           />
+          <meta name="google-site-verification" content="6kNUB74A6IEx4Ul7vpW9KbJ6ZmCB6GRlEL6_T3nBGUk" />
         </Head>
         <body>
           <Main />
