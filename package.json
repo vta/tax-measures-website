@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "16.14.2"
+    "node": "16.16.0"
   },
   "scripts": {
     "dev": "next dev",
@@ -19,29 +19,29 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
     "@turf/bbox": "^6.5.0",
-    "algoliasearch": "^4.13.0",
-    "apexcharts": "^3.35.0",
+    "algoliasearch": "^4.13.1",
+    "apexcharts": "^3.35.3",
     "bootstrap": "^4.6.1",
     "cross-fetch": "^3.1.5",
     "lodash": "^4.17.21",
-    "mapbox-gl": "^2.8.2",
-    "moment": "^2.29.3",
-    "next": "12.1.6",
+    "mapbox-gl": "^2.9.1",
+    "moment": "^2.29.4",
+    "next": "12.2.0",
     "next-seo": "^5.4.0",
-    "react": "18.0.0",
+    "react": "18.2.0",
     "react-apexcharts": "^1.4.0",
     "react-bootstrap": "^1.6.1",
-    "react-copy-to-clipboard": "^5.0.4",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-csv": "^2.2.2",
-    "react-dom": "18.0.0",
+    "react-dom": "18.2.0",
     "react-https-redirect": "^1.1.0",
-    "react-map-gl": "^7.0.10",
-    "react-markdown": "^8.0.2",
-    "react-select": "^5.2.2",
+    "react-map-gl": "^7.0.17",
+    "react-markdown": "^8.0.3",
+    "react-select": "^5.4.0",
     "remark-breaks": "^3.0.2"
   },
   "devDependencies": {
-    "eslint": "8.13.0",
-    "eslint-config-next": "^12.1.4"
+    "eslint": "8.19.0",
+    "eslint-config-next": "^12.2.0"
   }
 }
