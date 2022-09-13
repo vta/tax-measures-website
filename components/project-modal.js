@@ -1,61 +1,68 @@
-import React, { useState } from 'react'
-import Image from 'next/image'
-import moment from 'moment'
-import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
-import ListGroup from 'react-bootstrap/ListGroup'
-import Table from 'react-bootstrap/Table'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
-import { compact, flatMap, sortBy, sumBy, uniq } from 'lodash'
-import { getDocumentById, getGranteeByProject } from '../lib/util.js'
-import { formatCategory, formatCurrency, formatProjectUrl } from '../lib/formatters.js'
-import DocumentLink from './document-link.js'
-import PrintButton from './print-button.js'
-import ShareButton from './share-button.js'
-import ProjectMap from './project-map.js'
-import ProjectsTable from './projects-table.js'
+import React, { useState } from 'react';
+import Image from 'next/image';
+import moment from 'moment';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Table from 'react-bootstrap/Table';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { compact, flatMap, sortBy, sumBy, uniq } from 'lodash';
+import { getDocumentById, getGranteeByProject } from '../lib/util.js';
+import {
+  formatCategory,
+  formatCurrency,
+  formatProjectUrl,
+} from '../lib/formatters.js';
+import DocumentLink from './document-link.js';
+import PrintButton from './print-button.js';
+import ShareButton from './share-button.js';
+import ProjectMap from './project-map.js';
+import ProjectsTable from './projects-table.js';
 
 const ProjectModal = ({
   selectedProjects,
-  data: {
-    allocations,
-    awards,
-    documents,
-    grantees,
-    expenditures,
-    faqs
-  },
+  data: { allocations, awards, documents, grantees, expenditures, faqs },
   geojsons,
   onHide,
   show,
-  setProjectModalProjects
+  setProjectModalProjects,
 }) => {
-  const [mapVisible, setMapVisible] = useState(false)
+  const [mapVisible, setMapVisible] = useState(false);
 
   if (!selectedProjects || selectedProjects.length === 0) {
-    return null
+    return null;
   }
 
-  const project = selectedProjects[0]
+  const project = selectedProjects[0];
   const handleHide = () => {
-    setMapVisible(false)
-    onHide()
-  }
+    setMapVisible(false);
+    onHide();
+  };
 
-  const projectAllocations = project.fields.Allocations ? allocations.filter(a => project.fields.Allocations.includes(a.id)) : []
-  const projectAwards = project.fields.Awards ? awards.filter(a => project.fields.Awards.includes(a.id)) : []
-  const projectDocumentIds = compact(uniq([
-    ...(project.fields.Documents || []),
-    ...flatMap(projectAwards, 'fields.Documents')
-  ]))
-  const projectDocuments = projectDocumentIds.map(id => getDocumentById(id, documents))
-  const projectGrantee = getGranteeByProject(project, grantees)
-  const projectExpenditures = project.fields.Expenditures ? expenditures.filter(p => project.fields.Expenditures.includes(p.id)) : []
+  const projectAllocations = project.fields.Allocations
+    ? allocations.filter((a) => project.fields.Allocations.includes(a.id))
+    : [];
+  const projectAwards = project.fields.Awards
+    ? awards.filter((a) => project.fields.Awards.includes(a.id))
+    : [];
+  const projectDocumentIds = compact(
+    uniq([
+      ...(project.fields.Documents || []),
+      ...flatMap(projectAwards, 'fields.Documents'),
+    ])
+  );
+  const projectDocuments = projectDocumentIds.map((id) =>
+    getDocumentById(id, documents)
+  );
+  const projectGrantee = getGranteeByProject(project, grantees);
+  const projectExpenditures = project.fields.Expenditures
+    ? expenditures.filter((p) => project.fields.Expenditures.includes(p.id))
+    : [];
 
   const renderAllocations = () => {
     if (projectAllocations.length === 0) {
-      return 'None'
+      return 'None';
     }
 
     return (
@@ -68,7 +75,7 @@ const ProjectModal = ({
           </tr>
         </thead>
         <tbody>
-          {projectAllocations.map(allocation => (
+          {projectAllocations.map((allocation) => (
             <tr key={allocation.id}>
               <td>{allocation.fields['Date Allocated']}</td>
               <td>{formatCurrency(allocation.fields.Amount)}</td>
@@ -76,20 +83,24 @@ const ProjectModal = ({
             </tr>
           ))}
         </tbody>
-        {projectAllocations.length > 1 && <tfoot>
-          <tr>
-            <th scope="row">Total</th>
-            <th>{formatCurrency(sumBy(projectAllocations, 'fields.Amount'))}</th>
-            <th></th>
-          </tr>
-        </tfoot>}
+        {projectAllocations.length > 1 && (
+          <tfoot>
+            <tr>
+              <th scope="row">Total</th>
+              <th>
+                {formatCurrency(sumBy(projectAllocations, 'fields.Amount'))}
+              </th>
+              <th></th>
+            </tr>
+          </tfoot>
+        )}
       </Table>
-    )
-  }
+    );
+  };
 
   const renderAwards = () => {
     if (projectAwards.length === 0) {
-      return 'None'
+      return 'None';
     }
 
     return (
@@ -101,27 +112,31 @@ const ProjectModal = ({
           </tr>
         </thead>
         <tbody>
-          {projectAwards.map(award => (
+          {projectAwards.map((award) => (
             <tr key={award.id}>
               <td>{award.fields.Date}</td>
               <td>{formatCurrency(award.fields['Award Amount'])}</td>
             </tr>
           ))}
         </tbody>
-        {projectAwards.length > 1 && <tfoot>
-          <tr>
-            <th scope="row">Total</th>
-            <th>{formatCurrency(sumBy(projectAwards, 'fields.Award Amount'))}</th>
-            <th></th>
-          </tr>
-        </tfoot>}
+        {projectAwards.length > 1 && (
+          <tfoot>
+            <tr>
+              <th scope="row">Total</th>
+              <th>
+                {formatCurrency(sumBy(projectAwards, 'fields.Award Amount'))}
+              </th>
+              <th></th>
+            </tr>
+          </tfoot>
+        )}
       </Table>
-    )
-  }
+    );
+  };
 
   const renderExpenditures = () => {
     if (projectExpenditures.length === 0) {
-      return 'None'
+      return 'None';
     }
 
     return (
@@ -134,7 +149,7 @@ const ProjectModal = ({
           </tr>
         </thead>
         <tbody>
-          {projectExpenditures.map(expenditure => (
+          {projectExpenditures.map((expenditure) => (
             <tr key={expenditure.id}>
               <td>{expenditure.fields.Date}</td>
               <td>{formatCurrency(expenditure.fields.Amount)}</td>
@@ -142,93 +157,108 @@ const ProjectModal = ({
             </tr>
           ))}
         </tbody>
-        {projectExpenditures.length > 1 && <tfoot>
-          <tr>
-            <th scope="row">Total</th>
-            <th>{formatCurrency(sumBy(projectExpenditures, 'fields.Amount'))}</th>
-            <th></th>
-          </tr>
-        </tfoot>}
+        {projectExpenditures.length > 1 && (
+          <tfoot>
+            <tr>
+              <th scope="row">Total</th>
+              <th>
+                {formatCurrency(sumBy(projectExpenditures, 'fields.Amount'))}
+              </th>
+              <th></th>
+            </tr>
+          </tfoot>
+        )}
       </Table>
-    )
-  }
+    );
+  };
 
   const renderDocuments = () => {
     if (projectDocuments.length === 0) {
-      return 'None'
+      return 'None';
     }
 
     return (
       <ListGroup className="small-list-group">
-        {sortBy(projectDocuments, 'fields.Name').map(document => (
+        {sortBy(projectDocuments, 'fields.Name').map((document) => (
           <ListGroup.Item key={document.id}>
             <DocumentLink document={document} />
           </ListGroup.Item>
         ))}
       </ListGroup>
-    )
-  }
+    );
+  };
 
   const renderModalBody = () => {
     if (selectedProjects.length === 1) {
-      const projectUrl = formatProjectUrl(project, projectGrantee)
+      const projectUrl = formatProjectUrl(project, projectGrantee);
       return (
         <>
           <div className="row">
             <div className="col-md-6">
-              {project.fields.Description && <div className="project-stat">
-                {project.fields.Description}
-              </div>}
+              {project.fields.Description && (
+                <div className="project-stat">{project.fields.Description}</div>
+              )}
               <div className="project-stat">
-                <b>Category:</b>{' '}
-                {formatCategory(project)}
+                <b>Category:</b> {formatCategory(project)}
               </div>
-              {project.fields.Subcategory.id && <div className="project-stat">
-                <b>Subcategory:</b>{' '}
-                {project.fields.Subcategory.fields.Name}
-              </div>}
-              {project.fields['Fiscal Year'] && <div className="project-stat">
-                <b>Fiscal Year:</b>{' '}
-                {project.fields['Fiscal Year']}
-              </div>}
-              {projectUrl && <div className="project-stat">
-                <a href={projectUrl} target="_blank" rel="noreferrer">Project Website <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" /></a>
-              </div>}
+              {project.fields.Subcategory.id && (
+                <div className="project-stat">
+                  <b>Subcategory:</b> {project.fields.Subcategory.fields.Name}
+                </div>
+              )}
+              {project.fields['Fiscal Year'] && (
+                <div className="project-stat">
+                  <b>Fiscal Year:</b> {project.fields['Fiscal Year']}
+                </div>
+              )}
+              {projectUrl && (
+                <div className="project-stat">
+                  <a href={projectUrl} target="_blank" rel="noreferrer">
+                    Project Website{' '}
+                    <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
+                  </a>
+                </div>
+              )}
               <div className="project-stat">
                 <b>Grantee:</b>{' '}
-                {projectGrantee.fields.URL ?
+                {projectGrantee.fields.URL ? (
                   <a href={projectGrantee.fields.URL}>
-                    {projectGrantee.fields.Name} <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
-                  </a> :
+                    {projectGrantee.fields.Name}{' '}
+                    <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
+                  </a>
+                ) : (
                   projectGrantee.fields.Name
-                }
+                )}
               </div>
             </div>
             <div className="col-md-6">
-              {mapVisible && geojsons && <ProjectMap
-                project={project}
-                geojsons={geojsons}
-                grantees={grantees}
-              />}
+              {mapVisible && geojsons && (
+                <ProjectMap
+                  project={project}
+                  geojsons={geojsons}
+                  grantees={grantees}
+                />
+              )}
             </div>
           </div>
           <div className="project-stat">
-            <b>Allocations:</b>{' '}
-            {renderAllocations()}
+            <b>Allocations:</b> {renderAllocations()}
           </div>
           <div className="project-stat">
-            <b>Awards:</b>{' '}
-            {renderAwards()}
+            <b>Awards:</b> {renderAwards()}
           </div>
           <div className="project-stat">
-            <b>Expenditures:</b>{' '}
-            {renderExpenditures()}
+            <b>Expenditures:</b> {renderExpenditures()}
           </div>
           <div className="project-stat">
-            <b>Related Documents:</b>{' '}
-            {renderDocuments()}
+            <b>Related Documents:</b> {renderDocuments()}
           </div>
-          <small className="float-right mt-2">Last Modified: {moment(project.fields['Last Modified']).format('MMMM Do YYYY, h:mm a')}</small>
+          <small className="float-right mt-2">
+            Last Modified:{' '}
+            {moment(project.fields['Last Modified']).format(
+              'MMMM Do YYYY, h:mm a'
+            )}
+          </small>
           <style jsx>{`
             .table-small td {
               font-size: 12px;
@@ -239,23 +269,27 @@ const ProjectModal = ({
             }
           `}</style>
         </>
-      )
+      );
     }
 
-    const sortedProjects = sortBy(selectedProjects, project => {
+    const sortedProjects = sortBy(selectedProjects, (project) => {
       // Show countywide projects last
       if (project.fields.hasProjectGeometry) {
-        return 0
+        return 0;
       }
 
-      const grantee = getGranteeByProject(project, grantees)
+      const grantee = getGranteeByProject(project, grantees);
 
-      if (grantee && (grantee.fields.Name === 'VTA' || grantee.fields.Name === 'Santa Clara County')) {
-        return 1
+      if (
+        grantee &&
+        (grantee.fields.Name === 'VTA' ||
+          grantee.fields.Name === 'Santa Clara County')
+      ) {
+        return 1;
       }
 
-      return 0
-    })
+      return 0;
+    });
 
     return (
       <ProjectsTable
@@ -264,23 +298,29 @@ const ProjectModal = ({
         faqs={faqs}
         showButtons={false}
       />
-    )
-  }
+    );
+  };
 
   const renderModalTitle = () => {
     if (selectedProjects.length === 1) {
       return (
         <Modal.Title id="contained-modal-title-vcenter">
           <div className="d-none d-print-block">
-            <Image src="/images/logo.png" alt="2016 Measure B" className="logo" width="100" height="100" />
+            <Image
+              src="/images/logo.png"
+              alt="2016 Measure B"
+              className="logo"
+              width="100"
+              height="100"
+            />
           </div>
           {project.fields.Name}
         </Modal.Title>
-      )
+      );
     }
 
-    return null
-  }
+    return null;
+  };
 
   return (
     <Modal
@@ -291,19 +331,17 @@ const ProjectModal = ({
       onEntering={() => setMapVisible(true)}
       onHide={handleHide}
     >
-      <Modal.Header>
-        {renderModalTitle()}
-      </Modal.Header>
-      <Modal.Body>
-        {renderModalBody()}
-      </Modal.Body>
+      <Modal.Header>{renderModalTitle()}</Modal.Header>
+      <Modal.Body>{renderModalBody()}</Modal.Body>
       <Modal.Footer className="d-print-none">
         <ShareButton className="btn btn-green mr-2" />
         <PrintButton className="btn btn-green mr-2" />
-        <Button onClick={handleHide} className="btn-secondary">Close</Button>
+        <Button onClick={handleHide} className="btn-secondary">
+          Close
+        </Button>
       </Modal.Footer>
     </Modal>
-  )
-}
+  );
+};
 
-export default ProjectModal
+export default ProjectModal;

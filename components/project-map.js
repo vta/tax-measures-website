@@ -1,14 +1,14 @@
-import ReactMapGL, { NavigationControl } from 'react-map-gl'
-import MapLayer from '../components/map-layer.js'
-import { getViewport } from '../lib/util.js'
+import ReactMapGL, { NavigationControl } from 'react-map-gl';
+import MapLayer from '../components/map-layer.js';
+import { getViewport } from '../lib/util.js';
 
 const ProjectMap = ({ project, grantees, geojsons }) => {
   /* eslint-disable-next-line new-cap */
-  const { layers, bbox } = MapLayer([project], geojsons, grantees)
-  const viewport = getViewport(bbox)
+  const { layers, bbox } = MapLayer([project], geojsons, grantees);
+  const viewport = getViewport(bbox);
 
   if (!geojsons || layers.length === 0) {
-    return null
+    return null;
   }
 
   return (
@@ -44,7 +44,7 @@ const ProjectMap = ({ project, grantees, geojsons }) => {
         }
       `}</style>
     </div>
-  )
-}
+  );
+};
 
-export default ProjectMap
+export default ProjectMap;

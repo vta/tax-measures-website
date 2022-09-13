@@ -1,28 +1,28 @@
-import 'bootstrap/dist/css/bootstrap.css'
-import '@fortawesome/fontawesome-svg-core/styles.css'
-import 'mapbox-gl/dist/mapbox-gl.css'
-import '../css/print.css'
-import '../css/index.css'
-import { DefaultSeo } from 'next-seo'
-import HttpsRedirect from 'react-https-redirect'
-import { useEffect } from 'react'
-import Script from 'next/script'
-import { useRouter } from 'next/router'
-import * as gtag from '../lib/gtag'
+import 'bootstrap/dist/css/bootstrap.css';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import '../css/print.css';
+import '../css/index.css';
+import { DefaultSeo } from 'next-seo';
+import HttpsRedirect from 'react-https-redirect';
+import { useEffect } from 'react';
+import Script from 'next/script';
+import { useRouter } from 'next/router';
+import * as gtag from '../lib/gtag';
 
 export default function MyApp({ Component, pageProps }) {
-  const router = useRouter()
+  const router = useRouter();
   useEffect(() => {
     const handleRouteChange = (url) => {
-      gtag.pageview(url)
-    }
-    router.events.on('routeChangeComplete', handleRouteChange)
-    router.events.on('hashChangeComplete', handleRouteChange)
+      gtag.pageview(url);
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+    router.events.on('hashChangeComplete', handleRouteChange);
     return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
-      router.events.off('hashChangeComplete', handleRouteChange)
-    }
-  }, [router.events])
+      router.events.off('routeChangeComplete', handleRouteChange);
+      router.events.off('hashChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
 
   return (
     <HttpsRedirect>
@@ -31,12 +31,12 @@ export default function MyApp({ Component, pageProps }) {
           type: 'website',
           locale: 'en_IE',
           url: 'https:/2016measureb-beta.vta.org',
-          site_name: '2016 Measure B'
+          site_name: '2016 Measure B',
         }}
         twitter={{
           handle: '@VTA',
           site: '@VTA',
-          cardType: 'summary_large_image'
+          cardType: 'summary_large_image',
         }}
       />
       {/* Global Site Tag (gtag.js) - Google Analytics */}
@@ -60,5 +60,5 @@ export default function MyApp({ Component, pageProps }) {
       />
       <Component {...pageProps} />
     </HttpsRedirect>
-  )
+  );
 }

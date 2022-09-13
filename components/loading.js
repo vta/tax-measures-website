@@ -1,14 +1,20 @@
-import Spinner from 'react-bootstrap/Spinner'
+import Spinner from 'react-bootstrap/Spinner';
 
 const Loading = ({ loading }) => {
   if (!loading) {
-    return null
+    return null;
   }
 
   return (
     <div className="card mb-3">
       <div className="card-body card-loading text-center">
-        <Spinner animation="border" role="status" size="xl" variant="primary" className="mb-4">
+        <Spinner
+          animation="border"
+          role="status"
+          size="xl"
+          variant="primary"
+          className="mb-4"
+        >
           <span className="sr-only">Loading...</span>
         </Spinner>
         <h1>Loading...</h1>
@@ -20,7 +26,7 @@ const Loading = ({ loading }) => {
         }
       `}</style>
     </div>
-  )
-}
+  );
+};
 
-export default Loading
+export default Loading;

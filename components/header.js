@@ -1,28 +1,47 @@
-import React from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestion } from '@fortawesome/free-solid-svg-icons'
-import { sumBy } from 'lodash'
-import moment from 'moment'
-import Button from 'react-bootstrap/Button'
-import { formatCurrencyMillions } from '../lib/formatters.js'
-import { getCurrentFiscalYear, findLatestDate, findLatestYear } from '../lib/util.js'
-import FaqTerm from './faq-term.js'
+import React from 'react';
+import Image from 'next/image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
+import { sumBy } from 'lodash';
+import moment from 'moment';
+import Button from 'react-bootstrap/Button';
+import { formatCurrencyMillions } from '../lib/formatters.js';
+import {
+  getCurrentFiscalYear,
+  findLatestDate,
+  findLatestYear,
+} from '../lib/util.js';
+import FaqTerm from './faq-term.js';
 
 const Header = ({ data, setAboutModalShow }) => {
-  const currentFiscalYear = getCurrentFiscalYear()
-  const allocationsThroughTwoYearsIntoTheFuture = data.allocations.filter(allocation => {
-    if (allocation.fields['Available Start']) {
-      return Number.parseInt(allocation.fields['Available Start'], 10) <= currentFiscalYear + 2
-    }
+  const currentFiscalYear = getCurrentFiscalYear();
+  const allocationsThroughTwoYearsIntoTheFuture = data.allocations.filter(
+    (allocation) => {
+      if (allocation.fields['Available Start']) {
+        return (
+          Number.parseInt(allocation.fields['Available Start'], 10) <=
+          currentFiscalYear + 2
+        );
+      }
 
-    return false
-  })
+      return false;
+    }
+  );
 
   /* eslint-disable @next/next/no-html-link-for-pages */
-  const LogoLink = () => 
-    <a href="/"><h1 className="p-2 p-md-3 m-0 h-100" style={{ width: '167px' }}><Image src="/images/logo.png" alt="2016 Measure B" className="logo" width="738" height="598" /></h1></a>
+  const LogoLink = () => (
+    <a href="/">
+      <h1 className="p-2 p-md-3 m-0 h-100" style={{ width: '167px' }}>
+        <Image
+          src="/images/logo.png"
+          alt="2016 Measure B"
+          className="logo"
+          width="738"
+          height="598"
+        />
+      </h1>
+    </a>
+  );
   /* eslint-enable @next/next/no-html-link-for-pages */
 
   return (
@@ -37,24 +56,50 @@ const Header = ({ data, setAboutModalShow }) => {
           </div>
           <div className="header-stat-label">
             Million Collected
-            <FaqTerm id="1293871" term="Revenue Collected" faqs={data.faqs} placement="auto" />
+            <FaqTerm
+              id="1293871"
+              term="Revenue Collected"
+              faqs={data.faqs}
+              placement="auto"
+            />
           </div>
           <div className="header-state-date">
-            Through {moment(findLatestDate(data.revenue.map(r => r.fields.Date))).format('MMM D, YYYY')}
+            Through{' '}
+            {moment(
+              findLatestDate(data.revenue.map((r) => r.fields.Date))
+            ).format('MMM D, YYYY')}
           </div>
         </div>
       </div>
       <div className="col-md d-print-none">
         <div className="header-stat">
           <div className="header-stat-value">
-            {formatCurrencyMillions(sumBy(allocationsThroughTwoYearsIntoTheFuture, 'fields.Amount'))}
+            {formatCurrencyMillions(
+              sumBy(allocationsThroughTwoYearsIntoTheFuture, 'fields.Amount')
+            )}
           </div>
           <div className="header-stat-label">
             Million Allocated
-            <FaqTerm id="1327856" term="Allocations" faqs={data.faqs} placement="auto" />
+            <FaqTerm
+              id="1327856"
+              term="Allocations"
+              faqs={data.faqs}
+              placement="auto"
+            />
           </div>
           <div className="header-state-date">
-            Through {moment(findLatestYear(allocationsThroughTwoYearsIntoTheFuture.map(r => Number.parseInt(r.fields['Available Start'], 10))), 'YYYY').date('30').month('Junes').format('MMM D, YYYY')}
+            Through{' '}
+            {moment(
+              findLatestYear(
+                allocationsThroughTwoYearsIntoTheFuture.map((r) =>
+                  Number.parseInt(r.fields['Available Start'], 10)
+                )
+              ),
+              'YYYY'
+            )
+              .date('30')
+              .month('Junes')
+              .format('MMM D, YYYY')}
           </div>
         </div>
       </div>
@@ -71,7 +116,7 @@ const Header = ({ data, setAboutModalShow }) => {
         </Button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
