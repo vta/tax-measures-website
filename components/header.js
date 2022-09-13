@@ -20,12 +20,15 @@ const Header = ({ data, setAboutModalShow }) => {
     return false
   })
 
+  /* eslint-disable @next/next/no-html-link-for-pages */
+  const LogoLink = () => 
+    <a href="/"><h1 className="p-2 p-md-3 m-0 h-100" style={{ width: '167px' }}><Image src="/images/logo.png" alt="2016 Measure B" className="logo" width="738" height="598" /></h1></a>
+  /* eslint-enable @next/next/no-html-link-for-pages */
+
   return (
     <div className="row bg-white no-gutters d-block d-md-flex">
       <div className="col col-md-auto bg-light-blue text-white ">
-        <Link href="/">
-          <a><h1 className="p-2 p-md-3 m-0 h-100" style={{ width: '167px' }}><Image src="/images/logo.png" alt="2016 Measure B" className="logo" width="738" height="598" /></h1></a>
-        </Link>
+        <LogoLink />
       </div>
       <div className="col-md d-print-none">
         <div className="header-stat">
