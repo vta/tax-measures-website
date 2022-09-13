@@ -1,41 +1,55 @@
-import React, { useState, useCallback } from 'react'
-import ReactMapGL, { NavigationControl } from 'react-map-gl'
-import MapLayer from '../components/map-layer.js'
-import { getViewport } from '../lib/util.js'
+import React, { useState, useCallback } from 'react';
+import ReactMapGL, { NavigationControl } from 'react-map-gl';
+import MapLayer from '../components/map-layer.js';
+import { getViewport } from '../lib/util.js';
 
-const ProjectsMap = ({ data: { grantees }, geojsons, projectsToMap, setProjectModalProjects, height }) => {
-  const [cursor, setCursor] = useState('auto')
+const ProjectsMap = ({
+  data: { grantees },
+  geojsons,
+  projectsToMap,
+  setProjectModalProjects,
+  height,
+}) => {
+  const [cursor, setCursor] = useState('auto');
   /* eslint-disable-next-line new-cap */
-  const { layers, layerIds, bbox } = MapLayer(projectsToMap, geojsons, grantees)
-  const viewport = getViewport(bbox)
+  const { layers, layerIds, bbox } = MapLayer(
+    projectsToMap,
+    geojsons,
+    grantees
+  );
+  const viewport = getViewport(bbox);
 
-  const onMapClick = event => {
-    const { features } = event
+  const onMapClick = (event) => {
+    const { features } = event;
 
-    const projectIds = new Set(features.map(f => f.properties.projectId))
-    const filteredProjects = projectsToMap.filter(project => projectIds.has(project.id))
+    const projectIds = new Set(features.map((f) => f.properties.projectId));
+    const filteredProjects = projectsToMap.filter((project) =>
+      projectIds.has(project.id)
+    );
 
     if (filteredProjects.length === 0) {
-      return
+      return;
     }
 
-    setProjectModalProjects(filteredProjects)
-  }
+    setProjectModalProjects(filteredProjects);
+  };
 
-  const onMouseEnter = useCallback(() => setCursor('pointer'), [])
-  const onMouseLeave = useCallback(() => setCursor('auto'), [])
+  const onMouseEnter = useCallback(() => setCursor('pointer'), []);
+  const onMouseLeave = useCallback(() => setCursor('auto'), []);
 
   if (!geojsons) {
-    return null
+    return null;
   }
 
   if (layers.length === 0) {
     return (
       <div>
         <p>&nbsp;</p>
-        <div className="text-center font-weight-bold mt-5">No map available</div>
+        <div className="text-center font-weight-bold mt-5">
+          No map available
+        </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -71,7 +85,7 @@ const ProjectsMap = ({ data: { grantees }, geojsons, projectsToMap, setProjectMo
         }
       `}</style>
     </div>
-  )
-}
+  );
+};
 
-export default ProjectsMap
+export default ProjectsMap;

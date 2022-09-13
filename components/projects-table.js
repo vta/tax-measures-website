@@ -1,24 +1,29 @@
-import React, { useState } from 'react'
-import Alert from 'react-bootstrap/Alert'
-import Table from 'react-bootstrap/Table'
-import { some, orderBy } from 'lodash'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFileCsv, faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
-import { CSVLink } from 'react-csv'
-import { formatCurrencyWithUnit } from '../lib/formatters.js'
-import { event } from '../lib/gtag.js'
-import FaqTerm from './faq-term.js'
-import PrintButton from './print-button.js'
-import ShareButton from './share-button.js'
+import React, { useState } from 'react';
+import Alert from 'react-bootstrap/Alert';
+import Table from 'react-bootstrap/Table';
+import { some, orderBy } from 'lodash';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faFileCsv,
+  faSort,
+  faSortUp,
+  faSortDown,
+} from '@fortawesome/free-solid-svg-icons';
+import { CSVLink } from 'react-csv';
+import { formatCurrencyWithUnit } from '../lib/formatters.js';
+import { event } from '../lib/gtag.js';
+import FaqTerm from './faq-term.js';
+import PrintButton from './print-button.js';
+import ShareButton from './share-button.js';
 
 const ProjectsTable = ({
   selectedProjects,
   setProjectModalProjects,
   faqs,
-  showButtons
+  showButtons,
 }) => {
-  const [sortOrder, setSortOrder] = useState()
-  const [sortDirection, setSortDirection] = useState('asc')
+  const [sortOrder, setSortOrder] = useState();
+  const [sortDirection, setSortDirection] = useState('asc');
 
   if (!selectedProjects || selectedProjects.length === 0) {
     return (
@@ -26,30 +31,32 @@ const ProjectsTable = ({
         <Alert.Heading>No funded projects meet these criteria.</Alert.Heading>
         <div>Try adjusting search filters.</div>
       </Alert>
-    )
+    );
   }
 
-  const hasSubcategoryColumn = some(selectedProjects, project => Boolean(project.fields.Subcategory.id))
+  const hasSubcategoryColumn = some(selectedProjects, (project) =>
+    Boolean(project.fields.Subcategory.id)
+  );
 
-  const setTableSort = columnName => {
+  const setTableSort = (columnName) => {
     if (sortOrder === columnName) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     } else {
-      setSortOrder(columnName)
-      setSortDirection('asc')
+      setSortOrder(columnName);
+      setSortDirection('asc');
     }
-  }
+  };
 
-  const renderProjectRow = project => {
+  const renderProjectRow = (project) => {
     return (
       <tr key={project.id}>
         <td className="text-right">{project.fields['Fiscal Year']}</td>
         <td>
           <a
             href=""
-            onClick={event => {
-              event.preventDefault()
-              setProjectModalProjects([project])
+            onClick={(event) => {
+              event.preventDefault();
+              setProjectModalProjects([project]);
             }}
           >
             {project.fields.Name}
@@ -57,7 +64,9 @@ const ProjectsTable = ({
         </td>
         <td>{project.fields['Grantee Name']}</td>
         <td>{project.fields['Parent Category'].fields.Name}</td>
-        {hasSubcategoryColumn && <td>{project.fields.Subcategory.fields.Name}</td>}
+        {hasSubcategoryColumn && (
+          <td>{project.fields.Subcategory.fields.Name}</td>
+        )}
         <td className="text-right" style={{ width: '110px' }}>
           {formatCurrencyWithUnit(project.fields.totalAllocationAmount)}
         </td>
@@ -68,12 +77,20 @@ const ProjectsTable = ({
           {formatCurrencyWithUnit(project.fields.totalExpenditureAmount)}
         </td>
       </tr>
-    )
-  }
+    );
+  };
 
   const csvData = [
-    ['Project', 'Category', 'Subcategory', 'URL', 'Total Allocations', 'Total Awards', 'Total Expenditures'],
-    ...selectedProjects.map(project => {
+    [
+      'Project',
+      'Category',
+      'Subcategory',
+      'URL',
+      'Total Allocations',
+      'Total Awards',
+      'Total Expenditures',
+    ],
+    ...selectedProjects.map((project) => {
       return [
         project.fields.Name,
         project.fields.Category.fields.Name,
@@ -81,48 +98,79 @@ const ProjectsTable = ({
         project.fields.URL,
         project.fields.totalAllocationAmount,
         project.fields.totalAwardAmount,
-        project.fields.totalExpenditureAmount
-      ]
-    })
-  ]
+        project.fields.totalExpenditureAmount,
+      ];
+    }),
+  ];
 
-  const totals = selectedProjects.reduce((memo, project) => {
-    memo.totalAllocationAmount += project.fields.totalAllocationAmount
-    memo.totalAwardAmount += project.fields.totalAwardAmount
-    memo.totalExpenditureAmount += project.fields.totalExpenditureAmount
-    return memo
-  }, { totalAllocationAmount: 0, totalAwardAmount: 0, totalExpenditureAmount: 0 })
+  const totals = selectedProjects.reduce(
+    (memo, project) => {
+      memo.totalAllocationAmount += project.fields.totalAllocationAmount;
+      memo.totalAwardAmount += project.fields.totalAwardAmount;
+      memo.totalExpenditureAmount += project.fields.totalExpenditureAmount;
+      return memo;
+    },
+    { totalAllocationAmount: 0, totalAwardAmount: 0, totalExpenditureAmount: 0 }
+  );
 
-  let projects = selectedProjects
+  let projects = selectedProjects;
 
   if (sortOrder) {
     if (sortOrder === 'fiscal_year') {
-      projects = orderBy(selectedProjects, project => {
-        return project.fields['Fiscal Year'] || 0
-      }, sortDirection)
+      projects = orderBy(
+        selectedProjects,
+        (project) => {
+          return project.fields['Fiscal Year'] || 0;
+        },
+        sortDirection
+      );
     } else if (sortOrder === 'project_name') {
-      projects = orderBy(selectedProjects, 'fields.Name', sortDirection)
+      projects = orderBy(selectedProjects, 'fields.Name', sortDirection);
     } else if (sortOrder === 'grantee') {
-      projects = orderBy(selectedProjects, 'fields.Grantee Name', sortDirection)
+      projects = orderBy(
+        selectedProjects,
+        'fields.Grantee Name',
+        sortDirection
+      );
     } else if (sortOrder === 'category') {
-      projects = orderBy(selectedProjects, 'fields.Parent Category.fields.Name', sortDirection)
+      projects = orderBy(
+        selectedProjects,
+        'fields.Parent Category.fields.Name',
+        sortDirection
+      );
     } else if (sortOrder === 'subcategory') {
-      projects = orderBy(selectedProjects, project => {
-        return project.fields.Subcategory.fields.Name || 'zzzz'
-      }, sortDirection)
+      projects = orderBy(
+        selectedProjects,
+        (project) => {
+          return project.fields.Subcategory.fields.Name || 'zzzz';
+        },
+        sortDirection
+      );
     } else if (sortOrder === 'allocations') {
-      projects = orderBy(selectedProjects, 'fields.totalAllocationAmount', sortDirection)
+      projects = orderBy(
+        selectedProjects,
+        'fields.totalAllocationAmount',
+        sortDirection
+      );
     } else if (sortOrder === 'awards') {
-      projects = orderBy(selectedProjects, 'fields.totalAwardAmount', sortDirection)
+      projects = orderBy(
+        selectedProjects,
+        'fields.totalAwardAmount',
+        sortDirection
+      );
     } else if (sortOrder === 'expenditures') {
-      projects = orderBy(selectedProjects, 'fields.totalExpenditureAmount', sortDirection)
+      projects = orderBy(
+        selectedProjects,
+        'fields.totalExpenditureAmount',
+        sortDirection
+      );
     }
   }
 
   const renderColumnHeader = (columnName, columnId) => {
-    let icon = faSort
+    let icon = faSort;
     if (columnId === sortOrder) {
-      icon = sortDirection === 'asc' ? faSortUp : faSortDown
+      icon = sortDirection === 'asc' ? faSortUp : faSortDown;
     }
 
     return (
@@ -141,56 +189,93 @@ const ProjectsTable = ({
           }
         `}</style>
       </th>
-    )
-  }
+    );
+  };
 
   return (
     <>
       <Table responsive size="sm" className="project-table">
         <thead>
           <tr>
-            {renderColumnHeader((
+            {renderColumnHeader(
               <>
                 Fiscal Year
-                <FaqTerm id="1293911" term="Fiscal Year" faqs={faqs} placement="bottom" />
-              </>
-            ), 'fiscal_year')}
+                <FaqTerm
+                  id="1293911"
+                  term="Fiscal Year"
+                  faqs={faqs}
+                  placement="bottom"
+                />
+              </>,
+              'fiscal_year'
+            )}
             {renderColumnHeader('Project Name', 'project_name')}
-            {renderColumnHeader((
+            {renderColumnHeader(
               <>
                 Grantee
-                <FaqTerm id="1293956" term="Grantee" faqs={faqs} placement="bottom" />
-              </>
-            ), 'grantee')}
-            {renderColumnHeader((
+                <FaqTerm
+                  id="1293956"
+                  term="Grantee"
+                  faqs={faqs}
+                  placement="bottom"
+                />
+              </>,
+              'grantee'
+            )}
+            {renderColumnHeader(
               <>
                 Category
-                <FaqTerm id="1293896" term="Category" faqs={faqs} placement="bottom" />
-              </>
-            ), 'category')}
-            {hasSubcategoryColumn && renderColumnHeader('Subcategory', 'subcategory')}
-            {renderColumnHeader((
+                <FaqTerm
+                  id="1293896"
+                  term="Category"
+                  faqs={faqs}
+                  placement="bottom"
+                />
+              </>,
+              'category'
+            )}
+            {hasSubcategoryColumn &&
+              renderColumnHeader('Subcategory', 'subcategory')}
+            {renderColumnHeader(
               <>
                 Allocations
-                <FaqTerm id="1293891" term="Allocations" faqs={faqs} placement="bottom" />
-              </>
-            ), 'allocations')}
-            {renderColumnHeader((
+                <FaqTerm
+                  id="1293891"
+                  term="Allocations"
+                  faqs={faqs}
+                  placement="bottom"
+                />
+              </>,
+              'allocations'
+            )}
+            {renderColumnHeader(
               <>
                 Awards
-                <FaqTerm id="1327821" term="Awards" faqs={faqs} placement="bottom" />
-              </>
-            ), 'awards')}
-            {renderColumnHeader((
+                <FaqTerm
+                  id="1327821"
+                  term="Awards"
+                  faqs={faqs}
+                  placement="bottom"
+                />
+              </>,
+              'awards'
+            )}
+            {renderColumnHeader(
               <>
                 Expenditures
-                <FaqTerm id="1327826" term="Expenditures" faqs={faqs} placement="bottom" />
-              </>
-            ), 'expenditures')}
+                <FaqTerm
+                  id="1327826"
+                  term="Expenditures"
+                  faqs={faqs}
+                  placement="bottom"
+                />
+              </>,
+              'expenditures'
+            )}
           </tr>
         </thead>
         <tbody>
-          {projects.map(project => renderProjectRow(project))}
+          {projects.map((project) => renderProjectRow(project))}
           <tr className="table-dark border-top-2">
             <td></td>
             <td>Total</td>
@@ -210,24 +295,28 @@ const ProjectsTable = ({
         </tbody>
       </Table>
 
-      {showButtons && <div className="d-flex justify-content-end d-print-none">
-        <ShareButton className="btn btn-green mr-2" />
-        <PrintButton className="btn btn-green mr-2" />
-        <CSVLink
-          data={csvData}
-          filename={'vta-tax-measures.csv'}
-          className="btn btn-green"
-          onClick={() => event({
-            action: 'click',
-            category: 'download',
-            label: 'csv'
-          })}
-        >
-          <FontAwesomeIcon icon={faFileCsv} className="mr-2" /> Download CSV
-        </CSVLink>
-      </div>}
+      {showButtons && (
+        <div className="d-flex justify-content-end d-print-none">
+          <ShareButton className="btn btn-green mr-2" />
+          <PrintButton className="btn btn-green mr-2" />
+          <CSVLink
+            data={csvData}
+            filename={'vta-tax-measures.csv'}
+            className="btn btn-green"
+            onClick={() =>
+              event({
+                action: 'click',
+                category: 'download',
+                label: 'csv',
+              })
+            }
+          >
+            <FontAwesomeIcon icon={faFileCsv} className="mr-2" /> Download CSV
+          </CSVLink>
+        </div>
+      )}
     </>
-  )
-}
+  );
+};
 
-export default ProjectsTable
+export default ProjectsTable;
