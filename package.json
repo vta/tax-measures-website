@@ -39,6 +39,7 @@
     "react-map-gl": "^7.0.19",
     "react-markdown": "^8.0.3",
     "react-select": "^5.6.0",
+    "react-slidedown": "^2.4.7",
     "remark-breaks": "^3.0.2"
   },
   "devDependencies": {
