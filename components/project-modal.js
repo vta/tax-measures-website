@@ -6,7 +6,12 @@ import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronUp,
+  faChevronDown,
+  faExternalLinkAlt,
+} from '@fortawesome/free-solid-svg-icons';
+import { SlideDown } from 'react-slidedown';
 import { compact, flatMap, sortBy, sumBy, uniq } from 'lodash';
 import { getDocumentById, getGranteeByProject } from '../lib/util.js';
 import { formatCurrency, formatProjectUrl } from '../lib/formatters.js';
@@ -15,6 +20,52 @@ import PrintButton from './print-button.js';
 import ShareButton from './share-button.js';
 import ProjectMap from './project-map.js';
 import ProjectsTable from './projects-table.js';
+
+const Documents = ({ documents }) => {
+  const [slidedownOpen, setSlidedownOpen] = useState(false);
+  if (documents.length === 0) {
+    return 'None';
+  }
+
+  const sortedDocuments = sortBy(documents, 'createdTime').reverse();
+
+  return (
+    <>
+      <ListGroup className="small-list-group">
+        {sortedDocuments.slice(0, 2).map((document) => (
+          <ListGroup.Item key={document.id}>
+            <DocumentLink document={document} />
+          </ListGroup.Item>
+        ))}
+        <SlideDown className={'my-dropdown-slidedown'}>
+          {slidedownOpen
+            ? sortedDocuments.slice(2).map((document) => (
+                <ListGroup.Item key={document.id}>
+                  <DocumentLink document={document} />
+                </ListGroup.Item>
+              ))
+            : null}
+        </SlideDown>
+      </ListGroup>
+      <button
+        onClick={() => setSlidedownOpen(!slidedownOpen)}
+        className="btn btn-primary btn-sm mt-2"
+      >
+        {slidedownOpen ? (
+          <>
+            <FontAwesomeIcon icon={faChevronUp} className="mr-2" />
+            Show Fewer
+          </>
+        ) : (
+          <>
+            <FontAwesomeIcon icon={faChevronDown} className="mr-2" />
+            Show More
+          </>
+        )}
+      </button>
+    </>
+  );
+};
 
 const ProjectModal = ({
   selectedProjects,
@@ -168,22 +219,6 @@ const ProjectModal = ({
     );
   };
 
-  const renderDocuments = () => {
-    if (projectDocuments.length === 0) {
-      return 'None';
-    }
-
-    return (
-      <ListGroup className="small-list-group">
-        {sortBy(projectDocuments, 'fields.Name').map((document) => (
-          <ListGroup.Item key={document.id}>
-            <DocumentLink document={document} />
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
-    );
-  };
-
   const renderModalBody = () => {
     if (selectedProjects.length === 1) {
       const projectUrl = formatProjectUrl(project, projectGrantee);
@@ -254,7 +289,7 @@ const ProjectModal = ({
             <b>Expenditures:</b> {renderExpenditures()}
           </div>
           <div className="project-stat">
-            <b>Related Documents:</b> {renderDocuments()}
+            <b>Related Documents:</b> <Documents documents={projectDocuments} />
           </div>
           <small className="float-right mt-2">
             Last Modified:{' '}
