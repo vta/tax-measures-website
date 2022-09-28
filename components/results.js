@@ -20,29 +20,39 @@ const Results = ({
     return null;
   }
 
+  const shouldShowChartAndMap = () => {
+    if (results.categoryCard && results.categoryCard.key === 'Administration') {
+      return false;
+    }
+
+    return true;
+  };
+
   return (
     <>
       <CategoryInfo categoryCard={results.categoryCard} data={data} />
-      <div className="card mb-3">
-        <div className="card-body card-graph">
-          <div className="row">
-            <div className="col-md-6 col-print-12">
-              <BarChart results={results} />
-            </div>
-            <div className="col-md-6 col-print-12">
-              {geojsons && (
-                <ProjectsMap
-                  data={data}
-                  geojsons={geojsons}
-                  projectsToMap={results.projects}
-                  setProjectModalProjects={setProjectModalProjects}
-                  height="350px"
-                />
-              )}
+      {shouldShowChartAndMap() && (
+        <div className="card mb-3">
+          <div className="card-body card-graph">
+            <div className="row">
+              <div className="col-md-6 col-print-12">
+                <BarChart results={results} />
+              </div>
+              <div className="col-md-6 col-print-12">
+                {geojsons && (
+                  <ProjectsMap
+                    data={data}
+                    geojsons={geojsons}
+                    projectsToMap={results.projects}
+                    setProjectModalProjects={setProjectModalProjects}
+                    height="350px"
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
       <div className="card bg-blue text-white mb-3">
         <div className="card-body">
           <h3>Projects List</h3>
