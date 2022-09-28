@@ -6,11 +6,7 @@ import { sumBy } from 'lodash';
 import moment from 'moment';
 import Button from 'react-bootstrap/Button';
 import { formatCurrencyMillions } from '../lib/formatters.js';
-import {
-  getCurrentFiscalYear,
-  findLatestDate,
-  findLatestYear,
-} from '../lib/util.js';
+import { getCurrentFiscalYear, findLatestYear } from '../lib/util.js';
 import FaqTerm from './faq-term.js';
 
 const Header = ({ data, setAboutModalShow }) => {
@@ -44,8 +40,24 @@ const Header = ({ data, setAboutModalShow }) => {
   );
   /* eslint-enable @next/next/no-html-link-for-pages */
 
+  const latestAwardDate = moment
+    .max(
+      data.revenue
+        .filter((r) => r.fields.Date !== undefined)
+        .map((r) => moment(r.fields.Date, 'YYYY-MM-DD'))
+    )
+    .format('MMM D, YYYY');
+
+  const latestExpenditureDate = moment
+    .max(
+      data.expenditures
+        .filter((e) => e.fields.Date !== undefined)
+        .map((e) => moment(e.fields.Date, 'MM/DD/YY'))
+    )
+    .format('MMM D, YYYY');
+
   return (
-    <div className="row bg-white no-gutters d-block d-md-flex">
+    <div className="row bg-white no-gutters d-block d-lg-flex">
       <div className="col col-md-auto bg-light-blue text-white ">
         <LogoLink />
       </div>
@@ -63,12 +75,7 @@ const Header = ({ data, setAboutModalShow }) => {
               placement="auto"
             />
           </div>
-          <div className="header-state-date">
-            Through{' '}
-            {moment(
-              findLatestDate(data.revenue.map((r) => r.fields.Date))
-            ).format('MMM D, YYYY')}
-          </div>
+          <div className="header-state-date">Through {latestAwardDate}</div>
         </div>
       </div>
       <div className="col-md d-print-none">
@@ -100,6 +107,25 @@ const Header = ({ data, setAboutModalShow }) => {
               .date('30')
               .month('Junes')
               .format('MMM D, YYYY')}
+          </div>
+        </div>
+      </div>
+      <div className="col-md d-print-none">
+        <div className="header-stat">
+          <div className="header-stat-value">
+            {formatCurrencyMillions(sumBy(data.expenditures, 'fields.Amount'))}
+          </div>
+          <div className="header-stat-label">
+            Million Spent
+            <FaqTerm
+              id="1327826"
+              term="Expenditures"
+              faqs={data.faqs}
+              placement="auto"
+            />
+          </div>
+          <div className="header-state-date">
+            Through {latestExpenditureDate}
           </div>
         </div>
       </div>
