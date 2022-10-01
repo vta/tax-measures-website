@@ -116,17 +116,15 @@ const ProjectModal = ({
       <Table responsive size="sm" className="small-table">
         <thead>
           <tr>
-            <th style={{ width: '33.3%' }}>Date</th>
+            <th style={{ width: '33.3%' }}>Fiscal Year</th>
             <th style={{ width: '33.3%' }}>Amount</th>
-            <th style={{ width: '33.3%' }}>Availability</th>
           </tr>
         </thead>
         <tbody>
           {projectAllocations.map((allocation) => (
             <tr key={allocation.id}>
-              <td>{allocation.fields['Date Allocated']}</td>
-              <td>{formatCurrency(allocation.fields.Amount)}</td>
               <td>{allocation.fields['Available Start']}</td>
+              <td>{formatCurrency(allocation.fields.Amount)}</td>
             </tr>
           ))}
         </tbody>
@@ -137,7 +135,6 @@ const ProjectModal = ({
               <th>
                 {formatCurrency(sumBy(projectAllocations, 'fields.Amount'))}
               </th>
-              <th></th>
             </tr>
           </tfoot>
         )}
