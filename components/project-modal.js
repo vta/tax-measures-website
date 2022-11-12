@@ -9,11 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { compact, flatMap, sortBy, sumBy, uniq } from 'lodash';
 import { getDocumentById, getGranteeByProject } from '../lib/util.js';
-import {
-  formatCategory,
-  formatCurrency,
-  formatProjectUrl,
-} from '../lib/formatters.js';
+import { formatCurrency, formatProjectUrl } from '../lib/formatters.js';
 import DocumentLink from './document-link.js';
 import PrintButton from './print-button.js';
 import ShareButton from './share-button.js';
@@ -198,12 +194,19 @@ const ProjectModal = ({
               {project.fields.Description && (
                 <div className="project-stat">{project.fields.Description}</div>
               )}
-              <div className="project-stat">
-                <b>Category:</b> {formatCategory(project)}
-              </div>
-              {project.fields.Subcategory.id && (
+
+              {project.fields.SubcategoryName ? (
+                <>
+                  <div className="project-stat">
+                    <b>Category:</b> {project.fields.ParentCategoryName}
+                  </div>
+                  <div className="project-stat">
+                    <b>Subcategory:</b> {project.fields.SubcategoryName}
+                  </div>
+                </>
+              ) : (
                 <div className="project-stat">
-                  <b>Subcategory:</b> {project.fields.Subcategory.fields.Name}
+                  <b>Category:</b> {project.fields.CategoryName}
                 </div>
               )}
               {project.fields['Fiscal Year'] && (
