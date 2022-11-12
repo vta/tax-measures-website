@@ -47,6 +47,8 @@ const Home = ({ data }) => {
   const [aboutModalShow, setAboutModalShow] = useState(false);
   const [geojsons, setGeojsons] = useState();
 
+  console.log(currentFilters);
+
   const handleSearch = useCallback(
     async (filters) => {
       setLoading(true);
