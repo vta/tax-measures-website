@@ -37,32 +37,36 @@ const Documents = ({ documents }) => {
             <DocumentLink document={document} />
           </ListGroup.Item>
         ))}
-        <SlideDown className={'my-dropdown-slidedown'}>
-          {slidedownOpen
-            ? sortedDocuments.slice(2).map((document) => (
-                <ListGroup.Item key={document.id}>
-                  <DocumentLink document={document} />
-                </ListGroup.Item>
-              ))
-            : null}
-        </SlideDown>
-      </ListGroup>
-      <button
-        onClick={() => setSlidedownOpen(!slidedownOpen)}
-        className="btn btn-primary btn-sm mt-2"
-      >
-        {slidedownOpen ? (
-          <>
-            <FontAwesomeIcon icon={faChevronUp} className="mr-2" />
-            Show Fewer
-          </>
-        ) : (
-          <>
-            <FontAwesomeIcon icon={faChevronDown} className="mr-2" />
-            Show More
-          </>
+        {sortedDocuments.length > 2 && (
+          <SlideDown className={'my-dropdown-slidedown'}>
+            {slidedownOpen
+              ? sortedDocuments.slice(2).map((document) => (
+                  <ListGroup.Item key={document.id}>
+                    <DocumentLink document={document} />
+                  </ListGroup.Item>
+                ))
+              : null}
+          </SlideDown>
         )}
-      </button>
+      </ListGroup>
+      {sortedDocuments.length > 2 && (
+        <button
+          onClick={() => setSlidedownOpen(!slidedownOpen)}
+          className="btn btn-primary btn-sm mt-2"
+        >
+          {slidedownOpen ? (
+            <>
+              <FontAwesomeIcon icon={faChevronUp} className="mr-2" />
+              Show Fewer
+            </>
+          ) : (
+            <>
+              <FontAwesomeIcon icon={faChevronDown} className="mr-2" />
+              Show More
+            </>
+          )}
+        </button>
+      )}
     </>
   );
 };
