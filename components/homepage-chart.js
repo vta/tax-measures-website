@@ -10,11 +10,11 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 const HomepageChart = ({ data: { allocations, parentCategories, faqs } }) => {
   const actualAllocatedGroups = groupBy(
     allocations,
-    (allocation) => allocation.fields['Parent Category'].id
+    (allocation) => allocation.fields.ParentCategoryName
   );
 
   const actualAllocateds = parentCategories.map((category) => {
-    const group = actualAllocatedGroups[category.id] || [];
+    const group = actualAllocatedGroups[category.fields.Name] || [];
 
     return group.reduce((memo, allocation) => {
       return memo + allocation.fields.Amount;

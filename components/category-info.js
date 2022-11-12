@@ -21,7 +21,7 @@ const CategoryInfo = ({ data, categoryCard }) => {
         return (
           Number.parseInt(allocation.fields['Available Start'], 10) <=
             currentFiscalYear + 2 &&
-          allocation.fields['Parent Category'].fields.Name === categoryCard.key
+          allocation.fields.ParentCategoryName === categoryCard.key
         );
       }
 
