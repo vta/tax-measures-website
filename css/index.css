@@ -1,31 +1,33 @@
 @font-face {
   font-family: 'Museo Sans 500';
-  src: url("/fonts/MuseoSans-500.woff2") format("woff2"), url("/fonts/MuseoSans-500.woff") format("woff");
+  src: url('/fonts/MuseoSans-500.woff2') format('woff2'),
+    url('/fonts/MuseoSans-500.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Museo Sans 500';
-  src: url("/fonts/MuseoSans-500Italic.woff2") format("woff2"), url("/fonts/MuseoSans-500Italic.woff") format("woff");
+  src: url('/fonts/MuseoSans-500Italic.woff2') format('woff2'),
+    url('/fonts/MuseoSans-500Italic.woff') format('woff');
   font-weight: normal;
   font-style: italic;
 }
 
 body {
-  background-color: #EBEAE6;
-  color: #4C4D55;
+  background-color: #ebeae6;
+  color: #4c4d55;
   font-family: 'Museo Sans 500';
   font-weight: normal;
   font-style: normal;
 }
 
 a {
-  color: #2D65B1;
+  color: #2d65b1;
 }
 
 .table {
-  color: #4C4D55;
+  color: #4c4d55;
 }
 
 h1,
@@ -34,7 +36,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: #2D65B1;
+  color: #2d65b1;
   font-weight: bold;
 }
 
@@ -44,11 +46,15 @@ h6 {
 .text-white h4,
 .text-white h5,
 .text-white h6 {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 h3 {
   font-size: 1.5rem;
+}
+
+h4 {
+  font-size: 1.25rem;
 }
 
 .text-decoration-underline {
@@ -58,8 +64,8 @@ h3 {
 @media (min-width: 992px) {
   .col-lg-5col {
     -webkit-box-flex: 0;
-        -ms-flex: 0 0 20%;
-            flex: 0 0 20%;
+    -ms-flex: 0 0 20%;
+    flex: 0 0 20%;
     max-width: 20%;
   }
 }
@@ -69,16 +75,16 @@ a.card {
 }
 
 .bg-light-blue {
-  background-color: #51BAEC !important;
+  background-color: #51baec !important;
 }
 
 .bg-blue {
-  background-color: #2D65B1 !important;
+  background-color: #2d65b1 !important;
 }
 
 .btn-primary {
-  color: #FFFFFF;
-  background-color: #2D65B1;
+  color: #ffffff;
+  background-color: #2d65b1;
   border-color: #28599d;
 }
 
@@ -87,8 +93,8 @@ a.card {
 }
 
 .btn-secondary {
-  color: #FFFFFF;
-  background-color: #51BAEC;
+  color: #ffffff;
+  background-color: #51baec;
   border-color: #3ab1e9;
 }
 
@@ -98,12 +104,12 @@ a.card {
 }
 
 .btn-white-border {
-  border-color: #FFFFFF;
+  border-color: #ffffff;
 }
 
 .btn-green {
-  background: #4DB938;
-  border-color: #4DB938;
+  background: #4db938;
+  border-color: #4db938;
   color: #ffffff;
 }
 
@@ -122,14 +128,14 @@ a.card {
 }
 
 .header-bar {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-top: 1px solid #979797;
   border-bottom: 2px solid #979797;
   border-left: 1px solid #979797;
 }
 
 .header-stat {
-  color: #2D65B1;
+  color: #2d65b1;
   text-align: center;
 }
 
@@ -153,12 +159,12 @@ a.card {
 }
 
 .project-table {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .project-table tr th {
-  background: #51BAEC;
-  color: #FFFFFF;
+  background: #51baec;
+  color: #ffffff;
   border-top: none;
   font-weight: bold;
 }
@@ -169,14 +175,14 @@ a.card {
 
 .number-list {
   -ms-flex-negative: 0;
-      flex-shrink: 0;
+  flex-shrink: 0;
   font-size: 30px;
   margin-right: 14px;
   float: left;
   width: 42px;
   height: 42px;
   border-radius: 21px;
-  background-color: #51BAEC;
+  background-color: #51baec;
   text-align: center;
 }
 

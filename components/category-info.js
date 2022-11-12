@@ -45,6 +45,42 @@ const CategoryInfo = ({ data, categoryCard }) => {
     );
   };
 
+  const renderAdminDocuments = () => {
+    if (categoryCard.key !== 'Administration') {
+      return null;
+    }
+
+    const annualReports = data.documents.filter(
+      (document) =>
+        document.fields['Document Type'] === 'Administration Annual Report'
+    );
+    const auditReports = data.documents.filter(
+      (document) =>
+        document.fields['Document Type'] === 'Administration Audit Report'
+    );
+
+    return (
+      <>
+        <h4 className="mt-4">Annual Reports</h4>
+        <ListGroup className="small-list-group">
+          {annualReports.map((document) => (
+            <ListGroup.Item key={document.id}>
+              <DocumentLink document={document} />
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
+        <h4 className="mt-4">Audit Reports</h4>
+        <ListGroup className="small-list-group">
+          {auditReports.map((document) => (
+            <ListGroup.Item key={document.id}>
+              <DocumentLink document={document} />
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
+      </>
+    );
+  };
+
   return (
     <div className="row mb-3">
       <div className="col-lg-6 offset-lg-3">
@@ -91,6 +127,7 @@ const CategoryInfo = ({ data, categoryCard }) => {
                 {categoryCard.description2}
               </ReactMarkdown>
               {renderDocuments()}
+              {renderAdminDocuments()}
             </div>
           </div>
         </div>
