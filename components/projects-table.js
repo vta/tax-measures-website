@@ -35,7 +35,7 @@ const ProjectsTable = ({
   }
 
   const hasSubcategoryColumn = some(selectedProjects, (project) =>
-    Boolean(project.fields.Subcategory.id)
+    Boolean(project.fields.SubcategoryName)
   );
 
   const setTableSort = (columnName) => {
@@ -63,10 +63,8 @@ const ProjectsTable = ({
           </a>
         </td>
         <td>{project.fields['Grantee Name']}</td>
-        <td>{project.fields['Parent Category'].fields.Name}</td>
-        {hasSubcategoryColumn && (
-          <td>{project.fields.Subcategory.fields.Name}</td>
-        )}
+        <td>{project.fields.ParentCategoryName}</td>
+        {hasSubcategoryColumn && <td>{project.fields.SubcategoryName}</td>}
         <td className="text-right" style={{ width: '110px' }}>
           {formatCurrencyWithUnit(project.fields.totalAllocationAmount)}
         </td>
@@ -93,8 +91,8 @@ const ProjectsTable = ({
     ...selectedProjects.map((project) => {
       return [
         project.fields.Name,
-        project.fields.Category.fields.Name,
-        project.fields.Subcategory.fields.Name,
+        project.fields.CategoryName,
+        project.fields.SubcategoryName,
         project.fields.URL,
         project.fields.totalAllocationAmount,
         project.fields.totalAwardAmount,
@@ -135,14 +133,14 @@ const ProjectsTable = ({
     } else if (sortOrder === 'category') {
       projects = orderBy(
         selectedProjects,
-        'fields.Parent Category.fields.Name',
+        'fields.ParentCategoryName',
         sortDirection
       );
     } else if (sortOrder === 'subcategory') {
       projects = orderBy(
         selectedProjects,
         (project) => {
-          return project.fields.Subcategory.fields.Name || 'zzzz';
+          return project.fields.SubcategoryName || 'zzzz';
         },
         sortDirection
       );
