@@ -191,7 +191,7 @@ const ProjectModal = ({
       <Table responsive size="sm" className="small-table">
         <thead>
           <tr>
-            <th style={{ width: '33.3%' }}>Date</th>
+            <th style={{ width: '33.3%' }}>Fiscal Year</th>
             <th style={{ width: '33.3%' }}>Amount</th>
             <th style={{ width: '33.3%' }}>Description</th>
           </tr>
@@ -199,7 +199,7 @@ const ProjectModal = ({
         <tbody>
           {projectExpenditures.map((expenditure) => (
             <tr key={expenditure.id}>
-              <td>{expenditure.fields.Date}</td>
+              <td>{expenditure.fields['Fiscal Year']}</td>
               <td>{formatCurrency(expenditure.fields.Amount)}</td>
               <td>{expenditure.fields['Expenditure Description']}</td>
             </tr>
