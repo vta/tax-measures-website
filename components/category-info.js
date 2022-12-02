@@ -87,6 +87,9 @@ const CategoryInfo = ({ data, categoryCard }) => {
                   m
                 </div>
               </div>
+              <ReactMarkdown linkTarget="_blank" remarkPlugins={[breaks]}>
+                {categoryCard.description2}
+              </ReactMarkdown>
               {renderDocuments()}
             </div>
           </div>

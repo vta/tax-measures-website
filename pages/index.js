@@ -138,6 +138,7 @@ const Home = ({ data }) => {
       (c) => c.fields.Name === categoryCard.key
     );
     categoryCard.description = category && category.fields.Description;
+    categoryCard.description2 = category && category.fields['Description 2'];
     categoryCard.documents =
       category &&
       category.fields.Documents &&
