@@ -62,6 +62,10 @@ const CategoryInfo = ({ data, categoryCard }) => {
     return (
       <>
         <h4 className="mt-4">Annual Reports</h4>
+        <p>
+          The Program Annual Report is developed by VTA staff and details the
+          progress of the 2016 Measure B Program every year.
+        </p>
         <ListGroup className="small-list-group">
           {annualReports.map((document) => (
             <ListGroup.Item key={document.id}>
@@ -70,6 +74,12 @@ const CategoryInfo = ({ data, categoryCard }) => {
           ))}
         </ListGroup>
         <h4 className="mt-4">Audit Reports</h4>
+        <p>
+          The Performance Audit Report is conducted by an independent auditor to
+          verify VTA compliance with 2016 Measure B, which requires that Program
+          Tax Revenues be allocated and used for the nine approved program
+          categories, as defined in ballot language.
+        </p>
         <ListGroup className="small-list-group">
           {auditReports.map((document) => (
             <ListGroup.Item key={document.id}>
