@@ -52,7 +52,7 @@ const Header = ({ data, setAboutModalShow }) => {
     .max(
       data.expenditures
         .filter((e) => e.fields.Date !== undefined)
-        .map((e) => moment(e.fields.Date, 'MM/DD/YY'))
+        .map((e) => moment(e.fields.Date, 'YYYY-MM-DD'))
     )
     .format('MMM D, YYYY');
 
