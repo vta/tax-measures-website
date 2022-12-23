@@ -253,7 +253,11 @@ const Home = ({ data }) => {
                     alt={key}
                     width="300"
                     height="300"
-                    layout="responsive"
+                    sizes="100vw"
+                    style={{
+                      width: '100%',
+                      height: 'auto',
+                    }}
                   />
                 </div>
               </a>

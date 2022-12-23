@@ -34,6 +34,10 @@ const Header = ({ data, setAboutModalShow }) => {
           className="logo"
           width="738"
           height="598"
+          style={{
+            maxWidth: '100%',
+            height: 'auto',
+          }}
         />
       </h1>
     </a>
