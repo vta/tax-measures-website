@@ -43,6 +43,10 @@ const Footer = () => {
                 className="w-100"
                 width="262"
                 height="62"
+                style={{
+                  maxWidth: '100%',
+                  height: 'auto',
+                }}
               />
             </div>
 

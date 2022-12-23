@@ -102,6 +102,10 @@ const CategoryInfo = ({ data, categoryCard }) => {
                 alt={categoryCard.key}
                 width="150"
                 height="150"
+                style={{
+                  maxWidth: '100%',
+                  height: 'auto',
+                }}
               />
             </div>
             <div>
