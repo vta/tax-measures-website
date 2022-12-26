@@ -30,8 +30,8 @@ export default function MyApp({ Component, pageProps }) {
       <DefaultSeo
         openGraph={{
           type: 'website',
-          locale: 'en_IE',
-          url: 'https:/2016measureb-beta.vta.org',
+          locale: 'en_US',
+          url: 'https://2016measureb.vta.org',
           site_name: '2016 Measure B',
         }}
         twitter={{
