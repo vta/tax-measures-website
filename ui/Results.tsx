@@ -1,11 +1,10 @@
-import React from 'react';
-import BarChart from './bar-chart.js';
-import CategoryInfo from './category-info.js';
-import Loading from './loading.js';
-import ProjectsMap from './projects-map.js';
-import ProjectsTable from './projects-table.js';
+import { BarChart } from '#/ui/BarChart';
+import { CategoryInfo } from '#/ui/CategoryInfo';
+import { Loading } from '#/ui/Loading';
+import { ProjectsMap } from '#/ui/ProjectsMap';
+import { ProjectsTable } from '#/ui/ProjectsTable';
 
-const Results = ({
+export const Results = ({
   loading,
   results,
   data,
@@ -76,5 +75,3 @@ const Results = ({
     </>
   );
 };
-
-export default Results;

@@ -1,8 +1,7 @@
-import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileDownload } from '@fortawesome/free-solid-svg-icons';
 
-const DocumentLink = ({ document }) => {
+export const DocumentLink = ({ document }) => {
   if (document.fields.URL) {
     return (
       <a href={document.fields.URL} target="_blank" rel="noreferrer">
@@ -42,5 +41,3 @@ const DocumentLink = ({ document }) => {
 
   return document.fields.Name;
 };
-
-export default DocumentLink;

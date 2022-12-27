@@ -1,13 +1,14 @@
-import React from 'react';
-import dynamic from 'next/dynamic';
+'use client';
+
+import Chart from 'react-apexcharts';
 import { groupBy } from 'lodash';
-import { formatCurrencyWithUnit, formatPercent } from '../lib/formatters.js';
-import { sumCurrency } from '../lib/util.js';
-import FaqTerm from './faq-term.js';
+import { formatCurrencyWithUnit, formatPercent } from '#/lib/formatters.js';
+import { sumCurrency } from '#/lib/util.js';
+import { FaqTerm } from '#/ui/FaqTerm';
 
-const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
-
-const HomepageChart = ({ data: { allocations, parentCategories, faqs } }) => {
+export const HomepageChart = ({
+  data: { allocations, parentCategories, faqs },
+}) => {
   const actualAllocatedGroups = groupBy(
     allocations,
     (allocation) => allocation.fields.ParentCategoryName
@@ -146,5 +147,3 @@ const HomepageChart = ({ data: { allocations, parentCategories, faqs } }) => {
     </>
   );
 };
-
-export default HomepageChart;

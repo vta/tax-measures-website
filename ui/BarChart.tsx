@@ -1,12 +1,11 @@
-import React from 'react';
-import dynamic from 'next/dynamic';
+'use client';
+
 import { groupBy, sortBy } from 'lodash';
-import { formatCurrencyWithUnit } from '../lib/formatters.js';
-import { getProjectById, sumCurrency } from '../lib/util.js';
+import Chart from 'react-apexcharts';
+import { formatCurrencyWithUnit } from '#/lib/formatters.js';
+import { getProjectById, sumCurrency } from '#/lib/util.js';
 
-const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
-
-const BarChart = ({ results }) => {
+export const BarChart = ({ results }) => {
   const getGraphAmount = (item) => {
     if (results.transactionType === 'award') {
       return item.fields['Award Amount'];
@@ -247,5 +246,3 @@ const BarChart = ({ results }) => {
     />
   );
 };
-
-export default BarChart;

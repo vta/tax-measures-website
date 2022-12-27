@@ -1,8 +1,7 @@
-import React from 'react';
 import Alert from 'react-bootstrap/Alert';
 import { compact } from 'lodash';
 
-const FilterAlert = ({ results, currentFilters }) => {
+export const FilterAlert = ({ results, currentFilters }) => {
   const filterCount = currentFilters
     ? compact(Object.values(currentFilters)).length
     : 0;
@@ -46,5 +45,3 @@ const FilterAlert = ({ results, currentFilters }) => {
 
   return null;
 };
-
-export default FilterAlert;

@@ -1,6 +1,5 @@
-import React from 'react';
 import { Layer, Source } from 'react-map-gl';
-import { mergeBboxes, getGranteeByProject } from '../lib/util.js';
+import { mergeBboxes, getGranteeByProject } from '#/lib/util.js';
 
 const detectGeometryTypes = (geojson, project) => {
   const typesPresent = {
@@ -54,7 +53,7 @@ const detectGeometryTypes = (geojson, project) => {
   return typesPresent;
 };
 
-const MapLayer = (projects, geojsons, grantees) => {
+export const MapLayer = (projects, geojsons, grantees) => {
   if (!projects || !geojsons) {
     return {};
   }
@@ -200,5 +199,3 @@ const MapLayer = (projects, geojsons, grantees) => {
     bbox: mergeBboxes(bboxes),
   };
 };
-
-export default MapLayer;

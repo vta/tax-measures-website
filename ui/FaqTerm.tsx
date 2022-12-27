@@ -1,4 +1,3 @@
-import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faQuestion,
@@ -8,7 +7,7 @@ import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 
-const FaqTerm = ({ id, term, faqs, placement, showTerm }) => {
+export const FaqTerm = ({ id, term, faqs, placement, showTerm }) => {
   const faq = faqs && faqs.find((f) => f.nid === id);
 
   if (!faq) {
@@ -65,5 +64,3 @@ const FaqTerm = ({ id, term, faqs, placement, showTerm }) => {
     </OverlayTrigger>
   );
 };
-
-export default FaqTerm;

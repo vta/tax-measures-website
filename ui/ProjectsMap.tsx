@@ -1,9 +1,9 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import ReactMapGL, { NavigationControl } from 'react-map-gl';
-import MapLayer from '../components/map-layer.js';
-import { getViewport } from '../lib/util.js';
+import { MapLayer } from '#/ui/MapLayer';
+import { getViewport } from '#/lib/util.js';
 
-const ProjectsMap = ({
+export const ProjectsMap = ({
   data: { grantees },
   geojsons,
   projectsToMap,
@@ -87,5 +87,3 @@ const ProjectsMap = ({
     </div>
   );
 };
-
-export default ProjectsMap;

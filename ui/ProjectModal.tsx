@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import moment from 'moment';
 import Modal from 'react-bootstrap/Modal';
@@ -13,13 +13,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { SlideDown } from 'react-slidedown';
 import { compact, flatMap, sortBy, sumBy, uniq } from 'lodash';
-import { getDocumentById, getGranteeByProject } from '../lib/util.js';
-import { formatCurrency, formatProjectUrl } from '../lib/formatters.js';
-import DocumentLink from './document-link.js';
-import PrintButton from './print-button.js';
-import ShareButton from './share-button.js';
-import ProjectMap from './project-map.js';
-import ProjectsTable from './projects-table.js';
+import { getDocumentById, getGranteeByProject } from '#/lib/util.js';
+import { formatCurrency, formatProjectUrl } from '#/lib/formatters.js';
+import { DocumentLink } from '#/ui/DocumentLink';
+import { PrintButton } from '#/ui/PrintButton';
+import { ShareButton } from '#/ui/ShareButton';
+import { ProjectMap } from '#/ui/ProjectMap';
+import { ProjectsTable } from '#/ui/ProjectsTable';
 
 const Documents = ({ documents }) => {
   const [slidedownOpen, setSlidedownOpen] = useState(false);
@@ -71,7 +71,7 @@ const Documents = ({ documents }) => {
   );
 };
 
-const ProjectModal = ({
+export const ProjectModal = ({
   selectedProjects,
   data: { allocations, awards, documents, grantees, expenditures, faqs },
   geojsons,
@@ -386,5 +386,3 @@ const ProjectModal = ({
     </Modal>
   );
 };
-
-export default ProjectModal;

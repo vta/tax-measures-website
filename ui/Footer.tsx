@@ -1,6 +1,7 @@
+'use client';
 /* global window, document */
 
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,7 +10,7 @@ import {
   faYoutube,
 } from '@fortawesome/free-brands-svg-icons';
 
-const Footer = () => {
+export const Footer = () => {
   const googleTranslateElementInit = () => {
     new window.google.translate.TranslateElement(
       {
@@ -139,5 +140,3 @@ const Footer = () => {
     </div>
   );
 };
-
-export default Footer;

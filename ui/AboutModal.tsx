@@ -1,4 +1,3 @@
-import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
@@ -11,7 +10,7 @@ const Faq = ({ faq }) => {
   );
 };
 
-const AboutModal = ({ faqs, ...props }) => {
+export const AboutModal = ({ faqs, ...props }) => {
   return (
     <Modal
       {...props}
@@ -65,5 +64,3 @@ const AboutModal = ({ faqs, ...props }) => {
     </Modal>
   );
 };
-
-export default AboutModal;

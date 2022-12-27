@@ -1,6 +1,6 @@
 import Spinner from 'react-bootstrap/Spinner';
 
-const Loading = ({ loading }) => {
+export const Loading = ({ loading }) => {
   if (!loading) {
     return null;
   }
@@ -28,5 +28,3 @@ const Loading = ({ loading }) => {
     </div>
   );
 };
-
-export default Loading;

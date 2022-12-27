@@ -1,15 +1,14 @@
-import React from 'react';
 import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
 import breaks from 'remark-breaks';
 import moment from 'moment';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { sumBy } from 'lodash';
-import DocumentLink from './document-link.js';
-import { formatCurrencyMillions } from '../lib/formatters.js';
-import { getCurrentFiscalYear, findLatestYear } from '../lib/util.js';
+import { DocumentLink } from '#/ui/DocumentLink';
+import { formatCurrencyMillions } from '#/lib/formatters.js';
+import { getCurrentFiscalYear, findLatestYear } from '#/lib/util.js';
 
-const CategoryInfo = ({ data, categoryCard }) => {
+export const CategoryInfo = ({ data, categoryCard }) => {
   if (!categoryCard) {
     return null;
   }
@@ -149,5 +148,3 @@ const CategoryInfo = ({ data, categoryCard }) => {
     </div>
   );
 };
-
-export default CategoryInfo;

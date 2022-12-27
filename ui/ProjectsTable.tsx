@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Table from 'react-bootstrap/Table';
 import { some, orderBy } from 'lodash';
@@ -10,13 +10,14 @@ import {
   faSortDown,
 } from '@fortawesome/free-solid-svg-icons';
 import { CSVLink } from 'react-csv';
-import { formatCurrencyWithUnit } from '../lib/formatters.js';
-import { event } from '../lib/gtag.js';
-import FaqTerm from './faq-term.js';
-import PrintButton from './print-button.js';
-import ShareButton from './share-button.js';
 
-const ProjectsTable = ({
+import { formatCurrencyWithUnit } from '#/lib/formatters.js';
+import { event } from '#/lib/gtag.js';
+import { FaqTerm } from '#/ui/FaqTerm';
+import { PrintButton } from '#/ui/PrintButton';
+import { ShareButton } from '#/ui/ShareButton';
+
+export const ProjectsTable = ({
   selectedProjects,
   setProjectModalProjects,
   faqs,
@@ -316,5 +317,3 @@ const ProjectsTable = ({
     </>
   );
 };
-
-export default ProjectsTable;

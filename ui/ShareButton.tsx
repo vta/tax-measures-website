@@ -1,15 +1,14 @@
 /* global window, navigator */
-import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { faCopy, faEnvelope, faShare } from '@fortawesome/free-solid-svg-icons';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-import { isMobile } from '../lib/util.js';
-import { event } from '../lib/gtag.js';
+import { isMobile } from '#/lib/util.js';
+import { event } from '#/lib/gtag.js';
 
-const ShareButton = ({ className }) => {
+export const ShareButton = ({ className }) => {
   const shareTitle = '2016 Measure B';
   const shareUrl = window.location.href;
   const emailShareUrl = `mailto:?subject=2016%20Measure%20B&body=${encodeURIComponent(
@@ -101,5 +100,3 @@ const ShareButton = ({ className }) => {
     </Dropdown>
   );
 };
-
-export default ShareButton;

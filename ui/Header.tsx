@@ -1,15 +1,20 @@
-import React from 'react';
+'use client';
+
+import { useState } from 'react';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 import { sumBy } from 'lodash';
 import moment from 'moment';
 import Button from 'react-bootstrap/Button';
-import { formatCurrencyMillions } from '../lib/formatters.js';
-import { getCurrentFiscalYear, findLatestYear } from '../lib/util.js';
-import FaqTerm from './faq-term.js';
+import { formatCurrencyMillions } from '#/lib/formatters.js';
+import { getCurrentFiscalYear, findLatestYear } from '#/lib/util.js';
+import { AboutModal } from '#/ui/AboutModal';
+import { FaqTerm } from '#/ui/FaqTerm';
 
-const Header = ({ data, setAboutModalShow }) => {
+export const Header = ({ data }) => {
+  const [aboutModalShow, setAboutModalShow] = useState(false);
+
   const currentFiscalYear = getCurrentFiscalYear();
   const allocationsThroughTwoYearsIntoTheFuture = data.allocations.filter(
     (allocation) => {
@@ -145,8 +150,12 @@ const Header = ({ data, setAboutModalShow }) => {
           <span>About</span>
         </Button>
       </div>
+
+      <AboutModal
+        faqs={data.faqs}
+        show={aboutModalShow}
+        onHide={() => setAboutModalShow(false)}
+      />
     </div>
   );
 };
-
-export default Header;

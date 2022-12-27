@@ -1,5 +1,5 @@
 /*  global alert */
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Select from 'react-select';
@@ -7,9 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { capitalize, isEmpty } from 'lodash';
 
-import FaqTerm from './faq-term.js';
+import { FaqTerm } from '#/ui/FaqTerm';
 
-const FilterControls = ({
+export const FilterControls = ({
   data,
   incomingFilters,
   handleSearch,
@@ -212,5 +212,3 @@ const FilterControls = ({
     </div>
   );
 };
-
-export default FilterControls;
