@@ -1,3 +1,5 @@
+import { keyBy } from 'lodash';
+
 import { Footer } from '#/ui/Footer';
 import { Header } from '#/ui/Header';
 import { HomePage } from '#/ui/HomePage';
@@ -12,7 +14,7 @@ import {
   fetchRevenue,
   fetchFaq,
 } from '#/lib/api.js';
-import { preprocessData } from '#/lib/util.js';
+import { fetchGeoJson, preprocessData } from '#/lib/util.js';
 
 export default async function Page() {
   const [
@@ -48,6 +50,13 @@ export default async function Page() {
     revenue,
     faqs,
   });
+
+  const mapData = [
+    ...(await fetchGeoJson(data.projects)),
+    ...(await fetchGeoJson(data.grantees)),
+  ];
+
+  data.geojsons = keyBy(mapData, 'id');
 
   return (
     <div>

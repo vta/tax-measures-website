@@ -26,7 +26,6 @@ export const HomePage = ({ data }) => {
   const [incomingFilters, setIncomingFilters] = useState({});
   const [currentFilters, setCurrentFilters] = useState();
   const [projectModalProjects, setProjectModalProjects] = useState();
-  const [geojsons, setGeojsons] = useState();
 
   const searchParams = useSearchParams();
 
@@ -101,20 +100,6 @@ export const HomePage = ({ data }) => {
     }
   }, [searchParams, data.projects]);
 
-  useEffect(() => {
-    const fetchMapData = async () => {
-      const mapData = [
-        ...(await fetchGeoJson(data.projects)),
-        ...(await fetchGeoJson(data.grantees)),
-      ];
-
-      setGeojsons(keyBy(mapData, 'id'));
-      setLoading(false);
-    };
-
-    fetchMapData();
-  }, [data.projects, data.grantees]);
-
   // Track each filter change as a pageview
   useEffect(() => {
     gtag.pageview(window.location.href);
@@ -164,7 +149,6 @@ export const HomePage = ({ data }) => {
         loading={loading}
         results={results}
         data={data}
-        geojsons={geojsons}
         setProjectModalProjects={setProjectModalProjects}
       />
 
@@ -182,10 +166,9 @@ export const HomePage = ({ data }) => {
                 <HomepageChart data={data} />
               </div>
               <div className="col-md-6">
-                {geojsons && (
+                {data.geojsons && (
                   <ProjectsMap
                     data={data}
-                    geojsons={geojsons}
                     projectsToMap={data.projects}
                     setProjectModalProjects={setProjectModalProjects}
                     height="490px"
@@ -202,7 +185,6 @@ export const HomePage = ({ data }) => {
         selectedProjects={projectModalProjects}
         onHide={() => setProjectModalProjects()}
         data={data}
-        geojsons={geojsons}
         setProjectModalProjects={setProjectModalProjects}
       />
     </div>

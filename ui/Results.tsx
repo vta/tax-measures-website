@@ -8,7 +8,6 @@ export const Results = ({
   loading,
   results,
   data,
-  geojsons,
   setProjectModalProjects,
 }) => {
   if (loading) {
@@ -38,10 +37,9 @@ export const Results = ({
                 <BarChart results={results} />
               </div>
               <div className="col-md-6 col-print-12">
-                {geojsons && (
+                {data.geojsons && (
                   <ProjectsMap
                     data={data}
-                    geojsons={geojsons}
                     projectsToMap={results.projects}
                     setProjectModalProjects={setProjectModalProjects}
                     height="350px"

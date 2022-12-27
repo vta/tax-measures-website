@@ -4,8 +4,7 @@ import { MapLayer } from '#/ui/MapLayer';
 import { getViewport } from '#/lib/util.js';
 
 export const ProjectsMap = ({
-  data: { grantees },
-  geojsons,
+  data: { grantees, geojsons },
   projectsToMap,
   setProjectModalProjects,
   height,

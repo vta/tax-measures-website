@@ -73,8 +73,15 @@ const Documents = ({ documents }) => {
 
 export const ProjectModal = ({
   selectedProjects,
-  data: { allocations, awards, documents, grantees, expenditures, faqs },
-  geojsons,
+  data: {
+    allocations,
+    awards,
+    documents,
+    grantees,
+    expenditures,
+    faqs,
+    geojsons,
+  },
   onHide,
   show,
   setProjectModalProjects,
