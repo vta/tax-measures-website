@@ -21,7 +21,7 @@ import * as gtag from '#/lib/gtag.js';
 
 export const HomePage = ({ data }) => {
   const [results, setResults] = useState();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [incomingFilters, setIncomingFilters] = useState({});
   const [currentFilters, setCurrentFilters] = useState();
   const [projectModalProjects, setProjectModalProjects] = useState();

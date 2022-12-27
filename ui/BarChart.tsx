@@ -1,9 +1,12 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { groupBy, sortBy } from 'lodash';
-import Chart from 'react-apexcharts';
+
 import { formatCurrencyWithUnit } from '#/lib/formatters.js';
 import { getProjectById, sumCurrency } from '#/lib/util.js';
+
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export const BarChart = ({ results }) => {
   const getGraphAmount = (item) => {
@@ -243,6 +246,7 @@ export const BarChart = ({ results }) => {
       ]}
       type="bar"
       height={350}
+      width="100%"
     />
   );
 };

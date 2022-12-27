@@ -1,10 +1,13 @@
 'use client';
 
-import Chart from 'react-apexcharts';
+import dynamic from 'next/dynamic';
 import { groupBy } from 'lodash';
+
 import { formatCurrencyWithUnit, formatPercent } from '#/lib/formatters.js';
 import { sumCurrency } from '#/lib/util.js';
 import { FaqTerm } from '#/ui/FaqTerm';
+
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export const HomepageChart = ({
   data: { allocations, parentCategories, faqs },
@@ -137,6 +140,8 @@ export const HomepageChart = ({
           },
         ]}
         type="bar"
+        height={350}
+        width="100%"
       />
       <style jsx>{`
         h2 {
