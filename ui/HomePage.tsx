@@ -16,7 +16,6 @@ import {
   applyFilters,
   updateUrlWithFilters,
   getFiltersFromQuery,
-  fetchGeoJson,
 } from '#/lib/util.js';
 import * as gtag from '#/lib/gtag.js';
 
