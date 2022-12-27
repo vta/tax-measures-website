@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { isEmpty, keyBy } from 'lodash';
+import { isEmpty } from 'lodash';
 
 import { FilterControls } from '#/ui/FilterControls';
 import { FilterAlert } from '#/ui/FilterAlert';

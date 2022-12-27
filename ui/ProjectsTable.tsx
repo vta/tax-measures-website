@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import Link from 'next/link';
 import Alert from 'react-bootstrap/Alert';
 import Table from 'react-bootstrap/Table';
-import { some, orderBy } from 'lodash';
+import { kebabCase, some, orderBy } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFileCsv,
@@ -17,12 +18,7 @@ import { FaqTerm } from '#/ui/FaqTerm';
 import { PrintButton } from '#/ui/PrintButton';
 import { ShareButton } from '#/ui/ShareButton';
 
-export const ProjectsTable = ({
-  selectedProjects,
-  setProjectModalProjects,
-  faqs,
-  showButtons,
-}) => {
+export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
   const [sortOrder, setSortOrder] = useState();
   const [sortDirection, setSortDirection] = useState('asc');
 
@@ -53,15 +49,9 @@ export const ProjectsTable = ({
       <tr key={project.id}>
         <td className="text-right">{project.fields['Fiscal Year']}</td>
         <td>
-          <a
-            href=""
-            onClick={(event) => {
-              event.preventDefault();
-              setProjectModalProjects([project]);
-            }}
-          >
+          <Link href={`/projects/${kebabCase(project.fields.Name)}/`}>
             {project.fields.Name}
-          </a>
+          </Link>
         </td>
         <td>{project.fields['Grantee Name']}</td>
         <td>{project.fields.ParentCategoryName}</td>

@@ -59,7 +59,6 @@ export const Results = ({
           </p>
           <ProjectsTable
             selectedProjects={results && results.projects}
-            setProjectModalProjects={setProjectModalProjects}
             faqs={data.faqs}
             showButtons={true}
           />
