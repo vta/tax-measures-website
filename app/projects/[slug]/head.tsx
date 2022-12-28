@@ -31,6 +31,11 @@ export default async function Head({ params }) {
             },
           ],
         }}
+        twitter={{
+          handle: '@VTA',
+          site: '@VTA',
+          cardType: 'summary_large_image',
+        }}
       />
     </>
   );

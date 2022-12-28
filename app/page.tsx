@@ -3,6 +3,9 @@ import { Header } from '#/ui/Header';
 import { HomePage } from '#/ui/HomePage';
 import { fetchData } from '#/lib/api.js';
 
+import '#/css/print.css';
+import '#/css/index.css';
+
 export default async function Page() {
   const data = await fetchData();
 
