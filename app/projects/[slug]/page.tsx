@@ -16,7 +16,7 @@ export default async function Page({ params }) {
 
   return (
     <div>
-      <Header data={data} />
+      <Header />
 
       <ProjectPage data={data} project={project} />
 

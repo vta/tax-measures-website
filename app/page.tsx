@@ -11,7 +11,7 @@ export default async function Page() {
 
   return (
     <div>
-      <Header data={data} />
+      <Header />
 
       <HomePage data={data} />
 

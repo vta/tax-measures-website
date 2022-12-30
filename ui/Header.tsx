@@ -1,19 +1,17 @@
-'use client';
+'use server';
 
-import { useState } from 'react';
 import Image from 'next/image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 import { sumBy } from 'lodash';
 import moment from 'moment';
-import Button from 'react-bootstrap/Button';
+
+import { fetchData } from '#/lib/api.js';
 import { formatCurrencyMillions } from '#/lib/formatters.js';
 import { getCurrentFiscalYear, findLatestYear } from '#/lib/util.js';
-import { AboutModal } from '#/ui/AboutModal';
 import { FaqTerm } from '#/ui/FaqTerm';
+import { AboutButton } from '#/ui/AboutButton';
 
-export const Header = ({ data }) => {
-  const [aboutModalShow, setAboutModalShow] = useState(false);
+export const Header = async () => {
+  const data = await fetchData();
 
   const currentFiscalYear = getCurrentFiscalYear();
   const allocationsThroughTwoYearsIntoTheFuture = data.allocations.filter(
@@ -139,23 +137,8 @@ export const Header = ({ data }) => {
         </div>
       </div>
       <div className="col-md-2 d-flex align-items-center justify-content-center d-print-none">
-        <Button
-          onClick={() => setAboutModalShow(true)}
-          variant="primary"
-          size="lg"
-          title="About Measure B"
-          className="mb-2 mt-2"
-        >
-          <FontAwesomeIcon icon={faQuestion} className="mr-2" />
-          <span>About</span>
-        </Button>
+        <AboutButton data={data} />
       </div>
-
-      <AboutModal
-        faqs={data.faqs}
-        show={aboutModalShow}
-        onHide={() => setAboutModalShow(false)}
-      />
     </div>
   );
 };
