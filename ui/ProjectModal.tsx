@@ -4,8 +4,6 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { sortBy } from 'lodash';
 import { getGranteeByProject } from '#/lib/util.js';
-import { PrintButton } from '#/ui/PrintButton';
-import { ShareButton } from '#/ui/ShareButton';
 import { ProjectsTable } from '#/ui/ProjectsTable';
 
 export const ProjectModal = ({
@@ -61,8 +59,6 @@ export const ProjectModal = ({
     >
       <Modal.Body>{renderModalBody()}</Modal.Body>
       <Modal.Footer className="d-print-none">
-        <ShareButton className="btn btn-green mr-2" />
-        <PrintButton className="btn btn-green mr-2" />
         <Button onClick={handleHide} className="btn-secondary">
           Close
         </Button>
