@@ -1,6 +1,7 @@
 'use client';
 
-/* global window, navigator */
+/* global navigator */
+import { usePathname, useSearchParams } from 'next/navigation';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons';
@@ -11,8 +12,13 @@ import { isMobile } from '#/lib/util.js';
 import { event } from '#/lib/gtag.js';
 
 export const ShareButton = ({ className }) => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const searchString = searchParams.toString();
   const shareTitle = '2016 Measure B';
-  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+  const shareUrl = `https://2016measureb.vta.org${pathname}${
+    searchString ? '?' + searchString : ''
+  }`;
   const emailShareUrl = `mailto:?subject=2016%20Measure%20B&body=${encodeURIComponent(
     shareUrl
   )}`;
