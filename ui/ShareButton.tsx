@@ -12,7 +12,7 @@ import { event } from '#/lib/gtag.js';
 
 export const ShareButton = ({ className }) => {
   const shareTitle = '2016 Measure B';
-  const shareUrl = window.location.href;
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
   const emailShareUrl = `mailto:?subject=2016%20Measure%20B&body=${encodeURIComponent(
     shareUrl
   )}`;
@@ -57,7 +57,9 @@ export const ShareButton = ({ className }) => {
             </span>
           </CopyToClipboard>
         </Dropdown.Item>
-        {isMobile(navigator.userAgent) && (
+        {isMobile(
+          typeof navigator !== 'undefined' ? navigator.userAgent : ''
+        ) && (
           <Dropdown.Item
             href={emailShareUrl}
             onClick={() => {

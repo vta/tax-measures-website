@@ -107,13 +107,13 @@ export const ProjectPage = async ({ projectSlug }) => {
                 )}
                 <div className="project-stat">
                   <b>Grantee:</b>{' '}
-                  {projectGrantee.fields.URL ? (
+                  {projectGrantee?.fields.URL ? (
                     <a href={projectGrantee.fields.URL}>
                       {projectGrantee.fields.Name}{' '}
                       <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
                     </a>
                   ) : (
-                    projectGrantee.fields.Name
+                    projectGrantee?.fields.Name ?? 'None'
                   )}
                 </div>
               </div>
