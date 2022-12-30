@@ -1,80 +1,39 @@
-'use client';
+'use server';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import moment from 'moment';
-import ListGroup from 'react-bootstrap/ListGroup';
-import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faChevronUp,
-  faChevronDown,
   faExternalLinkAlt,
   faChevronLeft,
 } from '@fortawesome/free-solid-svg-icons';
-import { SlideDown } from 'react-slidedown';
-import { compact, flatMap, sortBy, sumBy, uniq } from 'lodash';
+import { compact, flatMap, kebabCase, uniq } from 'lodash';
+
+import { fetchData } from '#/lib/api.js';
 import { getDocumentById, getGranteeByProject } from '#/lib/util.js';
-import { formatCurrency, formatProjectUrl } from '#/lib/formatters.js';
-import { DocumentLink } from '#/ui/DocumentLink';
+import { formatProjectUrl } from '#/lib/formatters.js';
+import { AllocationsTable } from '#/ui/AllocationsTable';
+import { AwardsTable } from '#/ui/AwardsTable';
+import { DocumentsList } from '#/ui/DocumentsList';
+import { ExpendituresTable } from '#/ui/ExpendituresTable';
 import { PrintButton } from '#/ui/PrintButton';
 import { ShareButton } from '#/ui/ShareButton';
 import { ProjectMap } from '#/ui/ProjectMap';
 
-const Documents = ({ documents }) => {
-  const [slidedownOpen, setSlidedownOpen] = useState(false);
-  if (documents.length === 0) {
-    return 'None';
-  }
-
-  const sortedDocuments = sortBy(documents, 'createdTime').reverse();
-
-  return (
-    <>
-      <ListGroup className="small-list-group">
-        {sortedDocuments.slice(0, 2).map((document) => (
-          <ListGroup.Item key={document.id}>
-            <DocumentLink document={document} />
-          </ListGroup.Item>
-        ))}
-        {sortedDocuments.length > 2 && (
-          <SlideDown className={'my-dropdown-slidedown'}>
-            {slidedownOpen
-              ? sortedDocuments.slice(2).map((document) => (
-                  <ListGroup.Item key={document.id}>
-                    <DocumentLink document={document} />
-                  </ListGroup.Item>
-                ))
-              : null}
-          </SlideDown>
-        )}
-      </ListGroup>
-      {sortedDocuments.length > 2 && (
-        <button
-          onClick={() => setSlidedownOpen(!slidedownOpen)}
-          className="btn btn-primary btn-sm mt-2"
-        >
-          {slidedownOpen ? (
-            <>
-              <FontAwesomeIcon icon={faChevronUp} className="mr-2" />
-              Show Fewer
-            </>
-          ) : (
-            <>
-              <FontAwesomeIcon icon={faChevronDown} className="mr-2" />
-              Show More
-            </>
-          )}
-        </button>
-      )}
-    </>
+export const ProjectPage = async ({ projectSlug }) => {
+  const {
+    allocations,
+    awards,
+    documents,
+    grantees,
+    expenditures,
+    projects,
+    geojsons,
+  } = await fetchData();
+  const project = projects.find(
+    (project) => kebabCase(project.fields.Name) === projectSlug
   );
-};
 
-export const ProjectPage = ({
-  project,
-  data: { allocations, awards, documents, grantees, expenditures, geojsons },
-}) => {
   if (!project) {
     return null;
   }
@@ -98,115 +57,6 @@ export const ProjectPage = ({
   const projectExpenditures = project.fields.Expenditures
     ? expenditures.filter((p) => project.fields.Expenditures.includes(p.id))
     : [];
-
-  const renderAllocations = () => {
-    if (projectAllocations.length === 0) {
-      return 'None';
-    }
-
-    return (
-      <Table responsive size="sm" className="small-table">
-        <thead>
-          <tr>
-            <th style={{ width: '33.3%' }}>Fiscal Year</th>
-            <th style={{ width: '33.3%' }}>Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          {projectAllocations.map((allocation) => (
-            <tr key={allocation.id}>
-              <td>{allocation.fields['Available Start']}</td>
-              <td>{formatCurrency(allocation.fields.Amount)}</td>
-            </tr>
-          ))}
-        </tbody>
-        {projectAllocations.length > 1 && (
-          <tfoot>
-            <tr>
-              <th scope="row">Total</th>
-              <th>
-                {formatCurrency(sumBy(projectAllocations, 'fields.Amount'))}
-              </th>
-            </tr>
-          </tfoot>
-        )}
-      </Table>
-    );
-  };
-
-  const renderAwards = () => {
-    if (projectAwards.length === 0) {
-      return 'None';
-    }
-
-    return (
-      <Table responsive size="sm" className="small-table">
-        <thead>
-          <tr>
-            <th style={{ width: '33.3%' }}>Date</th>
-            <th style={{ width: '66.6%' }}>Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          {projectAwards.map((award) => (
-            <tr key={award.id}>
-              <td>{award.fields.Date}</td>
-              <td>{formatCurrency(award.fields['Award Amount'])}</td>
-            </tr>
-          ))}
-        </tbody>
-        {projectAwards.length > 1 && (
-          <tfoot>
-            <tr>
-              <th scope="row">Total</th>
-              <th>
-                {formatCurrency(sumBy(projectAwards, 'fields.Award Amount'))}
-              </th>
-              <th></th>
-            </tr>
-          </tfoot>
-        )}
-      </Table>
-    );
-  };
-
-  const renderExpenditures = () => {
-    if (projectExpenditures.length === 0) {
-      return 'None';
-    }
-
-    return (
-      <Table responsive size="sm" className="small-table">
-        <thead>
-          <tr>
-            <th style={{ width: '33.3%' }}>Fiscal Year</th>
-            <th style={{ width: '33.3%' }}>Amount</th>
-            <th style={{ width: '33.3%' }}>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {projectExpenditures.map((expenditure) => (
-            <tr key={expenditure.id}>
-              <td>{expenditure.fields['Fiscal Year']}</td>
-              <td>{formatCurrency(expenditure.fields.Amount)}</td>
-              <td>{expenditure.fields['Expenditure Description']}</td>
-            </tr>
-          ))}
-        </tbody>
-        {projectExpenditures.length > 1 && (
-          <tfoot>
-            <tr>
-              <th scope="row">Total</th>
-              <th>
-                {formatCurrency(sumBy(projectExpenditures, 'fields.Amount'))}
-              </th>
-              <th></th>
-            </tr>
-          </tfoot>
-        )}
-      </Table>
-    );
-  };
 
   const projectUrl = formatProjectUrl(project, projectGrantee);
 
@@ -278,17 +128,19 @@ export const ProjectPage = ({
               </div>
             </div>
             <div className="project-stat">
-              <b>Allocations:</b> {renderAllocations()}
+              <b>Allocations:</b>{' '}
+              <AllocationsTable allocations={projectAllocations} />
             </div>
             <div className="project-stat">
-              <b>Awards:</b> {renderAwards()}
+              <b>Awards:</b> <AwardsTable awards={projectAwards} />
             </div>
             <div className="project-stat">
-              <b>Expenditures:</b> {renderExpenditures()}
+              <b>Expenditures:</b>{' '}
+              <ExpendituresTable expenditures={projectExpenditures} />
             </div>
             <div className="project-stat">
               <b>Related Documents:</b>{' '}
-              <Documents documents={projectDocuments} />
+              <DocumentsList documents={projectDocuments} />
             </div>
             <div className="py-2">
               <small>
@@ -306,15 +158,6 @@ export const ProjectPage = ({
             </div>
           </div>
         </div>
-        <style jsx>{`
-          .table-small td {
-            font-size: 12px;
-          }
-
-          .project-stat {
-            margin-top: 6px;
-          }
-        `}</style>
       </div>
     </div>
   );

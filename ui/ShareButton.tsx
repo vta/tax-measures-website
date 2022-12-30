@@ -1,3 +1,5 @@
+'use client';
+
 /* global window, navigator */
 import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

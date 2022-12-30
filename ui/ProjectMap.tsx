@@ -1,3 +1,5 @@
+'use client';
+
 import ReactMapGL, { NavigationControl } from 'react-map-gl';
 import { MapLayer } from '#/ui/MapLayer';
 import { getViewport } from '#/lib/util.js';

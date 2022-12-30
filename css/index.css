@@ -173,6 +173,10 @@ a.card {
   font-size: 18px;
 }
 
+.project-stat {
+  margin-top: 6px;
+}
+
 .number-list {
   -ms-flex-negative: 0;
   flex-shrink: 0;
