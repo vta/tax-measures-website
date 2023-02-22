@@ -31,7 +31,7 @@ export const ProjectPage = async ({ projectSlug }) => {
     geojsons,
   } = await fetchData();
   const project = projects.find(
-    (project) => kebabCase(project.fields.Name) === projectSlug
+    (project) => kebabCase(project?.fields.Name) === projectSlug
   );
 
   if (!project) {

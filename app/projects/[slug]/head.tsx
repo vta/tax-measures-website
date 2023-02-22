@@ -7,7 +7,7 @@ import { NextSeo } from 'next-seo';
 export default async function Head({ params }) {
   const data = await fetchData();
   const project = data.projects.find(
-    (project) => kebabCase(project.fields.Name) === params.slug
+    (project) => kebabCase(project?.fields.Name) === params.slug
   );
 
   return (
@@ -15,13 +15,13 @@ export default async function Head({ params }) {
       <DefaultTags />
       <NextSeo
         useAppDir={true}
-        title={`${project.fields.Name} | 2016 Measure B`}
-        description={`${project.fields.Name}, a 2016 Measure B project.`}
+        title={`${project?.fields.Name} | 2016 Measure B`}
+        description={`${project?.fields.Name}, a 2016 Measure B project.`}
         canonical={`https://2016measureb.vta.org/projects/${params.slug}/`}
         openGraph={{
           url: `https://2016measureb.vta.org/projects/${params.slug}/`,
           title: '2016 Measure B',
-          description: `${project.fields.Name}, a 2016 Measure B project.`,
+          description: `${project?.fields.Name}, a 2016 Measure B project.`,
           images: [
             {
               url: 'https://2016measureb.vta.org/meta/measureb-logo-square.png',
