@@ -10,7 +10,7 @@ import { getCurrentFiscalYear, findLatestYear } from '#/lib/util.js';
 import { FaqTerm } from '#/ui/FaqTerm';
 import { AboutButton } from '#/ui/AboutButton';
 
-export const Header = async () => {
+export async function Header() {
   const data = await fetchData();
 
   const currentFiscalYear = getCurrentFiscalYear();
@@ -141,4 +141,4 @@ export const Header = async () => {
       </div>
     </div>
   );
-};
+}

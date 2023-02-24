@@ -3,7 +3,7 @@
 import { fetchData } from '#/lib/api.js';
 import { HomePageData } from '#/ui/HomepageData';
 
-export const HomePage = async () => {
+export async function HomePage() {
   const data = await fetchData();
 
   return (
@@ -11,4 +11,4 @@ export const HomePage = async () => {
       <HomePageData data={data} />
     </div>
   );
-};
+}

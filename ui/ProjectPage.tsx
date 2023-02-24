@@ -20,7 +20,7 @@ import { PrintButton } from '#/ui/PrintButton';
 import { ShareButton } from '#/ui/ShareButton';
 import { ProjectMap } from '#/ui/ProjectMap';
 
-export const ProjectPage = async ({ projectSlug }) => {
+export async function ProjectPage({ projectSlug }) {
   const {
     allocations,
     awards,
@@ -161,4 +161,4 @@ export const ProjectPage = async ({ projectSlug }) => {
       </div>
     </div>
   );
-};
+}
