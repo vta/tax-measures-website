@@ -123,6 +123,10 @@ a.card {
 }
 
 .logo {
+  height: 70px;
+}
+
+.home-logo {
   height: 90px;
   width: 111px;
 }
@@ -192,6 +196,9 @@ a.card {
 
 @media screen and (min-width: 768px) {
   .logo {
+    height: 80px;
+  }
+  .home-logo {
     height: 120px;
     width: 148px;
   }

@@ -1,12 +1,4 @@
-'use client';
-
-import { useState } from 'react';
-
-import { AboutModal } from '#/ui/AboutModal';
-
-export const IntroSection = ({ data }) => {
-  const [aboutModalShow, setAboutModalShow] = useState(false);
-
+export const IntroSection = () => {
   return (
     <div className="row mb-3">
       <div className="col-lg-6 offset-lg-3">
@@ -27,12 +19,6 @@ export const IntroSection = ({ data }) => {
           </div>
         </div>
       </div>
-
-      <AboutModal
-        faqs={data.faqs}
-        show={aboutModalShow}
-        onHide={() => setAboutModalShow(false)}
-      />
     </div>
   );
 };

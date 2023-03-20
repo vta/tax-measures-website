@@ -120,7 +120,7 @@ export const HomePageData = ({ data }) => {
         </div>
       </div>
 
-      {!results && <IntroSection data={data} />}
+      {!results && <IntroSection />}
 
       <Loading loading={loading} />
 
