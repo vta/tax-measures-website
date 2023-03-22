@@ -1,6 +1,3 @@
-import { kebabCase } from 'lodash';
-
-import { fetchData } from '#/lib/api.js';
 import { Footer } from '#/ui/Footer';
 import { ProjectPage } from '#/ui/ProjectPage';
 import { Header } from '#/ui/Header';
@@ -15,12 +12,4 @@ export default function Page({ params }) {
       <Footer />
     </div>
   );
-}
-
-export async function generateStaticParams() {
-  const data = await fetchData();
-
-  return data.projects.map((project) => ({
-    slug: kebabCase(project.fields.Name),
-  }));
 }
