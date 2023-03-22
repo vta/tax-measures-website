@@ -3,12 +3,17 @@ import { kebabCase } from 'lodash';
 import { fetchData } from '#/lib/api';
 import { DefaultTags } from '#/ui/DefaultTags';
 import { NextSeo } from 'next-seo';
+import { notFound } from 'next/navigation';
 
 export default async function Head({ params }) {
   const data = await fetchData();
   const project = data.projects.find(
     (project) => kebabCase(project?.fields.Name) === params.slug
   );
+
+  if (!project) {
+    notFound();
+  }
 
   return (
     <>
