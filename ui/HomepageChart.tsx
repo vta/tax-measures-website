@@ -14,7 +14,7 @@ export const HomepageChart = ({
 }) => {
   const actualAllocatedGroups = groupBy(
     allocations,
-    (allocation) => allocation.fields.ParentCategoryName
+    (allocation) => allocation.fields.ParentCategoryName,
   );
 
   const actualAllocateds = parentCategories.map((category) => {
@@ -29,13 +29,13 @@ export const HomepageChart = ({
   const remainingAllocateds = parentCategories.map(
     (category, index) =>
       (category.fields['Ballot Allocation'] || actualAllocateds[index]) -
-      actualAllocateds[index]
+      actualAllocateds[index],
   );
   const total = sumCurrency(
     parentCategories.map(
       (category, index) =>
-        category.fields['Ballot Allocation'] || actualAllocateds[index]
-    )
+        category.fields['Ballot Allocation'] || actualAllocateds[index],
+    ),
   );
 
   return (
@@ -64,31 +64,11 @@ export const HomepageChart = ({
           plotOptions: {
             bar: {
               horizontal: true,
-              dataLabels: {
-                position: 'top',
-              },
             },
           },
           colors: ['#BAD739', '#BDBEBD'],
           dataLabels: {
-            enabled: true,
-            textAnchor: 'start',
-            offsetX: 25,
-            formatter: (value, data) => {
-              const { series } = data.w.config;
-              const percent = formatPercent(
-                (series[0].data[data.dataPointIndex] /
-                  (series[0].data[data.dataPointIndex] +
-                    series[1].data[data.dataPointIndex])) *
-                  100
-              );
-              return percent;
-            },
-            style: {
-              fontSize: '14px',
-              colors: ['#4C4D55'],
-            },
-            enabledOnSeries: [1],
+            enabled: false,
           },
           grid: {
             yaxis: {
@@ -109,7 +89,18 @@ export const HomepageChart = ({
           },
           yaxis: {
             labels: {
-              maxWidth: 180,
+              maxWidth: 220,
+              formatter: (value, opt) => {
+                let percent;
+                if (opt?.dataPointIndex >= 0) {
+                  percent = formatPercent(
+                    opt.w.globals?.seriesPercent?.[opt.seriesIndex][
+                      opt.dataPointIndex
+                    ],
+                  );
+                }
+                return `${value} - ${percent}`;
+              },
             },
           },
           tooltip: {
@@ -120,10 +111,10 @@ export const HomepageChart = ({
                   data.series[1][data.dataPointIndex];
                 const percent = formatPercent(
                   (data.series[data.seriesIndex][data.dataPointIndex] / total) *
-                    100
+                    100,
                 );
                 return `${formatCurrencyWithUnit(
-                  value
+                  value,
                 )} (${percent} of ${formatCurrencyWithUnit(total)})`;
               },
             },
