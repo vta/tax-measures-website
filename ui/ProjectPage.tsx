@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import moment from 'moment';
+import { notFound } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faExternalLinkAlt,
@@ -31,11 +32,11 @@ export async function ProjectPage({ projectSlug }) {
     geojsons,
   } = await fetchData();
   const project = projects.find(
-    (project) => kebabCase(project?.fields.Name) === projectSlug
+    (project) => kebabCase(project?.fields.Name) === projectSlug,
   );
 
   if (!project) {
-    return null;
+    return notFound();
   }
 
   const projectAllocations = project.fields.Allocations
@@ -48,10 +49,10 @@ export async function ProjectPage({ projectSlug }) {
     uniq([
       ...(project.fields.Documents || []),
       ...flatMap(projectAwards, 'fields.Documents'),
-    ])
+    ]),
   );
   const projectDocuments = projectDocumentIds.map((id) =>
-    getDocumentById(id, documents)
+    getDocumentById(id, documents),
   );
   const projectGrantee = getGranteeByProject(project, grantees);
   const projectExpenditures = project.fields.Expenditures
@@ -146,7 +147,7 @@ export async function ProjectPage({ projectSlug }) {
               <small>
                 Last Modified:{' '}
                 {moment(project.fields['Last Modified']).format(
-                  'MMMM Do YYYY, h:mm a'
+                  'MMMM Do YYYY, h:mm a',
                 )}
               </small>
             </div>

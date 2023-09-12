@@ -27,7 +27,6 @@
     "mapbox-gl": "^2.15.0",
     "moment": "^2.29.4",
     "next": "13.4.13",
-    "next-seo": "^6.1.0",
     "react": "18.2.0",
     "react-apexcharts": "^1.4.1",
     "react-bootstrap": "^1.6.1",

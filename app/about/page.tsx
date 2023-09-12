@@ -1,11 +1,44 @@
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import type { Metadata } from 'next';
 
 import { Footer } from '#/ui/Footer';
 import { Header } from '#/ui/Header';
 
 import { fetchFaq } from '#/lib/api';
+
+export const metadata: Metadata = {
+  title: 'About 2016 Measure B',
+  description:
+    'A 30-year, half-cent countywide sales tax to enhance transit, highways, expressways and active transportation (bicycles, pedestrians and complete streets). The measure passed by nearly 72%, the highest level of support for any Santa Clara County transportation tax.',
+  openGraph: {
+    title: 'About 2016 Measure B',
+    description:
+      'A 30-year, half-cent countywide sales tax to enhance transit, highways, expressways and active transportation (bicycles, pedestrians and complete streets). The measure passed by nearly 72%, the highest level of support for any Santa Clara County transportation tax.',
+    url: 'https://2016measureb.vta.org',
+    siteName: '2016 Measure B',
+    images: [
+      {
+        url: 'https://2016measureb.vta.org/meta/measureb-logo-square.png',
+        width: 1200,
+        height: 1200,
+        alt: '2016 Measure B',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About 2016 Measure B',
+    description:
+      'A 30-year, half-cent countywide sales tax to enhance transit, highways, expressways and active transportation (bicycles, pedestrians and complete streets). The measure passed by nearly 72%, the highest level of support for any Santa Clara County transportation tax.',
+    creator: '@VTA',
+    site: '@VTA',
+    images: ['https://2016measureb.vta.org/meta/measureb-logo-square.png'],
+  },
+};
 
 const Faq = ({ faq }) => {
   return (
