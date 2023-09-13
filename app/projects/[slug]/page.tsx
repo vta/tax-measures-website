@@ -28,7 +28,7 @@ export async function generateMetadata(
     openGraph: {
       title: project?.fields.Name,
       description: `${project?.fields.Name} 2016 Measure B details`,
-      url: `https://2016measureb.vta.org/${params.slug}/}`,
+      url: `https://2016measureb.vta.org/projects/${params.slug}`,
       siteName: '2016 Measure B',
       images: [
         {

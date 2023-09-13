@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     title: 'About 2016 Measure B',
     description:
       'A 30-year, half-cent countywide sales tax to enhance transit, highways, expressways and active transportation (bicycles, pedestrians and complete streets). The measure passed by nearly 72%, the highest level of support for any Santa Clara County transportation tax.',
-    url: 'https://2016measureb.vta.org',
+    url: 'https://2016measureb.vta.org/about',
     siteName: '2016 Measure B',
     images: [
       {
