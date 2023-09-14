@@ -18,7 +18,7 @@ export const Footer = () => {
         layout:
           window.google.translate.TranslateElement.FloatPosition.TOP_RIGHT,
       },
-      'google_translate_element'
+      'google_translate_element',
     );
   };
 
@@ -26,7 +26,7 @@ export const Footer = () => {
     const addScript = document.createElement('script');
     addScript.setAttribute(
       'src',
-      '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'
+      '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit',
     );
     document.body.append(addScript);
     window.googleTranslateElementInit = googleTranslateElementInit;
@@ -66,11 +66,9 @@ export const Footer = () => {
           <div className="col-md-3 mb-3">
             Santa Clara Valley Transportation Authority
             <br />
-            Community Outreach
-            <br />
-            (408) 321-7575
-            <br />
-            community.outreach@vta.org
+            <a href="mailto:2016MeasureB@vta.org" className="text-white">
+              2016MeasureB@vta.org
+            </a>
             <br />
             3331 N First Street
             <br />
@@ -90,9 +88,6 @@ export const Footer = () => {
                 <a href="http://santaclaravta.iqm2.com/Citizens/Board/1100-2016-Measure-B-Citizens-Oversight-Committee">
                   Oversight Committee
                 </a>
-              </li>
-              <li>
-                <a href="https://www.vta.org/about/contact">Contact</a>
               </li>
               <li>
                 <a href="https://www.vta.org/privacy-policy">Privacy Policy</a>
