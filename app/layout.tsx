@@ -5,7 +5,6 @@ import { Analytics } from '#/ui/Analytics';
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import 'react-slidedown/lib/slidedown.css';
 
 import '#/css/print.css';
 import '#/css/index.css';
