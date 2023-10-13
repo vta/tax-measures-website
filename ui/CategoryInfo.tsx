@@ -25,7 +25,7 @@ export const CategoryInfo = ({ data, categoryCard }) => {
       }
 
       return false;
-    }
+    },
   );
 
   const renderDocuments = () => {
@@ -51,11 +51,11 @@ export const CategoryInfo = ({ data, categoryCard }) => {
 
     const annualReports = data.documents.filter(
       (document) =>
-        document.fields['Document Type'] === 'Administration Annual Report'
+        document.fields['Document Type'] === 'Administration Annual Report',
     );
     const auditReports = data.documents.filter(
       (document) =>
-        document.fields['Document Type'] === 'Administration Audit Report'
+        document.fields['Document Type'] === 'Administration Audit Report',
     );
 
     return (
@@ -109,7 +109,7 @@ export const CategoryInfo = ({ data, categoryCard }) => {
             </div>
             <div>
               <h3>{categoryCard.key}</h3>
-              <ReactMarkdown linkTarget="_blank" remarkPlugins={[breaks]}>
+              <ReactMarkdown remarkPlugins={[breaks]}>
                 {categoryCard.description}
               </ReactMarkdown>
               <div>
@@ -117,10 +117,10 @@ export const CategoryInfo = ({ data, categoryCard }) => {
                 {moment(
                   findLatestYear(
                     allocationsThroughTwoYearsIntoTheFuture.map((r) =>
-                      Number.parseInt(r.fields['Available Start'], 10)
-                    )
+                      Number.parseInt(r.fields['Available Start'], 10),
+                    ),
                   ),
-                  'YYYY'
+                  'YYYY',
                 )
                   .date('30')
                   .month('Junes')
@@ -130,13 +130,13 @@ export const CategoryInfo = ({ data, categoryCard }) => {
                   {formatCurrencyMillions(
                     sumBy(
                       allocationsThroughTwoYearsIntoTheFuture,
-                      'fields.Amount'
-                    )
+                      'fields.Amount',
+                    ),
                   )}
                   m
                 </div>
               </div>
-              <ReactMarkdown linkTarget="_blank" remarkPlugins={[breaks]}>
+              <ReactMarkdown remarkPlugins={[breaks]}>
                 {categoryCard.description2}
               </ReactMarkdown>
               {renderDocuments()}
