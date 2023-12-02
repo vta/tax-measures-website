@@ -23,6 +23,9 @@ export const Footer = () => {
   };
 
   useEffect(() => {
+    if (window.googleTranslateElementInit) {
+      return;
+    }
     const addScript = document.createElement('script');
     addScript.setAttribute(
       'src',
