@@ -11,18 +11,27 @@ export const AwardsTable = ({ awards }) => {
   }
 
   return (
-    <Table responsive size="sm" className="small-table">
+    <Table
+      responsive
+      size="sm"
+      className="small-table"
+      style={{ width: '300px' }}
+    >
       <thead>
         <tr>
-          <th style={{ width: '33.3%' }}>Date</th>
-          <th style={{ width: '66.6%' }}>Amount</th>
+          <th style={{ width: '50%' }}>Date</th>
+          <th style={{ width: '50%' }} className="text-right">
+            Amount
+          </th>
         </tr>
       </thead>
       <tbody>
         {awards.map((award) => (
           <tr key={award.id}>
             <td>{award.fields.Date}</td>
-            <td>{formatCurrency(award.fields['Award Amount'])}</td>
+            <td className="text-right">
+              {formatCurrency(award.fields['Award Amount'])}
+            </td>
           </tr>
         ))}
       </tbody>
@@ -31,7 +40,7 @@ export const AwardsTable = ({ awards }) => {
           <tr>
             <th scope="row">Total</th>
             <th>{formatCurrency(sumBy(awards, 'fields.Award Amount'))}</th>
-            <th></th>
+            <th className="text-right"></th>
           </tr>
         </tfoot>
       )}

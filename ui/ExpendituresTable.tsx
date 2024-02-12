@@ -11,11 +11,18 @@ export const ExpendituresTable = ({ expenditures }) => {
   }
 
   return (
-    <Table responsive size="sm" className="small-table">
+    <Table
+      responsive
+      size="sm"
+      className="small-table"
+      style={{ width: '450px' }}
+    >
       <thead>
         <tr>
           <th style={{ width: '33.3%' }}>Fiscal Year</th>
-          <th style={{ width: '33.3%' }}>Amount</th>
+          <th style={{ width: '33.3%' }} className="text-right">
+            Amount
+          </th>
           <th style={{ width: '33.3%' }}>Description</th>
         </tr>
       </thead>
@@ -23,7 +30,9 @@ export const ExpendituresTable = ({ expenditures }) => {
         {expenditures.map((expenditure) => (
           <tr key={expenditure.id}>
             <td>{expenditure.fields['Fiscal Year']}</td>
-            <td>{formatCurrency(expenditure.fields.Amount)}</td>
+            <td className="text-right">
+              {formatCurrency(expenditure.fields.Amount)}
+            </td>
             <td>{expenditure.fields['Expenditure Description']}</td>
           </tr>
         ))}
@@ -32,7 +41,9 @@ export const ExpendituresTable = ({ expenditures }) => {
         <tfoot>
           <tr>
             <th scope="row">Total</th>
-            <th>{formatCurrency(sumBy(expenditures, 'fields.Amount'))}</th>
+            <th className="text-right">
+              {formatCurrency(sumBy(expenditures, 'fields.Amount'))}
+            </th>
             <th></th>
           </tr>
         </tfoot>
