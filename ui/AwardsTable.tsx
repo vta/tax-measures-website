@@ -39,8 +39,9 @@ export const AwardsTable = ({ awards }) => {
         <tfoot>
           <tr>
             <th scope="row">Total</th>
-            <th>{formatCurrency(sumBy(awards, 'fields.Award Amount'))}</th>
-            <th className="text-right"></th>
+            <th className="text-right">
+              {formatCurrency(sumBy(awards, 'fields.Award Amount'))}
+            </th>
           </tr>
         </tfoot>
       )}
