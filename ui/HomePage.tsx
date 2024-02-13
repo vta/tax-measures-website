@@ -1,4 +1,5 @@
 'use server';
+import { Suspense } from 'react';
 
 import { fetchData } from '#/lib/api.js';
 import { HomePageData } from '#/ui/HomepageData';
@@ -8,7 +9,9 @@ export async function HomePage() {
 
   return (
     <div className="container-fluid main-container">
-      <HomePageData data={data} />
+      <Suspense>
+        <HomePageData data={data} />
+      </Suspense>
     </div>
   );
 }
