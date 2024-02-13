@@ -15,7 +15,7 @@ export const AwardsTable = ({ awards }) => {
       responsive
       size="sm"
       className="small-table"
-      style={{ width: '300px' }}
+      style={{ maxWidth: '300px' }}
     >
       <thead>
         <tr>
