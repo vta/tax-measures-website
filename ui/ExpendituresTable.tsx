@@ -15,15 +15,15 @@ export const ExpendituresTable = ({ expenditures }) => {
       responsive
       size="sm"
       className="small-table"
-      style={{ width: '450px' }}
+      style={{ maxWidth: '750px' }}
     >
       <thead>
         <tr>
-          <th style={{ width: '33.3%' }}>Fiscal Year</th>
-          <th style={{ width: '33.3%' }} className="text-right">
+          <th style={{ width: '20%' }}>Fiscal Year</th>
+          <th style={{ width: '20%' }} className="text-right">
             Amount
           </th>
-          <th style={{ width: '33.3%' }}>Description</th>
+          <th style={{ width: '60%' }}>Description</th>
         </tr>
       </thead>
       <tbody>
