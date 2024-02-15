@@ -1,7 +1,6 @@
 import { Slide } from 'react-slideshow-image';
 
 export const Slideshow = ({ data }) => {
-  console.log(data.images);
   return (
     <Slide
       autoplay={false}
