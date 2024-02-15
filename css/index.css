@@ -200,7 +200,7 @@ a.card {
   align-items: end;
   justify-content: center;
   background-size: cover;
-  height: 440px;
+  height: 250px;
 }
 
 .react-slideshow-container .each-slide-effect .caption {
@@ -210,7 +210,6 @@ a.card {
   color: #FFFFFF;
   text-align: center;
 }
-
 
 .react-slideshow-container button.default-nav:first-of-type {
   margin: 0;
@@ -230,6 +229,12 @@ a.card {
   position: absolute;
 }
 
+@media screen and (min-width: 576px) {
+  .react-slideshow-container .each-slide-effect > div {
+    height: 350px;
+  }
+}
+
 @media screen and (min-width: 768px) {
   .logo {
     height: 80px;
@@ -247,5 +252,9 @@ a.card {
   }
   .header-stat-label {
     font-size: 21px;
+  }
+
+  .react-slideshow-container .each-slide-effect > div {
+    height: 445px;
   }
 }

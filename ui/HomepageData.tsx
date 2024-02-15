@@ -142,22 +142,11 @@ export const HomePageData = ({ data }) => {
         <div className="card mb-3">
           <div className="card-body card-graph">
             <div className="row">
-              <div className="col-md-6">
+              <div className="col-lg-6">
                 <HomepageChart data={data} />
               </div>
-              <div className="col-md-6">
-                {results ? (
-                  data.geojsons && (
-                    <ProjectsMap
-                      data={data}
-                      projectsToMap={data.projects}
-                      setProjectModalProjects={setProjectModalProjects}
-                      height="490px"
-                    />
-                  )
-                ) : (
-                  <Slideshow data={data} />
-                )}
+              <div className="col-lg-6 mt-3 mt-lg-0">
+                <Slideshow data={data} />
               </div>
             </div>
           </div>
