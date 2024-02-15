@@ -13,6 +13,7 @@ import { HomepageChart } from '#/ui/HomepageChart';
 import { IntroSection } from '#/ui/IntroSection';
 import { ProjectsMap } from '#/ui/ProjectsMap';
 import { ProjectModal } from '#/ui/ProjectModal';
+import { Slideshow } from '#/ui/Slideshow';
 import {
   applyFilters,
   updateUrlWithFilters,
@@ -39,12 +40,12 @@ export const HomePageData = ({ data }) => {
           data.expenditures,
           data.projects,
           data.categories,
-          data.grantees
-        )
+          data.grantees,
+        ),
       );
       updateUrlWithFilters(
         filters,
-        (projectModalProjects || []).map((p) => p.id)
+        (projectModalProjects || []).map((p) => p.id),
       );
       setCurrentFilters(filters);
       setLoading(false);
@@ -56,7 +57,7 @@ export const HomePageData = ({ data }) => {
       data.categories,
       data.grantees,
       projectModalProjects,
-    ]
+    ],
   );
 
   const clearSearch = () => {
@@ -72,7 +73,7 @@ export const HomePageData = ({ data }) => {
     } else {
       updateUrlWithFilters(
         currentFilters,
-        projectModalProjects.map((p) => p.id)
+        projectModalProjects.map((p) => p.id),
       );
     }
   }, [projectModalProjects, currentFilters]);
@@ -94,8 +95,8 @@ export const HomePageData = ({ data }) => {
     if (modalProjectIds) {
       setProjectModalProjects(
         modalProjectIds.map((projectId) =>
-          data.projects.find((p) => p.id === projectId)
-        )
+          data.projects.find((p) => p.id === projectId),
+        ),
       );
     }
   }, [searchParams, data.projects]);
@@ -145,13 +146,17 @@ export const HomePageData = ({ data }) => {
                 <HomepageChart data={data} />
               </div>
               <div className="col-md-6">
-                {data.geojsons && (
-                  <ProjectsMap
-                    data={data}
-                    projectsToMap={data.projects}
-                    setProjectModalProjects={setProjectModalProjects}
-                    height="490px"
-                  />
+                {results ? (
+                  data.geojsons && (
+                    <ProjectsMap
+                      data={data}
+                      projectsToMap={data.projects}
+                      setProjectModalProjects={setProjectModalProjects}
+                      height="490px"
+                    />
+                  )
+                ) : (
+                  <Slideshow data={data} />
                 )}
               </div>
             </div>

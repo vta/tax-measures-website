@@ -19,9 +19,6 @@ export async function generateMetadata(
     (project) => kebabCase(project?.fields.Name) === params.slug,
   );
 
-  // access and extend (rather than replace) parent metadata
-  const previousImages = (await parent).openGraph?.images || [];
-
   return {
     title: project?.fields.Name,
     description: `${project?.fields.Name} 2016 Measure B details`,
