@@ -11,7 +11,6 @@ import { Results } from '#/ui/Results';
 import { CategoryCards } from '#/ui/CategoryCards';
 import { HomepageChart } from '#/ui/HomepageChart';
 import { IntroSection } from '#/ui/IntroSection';
-import { ProjectsMap } from '#/ui/ProjectsMap';
 import { ProjectModal } from '#/ui/ProjectModal';
 import { Slideshow } from '#/ui/Slideshow';
 import {

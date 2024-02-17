@@ -54,7 +54,7 @@ export default async function Page() {
 
   return (
     <div>
-      <Header showAboutButton={false} />
+      <Header />
 
       <div className="container  main-container">
         <Link href="/" className="btn btn-primary mt-4">

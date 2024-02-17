@@ -8,7 +8,7 @@ import { fetchData } from '#/lib/api.js';
 import { formatCurrencyMillions } from '#/lib/formatters.js';
 import { getCurrentFiscalYear, findLatestYear } from '#/lib/util.js';
 import { FaqTerm } from '#/ui/FaqTerm';
-import { AboutButton } from '#/ui/AboutButton';
+import { Menu } from '#/ui/Menu';
 
 export async function HomeHeader() {
   const data = await fetchData();
@@ -24,7 +24,7 @@ export async function HomeHeader() {
       }
 
       return false;
-    }
+    },
   );
 
   /* eslint-disable @next/next/no-html-link-for-pages */
@@ -51,7 +51,7 @@ export async function HomeHeader() {
     .max(
       data.revenue
         .filter((r) => r.fields.Date !== undefined)
-        .map((r) => moment(r.fields.Date, 'YYYY-MM-DD'))
+        .map((r) => moment(r.fields.Date, 'YYYY-MM-DD')),
     )
     .format('MMM D, YYYY');
 
@@ -59,7 +59,7 @@ export async function HomeHeader() {
     .max(
       data.expenditures
         .filter((e) => e.fields.Date !== undefined)
-        .map((e) => moment(e.fields.Date, 'YYYY-MM-DD'))
+        .map((e) => moment(e.fields.Date, 'YYYY-MM-DD')),
     )
     .format('MMM D, YYYY');
 
@@ -89,7 +89,7 @@ export async function HomeHeader() {
         <div className="header-stat">
           <div className="header-stat-value">
             {formatCurrencyMillions(
-              sumBy(allocationsThroughTwoYearsIntoTheFuture, 'fields.Amount')
+              sumBy(allocationsThroughTwoYearsIntoTheFuture, 'fields.Amount'),
             )}
           </div>
           <div className="header-stat-label">
@@ -106,10 +106,10 @@ export async function HomeHeader() {
             {moment(
               findLatestYear(
                 allocationsThroughTwoYearsIntoTheFuture.map((r) =>
-                  Number.parseInt(r.fields['Available Start'], 10)
-                )
+                  Number.parseInt(r.fields['Available Start'], 10),
+                ),
               ),
-              'YYYY'
+              'YYYY',
             )
               .date('30')
               .month('Junes')
@@ -136,9 +136,8 @@ export async function HomeHeader() {
           </div>
         </div>
       </div>
-      <div className="col-md-2 d-flex align-items-center justify-content-center d-print-none">
-        <AboutButton />
-      </div>
+      <div className="col-md-1"></div>
+      <Menu />
     </div>
   );
 }

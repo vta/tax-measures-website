@@ -52,7 +52,7 @@ export async function generateMetadata(
 export default function Page({ params }) {
   return (
     <div>
-      <Header showAboutButton={true} />
+      <Header />
 
       <ProjectPage projectSlug={params.slug} />
 

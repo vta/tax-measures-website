@@ -1,10 +1,9 @@
 'use client';
 
 import Image from 'next/image';
+import { Menu } from '#/ui/Menu';
 
-import { AboutButton } from '#/ui/AboutButton';
-
-export function Header({ showAboutButton }) {
+export function Header() {
   /* eslint-disable @next/next/no-html-link-for-pages */
   const LogoLink = () => (
     <a href="/">
@@ -31,9 +30,8 @@ export function Header({ showAboutButton }) {
         <LogoLink />
       </div>
 
-      <div className="col-md-2 d-flex align-items-center justify-content-center d-print-none">
-        {showAboutButton && <AboutButton />}
-      </div>
+      <div className="col-md-1"></div>
+      <Menu />
     </div>
   );
 }

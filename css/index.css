@@ -244,8 +244,8 @@ a.card {
     width: 148px;
   }
   .header-stat {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
   .header-stat-value {
     font-size: 48px;
