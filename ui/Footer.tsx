@@ -36,7 +36,7 @@ export const Footer = () => {
   }, []);
 
   return (
-    <div className="row footer d-print-none">
+    <div className="footer d-print-none">
       <div className="col bg-light-blue text-white pb-4 pt-4 pt-md-5">
         <div className="row">
           <div className="col-md-3 text-center mb-3">
