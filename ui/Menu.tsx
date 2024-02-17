@@ -1,5 +1,4 @@
 'use client';
-import Link from 'next/link';
 import { slide as SlideMenu } from 'react-burger-menu';
 
 import { categoryCards } from '#/lib/category-cards.js';
@@ -56,16 +55,16 @@ var styles = {
 export const Menu = () => {
   return (
     <SlideMenu styles={styles} right>
-      <Link href="/">Home</Link>
-      <Link href="/about">About</Link>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
       <div>Program Categories</div>
       {categoryCards.map(({ key }) => (
-        <Link
+        <a
           className="ml-4"
           href={`/?transactionType=award&grantee=&project=&category=${encodeURIComponent(key)}`}
         >
           {key}
-        </Link>
+        </a>
       ))}
     </SlideMenu>
   );
