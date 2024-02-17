@@ -1,6 +1,3 @@
-import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import type { Metadata } from 'next';
 
 import { Footer } from '#/ui/Footer';
@@ -57,10 +54,6 @@ export default async function Page() {
       <Header />
 
       <div className="container  main-container">
-        <Link href="/" className="btn btn-primary mt-4">
-          <FontAwesomeIcon icon={faChevronLeft} className="mr-2" /> Home
-        </Link>
-
         <div className="card mt-3 mb-5">
           <div className="card-body">
             <h1>About 2016 Measure B</h1>
