@@ -28,6 +28,7 @@ a {
 
 .table {
   color: #4c4d55;
+  width: auto;
 }
 
 h1,
@@ -123,6 +124,10 @@ a.card {
 }
 
 .logo {
+  height: 70px;
+}
+
+.home-logo {
   height: 90px;
   width: 111px;
 }
@@ -173,6 +178,10 @@ a.card {
   font-size: 18px;
 }
 
+.project-stat {
+  margin-top: 6px;
+}
+
 .number-list {
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -186,19 +195,66 @@ a.card {
   text-align: center;
 }
 
+.react-slideshow-container .each-slide-effect > div {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  background-size: cover;
+  height: 250px;
+}
+
+.react-slideshow-container .each-slide-effect .caption {
+  padding: 5px 8px;
+  font-size: 16px;
+  background: rgba(0, 0, 0, 0.5);
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.react-slideshow-container button.default-nav:first-of-type {
+  margin: 0;
+  padding: 0 3px 0 0;
+  border-right: 0;
+  border-top: 0;
+  left: 20px;
+  position: absolute;
+}
+
+.react-slideshow-container button.default-nav:last-of-type {
+  margin: 0;
+  padding: 0 0 0 1px;
+  border-right: 0;
+  border-top: 0;
+  right: 20px;
+  position: absolute;
+}
+
+@media screen and (min-width: 576px) {
+  .react-slideshow-container .each-slide-effect > div {
+    height: 350px;
+  }
+}
+
 @media screen and (min-width: 768px) {
   .logo {
+    height: 80px;
+  }
+  .home-logo {
     height: 120px;
     width: 148px;
   }
   .header-stat {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
   .header-stat-value {
     font-size: 48px;
   }
   .header-stat-label {
     font-size: 21px;
+  }
+
+  .react-slideshow-container .each-slide-effect > div {
+    height: 445px;
   }
 }

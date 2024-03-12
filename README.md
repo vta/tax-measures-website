@@ -2,16 +2,16 @@
 
 ## Setup
 
-Requires [node.js](https://nodejs.org/) and [yarn](https://yarnpkg.com/) to be installed.
+Requires [node.js](https://nodejs.org/)
 
 On OS X:
 
-    brew install node yarn
+    brew install node
 
 
 Install project dependencies:
 
-    yarn
+    npm install
 
 Setup configurtion by creating a `.env` file in the project root with the following:
 
@@ -28,19 +28,19 @@ Setup configurtion by creating a `.env` file in the project root with the follow
 
 Start the development server:
 
-    yarn dev
+    npm run dev
 
 Open http://localhost:3000 in your browser
     
 ## Building a staticly compiled version for production
 
-Follow the setup inistructions above, and then run:
+Follow the setup instructions above, and then run:
 
-    yarn build
+    npm run build
 
 ## Running in production
 
 Runs the built app in production mode:
 
-    yarn start
+    npm start
     
