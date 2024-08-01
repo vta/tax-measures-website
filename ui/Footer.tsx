@@ -37,10 +37,10 @@ export const Footer = () => {
 
   return (
     <div className="footer d-print-none">
-      <div className="col bg-light-blue text-white pb-4 pt-4 pt-md-5">
+      <div className="col bg-white pb-4 pt-4 pt-md-5">
         <div className="row">
           <div className="col-md-3 text-center mb-3">
-            <div className="bg-white p-3 footer-logo mx-auto">
+            <div className="p-3 footer-logo mx-auto">
               <Image
                 src="/images/vta-logo.png"
                 alt="2016 Measure B"
@@ -69,7 +69,7 @@ export const Footer = () => {
           <div className="col-md-3 mb-3">
             Santa Clara Valley Transportation Authority
             <br />
-            <a href="mailto:2016MeasureB@vta.org" className="text-white">
+            <a href="mailto:2016MeasureB@vta.org" className="text-dark">
               2016MeasureB@vta.org
             </a>
             <br />
@@ -124,13 +124,11 @@ export const Footer = () => {
         }
 
         .footer-menu li a {
-          color: #ffffff;
           text-transform: uppercase;
           font-size: 18px;
         }
 
         .footer-icon {
-          color: #ffffff;
           margin-right: 15px;
           font-size: 30px;
         }

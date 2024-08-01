@@ -16,7 +16,7 @@ export const FilterControls = ({
   clearSearch,
 }) => {
   const [transactionType, setTransactionType] = useState(
-    incomingFilters.transactionType || 'award'
+    incomingFilters.transactionType || 'award',
   );
   const [grantee, setGrantee] = useState(incomingFilters.grantee || '');
   const [project, setProject] = useState(incomingFilters.project || '');
@@ -31,7 +31,7 @@ export const FilterControls = ({
 
       handleSearch(filters);
     },
-    [handleSearch]
+    [handleSearch],
   );
 
   useEffect(() => {
@@ -86,7 +86,11 @@ export const FilterControls = ({
       </div>
       <div className="row">
         <div className="col-lg-2 mb-2 mb-lg-0">
+          <label htmlFor="transaction-type" className="sr-only">
+            Transaction Type
+          </label>
           <Select
+            inputId="transaction-type"
             value={
               transactionType && [
                 {
@@ -112,7 +116,11 @@ export const FilterControls = ({
           />
         </div>
         <div className="col-lg-2 mb-2 mb-lg-0">
+          <label htmlFor="program-category" className="sr-only">
+            Program Category
+          </label>
           <Select
+            inputId="program-category"
             value={
               category &&
               category.map((c) => ({
@@ -140,7 +148,11 @@ export const FilterControls = ({
           />
         </div>
         <div className="col-lg-2 mb-2 mb-lg-0">
+          <label htmlFor="grantee" className="sr-only">
+            Grantee
+          </label>
           <Select
+            inputId="grantee"
             value={
               grantee &&
               grantee.map((g) => ({

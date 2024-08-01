@@ -40,8 +40,11 @@ export const metadata: Metadata = {
 const Faq = ({ faq }) => {
   return (
     <>
-      <h4 dangerouslySetInnerHTML={{ __html: faq['faq-question'] }} />
-      <p dangerouslySetInnerHTML={{ __html: faq['faq-answer'] }} />
+      <h2 dangerouslySetInnerHTML={{ __html: faq['faq-question'] }} />
+      <p
+        dangerouslySetInnerHTML={{ __html: faq['faq-answer'] }}
+        className="faq-answer"
+      />
     </>
   );
 };
@@ -58,8 +61,8 @@ export default async function Page() {
           <div className="card-body">
             <h1>About 2016 Measure B</h1>
 
-            <h4>What is 2016 Measure B?</h4>
-            <p>
+            <h2>What is 2016 Measure B?</h2>
+            <p className="faq-answer">
               A 30-year, half-cent countywide sales tax to enhance transit,
               highways, expressways and active transportation (bicycles,
               pedestrians and complete streets). The measure passed by nearly
@@ -74,16 +77,16 @@ export default async function Page() {
               </a>
             </p>
 
-            <h4>What is this website?</h4>
-            <p>
+            <h2>What is this website?</h2>
+            <p className="faq-answer">
               This website is a window into 2016 Measure B revenue and spending.
               You can search, view and share unaudited financial information
               about programs and projects, updated quarterly or as new
               information is released.
             </p>
 
-            <h4>Where can I submit questions or feedback?</h4>
-            <p>
+            <h2>Where can I submit questions or feedback?</h2>
+            <p className="faq-answer">
               Email us at{' '}
               <a href="mailto:2016MeasureB@vta.org">2016MeasureB@vta.org</a>.
             </p>

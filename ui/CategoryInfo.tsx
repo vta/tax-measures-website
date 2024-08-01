@@ -60,7 +60,9 @@ export const CategoryInfo = ({ data, categoryCard }) => {
 
     return (
       <>
-        <h4 className="mt-4">Annual Reports</h4>
+        <div className="mt-4 text-blue" style={{ fontSize: '1.25rem' }}>
+          Annual Reports
+        </div>
         <p>
           The Program Annual Report is developed by VTA staff and details the
           progress of the 2016 Measure B Program every year.
@@ -72,7 +74,9 @@ export const CategoryInfo = ({ data, categoryCard }) => {
             </ListGroup.Item>
           ))}
         </ListGroup>
-        <h4 className="mt-4">Audit Reports</h4>
+        <div className="mt-4 text-blue" style={{ fontSize: '1.25rem' }}>
+          Audit Reports
+        </div>
         <p>
           The Performance Audit Report is conducted by an independent auditor to
           verify VTA compliance with 2016 Measure B, which requires that Program
@@ -98,7 +102,7 @@ export const CategoryInfo = ({ data, categoryCard }) => {
             <div className="mr-3 flex-shrink-0">
               <Image
                 src={`/images/programs/${categoryCard.image}`}
-                alt={categoryCard.key}
+                alt=""
                 width="150"
                 height="150"
                 style={{
@@ -108,7 +112,7 @@ export const CategoryInfo = ({ data, categoryCard }) => {
               />
             </div>
             <div>
-              <h3>{categoryCard.key}</h3>
+              <h2>{categoryCard.key}</h2>
               <ReactMarkdown remarkPlugins={[breaks]}>
                 {categoryCard.description}
               </ReactMarkdown>

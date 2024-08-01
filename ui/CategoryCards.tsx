@@ -7,7 +7,7 @@ export const CategoryCards = ({ data, setIncomingFilters, handleSearch }) => {
   // Merge category cards and categories
   for (const categoryCard of categoryCards) {
     const category = data.categories.find(
-      (c) => c.fields.Name === categoryCard.key
+      (c) => c.fields.Name === categoryCard.key,
     );
     categoryCard.description = category && category.fields.Description;
     categoryCard.description2 = category && category.fields['Description 2'];
@@ -15,7 +15,7 @@ export const CategoryCards = ({ data, setIncomingFilters, handleSearch }) => {
       category &&
       category.fields.Documents &&
       category.fields.Documents.map((id) =>
-        getDocumentById(id, data.documents)
+        getDocumentById(id, data.documents),
       );
   }
 
@@ -41,10 +41,10 @@ export const CategoryCards = ({ data, setIncomingFilters, handleSearch }) => {
             }}
           >
             <div className="card-body d-flex flex-column justify-content-between">
-              <h3 className="text-center">{key}</h3>
+              <h2 className="text-center">{key}</h2>
               <Image
                 src={`/images/programs/${image}`}
-                alt={key}
+                alt=""
                 width="300"
                 height="300"
                 sizes="100vw"

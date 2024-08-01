@@ -52,7 +52,7 @@ export const Results = ({
       )}
       <div className="card bg-blue text-white mb-3">
         <div className="card-body">
-          <h3>Projects List</h3>
+          <h2>Projects List</h2>
           <p>
             Below is a list of the projects correlated with the filter settings
             above

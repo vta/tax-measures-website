@@ -50,12 +50,20 @@ h6 {
   color: #ffffff;
 }
 
-h3 {
+.text-blue {
+  color: #2d65b1;
+}
+
+h2 {
   font-size: 1.5rem;
 }
 
-h4 {
+h3 {
   font-size: 1.25rem;
+}
+
+h4 {
+  font-size: 1.125rem;
 }
 
 .text-decoration-underline {
@@ -94,12 +102,13 @@ a.card {
 }
 
 .btn-secondary {
-  color: #ffffff;
+  color: #000000;
   background-color: #51baec;
   border-color: #3ab1e9;
 }
 
 .btn-secondary:hover {
+  color: #000000;
   background-color: #189bd9;
   border-color: #158ac2;
 }
@@ -111,7 +120,7 @@ a.card {
 .btn-green {
   background: #4db938;
   border-color: #4db938;
-  color: #ffffff;
+  color: #000000;
 }
 
 .btn-green:hover,
@@ -120,7 +129,7 @@ a.card {
 .show > .btn-green.dropdown-toggle {
   background: #357e26;
   border-color: #357e26;
-  color: #ffffff;
+  color: #000000;
 }
 
 .logo {
@@ -178,8 +187,29 @@ a.card {
   font-size: 18px;
 }
 
+.project-table tr td a,
+.project-table tr td a:visited,
+.project-table tr td a:hover,
+.project-table tr th a,
+.project-table tr th a:visited,
+.project-table tr th a:hover {
+  color: #000000;
+}
+
+.project-table .table-dark {
+  color: #000000;
+}
+
 .project-stat {
   margin-top: 6px;
+}
+
+.project-stat a {
+  text-decoration: underline;
+}
+
+.faq-answer a {
+  text-decoration: underline;
 }
 
 .number-list {

@@ -4,7 +4,7 @@ export const IntroSection = () => {
       <div className="col-lg-6 offset-lg-3">
         <div className="card">
           <div className="card-body">
-            <h3>See how 2016 Measure B has been spent</h3>
+            <h2>See how 2016 Measure B has been spent</h2>
             <ul>
               <li>Filter by program categories or grantees</li>
               <li>Search for a specific project by name</li>
