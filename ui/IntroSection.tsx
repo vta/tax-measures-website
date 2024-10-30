@@ -11,11 +11,6 @@ export const IntroSection = () => {
               <li>Visualize funding in a chart or map</li>
               <li>Download project data as a PDF or CSV</li>
             </ul>
-            <div>
-              <a href="#" onClick={() => setAboutModalShow(true)}>
-                Read More &raquo;
-              </a>
-            </div>
           </div>
         </div>
       </div>
