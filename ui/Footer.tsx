@@ -5,9 +5,10 @@ import { useEffect } from 'react';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faTwitter,
   faFacebook,
   faYoutube,
+  faXTwitter,
+  faInstagram,
 } from '@fortawesome/free-brands-svg-icons';
 
 export const Footer = () => {
@@ -69,7 +70,7 @@ export const Footer = () => {
           <div className="col-md-3 mb-3">
             Santa Clara Valley Transportation Authority
             <br />
-            <a href="mailto:2016MeasureB@vta.org" className="text-dark">
+            <a href="mailto:2016MeasureB@vta.org" className="text-blue">
               2016MeasureB@vta.org
             </a>
             <br />
@@ -99,10 +100,16 @@ export const Footer = () => {
 
             <div className="mt-3">
               <a href="https://twitter.com/VTA" className="footer-icon">
-                <FontAwesomeIcon icon={faTwitter} title="Twitter" />
+                <FontAwesomeIcon icon={faXTwitter} title="X" />
               </a>
               <a href="https://www.facebook.com/scvta" className="footer-icon">
                 <FontAwesomeIcon icon={faFacebook} title="Facebook" />
+              </a>
+              <a
+                href="https://www.instagram.com/scvta/"
+                className="footer-icon"
+              >
+                <FontAwesomeIcon icon={faInstagram} title="Instagram" />
               </a>
               <a href="https://www.youtube.com/SCVTA" className="footer-icon">
                 <FontAwesomeIcon icon={faYoutube} title="Youtube" />
