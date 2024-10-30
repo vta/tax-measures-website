@@ -5,7 +5,7 @@ import { sumBy } from 'lodash';
 import moment from 'moment';
 
 import { fetchData } from '#/lib/api.js';
-import { formatCurrencyMillions } from '#/lib/formatters.js';
+import { formatCurrencyBillions } from '#/lib/formatters.js';
 import { getCurrentFiscalYear, findLatestYear } from '#/lib/util.js';
 import { FaqTerm } from '#/ui/FaqTerm';
 import { Menu } from '#/ui/Menu';
@@ -71,10 +71,10 @@ export async function HomeHeader() {
       <div className="col-md d-print-none">
         <div className="header-stat">
           <div className="header-stat-value">
-            {formatCurrencyMillions(sumBy(data.revenue, 'fields.Amount'))}
+            {formatCurrencyBillions(sumBy(data.revenue, 'fields.Amount'))}
           </div>
           <div className="header-stat-label">
-            Million Collected
+            Billion Collected
             <FaqTerm
               id="1293871"
               term="Revenue Collected"
@@ -88,12 +88,12 @@ export async function HomeHeader() {
       <div className="col-md d-print-none">
         <div className="header-stat">
           <div className="header-stat-value">
-            {formatCurrencyMillions(
+            {formatCurrencyBillions(
               sumBy(allocationsThroughTwoYearsIntoTheFuture, 'fields.Amount'),
             )}
           </div>
           <div className="header-stat-label">
-            Million Allocated
+            Billion Allocated
             <FaqTerm
               id="1327856"
               term="Allocations"
@@ -120,10 +120,10 @@ export async function HomeHeader() {
       <div className="col-md d-print-none">
         <div className="header-stat">
           <div className="header-stat-value">
-            {formatCurrencyMillions(sumBy(data.expenditures, 'fields.Amount'))}
+            {formatCurrencyBillions(sumBy(data.expenditures, 'fields.Amount'))}
           </div>
           <div className="header-stat-label">
-            Million Spent
+            Billion Spent
             <FaqTerm
               id="1327826"
               term="Expenditures"
