@@ -1,6 +1,7 @@
 import { BarChart } from '#/ui/BarChart';
 import { CategoryInfo } from '#/ui/CategoryInfo';
 import { Loading } from '#/ui/Loading';
+import { AllocationVsExpenditureChart } from '#/ui/AllocationVsExpenditureChart';
 import { ProjectsMap } from '#/ui/ProjectsMap';
 import { ProjectsTable } from '#/ui/ProjectsTable';
 
@@ -26,6 +27,31 @@ export const Results = ({
     return true;
   };
 
+  const Chart = () => {
+    const pieChartCategories = [
+      'BART Phase II',
+      'Caltrain Corridor Capacity',
+      'Local Streets & Roads',
+      'Highway Interchanges',
+      'County Expressways',
+      'SR 85 Corridor',
+    ];
+    if (
+      results.categoryCard &&
+      pieChartCategories.includes(results.categoryCard.key)
+    ) {
+      return (
+        <AllocationVsExpenditureChart
+          results={results}
+          allocations={data.allocations}
+          expenditures={data.expenditures}
+        />
+      );
+    }
+
+    return <BarChart results={results} />;
+  };
+
   return (
     <>
       <CategoryInfo categoryCard={results.categoryCard} data={data} />
@@ -34,7 +60,7 @@ export const Results = ({
           <div className="card-body card-graph">
             <div className="row">
               <div className="col-md-6 col-print-12">
-                <BarChart results={results} />
+                <Chart />
               </div>
               <div className="col-md-6 col-print-12">
                 {data.geojsons && (
