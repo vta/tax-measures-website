@@ -63,8 +63,12 @@ export async function ProjectPage({ projectSlug }) {
 
   return (
     <div className="container">
-      <Link href="/" className="btn btn-primary mt-4">
-        <FontAwesomeIcon icon={faChevronLeft} className="mr-2" /> All Projects
+      <Link
+        href={`/?transactionType=award&grantee=&project=&category=${encodeURIComponent(project.fields.ParentCategoryName)}`}
+        className="btn btn-primary mt-4"
+      >
+        <FontAwesomeIcon icon={faChevronLeft} className="mr-2" /> All{' '}
+        {project.fields.ParentCategoryName} Projects
       </Link>
 
       <div className="card my-4">
@@ -114,7 +118,7 @@ export async function ProjectPage({ projectSlug }) {
                       <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
                     </a>
                   ) : (
-                    projectGrantee?.fields.Name ?? 'None'
+                    (projectGrantee?.fields.Name ?? 'None')
                   )}
                 </div>
               </div>
