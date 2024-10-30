@@ -88,7 +88,7 @@ export const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="http://santaclaravta.iqm2.com/Citizens/Board/1100-2016-Measure-B-Citizens-Oversight-Committee">
+                <a href="https://www.vta.org/2016-measure-b-citizens-oversight-committee">
                   Oversight Committee
                 </a>
               </li>

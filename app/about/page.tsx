@@ -68,7 +68,7 @@ export default async function Page() {
               pedestrians and complete streets). The measure passed by nearly
               72%, the highest level of support for any Santa Clara County
               transportation tax. The 
-              <a href="http://santaclaravta.iqm2.com/Citizens/Board/1100-2016-Measure-B-Citizens-Oversight-Committee">
+              <a href="https://www.vta.org/2016-measure-b-citizens-oversight-committee">
                 2016 Measure B Citizens&apos; Oversight Committee
               </a>
                ensures funds are expended as approved.{' '}
