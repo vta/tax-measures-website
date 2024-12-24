@@ -199,26 +199,29 @@ export const FilterControls = ({
           />
         </div>
         <div className="col-lg-2 col-6 mb-2 mb-lg-0">
-          <Button
-            variant="secondary"
-            onClick={() =>
-              validateFilters({
-                transactionType,
-                grantee,
-                project,
-                category,
-              })
-            }
-            block
-            disabled={!data}
-          >
-            <FontAwesomeIcon icon={faSearch} className="mr-2" /> Search
-          </Button>
+          <div className="d-grid">
+            <Button
+              variant="secondary"
+              onClick={() =>
+                validateFilters({
+                  transactionType,
+                  grantee,
+                  project,
+                  category,
+                })
+              }
+              disabled={!data}
+            >
+              <FontAwesomeIcon icon={faSearch} className="me-2" /> Search
+            </Button>
+          </div>
         </div>
         <div className="col-lg-2 col-6">
-          <Button variant="danger" onClick={clearSearch} block disabled={!data}>
-            Clear
-          </Button>
+          <div className="d-grid">
+            <Button variant="danger" onClick={clearSearch} disabled={!data}>
+              Clear
+            </Button>
+          </div>
         </div>
       </div>
     </div>

@@ -32,7 +32,7 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
   }
 
   const hasSubcategoryColumn = some(selectedProjects, (project) =>
-    Boolean(project.fields.SubcategoryName)
+    Boolean(project.fields.SubcategoryName),
   );
 
   const setTableSort = (columnName) => {
@@ -99,7 +99,11 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
       memo.totalExpenditureAmount += project.fields.totalExpenditureAmount;
       return memo;
     },
-    { totalAllocationAmount: 0, totalAwardAmount: 0, totalExpenditureAmount: 0 }
+    {
+      totalAllocationAmount: 0,
+      totalAwardAmount: 0,
+      totalExpenditureAmount: 0,
+    },
   );
 
   let projects = selectedProjects;
@@ -111,7 +115,7 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
         (project) => {
           return project.fields['Fiscal Year'] || 0;
         },
-        sortDirection
+        sortDirection,
       );
     } else if (sortOrder === 'project_name') {
       projects = orderBy(selectedProjects, 'fields.Name', sortDirection);
@@ -119,13 +123,13 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
       projects = orderBy(
         selectedProjects,
         'fields.Grantee Name',
-        sortDirection
+        sortDirection,
       );
     } else if (sortOrder === 'category') {
       projects = orderBy(
         selectedProjects,
         'fields.ParentCategoryName',
-        sortDirection
+        sortDirection,
       );
     } else if (sortOrder === 'subcategory') {
       projects = orderBy(
@@ -133,25 +137,25 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
         (project) => {
           return project.fields.SubcategoryName || 'zzzz';
         },
-        sortDirection
+        sortDirection,
       );
     } else if (sortOrder === 'allocations') {
       projects = orderBy(
         selectedProjects,
         'fields.totalAllocationAmount',
-        sortDirection
+        sortDirection,
       );
     } else if (sortOrder === 'awards') {
       projects = orderBy(
         selectedProjects,
         'fields.totalAwardAmount',
-        sortDirection
+        sortDirection,
       );
     } else if (sortOrder === 'expenditures') {
       projects = orderBy(
         selectedProjects,
         'fields.totalExpenditureAmount',
-        sortDirection
+        sortDirection,
       );
     }
   }
@@ -196,7 +200,7 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
                   placement="bottom"
                 />
               </>,
-              'fiscal_year'
+              'fiscal_year',
             )}
             {renderColumnHeader('Project Name', 'project_name')}
             {renderColumnHeader(
@@ -209,7 +213,7 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
                   placement="bottom"
                 />
               </>,
-              'grantee'
+              'grantee',
             )}
             {renderColumnHeader(
               <>
@@ -221,7 +225,7 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
                   placement="bottom"
                 />
               </>,
-              'category'
+              'category',
             )}
             {hasSubcategoryColumn &&
               renderColumnHeader('Subcategory', 'subcategory')}
@@ -235,7 +239,7 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
                   placement="bottom"
                 />
               </>,
-              'allocations'
+              'allocations',
             )}
             {renderColumnHeader(
               <>
@@ -247,7 +251,7 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
                   placement="bottom"
                 />
               </>,
-              'awards'
+              'awards',
             )}
             {renderColumnHeader(
               <>
@@ -259,13 +263,13 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
                   placement="bottom"
                 />
               </>,
-              'expenditures'
+              'expenditures',
             )}
           </tr>
         </thead>
         <tbody>
           {projects.map((project) => renderProjectRow(project))}
-          <tr className="table-dark border-top-2">
+          <tr className="table-secondary border-top-2">
             <td></td>
             <td>Total</td>
             <td></td>
@@ -286,8 +290,8 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
 
       {showButtons && (
         <div className="d-flex justify-content-end d-print-none">
-          <ShareButton className="btn btn-green mr-2" />
-          <PrintButton className="btn btn-green mr-2" />
+          <ShareButton className="btn btn-green me-2" />
+          <PrintButton className="btn btn-green me-2" />
           <CSVLink
             data={csvData}
             filename={'vta-tax-measures.csv'}
@@ -300,7 +304,7 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
               })
             }
           >
-            <FontAwesomeIcon icon={faFileCsv} className="mr-2" /> Download CSV
+            <FontAwesomeIcon icon={faFileCsv} className="me-2" /> Download CSV
           </CSVLink>
         </div>
       )}

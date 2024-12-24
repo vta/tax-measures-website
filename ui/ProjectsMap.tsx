@@ -14,7 +14,7 @@ export const ProjectsMap = ({
   const { layers, layerIds, bbox } = MapLayer(
     projectsToMap,
     geojsons,
-    grantees
+    grantees,
   );
   const viewport = getViewport(bbox);
 
@@ -23,7 +23,7 @@ export const ProjectsMap = ({
 
     const projectIds = new Set(features.map((f) => f.properties.projectId));
     const filteredProjects = projectsToMap.filter((project) =>
-      projectIds.has(project.id)
+      projectIds.has(project.id),
     );
 
     if (filteredProjects.length === 0) {
@@ -44,9 +44,7 @@ export const ProjectsMap = ({
     return (
       <div>
         <p>&nbsp;</p>
-        <div className="text-center font-weight-bold mt-5">
-          No map available
-        </div>
+        <div className="text-center fw-bold mt-5">No map available</div>
       </div>
     );
   }

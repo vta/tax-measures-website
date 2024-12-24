@@ -49,7 +49,7 @@ export const BarChart = ({ results }) => {
       if (item.fields.Project) {
         const project = getProjectById(
           item.fields.Project[0],
-          results.projects
+          results.projects,
         );
         if (project) {
           if (!memo[project.fields.Name]) {
@@ -84,7 +84,7 @@ export const BarChart = ({ results }) => {
       if (item.fields.Project) {
         const project = getProjectById(
           item.fields.Project[0],
-          results.projects
+          results.projects,
         );
         if (project) {
           if (!memo[project.fields['Grantee Name']]) {
@@ -120,7 +120,7 @@ export const BarChart = ({ results }) => {
         color: colorPalate[index % colorPalate.length],
       };
     }),
-    'value'
+    'value',
   );
 
   const dataType =
@@ -133,7 +133,7 @@ export const BarChart = ({ results }) => {
         <p>
           Total {dataType}: {formatCurrencyWithUnit(total)}
         </p>
-        <div className="text-center font-weight-bold mt-5">
+        <div className="text-center fw-bold mt-5">
           Not enough data for chart
         </div>
       </div>
@@ -146,9 +146,7 @@ export const BarChart = ({ results }) => {
         <p>
           Total {dataType}: {formatCurrencyWithUnit(total)}
         </p>
-        <div className="text-center font-weight-bold mt-5">
-          Too much data for chart
-        </div>
+        <div className="text-center fw-bold mt-5">Too much data for chart</div>
       </div>
     );
   }
@@ -232,8 +230,8 @@ export const BarChart = ({ results }) => {
                 seriesName === 'award'
                   ? 'Awards'
                   : seriesName === 'expenditure'
-                  ? 'Expenditures'
-                  : seriesName,
+                    ? 'Expenditures'
+                    : seriesName,
             },
           },
         },

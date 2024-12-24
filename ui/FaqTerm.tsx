@@ -18,9 +18,7 @@ export const FaqTerm = ({ id, term, faqs, placement, showTerm }) => {
 
   const popover = (
     <Popover id="popover-basic">
-      <Popover.Content
-        dangerouslySetInnerHTML={{ __html: faq['faq-answer'] }}
-      />
+      <Popover.Body dangerouslySetInnerHTML={{ __html: faq['faq-answer'] }} />
     </Popover>
   );
 

@@ -18,7 +18,7 @@ const print = () => {
 export const PrintButton = ({ className }) => {
   return (
     <Button onClick={print} className={className}>
-      <FontAwesomeIcon icon={faPrint} className="mr-2" /> Print
+      <FontAwesomeIcon icon={faPrint} className="me-2" /> Print
     </Button>
   );
 };

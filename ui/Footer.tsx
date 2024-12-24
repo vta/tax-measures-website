@@ -38,7 +38,7 @@ export const Footer = () => {
 
   return (
     <div className="footer d-print-none">
-      <div className="col bg-white pb-4 pt-4 pt-md-5">
+      <div className="container-fluid bg-white pb-4 pt-4 pt-md-5">
         <div className="row">
           <div className="col-md-3 text-center mb-3">
             <div className="p-3 footer-logo mx-auto">
@@ -133,6 +133,11 @@ export const Footer = () => {
         .footer-menu li a {
           text-transform: uppercase;
           font-size: 18px;
+          text-decoration: none;
+        }
+
+        .footer-menu li a:hover {
+          text-decoration: underline;
         }
 
         .footer-icon {

@@ -40,7 +40,10 @@ export const metadata: Metadata = {
 const Faq = ({ faq }) => {
   return (
     <>
-      <h2 dangerouslySetInnerHTML={{ __html: faq['faq-question'] }} />
+      <h2
+        className="mt-4"
+        dangerouslySetInnerHTML={{ __html: faq['faq-question'] }}
+      />
       <p
         dangerouslySetInnerHTML={{ __html: faq['faq-answer'] }}
         className="faq-answer"
@@ -56,12 +59,12 @@ export default async function Page() {
     <div>
       <Header />
 
-      <div className="container  main-container">
+      <div className="container main-container">
         <div className="card mt-3 mb-5">
           <div className="card-body">
             <h1>About 2016 Measure B</h1>
 
-            <h2>What is 2016 Measure B?</h2>
+            <h2 className="mt-4">What is 2016 Measure B?</h2>
             <p className="faq-answer">
               A 30-year, half-cent countywide sales tax to enhance transit,
               highways, expressways and active transportation (bicycles,
@@ -77,7 +80,7 @@ export default async function Page() {
               </a>
             </p>
 
-            <h2>What is this website?</h2>
+            <h2 className="mt-4">What is this website?</h2>
             <p className="faq-answer">
               This website is a window into 2016 Measure B revenue and spending.
               You can search, view and share unaudited financial information
@@ -85,7 +88,7 @@ export default async function Page() {
               information is released.
             </p>
 
-            <h2>Where can I submit questions or feedback?</h2>
+            <h2 className="mt-4">Where can I submit questions or feedback?</h2>
             <p className="faq-answer">
               Email us at{' '}
               <a href="mailto:2016MeasureB@vta.org">2016MeasureB@vta.org</a>.

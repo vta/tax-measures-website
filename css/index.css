@@ -183,6 +183,14 @@ a.card {
   font-weight: bold;
 }
 
+.project-table tr th a {
+  text-decoration: none;
+}
+
+.project-table tr th a:hover {
+  text-decoration: underline;
+}
+
 .project-table tr td:first-child {
   font-size: 18px;
 }

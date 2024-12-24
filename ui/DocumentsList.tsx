@@ -42,7 +42,7 @@ export const DocumentsList = ({ documents }) => {
         Document Type
         <select
           onChange={(event) => setSelectedDocumentType(event.target.value)}
-          className="ml-2"
+          className="ms-2"
         >
           {documentTypes.map((documentType) => {
             return <option value={documentType}>{documentType}</option>;

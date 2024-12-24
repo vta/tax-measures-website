@@ -99,7 +99,7 @@ export const CategoryInfo = ({ data, categoryCard }) => {
       <div className="col-lg-6 offset-lg-3">
         <div className="card h-100">
           <div className="card-body d-sm-flex">
-            <div className="mr-3 flex-shrink-0">
+            <div className="me-3 flex-shrink-0">
               <Image
                 src={`/images/programs/${categoryCard.image}`}
                 alt=""
@@ -126,11 +126,11 @@ export const CategoryInfo = ({ data, categoryCard }) => {
                   ),
                   'YYYY',
                 )
-                  .date('30')
-                  .month('Junes')
+                  .date(30)
+                  .month('June')
                   .format('MMM D, YYYY')}
                 :
-                <div className="font-weight-bold d-inline-block pl-2 pb-2">
+                <div className="fw-bold d-inline-block ps-2 pb-2">
                   {formatCurrencyMillions(
                     sumBy(
                       allocationsThroughTwoYearsIntoTheFuture,

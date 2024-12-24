@@ -42,11 +42,6 @@ var styles = {
     color: '#b8b7ad',
     padding: '0.8em',
   },
-  bmItem: {
-    display: 'block',
-    marginBottom: '15px',
-    color: 'white',
-  },
   bmOverlay: {
     background: 'rgba(0, 0, 0, 0.3)',
   },
@@ -54,18 +49,34 @@ var styles = {
 
 export const Menu = () => {
   return (
-    <SlideMenu styles={styles} right>
-      <a href="/">Home</a>
-      <a href="/about">About</a>
-      <div>Program Categories</div>
-      {categoryCards.map(({ key }) => (
-        <a
-          className="ml-4"
-          href={`/?transactionType=award&grantee=&project=&category=${encodeURIComponent(key)}`}
-        >
-          {key}
-        </a>
-      ))}
-    </SlideMenu>
+    <>
+      <style>
+        {`
+            .bm-item {
+              display: block !important;
+              margin-bottom: 15px;
+              color: white;
+              text-decoration: none;
+            }
+
+            .bm-item:hover {
+              text-decoration: underline;
+            }
+          `}
+      </style>
+      <SlideMenu styles={styles} right>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <div>Program Categories</div>
+        {categoryCards.map(({ key }) => (
+          <a
+            className="ms-4"
+            href={`/?transactionType=award&grantee=&project=&category=${encodeURIComponent(key)}`}
+          >
+            {key}
+          </a>
+        ))}
+      </SlideMenu>
+    </>
   );
 };

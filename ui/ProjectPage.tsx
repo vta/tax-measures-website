@@ -62,9 +62,9 @@ export async function ProjectPage({ projectSlug }) {
   const projectUrl = formatProjectUrl(project, projectGrantee);
 
   return (
-    <div className="container">
+    <div className="container" style={{ maxWidth: '1140px' }}>
       <Link href="/" className="btn btn-primary mt-4">
-        <FontAwesomeIcon icon={faChevronLeft} className="mr-2" /> All Projects
+        <FontAwesomeIcon icon={faChevronLeft} className="me-2" /> All Projects
       </Link>
 
       <div className="card my-4">
@@ -114,7 +114,7 @@ export async function ProjectPage({ projectSlug }) {
                       <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
                     </a>
                   ) : (
-                    projectGrantee?.fields.Name ?? 'None'
+                    (projectGrantee?.fields.Name ?? 'None')
                   )}
                 </div>
               </div>
@@ -154,8 +154,8 @@ export async function ProjectPage({ projectSlug }) {
           </div>
           <div className="d-print-none">
             <div className="d-flex mt-3">
-              <ShareButton className="btn btn-green mr-2" />
-              <PrintButton className="btn btn-green mr-2" />
+              <ShareButton className="btn btn-green me-2" />
+              <PrintButton className="btn btn-green me-2" />
             </div>
           </div>
         </div>
