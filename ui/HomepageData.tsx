@@ -18,7 +18,7 @@ import {
   updateUrlWithFilters,
   getFiltersFromQuery,
 } from '#/lib/util.js';
-import * as gtag from '#/lib/gtag.js';
+import { pageview } from '#/lib/gtag.js';
 
 export const HomePageData = ({ data }) => {
   const [results, setResults] = useState();
@@ -102,7 +102,7 @@ export const HomePageData = ({ data }) => {
 
   // Track each filter change as a pageview
   useEffect(() => {
-    gtag.pageview(window.location.href);
+    pageview(window.location.href);
   }, [currentFilters]);
 
   return (
