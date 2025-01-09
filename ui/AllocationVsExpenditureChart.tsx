@@ -12,11 +12,13 @@ export const AllocationVsExpenditureChart = ({
   allocations,
   expenditures,
 }) => {
-  const totalAllocations = results.items.reduce((memo, item) => {
-    const allocation = getAllocationById(
-      item.fields?.Allocation?.[0],
-      allocations,
-    );
+  // Find all unique allocation ids
+  const allocationIds = Array.from(
+    new Set(results.items.flatMap((item) => item.fields?.Allocation || [])),
+  );
+
+  const totalAllocations = allocationIds.reduce((memo, allocationId) => {
+    const allocation = getAllocationById(allocationId, allocations);
     if (allocation) {
       memo += allocation.fields.Amount;
     }
@@ -24,12 +26,15 @@ export const AllocationVsExpenditureChart = ({
     return memo;
   }, 0);
 
-  const totalExpenditures = results.items.reduce((memo, item) => {
-    for (const expenditureId of item.fields?.Expenditures || []) {
-      const expenditure = getExpenditureById(expenditureId, expenditures);
-      if (expenditure) {
-        memo += expenditure.fields.Amount;
-      }
+  // Find all unique expenditure ids
+  const expenditureIds = Array.from(
+    new Set(results.items.flatMap((item) => item.fields?.Expenditures || [])),
+  );
+
+  const totalExpenditures = expenditureIds.reduce((memo, expenditureId) => {
+    const expenditure = getExpenditureById(expenditureId, expenditures);
+    if (expenditure) {
+      memo += expenditure.fields.Amount;
     }
 
     return memo;
@@ -122,7 +127,7 @@ export const AllocationVsExpenditureChart = ({
           },
           {
             name: 'Remaining Allocation',
-            data: [totalAllocations],
+            data: [Math.max(0, totalAllocations - totalExpenditures)],
           },
         ]}
         type="bar"
