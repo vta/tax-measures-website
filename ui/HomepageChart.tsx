@@ -61,6 +61,13 @@ export const HomepageChart = ({
               show: false,
             },
           },
+          states: {
+            hover: {
+              filter: {
+                type: 'darken',
+              },
+            },
+          },
           plotOptions: {
             bar: {
               horizontal: true,

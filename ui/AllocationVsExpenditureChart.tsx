@@ -49,6 +49,13 @@ export const AllocationVsExpenditureChart = ({
               show: false,
             },
           },
+          states: {
+            hover: {
+              filter: {
+                type: 'darken',
+              },
+            },
+          },
           plotOptions: {
             bar: {
               horizontal: true,
