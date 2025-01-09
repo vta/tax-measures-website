@@ -71,6 +71,7 @@ export const Menu = () => {
         {categoryCards.map(({ key }) => (
           <a
             className="ms-4"
+            key={key}
             href={`/?transactionType=award&grantee=&project=&category=${encodeURIComponent(key)}`}
           >
             {key}
