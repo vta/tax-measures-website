@@ -41,7 +41,7 @@ export const HomepageChart = ({
   return (
     <>
       <h2>
-        Percentage of Allocation through FY2024 vs. Total Ballot Allocation
+        Percentage of Allocation through FY2025 vs. Total Ballot Allocation
         <FaqTerm
           id="1293971"
           term="Total Ballot Allocation"
@@ -129,7 +129,7 @@ export const HomepageChart = ({
         }}
         series={[
           {
-            name: 'Actual Allocated through FY24',
+            name: 'Actual Allocated through FY25',
             data: actualAllocateds,
           },
           {
