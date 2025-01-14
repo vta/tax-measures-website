@@ -45,7 +45,11 @@ export const DocumentsList = ({ documents }) => {
           className="ms-2"
         >
           {documentTypes.map((documentType) => {
-            return <option value={documentType}>{documentType}</option>;
+            return (
+              <option value={documentType} key={documentType}>
+                {documentType}
+              </option>
+            );
           })}
         </select>
       </label>

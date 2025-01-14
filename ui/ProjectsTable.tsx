@@ -289,6 +289,7 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
                 action: 'click',
                 category: 'download',
                 label: 'csv',
+                value: 'vta-tax-measures.csv',
               })
             }
           >

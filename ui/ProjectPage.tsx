@@ -1,7 +1,6 @@
 'use server';
 
 import Link from 'next/link';
-import moment from 'moment';
 import { notFound } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -11,16 +10,9 @@ import {
 import { compact, flatMap, kebabCase, uniq } from 'lodash';
 
 import { fetchData } from '#/lib/api.js';
-import {
-  getDocumentById,
-  getGranteeByProject,
-  getLastModified,
-} from '#/lib/util.js';
+import { getDocumentById, getGranteeByProject } from '#/lib/util.js';
 import { formatProjectUrl } from '#/lib/formatters.js';
-import { DocumentsList } from '#/ui/DocumentsList';
-import { PrintButton } from '#/ui/PrintButton';
 import { ProjectFinanceTable } from '#/ui/ProjectFinanceTable';
-import { ShareButton } from '#/ui/ShareButton';
 import { ProjectMap } from '#/ui/ProjectMap';
 
 export async function ProjectPage({ projectSlug }) {
@@ -135,33 +127,12 @@ export async function ProjectPage({ projectSlug }) {
               </div>
             </div>
             <ProjectFinanceTable
+              project={project}
               allocations={projectAllocations}
               awards={projectAwards}
               expenditures={projectExpenditures}
+              documents={projectDocuments}
             />
-            <div className="project-stat">
-              <b>Related Documents:</b>{' '}
-              <DocumentsList documents={projectDocuments} />
-            </div>
-            <div className="py-2">
-              <small>
-                Last Modified:{' '}
-                {moment(
-                  getLastModified([
-                    project,
-                    ...projectAllocations,
-                    ...projectAwards,
-                    ...projectExpenditures,
-                  ]),
-                ).format('MMMM Do YYYY, h:mm a')}
-              </small>
-            </div>
-          </div>
-          <div className="d-print-none">
-            <div className="d-flex mt-3">
-              <ShareButton className="btn btn-green me-2" />
-              <PrintButton className="btn btn-green me-2" />
-            </div>
           </div>
         </div>
       </div>

@@ -54,6 +54,7 @@
   "lint-staged": {
     "*.js": "prettier --write",
     "*.json": "prettier --write",
-    "*.tsx": "prettier --write"
+    "*.tsx": "prettier --write",
+    "*.ts": "prettier --write"
   }
 }
