@@ -116,30 +116,32 @@ export const CategoryInfo = ({ data, categoryCard }) => {
               <ReactMarkdown remarkPlugins={[breaks]}>
                 {categoryCard.description}
               </ReactMarkdown>
-              <div>
-                Program Category Total Allocation through{' '}
-                {moment(
-                  findLatestYear(
-                    allocationsThroughTwoYearsIntoTheFuture.map((r) =>
-                      Number.parseInt(r.fields['Available Start'], 10),
+              {allocationsThroughTwoYearsIntoTheFuture?.length > 0 && (
+                <div>
+                  Program Category Total Allocation through{' '}
+                  {moment(
+                    findLatestYear(
+                      allocationsThroughTwoYearsIntoTheFuture.map((r) =>
+                        Number.parseInt(r.fields['Available Start'], 10),
+                      ),
                     ),
-                  ),
-                  'YYYY',
-                )
-                  .date(30)
-                  .month('June')
-                  .format('MMM D, YYYY')}
-                :
-                <div className="fw-bold d-inline-block ps-2 pb-2">
-                  {formatCurrencyMillions(
-                    sumBy(
-                      allocationsThroughTwoYearsIntoTheFuture,
-                      'fields.Amount',
-                    ),
-                  )}
-                  m
+                    'YYYY',
+                  )
+                    .date(30)
+                    .month('June')
+                    .format('MMM D, YYYY')}
+                  :
+                  <div className="fw-bold d-inline-block ps-2 pb-2">
+                    {formatCurrencyMillions(
+                      sumBy(
+                        allocationsThroughTwoYearsIntoTheFuture,
+                        'fields.Amount',
+                      ),
+                    )}
+                    m
+                  </div>
                 </div>
-              </div>
+              )}
               <ReactMarkdown remarkPlugins={[breaks]}>
                 {categoryCard.description2}
               </ReactMarkdown>
