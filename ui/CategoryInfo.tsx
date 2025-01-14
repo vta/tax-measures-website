@@ -3,12 +3,17 @@ import ReactMarkdown from 'react-markdown';
 import breaks from 'remark-breaks';
 import moment from 'moment';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { sumBy } from 'lodash';
+import { compact, sumBy, uniq, flatMap } from 'lodash';
 import { DocumentLink } from '#/ui/DocumentLink';
 import { formatCurrencyMillions } from '#/lib/formatters.js';
-import { getCurrentFiscalYear, findLatestYear } from '#/lib/util.js';
+import {
+  getCurrentFiscalYear,
+  findLatestYear,
+  getDocumentById,
+} from '#/lib/util.js';
+import { ProjectFinanceTable } from '#/ui/ProjectFinanceTable';
 
-export const CategoryInfo = ({ data, categoryCard }) => {
+export const CategoryInfo = ({ data, categoryCard, results }) => {
   if (!categoryCard) {
     return null;
   }
@@ -58,8 +63,42 @@ export const CategoryInfo = ({ data, categoryCard }) => {
         document.fields['Document Type'] === 'Administration Audit Report',
     );
 
+    const project = results.projects[0];
+
+    const projectAllocations = project.fields.Allocations
+      ? data.allocations.filter((a) =>
+          project.fields.Allocations.includes(a.id),
+        )
+      : [];
+    const projectAwards = project.fields.Awards
+      ? data.awards.filter((a) => project.fields.Awards.includes(a.id))
+      : [];
+    const projectDocumentIds = compact(
+      uniq([
+        ...(project.fields.Documents || []),
+        ...flatMap(projectAwards, 'fields.Documents'),
+      ]),
+    );
+    const projectDocuments = projectDocumentIds.map((id) =>
+      getDocumentById(id, data.documents),
+    );
+    const projectExpenditures = project.fields.Expenditures
+      ? data.expenditures.filter((p) =>
+          project.fields.Expenditures.includes(p.id),
+        )
+      : [];
+
     return (
       <>
+        <div className="mt-4">
+          <ProjectFinanceTable
+            project={project}
+            awards={projectAwards}
+            allocations={projectAllocations}
+            expenditures={projectExpenditures}
+            documents={projectDocuments}
+          />
+        </div>
         <div className="mt-4 text-blue" style={{ fontSize: '1.25rem' }}>
           Annual Reports
         </div>
