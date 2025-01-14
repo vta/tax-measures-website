@@ -17,11 +17,9 @@ import {
   getLastModified,
 } from '#/lib/util.js';
 import { formatProjectUrl } from '#/lib/formatters.js';
-import { AllocationsTable } from '#/ui/AllocationsTable';
-import { AwardsTable } from '#/ui/AwardsTable';
 import { DocumentsList } from '#/ui/DocumentsList';
-import { ExpendituresTable } from '#/ui/ExpendituresTable';
 import { PrintButton } from '#/ui/PrintButton';
+import { ProjectFinanceTable } from '#/ui/ProjectFinanceTable';
 import { ShareButton } from '#/ui/ShareButton';
 import { ProjectMap } from '#/ui/ProjectMap';
 
@@ -136,17 +134,11 @@ export async function ProjectPage({ projectSlug }) {
                 )}
               </div>
             </div>
-            <div className="project-stat">
-              <b>Allocations:</b>{' '}
-              <AllocationsTable allocations={projectAllocations} />
-            </div>
-            <div className="project-stat">
-              <b>Awards:</b> <AwardsTable awards={projectAwards} />
-            </div>
-            <div className="project-stat">
-              <b>Expenditures:</b>{' '}
-              <ExpendituresTable expenditures={projectExpenditures} />
-            </div>
+            <ProjectFinanceTable
+              allocations={projectAllocations}
+              awards={projectAwards}
+              expenditures={projectExpenditures}
+            />
             <div className="project-stat">
               <b>Related Documents:</b>{' '}
               <DocumentsList documents={projectDocuments} />

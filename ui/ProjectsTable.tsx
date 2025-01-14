@@ -55,13 +55,13 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
         <td>{project.fields['Grantee Name']}</td>
         <td>{project.fields.ParentCategoryName}</td>
         {hasSubcategoryColumn && <td>{project.fields.SubcategoryName}</td>}
-        <td className="text-right" style={{ width: '110px' }}>
+        <td className="text-end" style={{ width: '110px' }}>
           {formatCurrencyWithUnit(project.fields.totalAllocationAmount)}
         </td>
-        <td className="text-right" style={{ width: '80px' }}>
+        <td className="text-end" style={{ width: '80px' }}>
           {formatCurrencyWithUnit(project.fields.totalAwardAmount)}
         </td>
-        <td className="text-right" style={{ width: '100px' }}>
+        <td className="text-end" style={{ width: '100px' }}>
           {formatCurrencyWithUnit(project.fields.totalExpenditureAmount)}
         </td>
       </tr>
@@ -263,13 +263,13 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
             <td></td>
             <td></td>
             {hasSubcategoryColumn && <td></td>}
-            <td className="text-right">
+            <td className="text-end">
               {formatCurrencyWithUnit(totals.totalAllocationAmount)}
             </td>
-            <td className="text-right">
+            <td className="text-end">
               {formatCurrencyWithUnit(totals.totalAwardAmount)}
             </td>
-            <td className="text-right">
+            <td className="text-end">
               {formatCurrencyWithUnit(totals.totalExpenditureAmount)}
             </td>
           </tr>

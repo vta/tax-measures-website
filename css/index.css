@@ -31,6 +31,15 @@ a {
   width: auto;
 }
 
+.table tfoot {
+  font-weight: bold;
+  border-top: 2px solid #4c4d55;
+}
+
+table tfoot tr:last-of-type th {
+  border-bottom: none;
+}
+
 h1,
 h2,
 h3,
