@@ -22,8 +22,6 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
   const [sortOrder, setSortOrder] = useState('project_name');
   const [sortDirection, setSortDirection] = useState('asc');
 
-  console.log(sortOrder);
-
   if (!selectedProjects || selectedProjects.length === 0) {
     return (
       <Alert variant="warning" className="text-center">

@@ -11,7 +11,11 @@ import {
 import { compact, flatMap, kebabCase, uniq } from 'lodash';
 
 import { fetchData } from '#/lib/api.js';
-import { getDocumentById, getGranteeByProject } from '#/lib/util.js';
+import {
+  getDocumentById,
+  getGranteeByProject,
+  getLastModified,
+} from '#/lib/util.js';
 import { formatProjectUrl } from '#/lib/formatters.js';
 import { AllocationsTable } from '#/ui/AllocationsTable';
 import { AwardsTable } from '#/ui/AwardsTable';
@@ -150,9 +154,14 @@ export async function ProjectPage({ projectSlug }) {
             <div className="py-2">
               <small>
                 Last Modified:{' '}
-                {moment(project.fields['Last Modified']).format(
-                  'MMMM Do YYYY, h:mm a',
-                )}
+                {moment(
+                  getLastModified([
+                    project,
+                    ...projectAllocations,
+                    ...projectAwards,
+                    ...projectExpenditures,
+                  ]),
+                ).format('MMMM Do YYYY, h:mm a')}
               </small>
             </div>
           </div>
