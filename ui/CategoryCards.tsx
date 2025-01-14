@@ -17,46 +17,50 @@ export const CategoryCards = ({ data, setIncomingFilters, handleSearch }) => {
       category.fields.Documents.map((id) =>
         getDocumentById(id, data.documents),
       );
+    categoryCard.parentCategory =
+      category && category.fields['Parent Category'];
   }
 
   return (
     <div className="row justify-content-center d-print-none">
-      {categoryCards.map(({ key, image }) => (
-        <div className="col-lg-5col col-md-4 col-xs-6 mb-3" key={key}>
-          <a
-            className="card h-100"
-            title={`Show all ${key} projects`}
-            href="#"
-            onClick={(event) => {
-              event.preventDefault();
+      {categoryCards
+        .filter((card) => !card.parentCategory)
+        .map(({ key, image }) => (
+          <div className="col-lg-5col col-md-4 col-xs-6 mb-3" key={key}>
+            <a
+              className="card h-100"
+              title={`Show all ${key} projects`}
+              href="#"
+              onClick={(event) => {
+                event.preventDefault();
 
-              const categoryFilters = {
-                transactionType: 'award',
-                category: [key],
-              };
+                const categoryFilters = {
+                  transactionType: 'award',
+                  category: [key],
+                };
 
-              setIncomingFilters(categoryFilters);
-              handleSearch(categoryFilters);
-              window.scrollTo(0, 0);
-            }}
-          >
-            <div className="card-body d-flex flex-column justify-content-between">
-              <h2 className="text-center">{key}</h2>
-              <Image
-                src={`/images/programs/${image}`}
-                alt=""
-                width="300"
-                height="300"
-                sizes="100vw"
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                }}
-              />
-            </div>
-          </a>
-        </div>
-      ))}
+                setIncomingFilters(categoryFilters);
+                handleSearch(categoryFilters);
+                window.scrollTo(0, 0);
+              }}
+            >
+              <div className="card-body d-flex flex-column justify-content-between">
+                <h2 className="text-center">{key}</h2>
+                <Image
+                  src={`/images/programs/${image}`}
+                  alt=""
+                  width="300"
+                  height="300"
+                  sizes="100vw"
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                  }}
+                />
+              </div>
+            </a>
+          </div>
+        ))}
     </div>
   );
 };
