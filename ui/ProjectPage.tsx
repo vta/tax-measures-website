@@ -13,7 +13,10 @@ import { fetchData } from '#/lib/api.js';
 import { getDocumentById, getGranteeByProject } from '#/lib/util.js';
 import { formatProjectUrl } from '#/lib/formatters.js';
 import { ProjectFinanceTable } from '#/ui/ProjectFinanceTable';
+import { DocumentsList } from '#/ui/DocumentsList';
 import { ProjectMap } from '#/ui/ProjectMap';
+import { ProjectShareButtons } from './ProjectShareButtons';
+import { ProjectLastModified } from './ProjectLastModified';
 
 export async function ProjectPage({ projectSlug }) {
   const {
@@ -127,11 +130,25 @@ export async function ProjectPage({ projectSlug }) {
               </div>
             </div>
             <ProjectFinanceTable
+              allocations={projectAllocations}
+              awards={projectAwards}
+              expenditures={projectExpenditures}
+            />
+            <div className="project-stat">
+              <b>Related Documents:</b>{' '}
+              <DocumentsList documents={projectDocuments} />
+            </div>
+            <ProjectLastModified
               project={project}
               allocations={projectAllocations}
               awards={projectAwards}
               expenditures={projectExpenditures}
-              documents={projectDocuments}
+            />
+            <ProjectShareButtons
+              project={project}
+              allocations={projectAllocations}
+              awards={projectAwards}
+              expenditures={projectExpenditures}
             />
           </div>
         </div>
