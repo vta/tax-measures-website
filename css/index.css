@@ -200,10 +200,6 @@ a.card {
   text-decoration: underline;
 }
 
-.project-table tr td:first-child {
-  font-size: 18px;
-}
-
 .project-table tr td a,
 .project-table tr td a:visited,
 .project-table tr td a:hover,
