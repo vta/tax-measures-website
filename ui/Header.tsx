@@ -7,7 +7,7 @@ export function Header() {
   /* eslint-disable @next/next/no-html-link-for-pages */
   const LogoLink = () => (
     <a href="/">
-      <h1
+      <div
         className="py-2 py-md-3 m-0 h-100 d-flex align-items-center justify-content-center"
         style={{ width: '120px' }}
       >
@@ -22,7 +22,7 @@ export function Header() {
             height: 'auto',
           }}
         />
-      </h1>
+      </div>
     </a>
   );
   /* eslint-enable @next/next/no-html-link-for-pages */

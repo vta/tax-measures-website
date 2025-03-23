@@ -34,9 +34,10 @@ export async function HomeHeader() {
         className="py-2 py-md-3 m-0 h-100 d-flex align-items-center justify-content-center"
         style={{ width: '167px' }}
       >
+        <span className="sr-only">2016 Measure B</span>
         <Image
           src="/images/logo.png"
-          alt="2016 Measure B"
+          alt=""
           className="home-logo"
           width="738"
           height="598"
