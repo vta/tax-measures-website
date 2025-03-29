@@ -7,16 +7,17 @@ import { ProjectPage } from '#/ui/ProjectPage';
 import { Header } from '#/ui/Header';
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
+  const { slug } = await params;
   const data = await fetchData();
   const project = data.projects.find(
-    (project) => kebabCase(project?.fields.Name) === params.slug,
+    (project) => kebabCase(project?.fields.Name) === slug,
   );
 
   return {
@@ -25,7 +26,7 @@ export async function generateMetadata(
     openGraph: {
       title: project?.fields.Name,
       description: `${project?.fields.Name} 2016 Measure B details`,
-      url: `https://2016measureb.vta.org/projects/${params.slug}`,
+      url: `https://2016measureb.vta.org/projects/${slug}`,
       siteName: '2016 Measure B',
       images: [
         {
@@ -49,12 +50,13 @@ export async function generateMetadata(
   };
 }
 
-export default function Page({ params }) {
+export default async function Page({ params }) {
+  const { slug } = await params;
   return (
     <div>
       <Header />
 
-      <ProjectPage projectSlug={params.slug} />
+      <ProjectPage projectSlug={slug} />
 
       <Footer />
     </div>

@@ -6,7 +6,6 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { faCopy, faEnvelope, faShare } from '@fortawesome/free-solid-svg-icons';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import { isMobile } from '#/lib/util.js';
 import { event } from '#/lib/gtag.js';
@@ -20,13 +19,13 @@ export const ShareButton = ({ className }) => {
     searchString ? '?' + searchString : ''
   }`;
   const emailShareUrl = `mailto:?subject=2016%20Measure%20B&body=${encodeURIComponent(
-    shareUrl
+    shareUrl,
   )}`;
   const twitterShareUrl = `https://twitter.com/intent/tweet/?text=${encodeURIComponent(
-    shareTitle
+    shareTitle,
   )}&url=${encodeURIComponent(shareUrl)}`;
   const facebookShareUrl = `https://facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-    shareUrl
+    shareUrl,
   )}`;
 
   function triggerShare(event) {
@@ -49,22 +48,21 @@ export const ShareButton = ({ className }) => {
 
       <Dropdown.Menu>
         <Dropdown.Item>
-          <CopyToClipboard text={shareUrl}>
-            <span
-              onClick={() =>
-                event({
-                  action: 'click',
-                  category: 'share',
-                  label: 'copy',
-                })
-              }
-            >
-              <FontAwesomeIcon icon={faCopy} /> Copy URL
-            </span>
-          </CopyToClipboard>
+          <span
+            onClick={() => {
+              navigator.clipboard.writeText(shareUrl);
+              event({
+                action: 'click',
+                category: 'share',
+                label: 'copy',
+              });
+            }}
+          >
+            <FontAwesomeIcon icon={faCopy} /> Copy URL
+          </span>
         </Dropdown.Item>
         {isMobile(
-          typeof navigator !== 'undefined' ? navigator.userAgent : ''
+          typeof navigator !== 'undefined' ? navigator.userAgent : '',
         ) && (
           <Dropdown.Item
             href={emailShareUrl}

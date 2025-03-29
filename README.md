@@ -17,7 +17,6 @@ Setup configurtion by creating a `.env` file in the project root with the follow
 
     AIRTABLE_API_KEY=your-airtable-api-key
     AIRTABLE_BASE_ID=your-airtable-base-id
-    AIRTABLE_CACHE_TIME=300000
     NEXT_PUBLIC_ALGOLIA_APP_ID=your-algolia-app-id
     NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY=your-algolia-search-api-key
     ALGOLIA_ADMIN_API_KEY=your-algolia-api-key
