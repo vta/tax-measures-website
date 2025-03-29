@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import ReactMapGL, { NavigationControl } from 'react-map-gl';
+import ReactMapGL, { NavigationControl } from 'react-map-gl/mapbox';
 import { MapLayer } from '#/ui/MapLayer';
 import { getViewport } from '#/lib/util.js';
 
