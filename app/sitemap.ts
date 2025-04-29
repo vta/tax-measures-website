@@ -11,6 +11,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 1,
     },
+    {
+      url: 'https://2016measureb.vta.org/about',
+      changeFrequency: 'monthly',
+      priority: 8,
+    },
   ]
   
   for (const project of projects) {

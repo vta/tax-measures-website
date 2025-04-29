@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   description:
     'A 30-year, half-cent countywide sales tax to enhance transit, highways, expressways and active transportation (bicycles, pedestrians and complete streets). The measure passed by nearly 72%, the highest level of support for any Santa Clara County transportation tax.',
-  metadataBase: new URL('https://measureb.vta.org'),
+  metadataBase: new URL('https://2016measureb.vta.org'),
   alternates: {
     canonical: '/',
     languages: {
