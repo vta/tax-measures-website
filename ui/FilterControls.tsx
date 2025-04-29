@@ -49,13 +49,11 @@ export const FilterControls = ({
     <div className="card bg-blue p-2 mb-3">
       <div className="row mb-2 text-white">
         <div className="col-lg-2 mb-2 mb-lg-0 d-flex align-items-center justify-content-start">
-          <div className="number-list">1</div>
           <div>
             <b>Transaction Type</b>
           </div>
         </div>
         <div className="col-lg-4 mb-2 mb-lg-0 d-flex align-items-center justify-content-start">
-          <div className="number-list">2</div>
           <div>
             <b>
               <FaqTerm
@@ -78,7 +76,6 @@ export const FilterControls = ({
           </div>
         </div>
         <div className="col-lg-3 d-flex align-items-center justify-content-start">
-          <div className="number-list">3</div>
           <div>
             <b>Search and select projects</b> (optional)
           </div>

@@ -220,19 +220,6 @@ a.card {
   text-decoration: underline;
 }
 
-.number-list {
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  font-size: 30px;
-  margin-right: 14px;
-  float: left;
-  width: 42px;
-  height: 42px;
-  border-radius: 21px;
-  background-color: #51baec;
-  text-align: center;
-}
-
 .react-slideshow-container .each-slide-effect > div {
   display: flex;
   align-items: end;
