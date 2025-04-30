@@ -19,7 +19,7 @@ import { PrintButton } from '#/ui/PrintButton';
 import { ShareButton } from '#/ui/ShareButton';
 
 export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
-  const [sortOrder, setSortOrder] = useState();
+  const [sortOrder, setSortOrder] = useState('project_name');
   const [sortDirection, setSortDirection] = useState('asc');
 
   if (!selectedProjects || selectedProjects.length === 0) {
@@ -47,7 +47,6 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
   const renderProjectRow = (project) => {
     return (
       <tr key={project.id}>
-        <td className="text-right">{project.fields['Fiscal Year']}</td>
         <td>
           <Link href={`/projects/${kebabCase(project.fields.Name)}/`}>
             {project.fields.Name}
@@ -56,13 +55,13 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
         <td>{project.fields['Grantee Name']}</td>
         <td>{project.fields.ParentCategoryName}</td>
         {hasSubcategoryColumn && <td>{project.fields.SubcategoryName}</td>}
-        <td className="text-right" style={{ width: '110px' }}>
+        <td className="text-end" style={{ width: '110px' }}>
           {formatCurrencyWithUnit(project.fields.totalAllocationAmount)}
         </td>
-        <td className="text-right" style={{ width: '80px' }}>
+        <td className="text-end" style={{ width: '80px' }}>
           {formatCurrencyWithUnit(project.fields.totalAwardAmount)}
         </td>
-        <td className="text-right" style={{ width: '100px' }}>
+        <td className="text-end" style={{ width: '100px' }}>
           {formatCurrencyWithUnit(project.fields.totalExpenditureAmount)}
         </td>
       </tr>
@@ -72,6 +71,7 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
   const csvData = [
     [
       'Project',
+      'Grantee',
       'Category',
       'Subcategory',
       'URL',
@@ -82,6 +82,7 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
     ...selectedProjects.map((project) => {
       return [
         project.fields.Name,
+        project.fields['Grantee Name'],
         project.fields.CategoryName,
         project.fields.SubcategoryName,
         project.fields.URL,
@@ -169,7 +170,7 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
     return (
       <th>
         <a
-          className="d-flex justify-content-between align-items-center text-nowrap"
+          className="d-flex justify-content-between align-items-center text-nowrap gap-1"
           onClick={() => setTableSort(columnId)}
           title={`Sort by ${columnName}`}
         >
@@ -190,18 +191,6 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
       <Table responsive size="sm" className="project-table">
         <thead>
           <tr>
-            {renderColumnHeader(
-              <>
-                Fiscal Year
-                <FaqTerm
-                  id="1293911"
-                  term="Fiscal Year"
-                  faqs={faqs}
-                  placement="bottom"
-                />
-              </>,
-              'fiscal_year',
-            )}
             {renderColumnHeader('Project Name', 'project_name')}
             {renderColumnHeader(
               <>
@@ -270,18 +259,17 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
         <tbody>
           {projects.map((project) => renderProjectRow(project))}
           <tr className="table-secondary border-top-2">
-            <td></td>
             <td>Total</td>
             <td></td>
             <td></td>
             {hasSubcategoryColumn && <td></td>}
-            <td className="text-right">
+            <td className="text-end">
               {formatCurrencyWithUnit(totals.totalAllocationAmount)}
             </td>
-            <td className="text-right">
+            <td className="text-end">
               {formatCurrencyWithUnit(totals.totalAwardAmount)}
             </td>
-            <td className="text-right">
+            <td className="text-end">
               {formatCurrencyWithUnit(totals.totalExpenditureAmount)}
             </td>
           </tr>
@@ -301,6 +289,7 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
                 action: 'click',
                 category: 'download',
                 label: 'csv',
+                value: 'vta-tax-measures.csv',
               })
             }
           >

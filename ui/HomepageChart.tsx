@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { groupBy } from 'lodash';
 
 import { formatCurrencyWithUnit, formatPercent } from '#/lib/formatters.js';
-import { sumCurrency } from '#/lib/util.js';
+import { getCurrentFiscalYear, sumCurrency } from '#/lib/util.js';
 import { FaqTerm } from '#/ui/FaqTerm';
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
@@ -41,7 +41,8 @@ export const HomepageChart = ({
   return (
     <>
       <h2>
-        Percentage of Allocation through FY2025 vs. Total Ballot Allocation
+        Percentage of Allocation through FY{getCurrentFiscalYear()} vs. Total
+        Ballot Allocation
         <FaqTerm
           id="1293971"
           term="Total Ballot Allocation"
@@ -129,7 +130,7 @@ export const HomepageChart = ({
         }}
         series={[
           {
-            name: 'Actual Allocated through FY25',
+            name: `Actual Allocated through FY${getCurrentFiscalYear()}`,
             data: actualAllocateds,
           },
           {

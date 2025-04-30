@@ -19,13 +19,8 @@ export const Results = ({
     return null;
   }
 
-  const shouldShowChartAndMap = () => {
-    if (results.categoryCard && results.categoryCard.key === 'Administration') {
-      return false;
-    }
-
-    return true;
-  };
+  const isAdministrationCategoryPage = () =>
+    results.categoryCard && results.categoryCard.key === 'Administration';
 
   const Chart = () => {
     const pieChartCategories = [
@@ -54,47 +49,53 @@ export const Results = ({
 
   return (
     <>
-      <CategoryInfo categoryCard={results.categoryCard} data={data} />
-      {shouldShowChartAndMap() && (
-        <div className="card mb-3">
-          <div className="card-body card-graph">
-            <div className="row">
-              <div className="col-md-6 col-print-12">
-                <Chart />
-              </div>
-              <div className="col-md-6 col-print-12">
-                {data.geojsons && (
-                  <ProjectsMap
-                    data={data}
-                    projectsToMap={results.projects}
-                    setProjectModalProjects={setProjectModalProjects}
-                    height="350px"
-                  />
-                )}
+      <CategoryInfo
+        categoryCard={results.categoryCard}
+        data={data}
+        results={results}
+      />
+      {!isAdministrationCategoryPage() && (
+        <>
+          <div className="card mb-3">
+            <div className="card-body card-graph">
+              <div className="row">
+                <div className="col-md-6 col-print-12">
+                  <Chart />
+                </div>
+                <div className="col-md-6 col-print-12">
+                  {data.geojsons && (
+                    <ProjectsMap
+                      data={data}
+                      projectsToMap={results.projects}
+                      setProjectModalProjects={setProjectModalProjects}
+                      height="350px"
+                    />
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+          <div className="card bg-blue text-white mb-3">
+            <div className="card-body">
+              <h2>Projects List</h2>
+              <p>
+                Below is a list of the projects correlated with the filter
+                settings above
+              </p>
+              <ProjectsTable
+                selectedProjects={results && results.projects}
+                faqs={data.faqs}
+                showButtons={true}
+              />
+            </div>
+          </div>
+          <style jsx>{`
+            .card-graph {
+              min-height: 400px;
+            }
+          `}</style>
+        </>
       )}
-      <div className="card bg-blue text-white mb-3">
-        <div className="card-body">
-          <h2>Projects List</h2>
-          <p>
-            Below is a list of the projects correlated with the filter settings
-            above
-          </p>
-          <ProjectsTable
-            selectedProjects={results && results.projects}
-            faqs={data.faqs}
-            showButtons={true}
-          />
-        </div>
-      </div>
-      <style jsx>{`
-        .card-graph {
-          min-height: 400px;
-        }
-      `}</style>
     </>
   );
 };
