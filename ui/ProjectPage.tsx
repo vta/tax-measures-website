@@ -11,7 +11,6 @@ import { compact, flatMap, kebabCase, uniq } from 'lodash';
 
 import { fetchData } from '#/lib/api.js';
 import { getDocumentById, getGranteeByProject } from '#/lib/util.js';
-import { formatProjectUrl } from '#/lib/formatters.js';
 import { ProjectFinanceTable } from '#/ui/ProjectFinanceTable';
 import { DocumentsList } from '#/ui/DocumentsList';
 import { ProjectMap } from '#/ui/ProjectMap';
@@ -56,8 +55,6 @@ export async function ProjectPage({ projectSlug }) {
     ? expenditures.filter((p) => project.fields.Expenditures.includes(p.id))
     : [];
 
-  const projectUrl = formatProjectUrl(project, projectGrantee);
-
   return (
     <div className="container" style={{ maxWidth: '1140px' }}>
       <Link
@@ -99,9 +96,13 @@ export async function ProjectPage({ projectSlug }) {
                     <b>Fiscal Year:</b> {project.fields['Fiscal Year']}
                   </div>
                 )}
-                {projectUrl && (
+                {project.fields.URL && (
                   <div className="project-stat">
-                    <a href={projectUrl} target="_blank" rel="noreferrer">
+                    <a
+                      href={project.fields.URL}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       Project Website{' '}
                       <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
                     </a>
