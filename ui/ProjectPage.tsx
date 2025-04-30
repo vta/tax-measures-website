@@ -77,20 +77,10 @@ export async function ProjectPage({ projectSlug }) {
                   </div>
                 )}
 
-                {project.fields.SubcategoryName ? (
-                  <>
-                    <div className="project-stat">
-                      <b>Category:</b> {project.fields.ParentCategoryName}
-                    </div>
-                    <div className="project-stat">
-                      <b>Subcategory:</b> {project.fields.SubcategoryName}
-                    </div>
-                  </>
-                ) : (
-                  <div className="project-stat">
-                    <b>Category:</b> {project.fields.CategoryName}
-                  </div>
-                )}
+                <div className="project-stat">
+                  <b>Category:</b> {project.fields.CategoryName}
+                </div>
+
                 {project.fields['Fiscal Year'] && (
                   <div className="project-stat">
                     <b>Fiscal Year:</b> {project.fields['Fiscal Year']}

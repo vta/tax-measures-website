@@ -31,10 +31,6 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
     );
   }
 
-  const hasSubcategoryColumn = some(selectedProjects, (project) =>
-    Boolean(project.fields.SubcategoryName),
-  );
-
   const setTableSort = (columnName) => {
     if (sortOrder === columnName) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -53,8 +49,7 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
           </Link>
         </td>
         <td>{project.fields['Grantee Name']}</td>
-        <td>{project.fields.ParentCategoryName}</td>
-        {hasSubcategoryColumn && <td>{project.fields.SubcategoryName}</td>}
+        <td>{project.fields.CategoryName}</td>
         <td className="text-end" style={{ width: '110px' }}>
           {formatCurrencyWithUnit(project.fields.totalAllocationAmount)}
         </td>
@@ -73,7 +68,6 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
       'Project',
       'Grantee',
       'Category',
-      'Subcategory',
       'URL',
       'Total Allocations',
       'Total Awards',
@@ -84,7 +78,6 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
         project.fields.Name,
         project.fields['Grantee Name'],
         project.fields.CategoryName,
-        project.fields.SubcategoryName,
         project.fields.URL,
         project.fields.totalAllocationAmount,
         project.fields.totalAwardAmount,
@@ -130,14 +123,6 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
       projects = orderBy(
         selectedProjects,
         'fields.ParentCategoryName',
-        sortDirection,
-      );
-    } else if (sortOrder === 'subcategory') {
-      projects = orderBy(
-        selectedProjects,
-        (project) => {
-          return project.fields.SubcategoryName || 'zzzz';
-        },
         sortDirection,
       );
     } else if (sortOrder === 'allocations') {
@@ -216,8 +201,6 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
               </>,
               'category',
             )}
-            {hasSubcategoryColumn &&
-              renderColumnHeader('Subcategory', 'subcategory')}
             {renderColumnHeader(
               <>
                 Allocations
@@ -262,7 +245,6 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
             <td>Total</td>
             <td></td>
             <td></td>
-            {hasSubcategoryColumn && <td></td>}
             <td className="text-end">
               {formatCurrencyWithUnit(totals.totalAllocationAmount)}
             </td>
