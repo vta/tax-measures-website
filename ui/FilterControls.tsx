@@ -53,7 +53,7 @@ export const FilterControls = ({
             <b>Transaction Type</b>
           </div>
         </div>
-        <div className="col-lg-4 mb-2 mb-lg-0 d-flex align-items-center justify-content-start">
+        <div className="col-lg-2 mb-2 mb-lg-0 d-flex align-items-center justify-content-start">
           <div>
             <b>
               <FaqTerm
@@ -62,8 +62,13 @@ export const FilterControls = ({
                 faqs={data.faqs}
                 placement="auto"
                 showTerm
-              />{' '}
-              or{' '}
+              />
+            </b>
+          </div>
+        </div>
+        <div className="col-lg-2 mb-2 mb-lg-0 d-flex align-items-center justify-content-start">
+          <div>
+            <b>
               <FaqTerm
                 id="1293956"
                 term="Grantees"
@@ -71,13 +76,12 @@ export const FilterControls = ({
                 placement="auto"
                 showTerm
               />
-            </b>{' '}
-            (optional)
+            </b>
           </div>
         </div>
         <div className="col-lg-3 d-flex align-items-center justify-content-start">
           <div>
-            <b>Search and select projects</b> (optional)
+            <b>Search projects</b>
           </div>
         </div>
       </div>
