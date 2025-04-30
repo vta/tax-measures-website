@@ -13,7 +13,6 @@ import {
 } from '#/lib/util.js';
 import { ProjectFinanceTable } from '#/ui/ProjectFinanceTable';
 import { ProjectLastModified } from '#/ui/ProjectLastModified';
-import { DocumentsList } from '#/ui/DocumentsList';
 import { ProjectShareButtons } from '#/ui/ProjectShareButtons';
 
 export const CategoryInfo = ({ data, categoryCard, results }) => {
@@ -40,11 +39,12 @@ export const CategoryInfo = ({ data, categoryCard, results }) => {
     if (categoryCard.key === 'Administration') {
       const annualReports = data.documents.filter(
         (document) =>
-          document.fields['Document Type'] === 'Administration Annual Report',
+          document.fields['Document Type'] === 'Program Annual Report',
       );
       const auditReports = data.documents.filter(
         (document) =>
-          document.fields['Document Type'] === 'Administration Audit Report',
+          document.fields['Document Type'] ===
+          'Program Performance Audit Report',
       );
 
       const project = results.projects[0];
@@ -110,10 +110,6 @@ export const CategoryInfo = ({ data, categoryCard, results }) => {
             ))}
           </ListGroup>
 
-          <div className="project-stat">
-            <b>Related Documents:</b>{' '}
-            <DocumentsList documents={projectDocuments} />
-          </div>
           <ProjectLastModified
             project={project}
             allocations={projectAllocations}
