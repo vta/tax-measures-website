@@ -282,14 +282,14 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
           <PrintButton className="btn btn-green me-2" />
           <CSVLink
             data={csvData}
-            filename={'vta-tax-measures.csv'}
+            filename={'measure-b-projects.csv'}
             className="btn btn-green"
             onClick={() =>
               event({
                 action: 'click',
                 category: 'download',
                 label: 'csv',
-                value: 'vta-tax-measures.csv',
+                value: 'measure-b-projects.csv',
               })
             }
           >
