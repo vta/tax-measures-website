@@ -55,7 +55,7 @@ export const HomepageChart = ({
         options={{
           chart: {
             type: 'bar',
-            height: 350,
+            height: 400,
             offsetY: -20,
             stacked: true,
             toolbar: {
@@ -139,7 +139,7 @@ export const HomepageChart = ({
           },
         ]}
         type="bar"
-        height={350}
+        height={400}
         width="100%"
       />
       <style jsx>{`

@@ -68,7 +68,7 @@ export const Results = ({
                       data={data}
                       projectsToMap={results.projects}
                       setProjectModalProjects={setProjectModalProjects}
-                      height="350px"
+                      height="400px"
                     />
                   )}
                 </div>

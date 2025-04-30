@@ -67,7 +67,7 @@ export const ProjectsMap = ({
       <style jsx>{`
         .map {
           clear: both;
-          height: 350px;
+          height: 400px;
         }
 
         .map-nav {

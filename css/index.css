@@ -261,7 +261,7 @@ a.card {
 
 @media screen and (min-width: 576px) {
   .react-slideshow-container .each-slide-effect > div {
-    height: 350px;
+    height: 400px;
   }
 }
 

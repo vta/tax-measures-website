@@ -140,7 +140,7 @@ export const BarChart = ({ results }) => {
     );
   }
 
-  if (data.length > 15) {
+  if (data.length > 20) {
     return (
       <div>
         <p>
@@ -243,7 +243,7 @@ export const BarChart = ({ results }) => {
         },
       ]}
       type="bar"
-      height={350}
+      height={400}
       width="100%"
     />
   );

@@ -47,7 +47,7 @@ export const AllocationVsExpenditureChart = ({
         options={{
           chart: {
             type: 'bar',
-            height: 350,
+            height: 400,
             offsetY: -20,
             stacked: true,
             toolbar: {
@@ -131,7 +131,7 @@ export const AllocationVsExpenditureChart = ({
           },
         ]}
         type="bar"
-        height={350}
+        height={400}
         width="100%"
       />
       <style jsx>{`
