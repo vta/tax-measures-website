@@ -4,9 +4,9 @@ import ReactMapGL, { NavigationControl } from 'react-map-gl/mapbox';
 import { MapLayer } from '#/ui/MapLayer';
 import { getViewport } from '#/lib/util.js';
 
-export const ProjectMap = ({ project, grantees, geojsons }) => {
+export const ProjectMap = ({ project, geojsons }) => {
   /* eslint-disable-next-line new-cap */
-  const { layers, bbox } = MapLayer([project], geojsons, grantees);
+  const { layers, bbox } = MapLayer([project], geojsons);
   const viewport = getViewport(bbox);
 
   if (!geojsons || layers.length === 0) {

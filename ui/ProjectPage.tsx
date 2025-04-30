@@ -121,11 +121,7 @@ export async function ProjectPage({ projectSlug }) {
               </div>
               <div className="col-md-6 mb-3">
                 {geojsons && (
-                  <ProjectMap
-                    project={project}
-                    geojsons={geojsons}
-                    grantees={grantees}
-                  />
+                  <ProjectMap project={project} geojsons={geojsons} />
                 )}
               </div>
             </div>

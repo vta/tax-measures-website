@@ -1,5 +1,5 @@
 import { Layer, Source } from 'react-map-gl/mapbox';
-import { mergeBboxes, getGranteeByProject } from '#/lib/util.js';
+import { mergeBboxes } from '#/lib/util.js';
 
 const detectGeometryTypes = (geojson, project) => {
   const typesPresent = {
@@ -53,7 +53,7 @@ const detectGeometryTypes = (geojson, project) => {
   return typesPresent;
 };
 
-export const MapLayer = (projects, geojsons, grantees) => {
+export const MapLayer = (projects, geojsons) => {
   if (!projects || !geojsons) {
     return {};
   }
@@ -67,14 +67,6 @@ export const MapLayer = (projects, geojsons, grantees) => {
     if (geojsons[project.id]) {
       geojson = geojsons[project.id].geojson;
       layerBbox = geojsons[project.id].bbox;
-    } else {
-      // Use geojson from grantee if exists
-      const grantee = getGranteeByProject(project, grantees);
-
-      if (grantee && geojsons[grantee.id]) {
-        geojson = geojsons[grantee.id].geojson;
-        layerBbox = geojsons[grantee.id].bbox;
-      }
     }
 
     if (geojson) {

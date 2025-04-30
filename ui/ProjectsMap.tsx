@@ -4,18 +4,14 @@ import { MapLayer } from '#/ui/MapLayer';
 import { getViewport } from '#/lib/util.js';
 
 export const ProjectsMap = ({
-  data: { grantees, geojsons },
+  data: { geojsons },
   projectsToMap,
   setProjectModalProjects,
   height,
 }) => {
   const [cursor, setCursor] = useState('auto');
   /* eslint-disable-next-line new-cap */
-  const { layers, layerIds, bbox } = MapLayer(
-    projectsToMap,
-    geojsons,
-    grantees,
-  );
+  const { layers, layerIds, bbox } = MapLayer(projectsToMap, geojsons);
   const viewport = getViewport(bbox);
 
   const onMapClick = (event) => {
