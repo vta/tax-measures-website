@@ -1,13 +1,17 @@
 import { Slide } from 'react-slideshow-image';
 
-export const Slideshow = ({ data }) => {
+export const Slideshow = ({ images }) => {
+  if (!images || images.length === 0) {
+    return null;
+  }
+
   return (
     <Slide
       autoplay={false}
       onChange={function noRefCheck() {}}
       onStartChange={function noRefCheck() {}}
     >
-      {data.images.map((image) => (
+      {images.map((image) => (
         <div className="each-slide-effect">
           <div
             style={{

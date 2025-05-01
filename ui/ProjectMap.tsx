@@ -3,14 +3,22 @@
 import ReactMapGL, { NavigationControl } from 'react-map-gl/mapbox';
 import { MapLayer } from '#/ui/MapLayer';
 import { getViewport } from '#/lib/util.js';
+import { Slideshow } from '#/ui/Slideshow';
 
-export const ProjectMap = ({ project, geojsons }) => {
+export const ProjectMap = ({ project, geojsons, images }) => {
   /* eslint-disable-next-line new-cap */
   const { layers, bbox } = MapLayer([project], geojsons);
   const viewport = getViewport(bbox);
 
+  // Fall back to slideshow if project does not have spatial data
   if (!geojsons || layers.length === 0) {
-    return null;
+    return (
+      <Slideshow
+        images={images.filter((image) =>
+          project.fields.Images?.includes(image.id),
+        )}
+      />
+    );
   }
 
   return (

@@ -1,10 +1,11 @@
 import { useState, useCallback } from 'react';
+import { uniq } from 'lodash';
 import ReactMapGL, { NavigationControl } from 'react-map-gl/mapbox';
 import { MapLayer } from '#/ui/MapLayer';
 import { getViewport } from '#/lib/util.js';
-
+import { Slideshow } from '#/ui/Slideshow';
 export const ProjectsMap = ({
-  data: { geojsons },
+  data: { geojsons, images },
   projectsToMap,
   setProjectModalProjects,
   height,
@@ -36,12 +37,15 @@ export const ProjectsMap = ({
     return null;
   }
 
+  // Fall back to slideshow if no projects have spatial data
   if (layers.length === 0) {
+    const imageIds = uniq(
+      projectsToMap.flatMap((project) => project.fields?.Images ?? []),
+    );
     return (
-      <div>
-        <p>&nbsp;</p>
-        <div className="text-center fw-bold mt-5">No map available</div>
-      </div>
+      <Slideshow
+        images={images.filter((image) => imageIds.includes(image.id))}
+      />
     );
   }
 

@@ -145,7 +145,7 @@ export const HomePageData = ({ data }) => {
                 <HomepageChart data={data} />
               </div>
               <div className="col-lg-6 mt-3 mt-lg-0">
-                <Slideshow data={data} />
+                <Slideshow images={data.images} />
               </div>
             </div>
           </div>

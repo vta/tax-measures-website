@@ -26,6 +26,7 @@ export async function ProjectPage({ projectSlug }) {
     expenditures,
     projects,
     geojsons,
+    images,
   } = await fetchData();
   const project = projects.find(
     (project) => kebabCase(project?.fields.Name) === projectSlug,
@@ -112,7 +113,11 @@ export async function ProjectPage({ projectSlug }) {
               </div>
               <div className="col-md-6 mb-3">
                 {geojsons && (
-                  <ProjectMap project={project} geojsons={geojsons} />
+                  <ProjectMap
+                    project={project}
+                    geojsons={geojsons}
+                    images={images}
+                  />
                 )}
               </div>
             </div>
