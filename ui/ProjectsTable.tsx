@@ -122,7 +122,7 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
     } else if (sortOrder === 'category') {
       projects = orderBy(
         selectedProjects,
-        'fields.ParentCategoryName',
+        'fields.CategoryName',
         sortDirection,
       );
     } else if (sortOrder === 'allocations') {
