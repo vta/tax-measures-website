@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Select from 'react-select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { capitalize, isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 
 import { FaqTerm } from '#/ui/FaqTerm';
 
@@ -15,27 +15,18 @@ export const FilterControls = ({
   handleSearch,
   clearSearch,
 }) => {
-  const [transactionType, setTransactionType] = useState(
-    incomingFilters.transactionType || 'award',
-  );
   const [grantee, setGrantee] = useState(incomingFilters.grantee || '');
   const [project, setProject] = useState(incomingFilters.project || '');
   const [category, setCategory] = useState(incomingFilters.category || '');
 
   const validateFilters = useCallback(
     (filters) => {
-      if (!filters.transactionType) {
-        /*  eslint-disable-next-line no-alert */
-        return alert('You must specify a transaction type');
-      }
-
       handleSearch(filters);
     },
     [handleSearch],
   );
 
   useEffect(() => {
-    setTransactionType(incomingFilters.transactionType || 'award');
     setGrantee(incomingFilters.grantee || '');
     setCategory(incomingFilters.category || '');
     setProject(incomingFilters.project || '');
@@ -48,12 +39,7 @@ export const FilterControls = ({
   return (
     <div className="card bg-blue p-2 mb-3">
       <div className="row mb-2 text-white">
-        <div className="col-lg-2 mb-2 mb-lg-0 d-flex align-items-center justify-content-start">
-          <div>
-            <b>Transaction Type</b>
-          </div>
-        </div>
-        <div className="col-lg-2 mb-2 mb-lg-0 d-flex align-items-center justify-content-start">
+        <div className="col-lg-3 mb-2 mb-lg-0 d-flex align-items-center justify-content-start">
           <div>
             <b>
               <FaqTerm
@@ -86,37 +72,7 @@ export const FilterControls = ({
         </div>
       </div>
       <div className="row">
-        <div className="col-lg-2 mb-2 mb-lg-0">
-          <label htmlFor="transaction-type" className="sr-only">
-            Transaction Type
-          </label>
-          <Select
-            inputId="transaction-type"
-            value={
-              transactionType && [
-                {
-                  value: transactionType,
-                  label: capitalize(transactionType),
-                },
-              ]
-            }
-            onChange={(selectedOption) =>
-              setTransactionType(selectedOption.value)
-            }
-            options={[
-              {
-                label: 'Expenditure',
-                value: 'expenditure',
-              },
-              {
-                label: 'Award',
-                value: 'award',
-              },
-            ]}
-            placeholder="Select Transaction Type"
-          />
-        </div>
-        <div className="col-lg-2 mb-2 mb-lg-0">
+        <div className="col-lg-3 mb-2 mb-lg-0">
           <label htmlFor="program-category" className="sr-only">
             Program Category
           </label>
@@ -181,7 +137,7 @@ export const FilterControls = ({
             disabled={!data}
           />
         </div>
-        <div className="col-lg-2 mb-2 mb-lg-0">
+        <div className="col-lg-3 mb-2 mb-lg-0">
           <Form.Control
             type="text"
             onChange={(event) => setProject(event.target.value)}
@@ -190,7 +146,6 @@ export const FilterControls = ({
             onKeyPress={(event) => {
               if (event.key === 'Enter') {
                 validateFilters({
-                  transactionType,
                   grantee,
                   project,
                   category,
@@ -205,7 +160,6 @@ export const FilterControls = ({
               variant="secondary"
               onClick={() =>
                 validateFilters({
-                  transactionType,
                   grantee,
                   project,
                   category,

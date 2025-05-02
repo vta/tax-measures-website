@@ -35,7 +35,6 @@ export const CategoryCards = ({ data, setIncomingFilters, handleSearch }) => {
                 event.preventDefault();
 
                 const categoryFilters = {
-                  transactionType: 'award',
                   category: [key],
                 };
 

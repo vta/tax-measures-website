@@ -14,7 +14,9 @@ export const AllocationVsExpenditureChart = ({
 }) => {
   // Find all unique allocation ids
   const allocationIds = Array.from(
-    new Set(results.items.flatMap((item) => item.fields?.Allocation || [])),
+    new Set(
+      results.projects.flatMap((project) => project.fields?.Allocations || []),
+    ),
   );
 
   const totalAllocations = allocationIds.reduce((memo, allocationId) => {
@@ -28,7 +30,9 @@ export const AllocationVsExpenditureChart = ({
 
   // Find all unique expenditure ids
   const expenditureIds = Array.from(
-    new Set(results.items.flatMap((item) => item.fields?.Expenditures || [])),
+    new Set(
+      results.projects.flatMap((project) => project.fields?.Expenditures || []),
+    ),
   );
 
   const totalExpenditures = expenditureIds.reduce((memo, expenditureId) => {

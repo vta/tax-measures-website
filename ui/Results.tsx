@@ -15,7 +15,7 @@ export const Results = ({
     return <Loading loading={loading} />;
   }
 
-  if (!results || !results.items || results.items.length === 0) {
+  if (!results || !results.projects || results.projects.length === 0) {
     return null;
   }
 
@@ -44,7 +44,13 @@ export const Results = ({
       );
     }
 
-    return <BarChart results={results} />;
+    return (
+      <BarChart
+        results={results}
+        awards={data.awards}
+        expenditures={data.expenditures}
+      />
+    );
   };
 
   return (

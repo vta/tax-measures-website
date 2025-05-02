@@ -72,7 +72,7 @@ export const Menu = () => {
           <a
             className="ms-4"
             key={key}
-            href={`/?transactionType=award&grantee=&project=&category=${encodeURIComponent(key)}`}
+            href={`/?grantee=&project=&category=${encodeURIComponent(key)}`}
           >
             {key}
           </a>

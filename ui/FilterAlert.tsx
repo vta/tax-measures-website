@@ -9,7 +9,7 @@ export const FilterAlert = ({ results, currentFilters }) => {
     return null;
   }
 
-  if (results.items.length === 0) {
+  if (results.projects.length === 0) {
     return (
       <Alert variant="warning" className="text-center">
         <Alert.Heading>No funded projects meet these criteria.</Alert.Heading>
@@ -18,7 +18,7 @@ export const FilterAlert = ({ results, currentFilters }) => {
     );
   }
 
-  if (results.items.length < 5) {
+  if (results.projects.length < 5) {
     return (
       <Alert variant="warning" className="text-center">
         <Alert.Heading>Limited results</Alert.Heading>
