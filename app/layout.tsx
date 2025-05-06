@@ -20,9 +20,6 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://2016measureb.vta.org'),
   alternates: {
     canonical: '/',
-    languages: {
-      'en-US': '/en-US',
-    },
   },
   openGraph: {
     title: '2016 Measure B - VTA',
