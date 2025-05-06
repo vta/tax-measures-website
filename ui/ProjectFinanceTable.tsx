@@ -36,6 +36,15 @@ export const ProjectFinanceTable = ({ allocations, awards, expenditures }) => {
   const minYear = Math.min(...years.map(Number).filter((i) => !isNaN(i)));
   const maxYear = Math.max(...years.map(Number).filter((i) => !isNaN(i)));
 
+  if (
+    minYear === -Infinity ||
+    minYear === Infinity ||
+    maxYear === Infinity ||
+    maxYear === -Infinity
+  ) {
+    return 'None';
+  }
+
   const fiscalYears = range(minYear, maxYear + 1);
 
   if (years.includes('undefined')) {
