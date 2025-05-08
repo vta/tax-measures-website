@@ -23,6 +23,7 @@
     "apexcharts": "^4.7.0",
     "bootstrap": "^5.3.5",
     "cross-fetch": "^4.1.0",
+    "downshift": "^9.0.9",
     "lodash": "^4.17.21",
     "mapbox-gl": "^3.11.1",
     "moment": "^2.30.1",

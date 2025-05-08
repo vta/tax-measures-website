@@ -35,8 +35,6 @@ export const HomePageData = ({ data }) => {
       setResults(
         await applyFilters(
           filters,
-          data.awards,
-          data.expenditures,
           data.projects,
           data.categories,
           data.grantees,

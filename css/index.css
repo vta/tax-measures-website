@@ -259,6 +259,68 @@ a.card {
   position: absolute;
 }
 
+.filter-input {
+  min-height: 38px;
+  outline: 0 !important;
+  transition: all 100ms;
+  background-color: hsl(0, 0%, 100%);
+  border-color: hsl(0, 0%, 80%);
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 2px 8px;
+}
+
+.filter-input::placeholder {
+  color: hsl(0, 0%, 50%);
+}
+
+.combobox-button {
+  padding-left: .5rem;
+  padding-right: .5rem;
+  font-feature-settings: inherit;
+  color: hsl(0, 0%, 50%);
+  font-family: inherit;
+  font-size: 100%;
+  font-variation-settings: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  margin: 0;
+  padding: 0;
+  -webkit-appearance: button;
+  background-color: hsl(0, 0%, 100%);
+  border-color: hsl(0, 0%, 80%);
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 2px 8px;
+  background-image: none;
+  box-sizing: border-box;
+}
+
+.combobox-icon {
+  color: rgb(204, 204, 204);
+  fill: rgb(204, 204, 204);
+}
+
+.combobox-icon.open {
+  color: rgb(153, 153, 153);
+  fill: rgb(153, 153, 153);
+}
+
+.combobox-menu {
+  position: absolute;
+  max-width: 288px;
+  background-color: #ffffff;
+  margin-top: 1px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 0;
+  z-index: 10;
+}
+
 @media screen and (min-width: 576px) {
   .react-slideshow-container .each-slide-effect > div {
     height: 400px;
