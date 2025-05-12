@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { isEmpty } from 'lodash';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { isEmpty, kebabCase } from 'lodash';
 
 import { FilterControls } from '#/ui/FilterControls';
 import { FilterAlert } from '#/ui/FilterAlert';
@@ -28,18 +28,33 @@ export const HomePageData = ({ data }) => {
   const [projectModalProjects, setProjectModalProjects] = useState();
 
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const handleSearch = useCallback(
     async (filters) => {
       setLoading(true);
-      setResults(
-        await applyFilters(
-          filters,
-          data.projects,
-          data.categories,
-          data.grantees,
-        ),
+
+      const filteredResults = await applyFilters(
+        filters,
+        data.projects,
+        data.categories,
+        data.grantees,
       );
+
+      // If the filtered results are a single project and the current filters include a project, redirect to project page
+      if (
+        filteredResults.projects.length === 1 &&
+        filters.project &&
+        filteredResults.projects[0].fields.Name.toLowerCase() ===
+          filters.project.toLowerCase()
+      ) {
+        router.push(
+          `/projects/${kebabCase(filteredResults.projects[0].fields.Name)}`,
+        );
+        return;
+      }
+
+      setResults(filteredResults);
       updateUrlWithFilters(
         filters,
         (projectModalProjects || []).map((p) => p.id),
@@ -54,6 +69,7 @@ export const HomePageData = ({ data }) => {
       data.categories,
       data.grantees,
       projectModalProjects,
+      router,
     ],
   );
 
