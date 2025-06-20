@@ -38,16 +38,20 @@ export const metadata: Metadata = {
 };
 
 const Faq = ({ faq }) => {
+  // Split content by line breaks and map to React elements
+  const contentLines = faq.fields.Content.split('\n');
+
   return (
     <>
-      <h2
-        className="mt-4"
-        dangerouslySetInnerHTML={{ __html: faq['faq-question'] }}
-      />
-      <p
-        dangerouslySetInnerHTML={{ __html: faq['faq-answer'] }}
-        className="faq-answer"
-      />
+      <h2 className="mt-4">{faq.fields.Title}</h2>
+      <p className="faq-answer">
+        {contentLines.map((line, index) => (
+          <span key={index}>
+            {line}
+            {index < contentLines.length - 1 && <br />}
+          </span>
+        ))}
+      </p>
     </>
   );
 };
@@ -63,36 +67,6 @@ export default async function Page() {
         <div className="card mt-3 mb-5">
           <div className="card-body">
             <h1>About 2016 Measure B</h1>
-
-            <h2 className="mt-4">What is 2016 Measure B?</h2>
-            <p className="faq-answer">
-              A 30-year, half-cent countywide sales tax to enhance transit,
-              highways, expressways and active transportation (bicycles,
-              pedestrians and complete streets). The measure passed by nearly
-              72%, the highest level of support for any Santa Clara County
-              transportation tax. The 
-              <a href="https://www.vta.org/2016-measure-b-citizens-oversight-committee">
-                2016 Measure B Citizens&apos; Oversight Committee
-              </a>
-               ensures funds are expended as approved.{' '}
-              <a href="https://www.vta.org/projects/funding/2016-measure-b">
-                Read More &raquo;
-              </a>
-            </p>
-
-            <h2 className="mt-4">What is this website?</h2>
-            <p className="faq-answer">
-              This website is a window into 2016 Measure B revenue and spending.
-              You can search, view and share unaudited financial information
-              about programs and projects, updated quarterly or as new
-              information is released.
-            </p>
-
-            <h2 className="mt-4">Where can I submit questions or feedback?</h2>
-            <p className="faq-answer">
-              Email us at{' '}
-              <a href="mailto:2016MeasureB@vta.org">2016MeasureB@vta.org</a>.
-            </p>
             {faqs.map((faq, index) => (
               <Faq faq={faq} key={index} />
             ))}

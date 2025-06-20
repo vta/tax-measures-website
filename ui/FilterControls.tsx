@@ -75,8 +75,7 @@ export const FilterControls = ({
           <div>
             <b>
               <FaqTerm
-                id="1293896"
-                term="Program Categories"
+                term="Categories"
                 faqs={data.faqs}
                 placement="auto"
                 showTerm
@@ -88,7 +87,6 @@ export const FilterControls = ({
           <div>
             <b>
               <FaqTerm
-                id="1293956"
                 term="Grantees"
                 faqs={data.faqs}
                 placement="auto"

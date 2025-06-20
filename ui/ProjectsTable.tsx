@@ -180,60 +180,35 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
             {renderColumnHeader(
               <>
                 Grantee
-                <FaqTerm
-                  id="1293956"
-                  term="Grantee"
-                  faqs={faqs}
-                  placement="bottom"
-                />
+                <FaqTerm term="Grantees" faqs={faqs} placement="bottom" />
               </>,
               'grantee',
             )}
             {renderColumnHeader(
               <>
                 Category
-                <FaqTerm
-                  id="1293896"
-                  term="Category"
-                  faqs={faqs}
-                  placement="bottom"
-                />
+                <FaqTerm term="Categories" faqs={faqs} placement="bottom" />
               </>,
               'category',
             )}
             {renderColumnHeader(
               <>
                 Allocations
-                <FaqTerm
-                  id="1293891"
-                  term="Allocations"
-                  faqs={faqs}
-                  placement="bottom"
-                />
+                <FaqTerm term="Allocations" faqs={faqs} placement="bottom" />
               </>,
               'allocations',
             )}
             {renderColumnHeader(
               <>
                 Awards
-                <FaqTerm
-                  id="1327821"
-                  term="Awards"
-                  faqs={faqs}
-                  placement="bottom"
-                />
+                <FaqTerm term="Awards" faqs={faqs} placement="bottom" />
               </>,
               'awards',
             )}
             {renderColumnHeader(
               <>
                 Expenditures
-                <FaqTerm
-                  id="1327826"
-                  term="Expenditures"
-                  faqs={faqs}
-                  placement="bottom"
-                />
+                <FaqTerm term="Expenditures" faqs={faqs} placement="bottom" />
               </>,
               'expenditures',
             )}

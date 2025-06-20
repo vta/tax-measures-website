@@ -21,7 +21,6 @@ Setup configurtion by creating a `.env` file in the project root with the follow
     NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY=your-algolia-search-api-key
     ALGOLIA_ADMIN_API_KEY=your-algolia-api-key
     NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=your-mapbox-access-token
-    VTA_API_KEY=your-vta.org-api-key
 
 ## Running locally
 

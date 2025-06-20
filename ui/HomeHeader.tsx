@@ -81,7 +81,6 @@ export async function HomeHeader() {
             <div className="header-stat-label">
               Billion Collected
               <FaqTerm
-                id="1293871"
                 term="Revenue Collected"
                 faqs={data.faqs}
                 placement="auto"
@@ -99,12 +98,7 @@ export async function HomeHeader() {
             </div>
             <div className="header-stat-label">
               Billion Allocated
-              <FaqTerm
-                id="1327856"
-                term="Allocations"
-                faqs={data.faqs}
-                placement="auto"
-              />
+              <FaqTerm term="Allocations" faqs={data.faqs} placement="auto" />
             </div>
             <div className="header-state-date">
               Through{' '}
@@ -131,12 +125,7 @@ export async function HomeHeader() {
             </div>
             <div className="header-stat-label">
               Billion Spent
-              <FaqTerm
-                id="1327826"
-                term="Expenditures"
-                faqs={data.faqs}
-                placement="auto"
-              />
+              <FaqTerm term="Expenditures" faqs={data.faqs} placement="auto" />
             </div>
             <div className="header-state-date">
               Through {latestExpenditureDate}

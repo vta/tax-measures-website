@@ -9,8 +9,8 @@ import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 
-export const FaqTerm = ({ id, term, faqs, placement, showTerm }) => {
-  const faq = faqs && faqs.find((f) => f.nid === id);
+export const FaqTerm = ({ term, faqs, placement, showTerm }) => {
+  const faq = faqs && faqs.find((f) => f.fields.Term === term);
 
   if (!faq) {
     return showTerm ? <span>{term}</span> : null;
@@ -18,7 +18,7 @@ export const FaqTerm = ({ id, term, faqs, placement, showTerm }) => {
 
   const popover = (
     <Popover id="popover-basic">
-      <Popover.Body dangerouslySetInnerHTML={{ __html: faq['faq-answer'] }} />
+      <Popover.Body dangerouslySetInnerHTML={{ __html: faq.fields.Content }} />
     </Popover>
   );
 
