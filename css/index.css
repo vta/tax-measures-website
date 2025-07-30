@@ -230,6 +230,7 @@ a.card {
   align-items: end;
   justify-content: center;
   background-size: cover;
+  background-position: center;
   height: 250px;
 }
 
