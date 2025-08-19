@@ -70,7 +70,7 @@ export const AllocationVsExpenditureChart = ({
               horizontal: true,
             },
           },
-          colors: ['#BAD739', '#BDBEBD'],
+          colors: ['#51baec', '#BDBEBD'],
           dataLabels: {
             enabled: false,
           },
