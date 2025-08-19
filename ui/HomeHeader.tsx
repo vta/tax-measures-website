@@ -6,7 +6,11 @@ import moment from 'moment';
 
 import { fetchData } from '#/lib/api.js';
 import { formatCurrencyBillions } from '#/lib/formatters.js';
-import { getCurrentFiscalYear, findLatestYear } from '#/lib/util.js';
+import {
+  getCurrentFiscalYear,
+  findLatestYear,
+  getLastFullMonthDate,
+} from '#/lib/util.js';
 import { FaqTerm } from '#/ui/FaqTerm';
 import { Menu } from '#/ui/Menu';
 
@@ -51,21 +55,22 @@ export async function HomeHeader() {
   );
   /* eslint-enable @next/next/no-html-link-for-pages */
 
-  const latestAwardDate = moment
-    .max(
-      data.revenue
-        .filter((r) => r.fields.Date !== undefined)
-        .map((r) => moment(r.fields.Date, 'YYYY-MM-DD')),
-    )
-    .format('MMM D, YYYY');
+  const latestAwardDate = moment.max(
+    data.revenue
+      .filter((r) => r.fields.Date !== undefined)
+      .map((r) => moment(r.fields.Date, 'YYYY-MM-DD')),
+  );
+  const latestAwardDateLastFullMonth =
+    getLastFullMonthDate(latestAwardDate).format('MMM D, YYYY');
 
-  const latestExpenditureDate = moment
-    .max(
-      data.expenditures
-        .filter((e) => e.fields.Date !== undefined)
-        .map((e) => moment(e.fields.Date, 'YYYY-MM-DD')),
-    )
-    .format('MMM D, YYYY');
+  const latestExpenditureDate = moment.max(
+    data.expenditures
+      .filter((e) => e.fields.Date !== undefined)
+      .map((e) => moment(e.fields.Date, 'YYYY-MM-DD')),
+  );
+  const latestExpenditureDateLastFullMonth = getLastFullMonthDate(
+    latestExpenditureDate,
+  ).format('MMM D, YYYY');
 
   return (
     <div className="container-fluid">
@@ -86,7 +91,9 @@ export async function HomeHeader() {
                 placement="auto"
               />
             </div>
-            <div className="header-state-date">Through {latestAwardDate}</div>
+            <div className="header-state-date">
+              Through {latestAwardDateLastFullMonth}
+            </div>
           </div>
         </div>
         <div className="col-md d-print-none">
@@ -128,7 +135,7 @@ export async function HomeHeader() {
               <FaqTerm term="Expenditures" faqs={data.faqs} placement="auto" />
             </div>
             <div className="header-state-date">
-              Through {latestExpenditureDate}
+              Through {latestExpenditureDateLastFullMonth}
             </div>
           </div>
         </div>
