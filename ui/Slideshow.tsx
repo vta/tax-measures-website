@@ -7,9 +7,13 @@ export const Slideshow = ({ images }) => {
 
   return (
     <Slide
-      autoplay={false}
+      autoplay={true}
+      duration={5000}
       onChange={function noRefCheck() {}}
       onStartChange={function noRefCheck() {}}
+      indicators={true}
+      arrows={true}
+      easing="cubic"
     >
       {images.map((image) => (
         <div className="each-slide-effect">

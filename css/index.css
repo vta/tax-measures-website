@@ -231,7 +231,7 @@ a.card {
   justify-content: center;
   background-size: cover;
   background-position: center;
-  height: 250px;
+  aspect-ratio: 16 / 9;
 }
 
 .react-slideshow-container .each-slide-effect .caption {
@@ -322,11 +322,6 @@ a.card {
   z-index: 10;
 }
 
-@media screen and (min-width: 576px) {
-  .react-slideshow-container .each-slide-effect > div {
-    height: 400px;
-  }
-}
 
 @media screen and (min-width: 768px) {
   .logo {
@@ -345,9 +340,5 @@ a.card {
   }
   .header-stat-label {
     font-size: 21px;
-  }
-
-  .react-slideshow-container .each-slide-effect > div {
-    height: 445px;
   }
 }
