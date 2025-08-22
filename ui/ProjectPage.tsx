@@ -82,11 +82,6 @@ export async function ProjectPage({ projectSlug }) {
                   <b>Category:</b> {project.fields.CategoryName}
                 </div>
 
-                {project.fields['Fiscal Year'] && (
-                  <div className="project-stat">
-                    <b>Fiscal Year:</b> {project.fields['Fiscal Year']}
-                  </div>
-                )}
                 {project.fields.URL && (
                   <div className="project-stat">
                     <a
