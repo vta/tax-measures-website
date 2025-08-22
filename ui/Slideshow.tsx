@@ -11,8 +11,8 @@ export const Slideshow = ({ images }) => {
       duration={5000}
       onChange={function noRefCheck() {}}
       onStartChange={function noRefCheck() {}}
-      indicators={true}
-      arrows={true}
+      indicators={images.length > 1 ? true : false}
+      arrows={images.length > 1 ? true : false}
       easing="cubic"
     >
       {images.map((image) => (

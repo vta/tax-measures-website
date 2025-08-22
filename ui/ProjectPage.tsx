@@ -94,7 +94,7 @@ export async function ProjectPage({ projectSlug }) {
                     </a>
                   </div>
                 )}
-                <div className="project-stat">
+                <div className="project-stat mb-3">
                   <b>Grantee:</b>{' '}
                   {projectGrantee?.fields.URL ? (
                     <a href={projectGrantee.fields.URL}>

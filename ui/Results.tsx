@@ -65,10 +65,10 @@ export const Results = ({
           <div className="card mb-3">
             <div className="card-body card-graph">
               <div className="row">
-                <div className="col-md-6 col-print-12">
+                <div className="col-lg-6 col-print-12">
                   <Chart />
                 </div>
-                <div className="col-md-6 col-print-12">
+                <div className="col-lg-6 col-print-12">
                   {data.geojsons && (
                     <ProjectsMap
                       data={data}
