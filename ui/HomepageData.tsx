@@ -12,6 +12,7 @@ import { CategoryCards } from '#/ui/CategoryCards';
 import { HomepageChart } from '#/ui/HomepageChart';
 import { IntroSection } from '#/ui/IntroSection';
 import { ProjectModal } from '#/ui/ProjectModal';
+import { WelcomeModal } from '#/ui/WelcomeModal';
 import { Slideshow } from '#/ui/Slideshow';
 import {
   applyFilters,
@@ -26,9 +27,22 @@ export const HomePageData = ({ data }) => {
   const [incomingFilters, setIncomingFilters] = useState({});
   const [currentFilters, setCurrentFilters] = useState();
   const [projectModalProjects, setProjectModalProjects] = useState();
-
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
+
+  // Check if user has seen the welcome modal before
+  useEffect(() => {
+    const hasSeenWelcomeModal = localStorage.getItem('hasSeenWelcomeModal');
+    if (!hasSeenWelcomeModal) {
+      setShowWelcomeModal(true);
+    }
+  }, []);
+
+  const handleWelcomeModalHide = () => {
+    localStorage.setItem('hasSeenWelcomeModal', 'true');
+    setShowWelcomeModal(false);
+  };
 
   const handleSearch = useCallback(
     async (filters) => {
@@ -173,6 +187,8 @@ export const HomePageData = ({ data }) => {
         data={data}
         setProjectModalProjects={setProjectModalProjects}
       />
+
+      <WelcomeModal show={showWelcomeModal} onHide={handleWelcomeModalHide} />
     </div>
   );
 };
