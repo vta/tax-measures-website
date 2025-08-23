@@ -8,8 +8,8 @@ import { FilterControls } from '#/ui/FilterControls';
 import { FilterAlert } from '#/ui/FilterAlert';
 import { Loading } from '#/ui/Loading';
 import { Results } from '#/ui/Results';
+import { AllocationVsExpenditureChart } from '#/ui/AllocationVsExpenditureChart';
 import { CategoryCards } from '#/ui/CategoryCards';
-import { HomepageChart } from '#/ui/HomepageChart';
 import { IntroSection } from '#/ui/IntroSection';
 import { ProjectModal } from '#/ui/ProjectModal';
 import { WelcomeModal } from '#/ui/WelcomeModal';
@@ -170,7 +170,11 @@ export const HomePageData = ({ data }) => {
           <div className="card-body card-graph">
             <div className="row">
               <div className="col-lg-6">
-                <HomepageChart data={data} />
+                <AllocationVsExpenditureChart
+                  projects={data.projects}
+                  allocations={data.allocations}
+                  expenditures={data.expenditures}
+                />
               </div>
               <div className="col-lg-6 mt-3 mt-lg-0">
                 <Slideshow images={data.images} />

@@ -1,48 +1,77 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { groupBy, sortBy } from 'lodash';
 
 import { formatCurrencyWithUnit, formatPercent } from '#/lib/formatters.js';
 import { getAllocationById, getExpenditureById } from '#/lib/util.js';
+import { categoryCards } from '#/lib/category-cards.js';
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export const AllocationVsExpenditureChart = ({
-  results,
+  projects,
   allocations,
   expenditures,
 }) => {
-  // Find all unique allocation ids
-  const allocationIds = Array.from(
-    new Set(
-      results.projects.flatMap((project) => project.fields?.Allocations || []),
-    ),
+  const categoryGroups = groupBy(
+    projects,
+    (project) => project.fields.CategoryName,
   );
 
-  const totalAllocations = allocationIds.reduce((memo, allocationId) => {
-    const allocation = getAllocationById(allocationId, allocations);
-    if (allocation) {
-      memo += allocation.fields.Amount;
-    }
+  const chartData = sortBy(
+    Object.entries(categoryGroups)
+      .map(([categoryName, categoryProjects]) => {
+        // Find all unique allocation ids
+        const allocationIds = Array.from(
+          new Set(
+            categoryProjects.flatMap(
+              (project) => project.fields?.Allocations || [],
+            ),
+          ),
+        );
 
-    return memo;
-  }, 0);
+        const totalAllocations = allocationIds.reduce((memo, allocationId) => {
+          const allocation = getAllocationById(allocationId, allocations);
+          if (allocation) {
+            memo += allocation.fields.Amount;
+          }
 
-  // Find all unique expenditure ids
-  const expenditureIds = Array.from(
-    new Set(
-      results.projects.flatMap((project) => project.fields?.Expenditures || []),
-    ),
+          return memo;
+        }, 0);
+
+        // Find all unique expenditure ids
+        const expenditureIds = Array.from(
+          new Set(
+            categoryProjects.flatMap(
+              (project) => project.fields?.Expenditures || [],
+            ),
+          ),
+        );
+
+        const totalExpenditures = expenditureIds.reduce(
+          (memo, expenditureId) => {
+            const expenditure = getExpenditureById(expenditureId, expenditures);
+            if (expenditure) {
+              memo += expenditure.fields.Amount;
+            }
+
+            return memo;
+          },
+          0,
+        );
+
+        return {
+          categoryName,
+          totalAllocations,
+          totalExpenditures,
+        };
+      })
+      .filter(
+        (data) => data.totalAllocations > 0 || data.totalExpenditures > 0,
+      ),
+    'categoryName',
   );
-
-  const totalExpenditures = expenditureIds.reduce((memo, expenditureId) => {
-    const expenditure = getExpenditureById(expenditureId, expenditures);
-    if (expenditure) {
-      memo += expenditure.fields.Amount;
-    }
-
-    return memo;
-  }, 0);
 
   return (
     <>
@@ -86,7 +115,7 @@ export const AllocationVsExpenditureChart = ({
             },
           },
           xaxis: {
-            categories: [results.categoryCard.key],
+            categories: chartData.map((data) => data.categoryName),
             labels: {
               formatter: formatCurrencyWithUnit,
             },
@@ -127,11 +156,13 @@ export const AllocationVsExpenditureChart = ({
         series={[
           {
             name: 'Total Expenditures',
-            data: [totalExpenditures],
+            data: chartData.map((data) => data.totalExpenditures),
           },
           {
             name: 'Remaining Allocation',
-            data: [Math.max(0, totalAllocations - totalExpenditures)],
+            data: chartData.map((data) =>
+              Math.max(0, data.totalAllocations - data.totalExpenditures),
+            ),
           },
         ]}
         type="bar"

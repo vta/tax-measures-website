@@ -37,7 +37,7 @@ export const Results = ({
     ) {
       return (
         <AllocationVsExpenditureChart
-          results={results}
+          projects={results.projects}
           allocations={data.allocations}
           expenditures={data.expenditures}
         />
