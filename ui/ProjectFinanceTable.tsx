@@ -6,11 +6,17 @@ import { groupBy, sumBy, uniq, range } from 'lodash';
 import { formatCurrency } from '#/lib/formatters.js';
 import { getFiscalYear } from '#/lib/util.js';
 
-export const ProjectFinanceTable = ({ allocations, awards, expenditures }) => {
+export const ProjectFinanceTable = ({
+  allocations,
+  awards,
+  expenditures,
+  auditedExpenditures,
+}) => {
   if (
     allocations.length === 0 &&
     awards.length === 0 &&
-    expenditures.length === 0
+    expenditures.length === 0 &&
+    auditedExpenditures.length === 0
   ) {
     return 'None';
   }
@@ -62,41 +68,36 @@ export const ProjectFinanceTable = ({ allocations, awards, expenditures }) => {
         </tr>
       </thead>
       <tbody>
-        {fiscalYears.map((fiscalYear) => (
-          <tr key={fiscalYear}>
-            <td>{fiscalYear === 'undefined' ? '' : fiscalYear}</td>
-            <td className="text-end">
-              {groupedAllocations[fiscalYear.toString()]
-                ? formatCurrency(
-                    sumBy(
-                      groupedAllocations[fiscalYear.toString()],
-                      'fields.Amount',
-                    ),
-                  )
-                : ''}
-            </td>
-            <td className="text-end">
-              {groupedAwards[fiscalYear.toString()]
-                ? formatCurrency(
-                    sumBy(
-                      groupedAwards[fiscalYear.toString()],
-                      'fields.Award Amount',
-                    ),
-                  )
-                : ''}
-            </td>
-            <td className="text-end">
-              {groupedExpenditures[fiscalYear.toString()]
-                ? formatCurrency(
-                    sumBy(
-                      groupedExpenditures[fiscalYear.toString()],
-                      'fields.Amount',
-                    ),
-                  )
-                : ''}
-            </td>
-          </tr>
-        ))}
+        {fiscalYears.map((fiscalYear) => {
+          const projectYearAllocations = groupedAllocations[
+            fiscalYear.toString()
+          ]
+            ? sumBy(groupedAllocations[fiscalYear.toString()], 'fields.Amount')
+            : '';
+
+          const projectYearAwards = groupedAwards[fiscalYear.toString()]
+            ? sumBy(groupedAwards[fiscalYear.toString()], 'fields.Award Amount')
+            : '';
+
+          const projectYearExpenditures = groupedExpenditures[
+            fiscalYear.toString()
+          ]
+            ? sumBy(groupedExpenditures[fiscalYear.toString()], 'fields.Amount')
+            : '';
+
+          return (
+            <tr key={fiscalYear}>
+              <td>{fiscalYear === 'undefined' ? '' : fiscalYear}</td>
+              <td className="text-end">
+                {formatCurrency(projectYearAllocations)}
+              </td>
+              <td className="text-end">{formatCurrency(projectYearAwards)}</td>
+              <td className="text-end">
+                {formatCurrency(projectYearExpenditures)}
+              </td>
+            </tr>
+          );
+        })}
       </tbody>
       <tfoot>
         <tr>

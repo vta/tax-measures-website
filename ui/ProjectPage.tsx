@@ -7,7 +7,7 @@ import {
   faExternalLinkAlt,
   faChevronLeft,
 } from '@fortawesome/free-solid-svg-icons';
-import { compact, flatMap, kebabCase, uniq } from 'lodash';
+import { compact, flatMap, kebabCase, uniq, sumBy } from 'lodash';
 
 import { fetchData } from '#/lib/api.js';
 import { getDocumentById, getGranteeByProject } from '#/lib/util.js';
@@ -16,6 +16,7 @@ import { DocumentsList } from '#/ui/DocumentsList';
 import { ProjectMap } from '#/ui/ProjectMap';
 import { ProjectShareButtons } from './ProjectShareButtons';
 import { ProjectLastModified } from './ProjectLastModified';
+import { formatCurrency } from '#/lib/formatters';
 
 export async function ProjectPage({ projectSlug }) {
   const {
@@ -24,6 +25,7 @@ export async function ProjectPage({ projectSlug }) {
     documents,
     grantees,
     expenditures,
+    auditedExpenditures,
     projects,
     geojsons,
     images,
@@ -54,6 +56,11 @@ export async function ProjectPage({ projectSlug }) {
   const projectGrantee = getGranteeByProject(project, grantees);
   const projectExpenditures = project.fields.Expenditures
     ? expenditures.filter((p) => project.fields.Expenditures.includes(p.id))
+    : [];
+  const projectAuditedExpenditures = project.fields.AuditedExpenditures
+    ? auditedExpenditures.filter((p) =>
+        project.fields.AuditedExpenditures.includes(p.id),
+      )
     : [];
 
   return (
@@ -94,7 +101,7 @@ export async function ProjectPage({ projectSlug }) {
                     </a>
                   </div>
                 )}
-                <div className="project-stat mb-3">
+                <div className="project-stat">
                   <b>Grantee:</b>{' '}
                   {projectGrantee?.fields.URL ? (
                     <a href={projectGrantee.fields.URL}>
@@ -104,6 +111,38 @@ export async function ProjectPage({ projectSlug }) {
                   ) : (
                     (projectGrantee?.fields.Name ?? 'None')
                   )}
+                  <div className="border border-black px-2 mt-4 mb-4">
+                    <div className="project-stat mb-2">
+                      <b>Total Expenditures:</b>{' '}
+                      {formatCurrency(
+                        sumBy(projectExpenditures, 'fields.Amount'),
+                      )}
+                    </div>
+
+                    <div className="project-stat mb-2">
+                      <b>Total Audited Expenditures:</b>{' '}
+                      {formatCurrency(
+                        sumBy(projectAuditedExpenditures, 'fields.Amount'),
+                      )}
+                    </div>
+
+                    <div className="project-stat mb-1">
+                      <b>
+                        Total Unaudited Expenditures<sup>*</sup>:
+                      </b>{' '}
+                      {formatCurrency(
+                        sumBy(projectExpenditures, 'fields.Amount') -
+                          sumBy(projectAuditedExpenditures, 'fields.Amount'),
+                      )}
+                    </div>
+
+                    <div>
+                      <small>
+                        * Unaudited Expenditures become an audited expenditure
+                        once VTA accounting is fully completed.
+                      </small>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="col-md-6 mb-3">
@@ -120,6 +159,7 @@ export async function ProjectPage({ projectSlug }) {
               allocations={projectAllocations}
               awards={projectAwards}
               expenditures={projectExpenditures}
+              auditedExpenditures={projectAuditedExpenditures}
             />
             <div className="project-stat">
               <b>Related Documents:</b>{' '}
@@ -136,6 +176,7 @@ export async function ProjectPage({ projectSlug }) {
               allocations={projectAllocations}
               awards={projectAwards}
               expenditures={projectExpenditures}
+              auditedExpenditures={projectAuditedExpenditures}
             />
           </div>
         </div>
