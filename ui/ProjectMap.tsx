@@ -37,7 +37,7 @@ export const ProjectMap = ({ project, geojsons, images }) => {
       </ReactMapGL>
       <style jsx>{`
         .map {
-          height: 200px;
+          aspect-ratio: 4 / 3;
         }
 
         .map-nav {

@@ -8,7 +8,6 @@ export const ProjectsMap = ({
   data: { geojsons, images },
   projectsToMap,
   setProjectModalProjects,
-  height,
 }) => {
   const [cursor, setCursor] = useState('auto');
   /* eslint-disable-next-line new-cap */
@@ -50,7 +49,7 @@ export const ProjectsMap = ({
   }
 
   return (
-    <div className="map" style={{ height }}>
+    <div className="map">
       <ReactMapGL
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
         initialViewState={viewport}
@@ -70,7 +69,6 @@ export const ProjectsMap = ({
       </ReactMapGL>
       <style jsx>{`
         .map {
-          clear: both;
           height: 400px;
         }
 
