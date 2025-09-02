@@ -15,7 +15,7 @@ export const Loading = ({ loading }) => {
           variant="primary"
           className="mb-4"
         >
-          <span className="sr-only">Loading...</span>
+          <span className="visually-hidden">Loading...</span>
         </Spinner>
         <h1>Loading...</h1>
       </div>

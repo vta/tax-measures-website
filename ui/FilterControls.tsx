@@ -103,7 +103,7 @@ export const FilterControls = ({
       </div>
       <div className="row">
         <div className="col-lg-3 mb-2 mb-lg-0">
-          <label htmlFor="program-category" className="sr-only">
+          <label htmlFor="program-category" className="visually-hidden">
             Program Category
           </label>
           <Select
@@ -135,7 +135,7 @@ export const FilterControls = ({
           />
         </div>
         <div className="col-lg-2 mb-2 mb-lg-0">
-          <label htmlFor="grantee" className="sr-only">
+          <label htmlFor="grantee" className="visually-hidden">
             Grantee
           </label>
           <Select
