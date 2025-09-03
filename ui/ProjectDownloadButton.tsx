@@ -30,7 +30,10 @@ export const ProjectDownloadButton = ({
     return fiscalYear ? fiscalYear.toString() : undefined;
   });
 
-  const groupedExpenditures = groupBy(expenditures, 'fields.Fiscal Year');
+  const groupedExpenditures = groupBy(expenditures, (expenditure) => {
+    const fiscalYear = getFiscalYear(expenditure.fields.Date);
+    return fiscalYear ? fiscalYear.toString() : undefined;
+  });
 
   const years = uniq([
     ...Object.keys(groupedAllocations),
