@@ -7,11 +7,9 @@ import { faFileCsv } from '@fortawesome/free-solid-svg-icons';
 
 import { formatCurrency } from '#/lib/formatters.js';
 import { getFiscalYear } from '#/lib/util.js';
-import { PrintButton } from '#/ui/PrintButton';
-import { ShareButton } from '#/ui/ShareButton';
 import { event } from '#/lib/gtag.js';
 
-export const ProjectShareButtons = ({
+export const ProjectDownloadButton = ({
   project,
   allocations,
   awards,
@@ -76,25 +74,22 @@ export const ProjectShareButtons = ({
 
   return (
     <div className="d-print-none">
-      <div className="d-flex mt-3">
-        <ShareButton className="btn btn-green me-2" />
-        <PrintButton className="btn btn-green me-2" />
-        <CSVLink
-          data={csvData}
-          filename={`${project.fields.Name.toLowerCase().replace(/\s+/g, '-')}.csv`}
-          className="btn btn-green"
-          onClick={() =>
-            event({
-              action: 'click',
-              category: 'download',
-              label: 'csv',
-              value: `${project.fields.Name.toLowerCase().replace(/\s+/g, '-')}.csv`,
-            })
-          }
-        >
-          <FontAwesomeIcon icon={faFileCsv} className="me-2" /> Download CSV
-        </CSVLink>
-      </div>
+      <CSVLink
+        data={csvData}
+        filename={`${project.fields.Name.toLowerCase().replace(/\s+/g, '-')}.csv`}
+        className="btn btn-green"
+        onClick={() =>
+          event({
+            action: 'click',
+            category: 'download',
+            label: 'csv',
+            value: `${project.fields.Name.toLowerCase().replace(/\s+/g, '-')}.csv`,
+          })
+        }
+      >
+        <FontAwesomeIcon icon={faFileCsv} className="me-2" /> Download Table as
+        CSV
+      </CSVLink>
     </div>
   );
 };

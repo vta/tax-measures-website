@@ -14,9 +14,10 @@ import { getDocumentById, getGranteeByProject } from '#/lib/util.js';
 import { ProjectFinanceTable } from '#/ui/ProjectFinanceTable';
 import { DocumentsList } from '#/ui/DocumentsList';
 import { ProjectMap } from '#/ui/ProjectMap';
-import { ProjectShareButtons } from './ProjectShareButtons';
 import { ProjectLastModified } from './ProjectLastModified';
 import { formatCurrency } from '#/lib/formatters';
+import { PrintButton } from '#/ui/PrintButton';
+import { ShareButton } from '#/ui/ShareButton';
 
 export async function ProjectPage({ projectSlug }) {
   const {
@@ -112,31 +113,52 @@ export async function ProjectPage({ projectSlug }) {
                     (projectGrantee?.fields.Name ?? 'None')
                   )}
                   <div className="border border-black px-2 mt-4 mb-4">
-                    <div className="project-stat mb-2">
-                      <b>Total Expenditures:</b>{' '}
-                      {formatCurrency(
-                        sumBy(projectExpenditures, 'fields.Amount'),
-                      )}
-                    </div>
+                    <table className="w-100">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <b>Total Expenditures:</b>
+                          </td>
+                          <td className="text-end">
+                            {formatCurrency(
+                              sumBy(projectExpenditures, 'fields.Amount'),
+                            )}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <b>Total Audited Expenditures:</b>
+                          </td>
+                          <td className="text-end">
+                            {formatCurrency(
+                              sumBy(
+                                projectAuditedExpenditures,
+                                'fields.Amount',
+                              ),
+                            )}
+                          </td>
+                        </tr>
 
-                    <div className="project-stat mb-2">
-                      <b>Total Audited Expenditures:</b>{' '}
-                      {formatCurrency(
-                        sumBy(projectAuditedExpenditures, 'fields.Amount'),
-                      )}
-                    </div>
+                        <tr>
+                          <td>
+                            <b>
+                              Total Unaudited Expenditures<sup>*</sup>:
+                            </b>
+                          </td>
+                          <td className="text-end">
+                            {formatCurrency(
+                              sumBy(projectExpenditures, 'fields.Amount') -
+                                sumBy(
+                                  projectAuditedExpenditures,
+                                  'fields.Amount',
+                                ),
+                            )}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
 
-                    <div className="project-stat mb-1">
-                      <b>
-                        Total Unaudited Expenditures<sup>*</sup>:
-                      </b>{' '}
-                      {formatCurrency(
-                        sumBy(projectExpenditures, 'fields.Amount') -
-                          sumBy(projectAuditedExpenditures, 'fields.Amount'),
-                      )}
-                    </div>
-
-                    <div>
+                    <div className="lh-sm mt-2">
                       <small>
                         * Unaudited Expenditures become an Audited Expenditure
                         once accounting is fully completed.
@@ -156,10 +178,10 @@ export async function ProjectPage({ projectSlug }) {
               </div>
             </div>
             <ProjectFinanceTable
+              project={project}
               allocations={projectAllocations}
               awards={projectAwards}
               expenditures={projectExpenditures}
-              auditedExpenditures={projectAuditedExpenditures}
             />
             <div className="project-stat">
               <b>Related Documents:</b>{' '}
@@ -171,13 +193,12 @@ export async function ProjectPage({ projectSlug }) {
               awards={projectAwards}
               expenditures={projectExpenditures}
             />
-            <ProjectShareButtons
-              project={project}
-              allocations={projectAllocations}
-              awards={projectAwards}
-              expenditures={projectExpenditures}
-              auditedExpenditures={projectAuditedExpenditures}
-            />
+            <div className="d-print-none">
+              <div className="d-flex mt-3">
+                <ShareButton className="btn btn-green me-2" />
+                <PrintButton className="btn btn-green me-2" />
+              </div>
+            </div>
           </div>
         </div>
       </div>

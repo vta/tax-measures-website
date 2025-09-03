@@ -13,7 +13,8 @@ import {
 } from '#/lib/util.js';
 import { ProjectFinanceTable } from '#/ui/ProjectFinanceTable';
 import { ProjectLastModified } from '#/ui/ProjectLastModified';
-import { ProjectShareButtons } from '#/ui/ProjectShareButtons';
+import { PrintButton } from '#/ui/PrintButton';
+import { ShareButton } from '#/ui/ShareButton';
 
 export const CategoryInfo = ({ data, categoryCard, results }) => {
   if (!categoryCard) {
@@ -75,6 +76,7 @@ export const CategoryInfo = ({ data, categoryCard, results }) => {
       return (
         <>
           <ProjectFinanceTable
+            project={project}
             allocations={projectAllocations}
             awards={projectAwards}
             expenditures={projectExpenditures}
@@ -116,12 +118,12 @@ export const CategoryInfo = ({ data, categoryCard, results }) => {
             awards={projectAwards}
             expenditures={projectExpenditures}
           />
-          <ProjectShareButtons
-            project={project}
-            allocations={projectAllocations}
-            awards={projectAwards}
-            expenditures={projectExpenditures}
-          />
+          <div className="d-print-none">
+            <div className="d-flex mt-3">
+              <ShareButton className="btn btn-green me-2" />
+              <PrintButton className="btn btn-green me-2" />
+            </div>
+          </div>
         </>
       );
     }

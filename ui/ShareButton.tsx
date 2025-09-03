@@ -4,7 +4,7 @@
 import { usePathname, useSearchParams } from 'next/navigation';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons';
+import { faXTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { faCopy, faEnvelope, faShare } from '@fortawesome/free-solid-svg-icons';
 
 import { isMobile } from '#/lib/util.js';
@@ -85,11 +85,11 @@ export const ShareButton = ({ className }) => {
             event({
               action: 'click',
               category: 'share',
-              label: 'twitter',
+              label: 'x',
             })
           }
         >
-          <FontAwesomeIcon icon={faTwitter} /> Twitter
+          <FontAwesomeIcon icon={faXTwitter} /> X
         </Dropdown.Item>
         <Dropdown.Item
           href={facebookShareUrl}
