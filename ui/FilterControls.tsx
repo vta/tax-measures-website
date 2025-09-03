@@ -70,7 +70,7 @@ export const FilterControls = ({
 
   return (
     <div className="card bg-blue p-2 mb-3">
-      <div className="row mb-2 text-white">
+      <div className="row mb-2 text-white d-none d-lg-flex">
         <div className="col-lg-3 mb-2 mb-lg-0 d-flex align-items-center justify-content-start">
           <div>
             <b>

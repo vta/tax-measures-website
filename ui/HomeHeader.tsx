@@ -78,64 +78,79 @@ export async function HomeHeader() {
         <div className="col col-md-auto bg-light-blue text-white">
           <LogoLink />
         </div>
-        <div className="col-md d-print-none">
-          <div className="header-stat">
-            <div className="header-stat-value">
-              {formatCurrencyBillions(sumBy(data.revenue, 'fields.Amount'))}
+        <div className="col-lg-9">
+          <div className="row d-block d-sm-flex gap-3">
+            <div className="col-md d-print-none">
+              <div className="header-stat">
+                <div className="header-stat-value">
+                  {formatCurrencyBillions(sumBy(data.revenue, 'fields.Amount'))}
+                </div>
+                <div className="header-stat-label">
+                  Billion Collected
+                  <FaqTerm
+                    term="Revenue Collected"
+                    faqs={data.faqs}
+                    placement="auto"
+                  />
+                </div>
+                <div className="header-state-date">
+                  Through {latestAwardDateLastFullMonth}
+                </div>
+              </div>
             </div>
-            <div className="header-stat-label">
-              Billion Collected
-              <FaqTerm
-                term="Revenue Collected"
-                faqs={data.faqs}
-                placement="auto"
-              />
+            <div className="col-md d-print-none">
+              <div className="header-stat">
+                <div className="header-stat-value">
+                  {formatCurrencyBillions(
+                    sumBy(
+                      allocationsThroughTwoYearsIntoTheFuture,
+                      'fields.Amount',
+                    ),
+                  )}
+                </div>
+                <div className="header-stat-label">
+                  Billion Allocated
+                  <FaqTerm
+                    term="Allocations"
+                    faqs={data.faqs}
+                    placement="auto"
+                  />
+                </div>
+                <div className="header-state-date">
+                  Through{' '}
+                  {moment(
+                    findLatestYear(
+                      allocationsThroughTwoYearsIntoTheFuture.map((r) =>
+                        Number.parseInt(r.fields['Available Start'], 10),
+                      ),
+                    ),
+                    'YYYY',
+                  )
+                    .date(30)
+                    .month('June')
+                    .format('MMM D, YYYY')}
+                </div>
+              </div>
             </div>
-            <div className="header-state-date">
-              Through {latestAwardDateLastFullMonth}
-            </div>
-          </div>
-        </div>
-        <div className="col-md d-print-none">
-          <div className="header-stat">
-            <div className="header-stat-value">
-              {formatCurrencyBillions(
-                sumBy(allocationsThroughTwoYearsIntoTheFuture, 'fields.Amount'),
-              )}
-            </div>
-            <div className="header-stat-label">
-              Billion Allocated
-              <FaqTerm term="Allocations" faqs={data.faqs} placement="auto" />
-            </div>
-            <div className="header-state-date">
-              Through{' '}
-              {moment(
-                findLatestYear(
-                  allocationsThroughTwoYearsIntoTheFuture.map((r) =>
-                    Number.parseInt(r.fields['Available Start'], 10),
-                  ),
-                ),
-                'YYYY',
-              )
-                .date(30)
-                .month('June')
-                .format('MMM D, YYYY')}
-            </div>
-          </div>
-        </div>
-        <div className="col-md d-print-none">
-          <div className="header-stat">
-            <div className="header-stat-value">
-              {formatCurrencyBillions(
-                sumBy(data.expenditures, 'fields.Amount'),
-              )}
-            </div>
-            <div className="header-stat-label">
-              Billion Spent
-              <FaqTerm term="Expenditures" faqs={data.faqs} placement="auto" />
-            </div>
-            <div className="header-state-date">
-              Through {latestExpenditureDateLastFullMonth}
+            <div className="col-md d-print-none">
+              <div className="header-stat">
+                <div className="header-stat-value">
+                  {formatCurrencyBillions(
+                    sumBy(data.expenditures, 'fields.Amount'),
+                  )}
+                </div>
+                <div className="header-stat-label">
+                  Billion Spent
+                  <FaqTerm
+                    term="Expenditures"
+                    faqs={data.faqs}
+                    placement="auto"
+                  />
+                </div>
+                <div className="header-state-date">
+                  Through {latestExpenditureDateLastFullMonth}
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -169,7 +169,7 @@ export const HomePageData = ({ data }) => {
         <div className="card mb-3">
           <div className="card-body card-graph">
             <div className="row">
-              <div className="col-lg-6">
+              <div className="d-none d-md-block col-lg-6">
                 <AllocationVsExpenditureChart
                   projects={data.projects}
                   allocations={data.allocations}

@@ -92,6 +92,11 @@ a.card {
   text-decoration: none;
 }
 
+.card h2 {
+  font-size: 1.1rem;
+  line-height: 1.1;
+}
+
 .bg-light-blue {
   background-color: #51baec !important;
 }
@@ -324,6 +329,10 @@ a.card {
 
 
 @media screen and (min-width: 768px) {
+  .card h2 {
+    font-size: 1.5rem;
+  }
+
   .logo {
     height: 80px;
   }

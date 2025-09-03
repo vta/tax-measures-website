@@ -138,8 +138,8 @@ export async function ProjectPage({ projectSlug }) {
 
                     <div>
                       <small>
-                        * Unaudited Expenditures become an audited expenditure
-                        once VTA accounting is fully completed.
+                        * Unaudited Expenditures become an Audited Expenditure
+                        once accounting is fully completed.
                       </small>
                     </div>
                   </div>

@@ -26,7 +26,7 @@ export const CategoryCards = ({ data, setIncomingFilters, handleSearch }) => {
       {categoryCards
         .filter((card) => !card.parentCategory)
         .map(({ key, image }) => (
-          <div className="col-lg-5col col-md-4 col-xs-6 mb-3" key={key}>
+          <div className="col-lg-5col col-md-4 col-6 mb-3" key={key}>
             <a
               className="card h-100"
               title={`Show all ${key} projects`}
