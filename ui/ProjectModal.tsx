@@ -51,7 +51,7 @@ export const ProjectModal = ({
 
   return (
     <Modal
-      size="lg"
+      size="xl"
       aria-labelledby="contained-modal-title-vcenter"
       centered
       show={show}

@@ -59,7 +59,11 @@ export const ProjectFinanceTable = ({
 
   return (
     <div className="mb-4">
-      <Table responsive style={{ maxWidth: '800px' }} striped>
+      <Table
+        responsive
+        style={{ maxWidth: '800px', marginBottom: '0' }}
+        striped
+      >
         <thead>
           <tr>
             <th>Fiscal Year</th>
@@ -126,6 +130,10 @@ export const ProjectFinanceTable = ({
           </tr>
         </tfoot>
       </Table>
+
+      <div className="mb-2">
+        <small>Discrepancies may occur due to the use of rounding.</small>
+      </div>
 
       <ProjectDownloadButton
         project={project}
