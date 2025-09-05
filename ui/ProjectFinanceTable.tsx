@@ -11,12 +11,12 @@ export const ProjectFinanceTable = ({
   project,
   allocations,
   awards,
-  expenditures,
+  auditedExpenditures,
 }) => {
   if (
     allocations.length === 0 &&
     awards.length === 0 &&
-    expenditures.length === 0
+    auditedExpenditures.length === 0
   ) {
     return 'None';
   }
@@ -28,15 +28,17 @@ export const ProjectFinanceTable = ({
     return fiscalYear ? fiscalYear.toString() : undefined;
   });
 
-  const groupedExpenditures = groupBy(expenditures, (expenditure) => {
-    const fiscalYear = getFiscalYear(expenditure.fields.Date);
-    return fiscalYear ? fiscalYear.toString() : undefined;
-  });
+  const groupedAuditedExpenditures = groupBy(
+    auditedExpenditures,
+    (auditedExpenditure) => {
+      return auditedExpenditure.fields['Audited Fiscal Year'];
+    },
+  );
 
   const years = uniq([
     ...Object.keys(groupedAllocations),
     ...Object.keys(groupedAwards),
-    ...Object.keys(groupedExpenditures),
+    ...Object.keys(groupedAuditedExpenditures),
   ]);
 
   const minYear = Math.min(...years.map(Number).filter((i) => !isNaN(i)));
@@ -69,7 +71,7 @@ export const ProjectFinanceTable = ({
             <th>Fiscal Year</th>
             <th className="text-end">Allocations</th>
             <th className="text-end">Awards</th>
-            <th className="text-end">Expenditures</th>
+            <th className="text-end">Audited Expenditures</th>
           </tr>
         </thead>
         <tbody>
@@ -90,11 +92,11 @@ export const ProjectFinanceTable = ({
                 )
               : '';
 
-            const projectYearExpenditures = groupedExpenditures[
+            const projectYearAuditedExpenditures = groupedAuditedExpenditures[
               fiscalYear.toString()
             ]
               ? sumBy(
-                  groupedExpenditures[fiscalYear.toString()],
+                  groupedAuditedExpenditures[fiscalYear.toString()],
                   'fields.Amount',
                 )
               : '';
@@ -109,7 +111,7 @@ export const ProjectFinanceTable = ({
                   {formatCurrency(projectYearAwards)}
                 </td>
                 <td className="text-end">
-                  {formatCurrency(projectYearExpenditures)}
+                  {formatCurrency(projectYearAuditedExpenditures)}
                 </td>
               </tr>
             );
@@ -125,7 +127,7 @@ export const ProjectFinanceTable = ({
               {formatCurrency(sumBy(awards, 'fields.Award Amount'))}
             </th>
             <th className="text-end">
-              {formatCurrency(sumBy(expenditures, 'fields.Amount'))}
+              {formatCurrency(sumBy(auditedExpenditures, 'fields.Amount'))}
             </th>
           </tr>
         </tfoot>
@@ -139,7 +141,7 @@ export const ProjectFinanceTable = ({
         project={project}
         allocations={allocations}
         awards={awards}
-        expenditures={expenditures}
+        auditedExpenditures={auditedExpenditures}
       />
     </div>
   );

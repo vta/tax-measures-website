@@ -181,7 +181,7 @@ export async function ProjectPage({ projectSlug }) {
               project={project}
               allocations={projectAllocations}
               awards={projectAwards}
-              expenditures={projectExpenditures}
+              auditedExpenditures={projectAuditedExpenditures}
             />
             <div className="project-stat">
               <b>Related Documents:</b>{' '}
@@ -192,6 +192,7 @@ export async function ProjectPage({ projectSlug }) {
               allocations={projectAllocations}
               awards={projectAwards}
               expenditures={projectExpenditures}
+              auditedExpenditures={auditedExpenditures}
             />
             <div className="d-print-none">
               <div className="d-flex mt-3">

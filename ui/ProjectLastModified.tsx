@@ -8,6 +8,7 @@ export const ProjectLastModified = ({
   allocations,
   awards,
   expenditures,
+  auditedExpenditures,
 }) => {
   return (
     <div className="py-2">
@@ -19,6 +20,7 @@ export const ProjectLastModified = ({
             ...allocations,
             ...awards,
             ...expenditures,
+            ...auditedExpenditures,
           ]),
         ).format('MMMM Do YYYY, h:mm a')}
       </small>

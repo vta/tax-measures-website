@@ -6,11 +6,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import { compact, sumBy, uniq, flatMap } from 'lodash';
 import { DocumentLink } from '#/ui/DocumentLink';
 import { formatCurrencyMillions } from '#/lib/formatters.js';
-import {
-  getCurrentFiscalYear,
-  findLatestYear,
-  getDocumentById,
-} from '#/lib/util.js';
+import { getCurrentFiscalYear, findLatestYear } from '#/lib/util.js';
 import { ProjectFinanceTable } from '#/ui/ProjectFinanceTable';
 import { ProjectLastModified } from '#/ui/ProjectLastModified';
 import { PrintButton } from '#/ui/PrintButton';
@@ -64,12 +60,15 @@ export const CategoryInfo = ({ data, categoryCard, results }) => {
           ...flatMap(projectAwards, 'fields.Documents'),
         ]),
       );
-      const projectDocuments = projectDocumentIds.map((id) =>
-        getDocumentById(id, data.documents),
-      );
       const projectExpenditures = project.fields.Expenditures
         ? data.expenditures.filter((p) =>
             project.fields.Expenditures.includes(p.id),
+          )
+        : [];
+
+      const projectAuditedExpenditures = project.fields.AuditedExpenditures
+        ? data.auditedExpenditures.filter((p) =>
+            project.fields.AuditedExpenditures.includes(p.id),
           )
         : [];
 
@@ -79,7 +78,7 @@ export const CategoryInfo = ({ data, categoryCard, results }) => {
             project={project}
             allocations={projectAllocations}
             awards={projectAwards}
-            expenditures={projectExpenditures}
+            auditedExpenditures={projectAuditedExpenditures}
           />
           <div className="mt-4 text-blue" style={{ fontSize: '1.25rem' }}>
             Annual Reports
@@ -117,6 +116,7 @@ export const CategoryInfo = ({ data, categoryCard, results }) => {
             allocations={projectAllocations}
             awards={projectAwards}
             expenditures={projectExpenditures}
+            auditedExpenditures={projectAuditedExpenditures}
           />
           <div className="d-print-none">
             <div className="d-flex mt-3">

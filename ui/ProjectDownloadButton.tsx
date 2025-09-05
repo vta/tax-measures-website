@@ -13,12 +13,12 @@ export const ProjectDownloadButton = ({
   project,
   allocations,
   awards,
-  expenditures,
+  auditedExpenditures,
 }) => {
   if (
     allocations.length === 0 &&
     awards.length === 0 &&
-    expenditures.length === 0
+    auditedExpenditures.length === 0
   ) {
     return 'None';
   }
@@ -30,15 +30,17 @@ export const ProjectDownloadButton = ({
     return fiscalYear ? fiscalYear.toString() : undefined;
   });
 
-  const groupedExpenditures = groupBy(expenditures, (expenditure) => {
-    const fiscalYear = getFiscalYear(expenditure.fields.Date);
-    return fiscalYear ? fiscalYear.toString() : undefined;
-  });
+  const groupedAuditedExpenditures = groupBy(
+    auditedExpenditures,
+    (expenditure) => {
+      return expenditure.fields['Audited Fiscal Year'];
+    },
+  );
 
   const years = uniq([
     ...Object.keys(groupedAllocations),
     ...Object.keys(groupedAwards),
-    ...Object.keys(groupedExpenditures),
+    ...Object.keys(groupedAuditedExpenditures),
   ]);
 
   const minYear = Math.min(...years.map(Number).filter((i) => !isNaN(i)));
@@ -60,17 +62,20 @@ export const ProjectDownloadButton = ({
   }
 
   const csvData = [
-    ['Fiscal Year', 'Allocations', 'Awards', 'Expenditures'],
+    ['Fiscal Year', 'Allocations', 'Awards', 'Audited Expenditures'],
     ...fiscalYears.map((fiscalYear) => [
       fiscalYear === 'undefined' ? '' : fiscalYear,
-      formatCurrency(
+      Math.round(
         sumBy(groupedAllocations[fiscalYear.toString()], 'fields.Amount'),
       ),
-      formatCurrency(
+      Math.round(
         sumBy(groupedAwards[fiscalYear.toString()], 'fields.Award Amount'),
       ),
-      formatCurrency(
-        sumBy(groupedExpenditures[fiscalYear.toString()], 'fields.Amount'),
+      Math.round(
+        sumBy(
+          groupedAuditedExpenditures[fiscalYear.toString()],
+          'fields.Amount',
+        ),
       ),
     ]),
   ];
