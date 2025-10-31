@@ -161,7 +161,7 @@ export async function ProjectPage({ projectSlug }) {
                     <div className="lh-sm mt-2">
                       <small>
                         * Unaudited Expenditures become an Audited Expenditure
-                        once accounting is fully completed.
+                        once the annual audit is completed.
                       </small>
                     </div>
                   </div>
