@@ -8,6 +8,7 @@ import {
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
+import { Anchorme } from 'react-anchorme';
 
 export const FaqTerm = ({ term, faqs, placement, showTerm }) => {
   const faq = faqs && faqs.find((f) => f.fields.Term === term);
@@ -18,7 +19,9 @@ export const FaqTerm = ({ term, faqs, placement, showTerm }) => {
 
   const popover = (
     <Popover id="popover-basic">
-      <Popover.Body dangerouslySetInnerHTML={{ __html: faq.fields.Content }} />
+      <Popover.Body>
+        <Anchorme>{faq.fields.Content}</Anchorme>
+      </Popover.Body>
     </Popover>
   );
 

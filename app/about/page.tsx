@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Anchorme } from 'react-anchorme';
 
 import { Footer } from '#/ui/Footer';
 import { Header } from '#/ui/Header';
@@ -47,7 +48,7 @@ const Faq = ({ faq }) => {
       <p className="faq-answer">
         {contentLines.map((line, index) => (
           <span key={index}>
-            {line}
+            <Anchorme>{line}</Anchorme>
             {index < contentLines.length - 1 && <br />}
           </span>
         ))}
