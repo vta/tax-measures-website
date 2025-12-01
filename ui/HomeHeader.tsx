@@ -41,7 +41,7 @@ export async function HomeHeader() {
         <span className="visually-hidden">2016 Measure B</span>
         <Image
           src="/images/logo.png"
-          alt=""
+          alt="2016 Measure B"
           className="home-logo"
           width="738"
           height="598"
