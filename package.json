@@ -18,16 +18,16 @@
     "@fortawesome/free-regular-svg-icons": "^7.1.0",
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
     "@fortawesome/react-fontawesome": "^3.1.1",
-    "@turf/bbox": "^7.3.1",
+    "@turf/bbox": "^7.3.2",
     "algoliasearch": "^4.25.3",
     "apexcharts": "^4.7.0",
     "bootstrap": "^5.3.8",
     "cross-fetch": "^4.1.0",
     "downshift": "^9.0.13",
-    "lodash": "^4.17.21",
-    "mapbox-gl": "^3.17.0",
+    "lodash": "^4.17.23",
+    "mapbox-gl": "^3.18.0",
     "moment": "^2.30.1",
-    "next": "16.1.1",
+    "next": "16.1.4",
     "react": "19.2.3",
     "react-anchorme": "^5.0.0",
     "react-apexcharts": "^1.9.0",
@@ -43,11 +43,11 @@
     "remark-breaks": "^4.0.0"
   },
   "devDependencies": {
-    "@types/node": "24.10.4",
+    "@types/node": "24.10.9",
     "@types/react-burger-menu": "^2.8.7",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
-    "prettier": "^3.7.4",
+    "prettier": "^3.8.1",
     "typescript": "5.9.3"
   },
   "prettier": {
@@ -59,5 +59,10 @@
     "*.tsx": "prettier --write",
     "*.ts": "prettier --write"
   },
-  "packageManager": "pnpm@10.27.0"
+  "packageManager": "pnpm@10.28.1",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp"
+    ]
+  }
 }
