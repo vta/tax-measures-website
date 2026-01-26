@@ -25,16 +25,16 @@
     "cross-fetch": "^4.1.0",
     "downshift": "^9.0.13",
     "lodash": "^4.17.23",
-    "mapbox-gl": "^3.18.0",
+    "mapbox-gl": "^3.18.1",
     "moment": "^2.30.1",
-    "next": "16.1.4",
-    "react": "19.2.3",
+    "next": "16.1.5",
+    "react": "19.2.4",
     "react-anchorme": "^5.0.0",
     "react-apexcharts": "^1.9.0",
     "react-bootstrap": "^2.10.10",
     "react-burger-menu": "^3.1.0",
     "react-csv": "^2.2.2",
-    "react-dom": "19.2.3",
+    "react-dom": "19.2.4",
     "react-https-redirect": "^1.1.0",
     "react-map-gl": "^8.1.0",
     "react-markdown": "^10.1.0",
@@ -59,7 +59,7 @@
     "*.tsx": "prettier --write",
     "*.ts": "prettier --write"
   },
-  "packageManager": "pnpm@10.28.1",
+  "packageManager": "pnpm@10.28.2",
   "pnpm": {
     "onlyBuiltDependencies": [
       "sharp"
