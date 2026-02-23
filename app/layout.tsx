@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 import { Analytics } from '#/ui/Analytics';
 
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     'A 30-year, half-cent countywide sales tax to enhance transit, highways, expressways and active transportation (bicycles, pedestrians and complete streets). The measure passed by nearly 72%, the highest level of support for any Santa Clara County transportation tax.',
   metadataBase: new URL('https://2016measureb.vta.org'),
   alternates: {
-    canonical: '/',
+    canonical: './',
   },
   openGraph: {
     title: '2016 Measure B - VTA',
@@ -52,6 +52,11 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -61,7 +66,6 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width" />
         <link
           rel="sitemap"
           type="application/xml"
