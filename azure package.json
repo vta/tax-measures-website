@@ -1,0 +1,68 @@
+{
+  "name": "tax-measures-website",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": "24.13.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "start": "next start -p ${PORT:-3000}",
+    "azure-post-deploy": "npm run build",
+    "publish-search": "export $(cat .env) && node ./tasks/publish-search",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^7.1.0",
+    "@fortawesome/free-brands-svg-icons": "^7.1.0",
+    "@fortawesome/free-regular-svg-icons": "^7.1.0",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@fortawesome/react-fontawesome": "^3.1.1",
+    "@turf/bbox": "^7.3.2",
+    "algoliasearch": "^4.25.3",
+    "apexcharts": "^4.7.0",
+    "bootstrap": "^5.3.8",
+    "cross-fetch": "^4.1.0",
+    "downshift": "^9.0.13",
+    "lodash": "^4.17.23",
+    "mapbox-gl": "^3.18.1",
+    "moment": "^2.30.1",
+    "next": "16.1.5",
+    "react": "19.2.4",
+    "react-anchorme": "^5.0.0",
+    "react-apexcharts": "^1.9.0",
+    "react-bootstrap": "^2.10.10",
+    "react-burger-menu": "^3.1.0",
+    "react-csv": "^2.2.2",
+    "react-dom": "19.2.4",
+    "react-https-redirect": "^1.1.0",
+    "react-map-gl": "^8.1.0",
+    "react-markdown": "^10.1.0",
+    "react-select": "^5.10.2",
+    "react-slideshow-image": "^4.3.2",
+    "remark-breaks": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.9",
+    "@types/react-burger-menu": "^2.8.7",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.8.1",
+    "typescript": "5.9.3"
+  },
+  "prettier": {
+    "singleQuote": true
+  },
+  "lint-staged": {
+    "*.js": "prettier --write",
+    "*.json": "prettier --write",
+    "*.tsx": "prettier --write",
+    "*.ts": "prettier --write"
+  },
+  "packageManager": "pnpm@10.28.2",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp"
+    ]
+  }
+}
