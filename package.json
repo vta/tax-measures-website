@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "24.13.0"
+    "node": "24.14.0"
   },
   "scripts": {
     "dev": "next dev",
@@ -13,21 +13,21 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^7.1.0",
-    "@fortawesome/free-brands-svg-icons": "^7.1.0",
-    "@fortawesome/free-regular-svg-icons": "^7.1.0",
-    "@fortawesome/free-solid-svg-icons": "^7.1.0",
-    "@fortawesome/react-fontawesome": "^3.1.1",
-    "@turf/bbox": "^7.3.2",
-    "algoliasearch": "^4.25.3",
+    "@fortawesome/fontawesome-svg-core": "^7.2.0",
+    "@fortawesome/free-brands-svg-icons": "^7.2.0",
+    "@fortawesome/free-regular-svg-icons": "^7.2.0",
+    "@fortawesome/free-solid-svg-icons": "^7.2.0",
+    "@fortawesome/react-fontawesome": "^3.2.0",
+    "@turf/bbox": "^7.3.4",
+    "algoliasearch": "^4.27.0",
     "apexcharts": "^4.7.0",
     "bootstrap": "^5.3.8",
     "cross-fetch": "^4.1.0",
-    "downshift": "^9.0.13",
+    "downshift": "^9.3.2",
     "lodash": "^4.17.23",
-    "mapbox-gl": "^3.18.1",
+    "mapbox-gl": "^3.20.0",
     "moment": "^2.30.1",
-    "next": "16.1.5",
+    "next": "16.1.7",
     "react": "19.2.4",
     "react-anchorme": "^5.0.0",
     "react-apexcharts": "^1.9.0",
@@ -39,14 +39,14 @@
     "react-map-gl": "^8.1.0",
     "react-markdown": "^10.1.0",
     "react-select": "^5.10.2",
-    "react-slideshow-image": "^4.3.2",
+    "react-slideshow-image": "^4.4.0",
     "remark-breaks": "^4.0.0"
   },
   "devDependencies": {
-    "@types/node": "24.10.9",
+    "@types/node": "24.12.0",
     "@types/react-burger-menu": "^2.8.7",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.7",
+    "lint-staged": "^16.4.0",
     "prettier": "^3.8.1",
     "typescript": "5.9.3"
   },
@@ -59,7 +59,7 @@
     "*.tsx": "prettier --write",
     "*.ts": "prettier --write"
   },
-  "packageManager": "pnpm@10.28.2",
+  "packageManager": "pnpm@10.32.1",
   "pnpm": {
     "onlyBuiltDependencies": [
       "sharp"
