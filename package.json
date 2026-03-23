@@ -9,7 +9,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p $PORT",
-    "publish-search": "export $(cat .env) && node ./tasks/publish-search",
+    "publish-search": "node ./tasks/publish-search",
     "prepare": "husky"
   },
   "dependencies": {

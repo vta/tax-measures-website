@@ -9,7 +9,7 @@
     "dev": "next dev",
     "start": "next start -p ${PORT:-3000}",
     "azure-post-deploy": "npm run build",
-    "publish-search": "export $(cat .env) && node ./tasks/publish-search",
+    "publish-search": "node ./tasks/publish-search",
     "prepare": "husky"
   },
   "dependencies": {
@@ -61,8 +61,6 @@
   },
   "packageManager": "pnpm@10.28.2",
   "pnpm": {
-    "onlyBuiltDependencies": [
-      "sharp"
-    ]
+    "onlyBuiltDependencies": ["sharp"]
   }
 }

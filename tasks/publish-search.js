@@ -2,9 +2,26 @@ const querystring = require('querystring');
 const algoliasearch = require('algoliasearch');
 const fetch = require('cross-fetch');
 
+const requiredEnvironmentVariables = [
+  'NEXT_PUBLIC_ALGOLIA_APP_ID',
+  'ALGOLIA_ADMIN_API_KEY',
+  'AIRTABLE_BASE_ID',
+  'AIRTABLE_API_KEY',
+];
+
+const missingEnvironmentVariables = requiredEnvironmentVariables.filter(
+  (name) => !process.env[name],
+);
+
+if (missingEnvironmentVariables.length > 0) {
+  throw new Error(
+    `Missing required environment variable(s): ${missingEnvironmentVariables.join(', ')}`,
+  );
+}
+
 const client = algoliasearch(
   process.env.NEXT_PUBLIC_ALGOLIA_APP_ID,
-  process.env.ALGOLIA_ADMIN_API_KEY
+  process.env.ALGOLIA_ADMIN_API_KEY,
 );
 const index = client.initIndex('TAX_MEASURES_PROJECTS');
 
