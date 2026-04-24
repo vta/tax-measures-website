@@ -68,9 +68,6 @@ importers:
       react-burger-menu:
         specifier: ^3.1.0
         version: 3.1.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      react-csv:
-        specifier: ^2.2.2
-        version: 2.2.2
       react-dom:
         specifier: 19.2.5
         version: 19.2.5(react@19.2.5)
@@ -1294,9 +1291,6 @@ packages:
     peerDependencies:
       react: '>=0.14.0'
       react-dom: '>=0.14.0'
-
-  react-csv@2.2.2:
-    resolution: {integrity: sha512-RG5hOcZKZFigIGE8LxIEV/OgS1vigFQT4EkaHeKgyuCbUAu9Nbd/1RYq++bJcJJ9VOqO/n9TZRADsXNDR4VEpw==}
 
   react-dom@19.2.5:
     resolution: {integrity: sha512-J5bAZz+DXMMwW/wV3xzKke59Af6CHY7G4uYLN1OvBcKEsWOs4pQExj86BBKamxl/Ik5bx9whOrvBlSDfWzgSag==}
@@ -2949,8 +2943,6 @@ snapshots:
       react: 19.2.5
       react-dom: 19.2.5(react@19.2.5)
       snapsvg-cjs: 0.0.6(eve@0.5.4)
-
-  react-csv@2.2.2: {}
 
   react-dom@19.2.5(react@19.2.5):
     dependencies:

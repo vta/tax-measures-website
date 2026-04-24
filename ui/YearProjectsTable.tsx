@@ -11,9 +11,8 @@ import {
   faSortUp,
   faSortDown,
 } from '@fortawesome/free-solid-svg-icons';
-import { CSVLink } from 'react-csv';
-
 import { formatCurrencyWithUnit } from '#/lib/formatters.js';
+import { downloadCsvFromMatrix } from '#/lib/download-csv.js';
 import { event } from '#/lib/gtag.js';
 import { FaqTerm } from '#/ui/FaqTerm';
 import { PrintButton } from '#/ui/PrintButton';
@@ -173,21 +172,22 @@ export const YearProjectsTable = ({ year, tableData, faqs, showButtons }) => {
         <div className="d-flex justify-content-end d-print-none">
           <ShareButton className="btn btn-green me-2" />
           <PrintButton className="btn btn-green me-2" />
-          <CSVLink
-            data={csvData}
-            filename={`measure-b-projects-fy-${year}.csv`}
+          <button
+            type="button"
             className="btn btn-green"
-            onClick={() =>
+            onClick={() => {
+              const filename = `measure-b-projects-fy-${year}.csv`;
               event({
                 action: 'click',
                 category: 'download',
                 label: 'csv',
-                value: 'measure-b-projects.csv',
-              })
-            }
+                value: filename,
+              });
+              downloadCsvFromMatrix(csvData, filename);
+            }}
           >
             <FontAwesomeIcon icon={faFileCsv} className="me-2" /> Download CSV
-          </CSVLink>
+          </button>
         </div>
       )}
     </>

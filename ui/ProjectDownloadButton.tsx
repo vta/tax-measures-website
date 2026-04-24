@@ -1,13 +1,13 @@
 'use client';
 
 import { groupBy, sumBy, uniq, range } from 'lodash';
-import { CSVLink } from 'react-csv';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileCsv } from '@fortawesome/free-solid-svg-icons';
 
 import { formatCurrency } from '#/lib/formatters.js';
 import { getFiscalYear } from '#/lib/util.js';
 import { event } from '#/lib/gtag.js';
+import { downloadCsvFromMatrix } from '#/lib/download-csv.js';
 
 export const ProjectDownloadButton = ({
   project,
@@ -82,22 +82,23 @@ export const ProjectDownloadButton = ({
 
   return (
     <div className="d-print-none">
-      <CSVLink
-        data={csvData}
-        filename={`${project.fields.Name.toLowerCase().replace(/\s+/g, '-')}.csv`}
+      <button
+        type="button"
         className="btn btn-green"
-        onClick={() =>
+        onClick={() => {
+          const filename = `${project.fields.Name.toLowerCase().replace(/\s+/g, '-')}.csv`;
           event({
             action: 'click',
             category: 'download',
             label: 'csv',
-            value: `${project.fields.Name.toLowerCase().replace(/\s+/g, '-')}.csv`,
-          })
-        }
+            value: filename,
+          });
+          downloadCsvFromMatrix(csvData, filename);
+        }}
       >
         <FontAwesomeIcon icon={faFileCsv} className="me-2" /> Download Table as
         CSV
-      </CSVLink>
+      </button>
     </div>
   );
 };
