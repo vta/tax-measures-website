@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 import Link from 'next/link';
 import Alert from 'react-bootstrap/Alert';
@@ -18,15 +19,17 @@ import { FaqTerm } from '#/ui/FaqTerm';
 import { PrintButton } from '#/ui/PrintButton';
 import { ShareButton } from '#/ui/ShareButton';
 
-export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
+export const YearProjectsTable = ({ year, tableData, faqs, showButtons }) => {
   const [sortOrder, setSortOrder] = useState('project_name');
   const [sortDirection, setSortDirection] = useState('asc');
 
-  if (!selectedProjects || selectedProjects.length === 0) {
+  if (!tableData || tableData.length === 0) {
     return (
       <Alert variant="warning" className="text-center">
-        <Alert.Heading>No funded projects meet these criteria.</Alert.Heading>
-        <div>Try adjusting search filters.</div>
+        <Alert.Heading>No expenditures for fiscal year {year}.</Alert.Heading>
+        <Link href={`/years/`} className="btn btn-primary">
+          Try a different fiscal year
+        </Link>
       </Alert>
     );
   }
@@ -42,105 +45,58 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
 
   const renderProjectRow = (project) => {
     return (
-      <tr key={project.id}>
+      <tr key={project.name}>
         <td>
-          <Link href={`/projects/${kebabCase(project.fields.Name)}/`}>
-            {project.fields.Name}
+          <Link href={`/projects/${kebabCase(project.name)}/`}>
+            {project.name}
           </Link>
         </td>
-        <td>{project.fields['Grantee Name']}</td>
-        <td>{project.fields.CategoryName}</td>
-        <td className="text-end" style={{ width: '110px' }}>
-          {formatCurrencyWithUnit(project.fields.totalAllocationAmount)}
-        </td>
-        <td className="text-end" style={{ width: '80px' }}>
-          {formatCurrencyWithUnit(project.fields.totalAwardAmount)}
-        </td>
+        <td>{project.grantee}</td>
+        <td>{project.category}</td>
         <td className="text-end" style={{ width: '100px' }}>
-          {formatCurrencyWithUnit(project.fields.totalExpenditureAmount)}
+          {formatCurrencyWithUnit(project.totalAuditedExpenditureAmountForYear)}
         </td>
       </tr>
     );
   };
 
   const csvData = [
-    [
-      'Project',
-      'Grantee',
-      'Category',
-      'URL',
-      'Total Allocations',
-      'Total Awards',
-      'Total Expenditures',
-    ],
-    ...selectedProjects.map((project) => {
+    ['Project', 'Grantee', 'Category', 'URL', `Total Expenditures FY${year}`],
+    ...tableData.map((project) => {
       return [
-        project.fields.Name,
-        project.fields['Grantee Name'],
-        project.fields.CategoryName,
-        project.fields.URL,
-        project.fields.totalAllocationAmount,
-        project.fields.totalAwardAmount,
-        project.fields.totalExpenditureAmount,
+        project.name,
+        project.grantee,
+        project.category,
+        project.url,
+        project.totalAuditedExpenditureAmountForYear,
       ];
     }),
   ];
 
-  const totals = selectedProjects.reduce(
-    (memo, project) => {
-      memo.totalAllocationAmount += project.fields.totalAllocationAmount;
-      memo.totalAwardAmount += project.fields.totalAwardAmount;
-      memo.totalExpenditureAmount += project.fields.totalExpenditureAmount;
+  const totals = tableData.reduce(
+    (memo, row) => {
+      memo.totalAuditedExpenditureAmount +=
+        row.totalAuditedExpenditureAmountForYear;
       return memo;
     },
     {
-      totalAllocationAmount: 0,
-      totalAwardAmount: 0,
-      totalExpenditureAmount: 0,
+      totalAuditedExpenditureAmount: 0,
     },
   );
 
-  let projects = selectedProjects;
+  let projects = tableData;
 
   if (sortOrder) {
-    if (sortOrder === 'fiscal_year') {
-      projects = orderBy(
-        selectedProjects,
-        (project) => {
-          return project.fields['Fiscal Year'] || 0;
-        },
-        sortDirection,
-      );
-    } else if (sortOrder === 'project_name') {
-      projects = orderBy(selectedProjects, 'fields.Name', sortDirection);
+    if (sortOrder === 'project_name') {
+      projects = orderBy(tableData, 'name', sortDirection);
     } else if (sortOrder === 'grantee') {
-      projects = orderBy(
-        selectedProjects,
-        'fields.Grantee Name',
-        sortDirection,
-      );
+      projects = orderBy(tableData, 'grantee', sortDirection);
     } else if (sortOrder === 'category') {
+      projects = orderBy(tableData, 'category', sortDirection);
+    } else if (sortOrder === 'expenditures_for_year') {
       projects = orderBy(
-        selectedProjects,
-        'fields.CategoryName',
-        sortDirection,
-      );
-    } else if (sortOrder === 'allocations') {
-      projects = orderBy(
-        selectedProjects,
-        'fields.totalAllocationAmount',
-        sortDirection,
-      );
-    } else if (sortOrder === 'awards') {
-      projects = orderBy(
-        selectedProjects,
-        'fields.totalAwardAmount',
-        sortDirection,
-      );
-    } else if (sortOrder === 'expenditures') {
-      projects = orderBy(
-        selectedProjects,
-        'fields.totalExpenditureAmount',
+        tableData,
+        'totalAuditedExpenditureAmountForYear',
         sortDirection,
       );
     }
@@ -193,24 +149,10 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
             )}
             {renderColumnHeader(
               <>
-                Allocations
-                <FaqTerm term="Allocations" faqs={faqs} placement="bottom" />
-              </>,
-              'allocations',
-            )}
-            {renderColumnHeader(
-              <>
-                Awards
-                <FaqTerm term="Awards" faqs={faqs} placement="bottom" />
-              </>,
-              'awards',
-            )}
-            {renderColumnHeader(
-              <>
-                Expenditures
+                Audited Expenditures for {year}
                 <FaqTerm term="Expenditures" faqs={faqs} placement="bottom" />
               </>,
-              'expenditures',
+              'expenditures_for_year',
             )}
           </tr>
         </thead>
@@ -221,13 +163,7 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
             <td></td>
             <td></td>
             <td className="text-end">
-              {formatCurrencyWithUnit(totals.totalAllocationAmount)}
-            </td>
-            <td className="text-end">
-              {formatCurrencyWithUnit(totals.totalAwardAmount)}
-            </td>
-            <td className="text-end">
-              {formatCurrencyWithUnit(totals.totalExpenditureAmount)}
+              {formatCurrencyWithUnit(totals.totalAuditedExpenditureAmount)}
             </td>
           </tr>
         </tbody>
@@ -239,7 +175,7 @@ export const ProjectsTable = ({ selectedProjects, faqs, showButtons }) => {
           <PrintButton className="btn btn-green me-2" />
           <CSVLink
             data={csvData}
-            filename={'measure-b-projects.csv'}
+            filename={`measure-b-projects-fy-${year}.csv`}
             className="btn btn-green"
             onClick={() =>
               event({
