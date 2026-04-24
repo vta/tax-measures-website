@@ -25,7 +25,9 @@ export const YearProjectsTable = ({ year, tableData, faqs, showButtons }) => {
   if (!tableData || tableData.length === 0) {
     return (
       <Alert variant="warning" className="text-center">
-        <Alert.Heading>No expenditures for fiscal year {year}.</Alert.Heading>
+        <Alert.Heading>
+          No audited expenditures for fiscal year {year}.
+        </Alert.Heading>
         <Link href={`/years/`} className="btn btn-primary">
           Try a different fiscal year
         </Link>

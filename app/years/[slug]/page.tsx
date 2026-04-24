@@ -39,14 +39,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: `Expenditures by Fiscal Year for ${slug} | 2016 Measure B`,
-    description: `See all expenditures by fiscal year for the 2016 Measure B projects for ${slug}.`,
+    title: `Audited Expenditures for Fiscal Year ${slug} | 2016 Measure B`,
+    description: `See all audited expenditures for fiscal year ${slug} for 2016 Measure B projects.`,
     alternates: {
       canonical: `/years/${slug}`,
     },
     openGraph: {
-      title: `Expenditures by Fiscal Year for ${slug} | 2016 Measure B`,
-      description: `See all expenditures by fiscal year for the 2016 Measure B projects for ${slug}.`,
+      title: `Audited Expenditures for Fiscal Year  ${slug} | 2016 Measure B`,
+      description: `See all audited expenditures for fiscal year ${slug} for 2016 Measure B projects.`,
       url: `${siteUrl}/years/${slug}`,
       siteName: '2016 Measure B',
       images: [
@@ -62,8 +62,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: `Expenditures by Fiscal Year for ${slug} | 2016 Measure B`,
-      description: `See all expenditures by fiscal year for the 2016 Measure B projects for ${slug}.`,
+      title: `Audited Expenditures for Fiscal Year ${slug} | 2016 Measure B`,
+      description: `See all audited expenditures for fiscal year ${slug} for 2016 Measure B projects.`,
       creator: '@VTA',
       site: '@VTA',
       images: [defaultSocialImage],
@@ -81,7 +81,10 @@ export default async function Page({ params }: Props) {
   const { awards, auditedExpenditures, projects, faqs } = await fetchData();
   const auditedExpendituresForYear = auditedExpenditures.filter(
     (expenditure) => {
-      return expenditure.fields['Audited Fiscal Year'] === slug;
+      return (
+        expenditure.fields['Audited Fiscal Year'] === slug &&
+        expenditure.fields.Amount > 0
+      );
     },
   );
 
@@ -161,7 +164,7 @@ export default async function Page({ params }: Props) {
 
         <div className="card my-4">
           <div className="card-body">
-            <h1>{slug} Project Expenditures</h1>
+            <h1>Audited Expenditures for Fiscal Year {slug}</h1>
             <YearProjectsTable
               year={slug}
               tableData={tableData}

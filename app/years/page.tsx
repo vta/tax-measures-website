@@ -5,13 +5,13 @@ import { Header } from '#/ui/Header';
 import FiscalYearSelector from '#/ui/FiscalYearSelect';
 
 export const metadata: Metadata = {
-  title: 'Expenditures by Fiscal Year | 2016 Measure B',
+  title: 'Audited Expenditures by Fiscal Year | 2016 Measure B',
   description:
-    'See all expenditures by fiscal year for the 2016 Measure B projects.',
+    'See all audited expenditures by fiscal year for 2016 Measure B projects.',
   openGraph: {
-    title: 'Expenditures by Fiscal Year | 2016 Measure B',
+    title: 'Audited Expenditures by Fiscal Year | 2016 Measure B',
     description:
-      'See all expenditures by fiscal year for the 2016 Measure B projects.',
+      'See all audited expenditures by fiscal year for 2016 Measure B projects.',
     url: 'https://2016measureb.vta.org/about',
     siteName: '2016 Measure B',
     images: [
@@ -27,9 +27,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Expenditures by Fiscal Year | 2016 Measure B',
+    title: 'Audited Expenditures by Fiscal Year | 2016 Measure B',
     description:
-      'See all expenditures by fiscal year for the 2016 Measure B projects.',
+      'See all audited expenditures by fiscal year for 2016 Measure B projects.',
     creator: '@VTA',
     site: '@VTA',
     images: ['https://2016measureb.vta.org/meta/measureb-logo-square.png'],
