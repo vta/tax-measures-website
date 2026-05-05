@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export const IntroSection = () => {
   return (
     <div className="row mb-3">
@@ -7,8 +9,11 @@ export const IntroSection = () => {
             <h2>See how 2016 Measure B has been spent</h2>
             <ul>
               <li>Filter by program categories or grantees</li>
+              <li>
+                Filter by{' '}
+                <Link href="/years">Audited Expenditures by Fiscal Year</Link>
+              </li>
               <li>Search for a specific project by name</li>
-              <li>Visualize funding in a chart or map</li>
               <li>Download project data as a PDF or CSV</li>
             </ul>
           </div>

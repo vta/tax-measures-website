@@ -151,7 +151,11 @@ export const YearProjectsTable = ({ year, tableData, faqs, showButtons }) => {
             {renderColumnHeader(
               <>
                 Audited Expenditures for {year}
-                <FaqTerm term="Expenditures" faqs={faqs} placement="bottom" />
+                <FaqTerm
+                  term="Audited Expenditures"
+                  faqs={faqs}
+                  placement="bottom"
+                />
               </>,
               'expenditures_for_year',
             )}
