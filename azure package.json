@@ -57,9 +57,5 @@
     "*.json": "prettier --write",
     "*.tsx": "prettier --write",
     "*.ts": "prettier --write"
-  },
-  "packageManager": "pnpm@10.28.2",
-  "pnpm": {
-    "onlyBuiltDependencies": ["sharp"]
   }
 }
