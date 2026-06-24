@@ -1,4 +1,3 @@
-'use server';
 import { Suspense } from 'react';
 
 import { fetchData } from '#/lib/api.js';

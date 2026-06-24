@@ -1,5 +1,3 @@
-'use server';
-
 import Image from 'next/image';
 import { sumBy } from 'lodash';
 import moment from 'moment';
