@@ -12,6 +12,13 @@ import { getCurrentFiscalYear } from '#/lib/util';
 import { fetchData } from '#/lib/api.js';
 import { notFound } from 'next/navigation';
 
+export async function generateStaticParams() {
+  const currentYear = getCurrentFiscalYear();
+  return Array.from({ length: currentYear - 2018 + 1 }, (_, i) => ({
+    slug: String(2018 + i),
+  }));
+}
+
 type Props = {
   params: Promise<{ slug: string }>;
 };

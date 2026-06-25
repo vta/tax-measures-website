@@ -1,6 +1,7 @@
 'use client';
 
 /* global navigator */
+import { Suspense } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,7 +11,7 @@ import { faCopy, faEnvelope, faShare } from '@fortawesome/free-solid-svg-icons';
 import { isMobile } from '#/lib/util.js';
 import { event } from '#/lib/gtag.js';
 
-export const ShareButton = ({ className }) => {
+const ShareButtonInner = ({ className }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const searchString = searchParams.toString();
@@ -108,3 +109,9 @@ export const ShareButton = ({ className }) => {
     </Dropdown>
   );
 };
+
+export const ShareButton = ({ className }) => (
+  <Suspense>
+    <ShareButtonInner className={className} />
+  </Suspense>
+);

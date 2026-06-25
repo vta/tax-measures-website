@@ -6,6 +6,13 @@ import { Footer } from '#/ui/Footer';
 import { ProjectPage } from '#/ui/ProjectPage';
 import { Header } from '#/ui/Header';
 
+export async function generateStaticParams() {
+  const data = await fetchData();
+  return data.projects.map((project) => ({
+    slug: kebabCase(project.fields.Name),
+  }));
+}
+
 type Props = {
   params: Promise<{ slug: string }>;
 };
